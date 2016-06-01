@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,6 +30,10 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><tiles:getAsString name="title"/></title>
@@ -39,6 +44,7 @@
 <tilesx:useAttribute name="current"/>
 
 <div class="container">
+
 
  <!-- Static navbar -->
       <nav class="navbar navbar-inverse">
@@ -67,7 +73,6 @@
       </nav>
 
 <tiles:insertAttribute name="body"/>
-
 
 
 
