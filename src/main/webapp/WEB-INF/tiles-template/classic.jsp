@@ -33,8 +33,6 @@
 <tilesx:useAttribute name="current"/>
 
 <div class="container">
-
-
  <!-- Static navbar -->
       <nav class="navbar navbar-inverse">
         <div class="container-fluid">
@@ -44,22 +42,25 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">Smart Budget</a>
+            </button>            
+            <a class="navbar-brand" href="/">Smart Budget            
+            <span class="glyphicon glyphicon-euro" aria-hidden="true"></span>
+            </a>
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="#">Home</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>             
+              <li class="active"><a href='<spring:url value="/"/>'>Home</a></li>
+              <li><a href='<spring:url value="/"/>'>Link</a></li>
+              <li><a href='<spring:url value="/"/>'>Link</a></li>             
             </ul>
             <ul class="nav navbar-nav navbar-right">              
-              <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign In</a></li>
-              <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+              <li><a href="/"><span class="glyphicon glyphicon-user"></span> Sign In</a></li>
+              <li><a href="/"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
       </nav>
+      
 
 <tiles:insertAttribute name="body"/>
 
