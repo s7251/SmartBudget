@@ -49,11 +49,14 @@
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li class="active"><a href='<spring:url value="/"/>'>Home</a></li>
-              <li><a href='<spring:url value="/"/>'>Link</a></li>
-              <li><a href='<spring:url value="/"/>'>Link</a></li>             
+              <li class="active"><a href='<spring:url value="/"/>'>Transactions</a></li>
+              <li><a href='<spring:url value="/"/>'>Budget Plan</a></li>
+              <li><a href='<spring:url value="/"/>'>Categories</a></li> 
+              <li><a href='<spring:url value="/"/>'>Accounts</a></li>              
+              <li><a href='<spring:url value="/"/>'>Reports</a></li>           
             </ul>
-            <ul class="nav navbar-nav navbar-right">              
+            <ul class="nav navbar-nav navbar-right">    
+            <li><a href="/"><span class="glyphicon glyphicon-cog"></span> Profile</a></li>          
               <li><a href="/"><span class="glyphicon glyphicon-user"></span> Sign In</a></li>
               <li><a href="/"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
             </ul>

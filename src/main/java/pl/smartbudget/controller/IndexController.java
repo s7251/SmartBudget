@@ -1,6 +1,9 @@
 package pl.smartbudget.controller;
 
 
+import javax.annotation.PostConstruct;
+
+import org.hsqldb.util.DatabaseManagerSwing;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -11,6 +14,15 @@ public class IndexController {
 		public String index(){
 			return "index";
 		
+	}
+	
+	
+	@PostConstruct
+	public void startDBManager() {
+			
+		//hsqldb
+		DatabaseManagerSwing.main(new String[] { "--url", "jdbc:hsqldb:mem:dataSource", "--user", "sa", "--password", "" });
+
 	}
 	
 }
