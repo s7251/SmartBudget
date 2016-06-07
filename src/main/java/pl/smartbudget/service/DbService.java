@@ -99,10 +99,20 @@ public class DbService {
 		Transaction transaction1 = new Transaction();
 		transaction1.setSubcategory(subcategorySample1);
 		transaction1.setAccount(account1);
-		transaction1.setName("Wp³ata");
+		transaction1.setType("influence");
+		transaction1.setName("tax refund");
 		transaction1.setDate(new Date());
 		transaction1.setAmount(123.00);
 		transactionRepository.save(transaction1);
+		
+		Transaction transaction2 = new Transaction();
+		transaction2.setSubcategory(subcategorySample1);
+		transaction2.setAccount(account1);
+		transaction2.setType("expense");
+		transaction2.setName("shopping in supermarket");
+		transaction2.setDate(new Date());
+		transaction2.setAmount(500.00);
+		transactionRepository.save(transaction2);
 	
 	}
 }

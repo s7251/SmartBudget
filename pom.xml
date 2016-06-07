@@ -36,7 +36,7 @@
 
 	<dependencies>
 	
-	<!-- HSQL JDBC driver -->
+	<!-- JSP Standard Tag Library -->
 	
 	<dependency>
 			<groupId>jstl</groupId>
@@ -52,7 +52,7 @@
 			<version>2.3.2</version>
 		</dependency>
 	
-	<!-- HIbernate -->
+	<!-- Hibernate -->
 	
 		<dependency>
 			<groupId>org.springframework.data</groupId>

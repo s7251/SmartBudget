@@ -14,6 +14,13 @@ public class Transaction {
 	@GeneratedValue	
 	private Integer id;
 	private String name;
+	private String type;
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
 	private double amount;
 	private Date date;
 	

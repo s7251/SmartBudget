@@ -49,16 +49,16 @@
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li class="active"><a href='<spring:url value="/"/>'>Transactions</a></li>
+              <li class="${current == 'transactions' ? 'active' : ''}"><a href='<spring:url value="/transactions.html"/>'>Transactions</a></li>
               <li><a href='<spring:url value="/"/>'>Budget Plan</a></li>
               <li><a href='<spring:url value="/"/>'>Categories</a></li> 
               <li><a href='<spring:url value="/"/>'>Accounts</a></li>                     
               <li><a href='<spring:url value="/"/>'>Reports</a></li>        
-              <li><a href='<spring:url value="/users.html"/>'>Users</a></li>     
+              <li class="${current == 'users' ? 'active' : ''}"><a href='<spring:url value="/users.html"/>'>Users</a></li>     
             </ul>
             <ul class="nav navbar-nav navbar-right">    
             <li><a href="/"><span class="glyphicon glyphicon-cog"></span> Profile</a></li>          
-              <li><a href="/"><span class="glyphicon glyphicon-user"></span> Sign In</a></li>
+                 <li class="${current == 'user-register' ? 'active' : ''}"><a href='<spring:url value="/register.html"/>'><span class="glyphicon glyphicon-user"></span> Register</a></li>
               <li><a href="/"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
             </ul>
           </div><!--/.nav-collapse -->
