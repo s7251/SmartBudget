@@ -42,4 +42,6 @@
 
 <jpa:repositories base-package="pl.smartbudget.repository" entity-manager-factory-ref="emf" transaction-manager-ref="transactionManager"/>
 
+<import resource="springsecurity.xml"/>
+
 </beans>

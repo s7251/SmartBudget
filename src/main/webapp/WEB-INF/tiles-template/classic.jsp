@@ -10,6 +10,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 
    <style type="text/css">         
     .footer {
@@ -49,17 +50,31 @@
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
+               <security:authorize access="hasRole('ROLE_USER')">    
               <li class="${current == 'transactions' ? 'active' : ''}"><a href='<spring:url value="/transactions.html"/>'>Transactions</a></li>
               <li><a href='<spring:url value="/"/>'>Budget Plan</a></li>
               <li><a href='<spring:url value="/"/>'>Categories</a></li> 
               <li><a href='<spring:url value="/"/>'>Accounts</a></li>                     
-              <li><a href='<spring:url value="/"/>'>Reports</a></li>        
+              <li><a href='<spring:url value="/"/>'>Reports</a></li>       
+               </security:authorize> 
+              <security:authorize access="hasRole('ROLE_ADMIN')">              
               <li class="${current == 'users' ? 'active' : ''}"><a href='<spring:url value="/users.html"/>'>Users</a></li>     
+       	      </security:authorize>    
             </ul>
+        
             <ul class="nav navbar-nav navbar-right">    
-            <li><a href="/"><span class="glyphicon glyphicon-cog"></span> Profile</a></li>          
-                 <li class="${current == 'user-register' ? 'active' : ''}"><a href='<spring:url value="/register.html"/>'><span class="glyphicon glyphicon-user"></span> Register</a></li>
-              <li><a href="/"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                  
+
+          
+           <security:authorize access="isAuthenticated()">
+            <li><a href="/"><span class="glyphicon glyphicon-cog"></span> Profile</a></li>   
+         		  <li><a href="<spring:url value="/logout"/>"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+            </security:authorize>           
+           
+           <security:authorize access="! isAuthenticated()">
+                       <li class="${current == 'user-register' ? 'active' : ''}"><a href='<spring:url value="/user-register.html"/>'><span class="glyphicon glyphicon-user"></span> Register</a></li>
+                  <li class="${current == 'user-login' ? 'active' : ''}"><a href='<spring:url value="/user-login.html"/>'><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+           </security:authorize>
             </ul>
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->

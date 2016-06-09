@@ -58,11 +58,20 @@ public class DbService {
 		userAdmin.setName("admin");
 		userAdmin.setPassword("admin");
 		userAdmin.setEmail("admin@admin.pl");
-		List<Role> roles = new ArrayList<Role>();
-		roles.add(roleAdmin);
-		roles.add(roleUser);
-		userAdmin.setRoles(roles);
+		List<Role> adminRoles = new ArrayList<Role>();
+		adminRoles.add(roleAdmin);
+		adminRoles.add(roleUser);
+		userAdmin.setRoles(adminRoles);
 		userRepository.save(userAdmin);
+		
+		User user1 = new User();
+		user1.setName("user");
+		user1.setPassword("user");
+		user1.setEmail("user@user.pl");	
+		List<Role> userRoles = new ArrayList<Role>();
+		userRoles.add(roleUser);
+		user1.setRoles(userRoles);
+		userRepository.save(user1);
 		
 		Account account1 = new Account();
 		account1.setUser(userAdmin);

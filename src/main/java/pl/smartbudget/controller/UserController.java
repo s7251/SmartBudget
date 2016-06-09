@@ -33,7 +33,7 @@ public class UserController {
 		model.addAttribute("user", userService.findOne(id));
 		return "user-detail";
 	}
-	@RequestMapping("/register")
+	@RequestMapping("/user-register")
 	public String showRegister(){
 		return "user-register";
 	}
