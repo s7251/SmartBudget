@@ -3,6 +3,9 @@
 
 <%@ include file="../tiles-template/taglib.jsp"%>
 
+<c:if test="${param.success eq true}">
+		<div class="alert alert-success">Success. Please Log In!</div>
+	</c:if>
 
 <br><br>
 <form:form commandName="user" cssClass="form-horizontal">

@@ -19,5 +19,10 @@ public class TransactionService {
 		
 	}
 
+	public String findAllByUser() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 }

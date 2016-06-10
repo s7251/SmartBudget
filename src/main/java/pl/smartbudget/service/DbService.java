@@ -58,6 +58,7 @@ public class DbService {
 		userAdmin.setName("admin");
 		userAdmin.setPassword("admin");
 		userAdmin.setEmail("admin@admin.pl");
+		userAdmin.setEnabled(true);
 		List<Role> adminRoles = new ArrayList<Role>();
 		adminRoles.add(roleAdmin);
 		adminRoles.add(roleUser);
@@ -68,6 +69,7 @@ public class DbService {
 		user1.setName("user");
 		user1.setPassword("user");
 		user1.setEmail("user@user.pl");	
+		user1.setEnabled(true);
 		List<Role> userRoles = new ArrayList<Role>();
 		userRoles.add(roleUser);
 		user1.setRoles(userRoles);

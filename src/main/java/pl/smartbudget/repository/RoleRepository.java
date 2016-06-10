@@ -9,4 +9,6 @@ import pl.smartbudget.entity.User;
 
 public interface RoleRepository extends JpaRepository <Role, Integer> {
 
+	Role findByName(String name);
+
 }
