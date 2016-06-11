@@ -12,44 +12,53 @@ import javax.persistence.ManyToOne;
 public class SubcategoryLimit {
 
 	@Id
-	@GeneratedValue	
+	@GeneratedValue
 	private Integer id;
 	private String name;
-	private double amount;	
-	
+	private double amount;
+
 	@ManyToOne
-	@JoinColumn(name="subcategory_id")	
+	@JoinColumn(name = "subcategory_id")
 	private Subcategory subcategory;
-	
+
 	public Subcategory getSubcategory() {
 		return subcategory;
 	}
+
 	public void setSubcategory(Subcategory subcategory) {
 		this.subcategory = subcategory;
 	}
+
 	private Date date;
-	
+
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public double getAmount() {
 		return amount;
 	}
+
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
+
 	public Date getDate() {
 		return date;
 	}
+
 	public void setDate(Date date) {
 		this.date = date;
 	}

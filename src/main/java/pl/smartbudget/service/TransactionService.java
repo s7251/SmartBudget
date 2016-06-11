@@ -13,16 +13,10 @@ public class TransactionService {
 
 	@Autowired
 	private TransactionRepository transactionRepository;
-	
-	public List<Transaction> findAll(){
-		return transactionRepository.findAll();		
-		
+
+	public List<Transaction> findAll() {
+		return transactionRepository.findAll();
+
 	}
 
-	public String findAllByUser() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	
 }

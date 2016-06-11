@@ -13,12 +13,10 @@ public class TransactionController {
 
 	@Autowired
 	private TransactionService transactionService;
-
+	
 	@RequestMapping("/transactions")
 	public String transactions(Model model) {
 		model.addAttribute("transactions", transactionService.findAll());
 		return "transactions";
-	}
-
-	
+	}	
 	}

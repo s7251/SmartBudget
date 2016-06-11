@@ -8,9 +8,13 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import pl.smartbudget.entity.Account;
 import pl.smartbudget.entity.Role;
+import pl.smartbudget.entity.Transaction;
 import pl.smartbudget.entity.User;
+import pl.smartbudget.repository.AccountRepository;
 import pl.smartbudget.repository.RoleRepository;
+import pl.smartbudget.repository.TransactionRepository;
 import pl.smartbudget.repository.UserRepository;
 
 @Service
@@ -19,13 +23,18 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Autowired
 	private RoleRepository roleRepository;
-	
-	public List<User> findAll(){
-		return userRepository.findAll();		
-		
+
+	@Autowired
+	private AccountRepository accountRepository;
+
+	@Autowired
+	private TransactionRepository transactionRepository;
+
+	public List<User> findAll() {
+		return userRepository.findAll();
 	}
 
 	public User findOne(int id) {
@@ -35,12 +44,29 @@ public class UserService {
 	public void save(User user) {
 		user.setEnabled(true);
 		user.setPassword(user.getPassword());
-		
+
 		List<Role> userRoles = new ArrayList<Role>();
 		userRoles.add(roleRepository.findByName("ROLE_USER"));
 		user.setRoles(userRoles);
-		
+
 		userRepository.save(user);
-		
+
+	}
+
+	@Transactional
+	public User findOneWithAccounts(int id) {
+		User user = findOne(id);
+		List<Account> accounts = accountRepository.findByUser(user);
+		for (Account account : accounts) {
+			List<Transaction> transactions = transactionRepository.findByAccount(account);
+			account.setTransactions(transactions);
+		}
+		user.setAccounts(accounts);
+		return user;
+	}
+
+	public User findOneWithAccounts(String name) {
+		User user = userRepository.findByName(name);
+		return findOneWithAccounts(user.getId());
 	}
 }

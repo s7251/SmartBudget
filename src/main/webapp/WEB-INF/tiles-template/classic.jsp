@@ -51,7 +51,7 @@
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                <security:authorize access="hasRole('ROLE_USER')">    
-              <li class="${current == 'transactions' ? 'active' : ''}"><a href='<spring:url value="/transactions.html"/>'>Transactions</a></li>
+              <li class="${current == 'user-transactions' ? 'active' : ''}"><a href='<spring:url value="/user-transactions.html"/>'>Transactions</a></li>
               <li><a href='<spring:url value="/"/>'>Budget Plan</a></li>
               <li><a href='<spring:url value="/"/>'>Categories</a></li> 
               <li><a href='<spring:url value="/"/>'>Accounts</a></li>                     

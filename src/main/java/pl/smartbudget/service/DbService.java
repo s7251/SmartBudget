@@ -54,6 +54,8 @@ public class DbService {
 		roleAdmin.setName("ROLE_ADMIN");
 		roleRepository.save(roleAdmin);
 		
+		// Admin
+		
 		User userAdmin = new User();
 		userAdmin.setName("admin");
 		userAdmin.setPassword("admin");
@@ -64,16 +66,6 @@ public class DbService {
 		adminRoles.add(roleUser);
 		userAdmin.setRoles(adminRoles);
 		userRepository.save(userAdmin);
-		
-		User user1 = new User();
-		user1.setName("user");
-		user1.setPassword("user");
-		user1.setEmail("user@user.pl");	
-		user1.setEnabled(true);
-		List<Role> userRoles = new ArrayList<Role>();
-		userRoles.add(roleUser);
-		user1.setRoles(userRoles);
-		userRepository.save(user1);
 		
 		Account account1 = new Account();
 		account1.setUser(userAdmin);
@@ -124,6 +116,49 @@ public class DbService {
 		transaction2.setDate(new Date());
 		transaction2.setAmount(500.00);
 		transactionRepository.save(transaction2);
+		
+		// User
+		
+		User user1 = new User();
+		user1.setName("user");
+		user1.setPassword("user");
+		user1.setEmail("user@user.pl");	
+		user1.setEnabled(true);
+		List<Role> userRoles = new ArrayList<Role>();
+		userRoles.add(roleUser);
+		user1.setRoles(userRoles);
+		userRepository.save(user1);
+		
+		Account account3 = new Account();
+		account3.setUser(user1);
+		account3.setName("Bank account");
+		accountRepository.save(account3);
+		
+		Category categorySample3 = new Category();
+		categorySample3.setUser(user1);
+		categorySample3.setName("SampleCategory1");
+		categoryRepository.save(categorySample3);
+		
+		Subcategory subcategorySample3 = new Subcategory();
+		subcategorySample3.setCategory(categorySample3);
+		subcategorySample3.setName("SampleSubcategory3");
+		subcategoryRepository.save(subcategorySample3);
+		
+		SubcategoryLimit subcategoryLimitSample3 = new SubcategoryLimit();
+		subcategoryLimitSample3.setSubcategory(subcategorySample3);
+		subcategoryLimitSample3.setAmount(200.00);
+		subcategoryLimitSample3.setDate(new Date());
+		subcategoryLimitSample3.setName("Limit on Subcategory3");
+		subcategoryLimitRepository.save(subcategoryLimitSample3);
+		
+		Transaction transaction3 = new Transaction();
+		transaction3.setSubcategory(subcategorySample3);
+		transaction3.setAccount(account3);
+		transaction3.setType("influence");
+		transaction3.setName("tax refund");
+		transaction3.setDate(new Date());
+		transaction3.setAmount(999.00);
+		transactionRepository.save(transaction3);
 	
 	}
 }

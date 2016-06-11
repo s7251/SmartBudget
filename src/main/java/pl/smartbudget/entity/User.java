@@ -13,34 +13,31 @@ import javax.persistence.OneToMany;
 public class User {
 
 	@Id
-	@GeneratedValue	
+	@GeneratedValue
 	private Integer id;
 	private String password;
 	private String name;
 	private String email;
 	private boolean enabled;
-	
-	
 
 	@ManyToMany
 	@JoinTable
 	private List<Role> roles;
-	
-	@OneToMany(mappedBy="user")
+
+	@OneToMany(mappedBy = "user")
 	private List<Account> accounts;
-	
-	@OneToMany(mappedBy="user")
+
+	@OneToMany(mappedBy = "user")
 	private List<Category> categories;
-	
-	
+
 	public List<Category> getCategories() {
 		return categories;
 	}
 
 	public void setCategories(List<Category> categories) {
 		this.categories = categories;
-	}	
-	
+	}
+
 	public List<Account> getAccounts() {
 		return accounts;
 	}
@@ -63,8 +60,8 @@ public class User {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}	
-	
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -88,7 +85,7 @@ public class User {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
+
 	public boolean isEnabled() {
 		return enabled;
 	}

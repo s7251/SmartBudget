@@ -13,43 +13,47 @@ import javax.persistence.OneToMany;
 public class Account {
 
 	@Id
-	@GeneratedValue	
+	@GeneratedValue
 	private Integer id;
 	private String name;
-	
+
 	@ManyToOne
-	@JoinColumn(name="user_id")
+	@JoinColumn(name = "user_id")
 	private User user;
-	
-	@OneToMany(mappedBy="account")
+
+	@OneToMany(mappedBy = "account")
 	List<Transaction> transactions;
-	
-	
+
 	public User getUser() {
 		return user;
 	}
+
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
+
 	public List<Transaction> getTransactions() {
 		return transactions;
 	}
+
 	public void setTransactions(List<Transaction> transactions) {
 		this.transactions = transactions;
 	}
-			
+
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 }
