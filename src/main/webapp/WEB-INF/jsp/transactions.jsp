@@ -26,6 +26,7 @@
 			<td><b>Date</b></td>
 			<td><b>SubCategory</b></td>
 			<td><b>Account</b></td>
+			<td></td>
 		</tr>
 		<c:forEach items="${transactions}" var="transaction">
 			<tr class="${transaction.type == 'expense' ? 'expensecolor' : 'influencecolor'}">
@@ -35,6 +36,20 @@
 				<td>${transaction.date}</td>
 				<td>${transaction.subcategory.name}</td>
 				<td>${transaction.account.name}</td>
+			<td>
+			<div class="btn-group">
+  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Action <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu">
+    <li><a href="#">Action</a></li>
+    <li><a href="#">Another action</a></li>
+    <li><a href="#">Something else here</a></li>
+    <li role="separator" class="divider"></li>
+    <li><a href="#">Separated link</a></li>
+  </ul>
+</div>
+			</td>
 			</tr>
 		</c:forEach>
 	</table>

@@ -10,12 +10,8 @@
 		<intercept-url pattern="/users**" access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/users/**" access="hasRole('ROLE_ADMIN')" />
 		<form-login login-page="/user-login.html" default-target-url="/user-transactions.html" />
-		<logout logout-url="/logout"/>
-		
+		<logout logout-url="/logout"/>		
 	</http>
-	
-
-
 
 <authentication-manager>
   <authentication-provider>

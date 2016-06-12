@@ -16,7 +16,6 @@ public class TransactionController {
 	
 	@RequestMapping("/transactions")
 	public String transactions(Model model) {
-		model.addAttribute("transactions", transactionService.findAll());
 		return "transactions";
 	}	
 	}

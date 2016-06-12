@@ -16,15 +16,6 @@ public class Transaction {
 	private Integer id;
 	private String name;
 	private String type;
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
 	private double amount;
 	private Date date;
 
@@ -36,6 +27,22 @@ public class Transaction {
 	@JoinColumn(name = "subcategory_id")
 	private Subcategory subcategory;
 
+	
+    public Transaction() { }
+	
+	public Transaction(double amount, String type) {
+		this.amount = amount;
+		this.type = type;
+	}
+	
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+	
 	public Integer getId() {
 		return id;
 	}

@@ -29,7 +29,6 @@
 </head>
 
 <body>
-
 <%@ taglib uri="http://tiles.apache.org/tags-tiles-extras" prefix="tilesx" %>
 <tilesx:useAttribute name="current"/>
 
@@ -52,9 +51,9 @@
             <ul class="nav navbar-nav">
                <security:authorize access="hasRole('ROLE_USER')">    
               <li class="${current == 'user-transactions' ? 'active' : ''}"><a href='<spring:url value="/user-transactions.html"/>'>Transactions</a></li>
-              <li><a href='<spring:url value="/"/>'>Budget Plan</a></li>
-              <li><a href='<spring:url value="/"/>'>Categories</a></li> 
-              <li><a href='<spring:url value="/"/>'>Accounts</a></li>                     
+              <li class="${current == 'user-accounts' ? 'active' : ''}"><a href='<spring:url value="/user-accounts.html"/>'>Accounts</a></li>
+              <li class="${current == 'user-categories' ? 'active' : ''}"><a href='<spring:url value="/user-categories.html"/>'>Categories</a></li>              
+              <li class="${current == 'user-budgetplan' ? 'active' : ''}"><a href='<spring:url value="/user-budgetplan.html"/>'>Budget Plan</a></li>                
               <li><a href='<spring:url value="/"/>'>Reports</a></li>       
                </security:authorize> 
               <security:authorize access="hasRole('ROLE_ADMIN')">              
@@ -62,28 +61,23 @@
        	      </security:authorize>    
             </ul>
         
-            <ul class="nav navbar-nav navbar-right">    
-                  
+            <ul class="nav navbar-nav navbar-right">       
 
-          
            <security:authorize access="isAuthenticated()">
-            <li><a href="/"><span class="glyphicon glyphicon-cog"></span> Profile</a></li>   
-         		  <li><a href="<spring:url value="/logout"/>"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+            <li><a href="/user-profile.html"><span class="glyphicon glyphicon-cog"></span> Profile</a></li>   
+         		  <li><a href="<spring:url value="/logout"/>"><span class="glyphicon glyphicon-log-out"></span> Sign Out</a></li>
             </security:authorize>           
            
            <security:authorize access="! isAuthenticated()">
-                       <li class="${current == 'user-register' ? 'active' : ''}"><a href='<spring:url value="/user-register.html"/>'><span class="glyphicon glyphicon-user"></span> Register</a></li>
-                  <li class="${current == 'user-login' ? 'active' : ''}"><a href='<spring:url value="/user-login.html"/>'><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                       <li class="${current == 'user-register' ? 'active' : ''}"><a href='<spring:url value="/user-register.html"/>'><span class="glyphicon glyphicon-user"></span> Create account</a></li>
+                  <li class="${current == 'user-login' ? 'active' : ''}"><a href='<spring:url value="/user-login.html"/>'><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
            </security:authorize>
             </ul>
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
-      </nav>
-      
+      </nav>      
 
 <tiles:insertAttribute name="body"/>
-
-
 
 <center>
 <tiles:insertAttribute name="footer"/>

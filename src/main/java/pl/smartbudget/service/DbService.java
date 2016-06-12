@@ -1,5 +1,7 @@
 package pl.smartbudget.service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -75,22 +77,47 @@ public class DbService {
 		Account account2 = new Account();
 		account2.setUser(userAdmin);
 		account2.setName("Wallet");
-		accountRepository.save(account1);
+		accountRepository.save(account2);
 		
 		Category categorySample1 = new Category();
 		categorySample1.setUser(userAdmin);
-		categorySample1.setName("SampleCategory1");
+		categorySample1.setName("Work");
 		categoryRepository.save(categorySample1);
 		
 		Category categorySample2 = new Category();
 		categorySample2.setUser(userAdmin);
-		categorySample2.setName("SampleCategory2");
+		categorySample2.setName("Food");
 		categoryRepository.save(categorySample2);
+		
+		Category categorySample3 = new Category();
+		categorySample3.setUser(userAdmin);
+		categorySample3.setName("Health and beauty");
+		categoryRepository.save(categorySample3);
 		
 		Subcategory subcategorySample1 = new Subcategory();
 		subcategorySample1.setCategory(categorySample1);
-		subcategorySample1.setName("SampleSubcategory1");
+		subcategorySample1.setName("Salary");
 		subcategoryRepository.save(subcategorySample1);
+		
+		Subcategory subcategorySample2 = new Subcategory();
+		subcategorySample2.setCategory(categorySample1);
+		subcategorySample2.setName("Bonus");
+		subcategoryRepository.save(subcategorySample2);
+		
+		Subcategory subcategorySample3 = new Subcategory();
+		subcategorySample3.setCategory(categorySample2);
+		subcategorySample3.setName("Supermarket");
+		subcategoryRepository.save(subcategorySample3);
+		
+		Subcategory subcategorySample4 = new Subcategory();
+		subcategorySample4.setCategory(categorySample2);
+		subcategorySample4.setName("Restaurant");
+		subcategoryRepository.save(subcategorySample4);
+		
+		Subcategory subcategorySample5 = new Subcategory();
+		subcategorySample5.setCategory(categorySample3);
+		subcategorySample5.setName("Barber");
+		subcategoryRepository.save(subcategorySample5);
 		
 		SubcategoryLimit subcategoryLimitSample1 = new SubcategoryLimit();
 		subcategoryLimitSample1.setSubcategory(subcategorySample1);
@@ -103,19 +130,37 @@ public class DbService {
 		transaction1.setSubcategory(subcategorySample1);
 		transaction1.setAccount(account1);
 		transaction1.setType("influence");
-		transaction1.setName("tax refund");
+		transaction1.setName("monthly salary");
 		transaction1.setDate(new Date());
-		transaction1.setAmount(123.00);
+		transaction1.setAmount(3600.00);
 		transactionRepository.save(transaction1);
 		
 		Transaction transaction2 = new Transaction();
-		transaction2.setSubcategory(subcategorySample1);
-		transaction2.setAccount(account1);
+		transaction2.setSubcategory(subcategorySample3);
+		transaction2.setAccount(account2);
 		transaction2.setType("expense");
 		transaction2.setName("shopping in supermarket");
 		transaction2.setDate(new Date());
-		transaction2.setAmount(500.00);
+		transaction2.setAmount(89.00);
 		transactionRepository.save(transaction2);
+		
+		Transaction transaction3 = new Transaction();
+		transaction3.setSubcategory(subcategorySample4);
+		transaction3.setAccount(account1);
+		transaction3.setType("expense");
+		transaction3.setName("dinner in restaurant");
+		transaction3.setDate(new Date());
+		transaction3.setAmount(101.00);
+		transactionRepository.save(transaction3);
+		
+		Transaction transaction4 = new Transaction();
+		transaction4.setSubcategory(subcategorySample5);
+		transaction4.setAccount(account1);
+		transaction4.setType("expense");
+		transaction4.setName("haircut");
+		transaction4.setDate(new Date());
+		transaction4.setAmount(25.00);
+		transactionRepository.save(transaction4);
 		
 		// User
 		
@@ -134,31 +179,31 @@ public class DbService {
 		account3.setName("Bank account");
 		accountRepository.save(account3);
 		
-		Category categorySample3 = new Category();
-		categorySample3.setUser(user1);
-		categorySample3.setName("SampleCategory1");
-		categoryRepository.save(categorySample3);
+		Category categorySample10 = new Category();
+		categorySample10.setUser(user1);
+		categorySample10.setName("SampleCategory1");
+		categoryRepository.save(categorySample10);
 		
-		Subcategory subcategorySample3 = new Subcategory();
-		subcategorySample3.setCategory(categorySample3);
-		subcategorySample3.setName("SampleSubcategory3");
-		subcategoryRepository.save(subcategorySample3);
+		Subcategory subcategorySample10 = new Subcategory();
+		subcategorySample10.setCategory(categorySample10);
+		subcategorySample10.setName("SampleSubcategory3");
+		subcategoryRepository.save(subcategorySample10);
 		
-		SubcategoryLimit subcategoryLimitSample3 = new SubcategoryLimit();
-		subcategoryLimitSample3.setSubcategory(subcategorySample3);
-		subcategoryLimitSample3.setAmount(200.00);
-		subcategoryLimitSample3.setDate(new Date());
-		subcategoryLimitSample3.setName("Limit on Subcategory3");
-		subcategoryLimitRepository.save(subcategoryLimitSample3);
+		SubcategoryLimit subcategoryLimitSample10 = new SubcategoryLimit();
+		subcategoryLimitSample10.setSubcategory(subcategorySample10);
+		subcategoryLimitSample10.setAmount(200.00);
+		subcategoryLimitSample10.setDate(new Date());
+		subcategoryLimitSample10.setName("Limit on Subcategory3");
+		subcategoryLimitRepository.save(subcategoryLimitSample10);
 		
-		Transaction transaction3 = new Transaction();
-		transaction3.setSubcategory(subcategorySample3);
-		transaction3.setAccount(account3);
-		transaction3.setType("influence");
-		transaction3.setName("tax refund");
-		transaction3.setDate(new Date());
-		transaction3.setAmount(999.00);
-		transactionRepository.save(transaction3);
+		Transaction transaction10 = new Transaction();
+		transaction10.setSubcategory(subcategorySample10);
+		transaction10.setAccount(account3);
+		transaction10.setType("influence");
+		transaction10.setName("tax refund");
+		transaction10.setDate(new Date());
+		transaction10.setAmount(999.00);
+		transactionRepository.save(transaction10);
 	
 	}
 }

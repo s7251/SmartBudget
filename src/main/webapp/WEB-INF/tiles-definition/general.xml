@@ -48,5 +48,28 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/user-transactions.jsp" />
 		<put-attribute name="current" value="user-transactions" />
 	</definition>
+	
+		<definition name="user-accounts" extends="common">
+		<put-attribute name="title" value="User Accounts" />
+		<put-attribute name="body" value="/WEB-INF/jsp/user-accounts.jsp" />
+		<put-attribute name="current" value="user-accounts" />
+	</definition>
+	
+		<definition name="user-categories" extends="common">
+		<put-attribute name="title" value="User Categories" />
+		<put-attribute name="body" value="/WEB-INF/jsp/user-categories.jsp" />
+		<put-attribute name="current" value="user-categories" />
+	</definition>
+	
+	<definition name="user-profile" extends="common">
+		<put-attribute name="title" value="User Profile" />
+		<put-attribute name="body" value="/WEB-INF/jsp/user-profile.jsp" />
+		<put-attribute name="current" value="user-profile" />
+	</definition>
 
+	<definition name="user-budgetplan" extends="common">
+		<put-attribute name="title" value="User Profile" />
+		<put-attribute name="body" value="/WEB-INF/jsp/user-budgetplan.jsp" />
+		<put-attribute name="current" value="user-budgetplan" />
+	</definition>
 </tiles-definitions>

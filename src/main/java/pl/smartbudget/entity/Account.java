@@ -24,6 +24,12 @@ public class Account {
 	@OneToMany(mappedBy = "account")
 	List<Transaction> transactions;
 
+	public Account() {}
+	
+	public Account(String name) {
+		this.name = name;
+	}
+	
 	public User getUser() {
 		return user;
 	}

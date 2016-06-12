@@ -3,19 +3,26 @@
 
 <%@ include file="../tiles-template/taglib.jsp"%>
 
-<table class="table">
-	<thead>
+<div class="panel panel-default">
+	<!-- Default panel contents -->
+	<div class="panel-heading">List of Users</div>
+	<div class="panel-body">
+		<p>Below you can see list of users.</p>
+	</div>	
+	<!-- Table -->
+	<table class="table table-striped">
 		<tr>
-			<th>Users</th>
+			<td style="text-align: center;"><b>Name</b></td>
+			<td style="text-align: center;"><b>Edit</b></td>
+			<td style="text-align: center;"><b>Remove</b></td>									
 		</tr>
-	</thead>
-	<tbody>
 		<c:forEach items="${users}" var="user">
 			<tr>
-				<td><a href="<spring:url value="/users/${user.id}.html" />">
-						<c:out value="${user.name}" />
-				</a></td>
+				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="/users/${user.id}.html" />"><c:out value="${user.name}" /></a></td>
+				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="" />" class="btn btn-warning" type="button">Edit</a></td>					
+				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="" />" class="btn btn-danger" type="button">Remove</a></td>	
 			</tr>
 		</c:forEach>
-	</tbody>
-</table>
+	</table>
+	</div>
+	
