@@ -5,6 +5,7 @@
 <tiles-definitions>
 	<definition name="common" template="/WEB-INF/tiles-template/classic.jsp">
 		<put-attribute name="footer" value="/WEB-INF/tiles-template/footer.jsp" />
+		<put-attribute name="title" expression="${user.username}" />
 	</definition>
 
 	<definition name="index" extends="common">
@@ -16,7 +17,7 @@
 	<definition name="users" extends="common">
 		<put-attribute name="title" value="Users" />
 		<put-attribute name="body" value="/WEB-INF/jsp/users.jsp" />
-		<put-attribute name="current" value="users" />
+		<put-attribute name="current" value="users" />		
 	</definition>
 
 	<definition name="user-detail" extends="common">
@@ -68,8 +69,14 @@
 	</definition>
 
 	<definition name="user-budgetplan" extends="common">
-		<put-attribute name="title" value="User Profile" />
+		<put-attribute name="title" value="User Budgetplan" />
 		<put-attribute name="body" value="/WEB-INF/jsp/user-budgetplan.jsp" />
-		<put-attribute name="current" value="user-budgetplan" />
+		<put-attribute name="current" value="user-budgetplan" />		
+	</definition>
+	
+		<definition name="user-reports" extends="common">
+		<put-attribute name="title" value="User Reports" />
+		<put-attribute name="body" value="/WEB-INF/jsp/user-reports.jsp" />
+		<put-attribute name="current" value="user-reports" />		
 	</definition>
 </tiles-definitions>

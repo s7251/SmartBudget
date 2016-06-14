@@ -12,11 +12,13 @@ import pl.smartbudget.entity.Account;
 import pl.smartbudget.entity.Category;
 import pl.smartbudget.entity.Role;
 import pl.smartbudget.entity.Subcategory;
+import pl.smartbudget.entity.SubcategoryLimit;
 import pl.smartbudget.entity.Transaction;
 import pl.smartbudget.entity.User;
 import pl.smartbudget.repository.AccountRepository;
 import pl.smartbudget.repository.CategoryRepository;
 import pl.smartbudget.repository.RoleRepository;
+import pl.smartbudget.repository.SubcategoryLimitRepository;
 import pl.smartbudget.repository.SubcategoryRepository;
 import pl.smartbudget.repository.TransactionRepository;
 import pl.smartbudget.repository.UserRepository;
@@ -42,6 +44,11 @@ public class UserService {
 
 	@Autowired
 	private SubcategoryRepository subcategoryRepository;
+	
+	
+	@Autowired
+	private SubcategoryLimitRepository subcategoryLimitRepository;
+	
 
 	public List<User> findAll() {
 		return userRepository.findAll();
@@ -89,6 +96,10 @@ public class UserService {
 		List<Category> categories = categoryRepository.findByUser(user);
 		for (Category category : categories) {
 			List<Subcategory> subcategories = subcategoryRepository.findByCategory(category);
+			for(Subcategory subcategory : subcategories){
+				List<SubcategoryLimit> subcategoryLimit = subcategoryLimitRepository.findBySubcategory(subcategory);
+				subcategory.setSubcategoryLimits(subcategoryLimit);
+			}
 			category.setSubcategories(subcategories);
 		}
 		user.setCategories(categories);

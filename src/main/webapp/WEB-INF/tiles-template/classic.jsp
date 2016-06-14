@@ -15,13 +15,13 @@
    <style type="text/css">         
     .footer {
         clear:both;
-        position:absolute;
+        position:fixed;
         bottom:0;
         left:0;
         text-align:center;
         width:100%;
         height:20px;
-    }     
+       }     
     </style>   
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -43,8 +43,8 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>            
-            <a class="navbar-brand" href="/">Smart Budget            
-            <span class="glyphicon glyphicon-euro" aria-hidden="true"></span>
+            <a class="navbar-brand" href=""><span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></span>  Smart Budget     
+            
             </a>
           </div>
           <div id="navbar" class="navbar-collapse collapse">
@@ -54,18 +54,20 @@
               <li class="${current == 'user-accounts' ? 'active' : ''}"><a href='<spring:url value="/user-accounts.html"/>'>Accounts</a></li>
               <li class="${current == 'user-categories' ? 'active' : ''}"><a href='<spring:url value="/user-categories.html"/>'>Categories</a></li>              
               <li class="${current == 'user-budgetplan' ? 'active' : ''}"><a href='<spring:url value="/user-budgetplan.html"/>'>Budget Plan</a></li>                
-              <li><a href='<spring:url value="/"/>'>Reports</a></li>       
+               <li class="${current == 'user-reports' ? 'active' : ''}"><a href='<spring:url value="/user-reports.html"/>'>Reports</a></li>                 
                </security:authorize> 
-              <security:authorize access="hasRole('ROLE_ADMIN')">              
-              <li class="${current == 'users' ? 'active' : ''}"><a href='<spring:url value="/users.html"/>'>Users</a></li>     
-       	      </security:authorize>    
+            
             </ul>
         
-            <ul class="nav navbar-nav navbar-right">       
+            <ul class="nav navbar-nav navbar-right">   
+              
 
            <security:authorize access="isAuthenticated()">
-            <li><a href="/user-profile.html"><span class="glyphicon glyphicon-cog"></span> Profile</a></li>   
-         		  <li><a href="<spring:url value="/logout"/>"><span class="glyphicon glyphicon-log-out"></span> Sign Out</a></li>
+            <li class="${current == 'user-profile' ? 'active' : ''}"><a href="/user-profile.html"><span class="glyphicon glyphicon-user"></span> Hi <b>${user.name}!</b></a></li>   
+               <security:authorize access="hasRole('ROLE_ADMIN')">              
+              <li class="${current == 'users' ? 'active' : ''}"><a href='<spring:url value="/users.html"/>'><span class="glyphicon glyphicon-cog"></span> Manage Users</a></li>     
+       	      </security:authorize>   
+           <li><a href="<spring:url value="/logout"/>"><span class="glyphicon glyphicon-log-out"></span> Sign Out </a></li>
             </security:authorize>           
            
            <security:authorize access="! isAuthenticated()">

@@ -21,7 +21,7 @@
      -moz-box-sizing: border-box;
           box-sizing: border-box;
   padding: 8px;
-  font-size: 16px;
+  font-size: 14px;
 }
 .form-signin .form-control:focus {
   z-index: 2;
@@ -40,7 +40,7 @@
 
 <form class="form-signin" role="form" action="/j_spring_security_check"  method="POST">
 <h4 class="form-signin-heading"><b>Please sign in</b></h4>
-	<input type="text" name="j_username" class="form-control" placeholder="Enter name" required autofocus> 
-	<input type="password" name="j_password" class="form-control" placeholder="Enter password" required> 
+	<input type="text" name="j_username" class="form-control" placeholder="Please enter name" required autofocus> 
+	<input type="password" name="j_password" class="form-control" placeholder="Please enter password" required> 
 	<button class="btn btn-primary btn-block" type="submit">Sign in</button>
 </form>

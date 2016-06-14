@@ -29,8 +29,10 @@ public class UserController {
 	}
 
 	@RequestMapping("/users")
-	public String users(Model model) {
+	public String users(Model model, Principal principal) {
+		String name = principal.getName();
 		model.addAttribute("users", userService.findAll());
+		model.addAttribute("user", userService.findOneByName(name));
 		return "users";
 	}
 
@@ -76,17 +78,22 @@ public class UserController {
 	@RequestMapping("/user-categories")
 	public String categories(Model model, Principal principal) {
 		String name = principal.getName();
-		model.addAttribute("user", userService.findOneWithCategories(name));
-		
+		model.addAttribute("user", userService.findOneWithCategories(name));		
 		return "user-categories";
 	}
 
 	@RequestMapping("/user-budgetplan")
 	public String budgetplan(Model model, Principal principal) {
 		String name = principal.getName();
-		model.addAttribute("user", userService.findOneWithCategories(name));
-		
+		model.addAttribute("user", userService.findOneWithCategories(name));				
 		return "user-budgetplan";
+	}
+	
+	@RequestMapping("/user-reports")
+	public String reports(Model model, Principal principal) {
+		String name = principal.getName();
+		model.addAttribute("user", userService.findOneWithCategories(name));				
+		return "user-reports";
 	}
 	
 }

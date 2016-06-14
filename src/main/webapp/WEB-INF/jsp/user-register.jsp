@@ -10,7 +10,7 @@
 <br><br>
 <form:form commandName="user" cssClass="form-horizontal">
 	<div class="form-group" style="text-align: center; width: 500px; margin: 0 auto;">
-		<h4><b>New Account</b></h4>
+		<h4><b>New account</b></h4>
 		</div>
 	<div class="form-group" style="text-align: center; width: 500px; margin: 0 auto;">
 			<label for="name" class="col-sm-2 control-label">Name:</label>

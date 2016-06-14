@@ -38,14 +38,19 @@
 				<td></td>
 				<td></td>			
 		</tr>
-		<c:forEach items="${category.subcategories}" var="subcategory">
+		<c:forEach items="${category.subcategories}" var="subcategory">		
 			<tr class="${'subcategorycolor'}">
-				<td style="text-align: left; vertical-align: middle;">- ${subcategory.name}</td>				
-				<td></td>			
+				<td style="text-align: left; vertical-align: middle;">- ${subcategory.name}</td>							
+				<td style="text-align: center; vertical-align: middle;">
+				<c:forEach items="${subcategory.subcategoryLimits}" var="subcategorylimits">
+				${subcategorylimits.amount}
+				</c:forEach>
+				</td>					
 				<td></td>	
 				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="" />" class="btn btn-primary" type="button">Change Budget</a>	</td>
-			</tr>
-			</c:forEach>
+				</tr>				
+			</c:forEach>		
+			
 		</c:forEach>
 	</table>
 		

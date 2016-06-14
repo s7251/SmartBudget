@@ -94,15 +94,20 @@ public class DbService {
 		categorySample3.setName("Health and beauty");
 		categoryRepository.save(categorySample3);
 		
+		Category categorySample4 = new Category();
+		categorySample4.setUser(userAdmin);
+		categorySample4.setName("Bank");
+		categoryRepository.save(categorySample4);
+		
 		Subcategory subcategorySample1 = new Subcategory();
 		subcategorySample1.setCategory(categorySample1);
 		subcategorySample1.setName("Salary");
 		subcategoryRepository.save(subcategorySample1);
 		
-		Subcategory subcategorySample2 = new Subcategory();
-		subcategorySample2.setCategory(categorySample1);
-		subcategorySample2.setName("Bonus");
-		subcategoryRepository.save(subcategorySample2);
+//		Subcategory subcategorySample2 = new Subcategory();
+//		subcategorySample2.setCategory(categorySample1);
+//		subcategorySample2.setName("Bonus");
+//		subcategoryRepository.save(subcategorySample2);
 		
 		Subcategory subcategorySample3 = new Subcategory();
 		subcategorySample3.setCategory(categorySample2);
@@ -118,6 +123,11 @@ public class DbService {
 		subcategorySample5.setCategory(categorySample3);
 		subcategorySample5.setName("Barber");
 		subcategoryRepository.save(subcategorySample5);
+		
+		Subcategory subcategorySample6 = new Subcategory();
+		subcategorySample6.setCategory(categorySample4);
+		subcategorySample6.setName("Interest on bank deposits");
+		subcategoryRepository.save(subcategorySample6);
 		
 		SubcategoryLimit subcategoryLimitSample1 = new SubcategoryLimit();
 		subcategoryLimitSample1.setSubcategory(subcategorySample1);
@@ -161,6 +171,15 @@ public class DbService {
 		transaction4.setDate(new Date());
 		transaction4.setAmount(25.00);
 		transactionRepository.save(transaction4);
+		
+		Transaction transaction5 = new Transaction();
+		transaction5.setSubcategory(subcategorySample6);
+		transaction5.setAccount(account1);
+		transaction5.setType("influence");
+		transaction5.setName("bank deposit (6months)");
+		transaction5.setDate(new Date());
+		transaction5.setAmount(77.00);
+		transactionRepository.save(transaction5);
 		
 		// User
 		
