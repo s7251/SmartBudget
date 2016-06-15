@@ -18,7 +18,7 @@
 </nav>
 <div class="panel panel-default">
 	<!-- Default panel contents -->
-	<div class="panel-heading">Budget Plan</div>
+		<div class="panel-heading"><h1 class="panel-title">Budget Plan <span class="pull-right"># 06.2016</span></h1></div>
 	<div class="panel-body">
 	Below you can see budget plan of Categories.				
 	</div>

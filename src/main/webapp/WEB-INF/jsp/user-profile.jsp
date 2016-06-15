@@ -5,7 +5,7 @@
 
 <div class="panel panel-default">
 	<!-- Default panel contents -->
-	<div class="panel-heading">User Profile</div>
+		<div class="panel-heading"><h1 class="panel-title">User Profile </h1></div>
 	<div class="panel-body">			
 			<a href="<spring:url value="" />" class="btn btn-danger" type="button">Remove account</a>		
 	</div>

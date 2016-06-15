@@ -5,7 +5,7 @@
 
 <div class="panel panel-default">
 	<!-- Default panel contents -->
-	<div class="panel-heading">List of Users</div>
+		<div class="panel-heading"><h1 class="panel-title">List of users </h1></div>
 	<div class="panel-body">
 		<p>Below you can see list of users.</p>
 	</div>	

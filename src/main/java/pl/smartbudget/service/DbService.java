@@ -130,11 +130,18 @@ public class DbService {
 		subcategoryRepository.save(subcategorySample6);
 		
 		SubcategoryLimit subcategoryLimitSample1 = new SubcategoryLimit();
-		subcategoryLimitSample1.setSubcategory(subcategorySample1);
+		subcategoryLimitSample1.setSubcategory(subcategorySample3);
 		subcategoryLimitSample1.setAmount(200.00);
 		subcategoryLimitSample1.setDate(new Date());
 		subcategoryLimitSample1.setName("Limit on Subcategory1");
-		subcategoryLimitRepository.save(subcategoryLimitSample1);
+		subcategoryLimitRepository.save(subcategoryLimitSample1);		
+		
+		SubcategoryLimit subcategoryLimitSample2 = new SubcategoryLimit();
+		subcategoryLimitSample2.setSubcategory(subcategorySample4);
+		subcategoryLimitSample2.setAmount(201.00);
+		subcategoryLimitSample2.setDate(new Date());
+		subcategoryLimitSample2.setName("Limit on Subcategory2");
+		subcategoryLimitRepository.save(subcategoryLimitSample2);
 		
 		Transaction transaction1 = new Transaction();
 		transaction1.setSubcategory(subcategorySample1);
@@ -180,6 +187,15 @@ public class DbService {
 		transaction5.setDate(new Date());
 		transaction5.setAmount(77.00);
 		transactionRepository.save(transaction5);
+		
+		Transaction transaction6 = new Transaction();
+		transaction6.setSubcategory(subcategorySample1);
+		transaction6.setAccount(account2);
+		transaction6.setType("influence");
+		transaction6.setName("bonus");
+		transaction6.setDate(new Date());
+		transaction6.setAmount(300.00);
+		transactionRepository.save(transaction6);
 		
 		// User
 		

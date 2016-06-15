@@ -13,7 +13,7 @@
 
 <div class="panel panel-default">
 	<!-- Default panel contents -->
-	<div class="panel-heading">Categories</div>
+		<div class="panel-heading"><h1 class="panel-title">Categories </h1></div>
 	<div class="panel-body">		
 			<a href="<spring:url value="" />" class="btn btn-primary" type="button">Add category</a>			
 	</div>

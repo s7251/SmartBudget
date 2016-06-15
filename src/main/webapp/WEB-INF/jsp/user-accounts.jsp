@@ -5,7 +5,7 @@
  
  <div class="panel panel-default">
 	<!-- Default panel contents -->
-	<div class="panel-heading">Accounts</div>
+	<div class="panel-heading"><h1 class="panel-title">Accounts </h1></div>
 	<div class="panel-body">
 			<a href="<spring:url value="" />" class="btn btn-primary" type="button">Add Account</a>
 			<a href="<spring:url value="" />" class="btn btn-primary" type="button">Internal Transfer</a>
@@ -27,6 +27,20 @@
 				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="" />" class="btn btn-primary" type="button">Align Balance</a></td>			
 			</tr>					
 		</c:forEach>	
+			<tr>
+			<td style="text-align: center; vertical-align: middle;"><b></b></td>
+			<td style="text-align: center; vertical-align: middle;"><b>Summary</b></td>
+			<td style="text-align: center; vertical-align: middle;"><b></b></td>
+			<td style="text-align: center; vertical-align: middle;"><b></b></td>
+			
+		</tr>
+			<tr>
+			<td style="text-align: center; vertical-align: middle;"><b></b></td>
+			<td style="text-align: center; vertical-align: middle;"><b>3762.00</b></td>
+			<td style="text-align: center; vertical-align: middle;"><b></b></td>
+			<td style="text-align: center; vertical-align: middle;"><b></b></td>
+			
+		</tr>		
 	</table>
 </div>
 		
