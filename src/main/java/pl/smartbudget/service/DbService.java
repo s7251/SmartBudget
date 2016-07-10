@@ -131,7 +131,7 @@ public class DbService {
 		
 		SubcategoryLimit subcategoryLimitSample1 = new SubcategoryLimit();
 		subcategoryLimitSample1.setSubcategory(subcategorySample3);
-		subcategoryLimitSample1.setAmount(200.00);
+		subcategoryLimitSample1.setAmount(139.00);
 		subcategoryLimitSample1.setDate(new Date());
 		subcategoryLimitSample1.setName("Limit on Subcategory1");
 		subcategoryLimitRepository.save(subcategoryLimitSample1);		
@@ -167,7 +167,7 @@ public class DbService {
 		transaction3.setType("expense");
 		transaction3.setName("dinner in restaurant");
 		transaction3.setDate(new Date());
-		transaction3.setAmount(101.00);
+		transaction3.setAmount(237.00);
 		transactionRepository.save(transaction3);
 		
 		Transaction transaction4 = new Transaction();

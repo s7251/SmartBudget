@@ -1,6 +1,7 @@
 package pl.smartbudget.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,24 @@ public class TransactionService {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	
+	public void save(Transaction transaction, String name) {
+		User user = userRepository.findByName(name);
+		transaction.setType(transaction.getType());
+		transaction.setAmount(transaction.getAmount());
+		transaction.setName(transaction.getName());
+		transaction.setDate(transaction.getDate());
+		transaction.setSubcategory(transaction.getSubcategory());			
+		Account accountOfTransaction = transaction.getAccount();
+		accountOfTransaction.setUser(user);
+		transaction.setAccount(accountOfTransaction);
+		transactionRepository.save(transaction);
+		
+		
+	
+		
+	}
 	
 	public List<Transaction> findInfluenceTransactionsByUser(String name) {
 		User user = userRepository.findByName(name);
@@ -101,4 +120,6 @@ public class TransactionService {
 		
 		return transactionsSum;
 	}
+
+	
 }

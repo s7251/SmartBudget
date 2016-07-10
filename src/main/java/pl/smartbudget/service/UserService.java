@@ -91,16 +91,17 @@ public class UserService {
 		return findOneWithAccounts(user.getId());
 	}
 
-	private User findOneWithCategories(int id) {
+	@Transactional
+	public User findOneWithCategories(int id) {
 		User user = findOne(id);
 		List<Category> categories = categoryRepository.findByUser(user);
 		for (Category category : categories) {
 			List<Subcategory> subcategories = subcategoryRepository.findByCategory(category);
+			category.setSubcategories(subcategories);
 			for(Subcategory subcategory : subcategories){
 				List<SubcategoryLimit> subcategoryLimit = subcategoryLimitRepository.findBySubcategory(subcategory);
 				subcategory.setSubcategoryLimits(subcategoryLimit);
-			}
-			category.setSubcategories(subcategories);
+			}	
 		}
 		user.setCategories(categories);
 		return user;

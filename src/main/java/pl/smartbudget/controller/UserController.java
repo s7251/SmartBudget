@@ -2,6 +2,8 @@ package pl.smartbudget.controller;
 
 import java.security.Principal;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import pl.smartbudget.entity.Transaction;
 import pl.smartbudget.entity.User;
 import pl.smartbudget.service.TransactionService;
 import pl.smartbudget.service.UserService;
@@ -24,8 +27,13 @@ public class UserController {
 	private TransactionService transactionService;
 	
 	@ModelAttribute("user")
-	public User construct() {
+	public User constructUser() {
 		return new User();
+	}
+	
+    @ModelAttribute("transaction")
+	public Transaction constructTransaction() {
+		return new Transaction();
 	}
 
 	@RequestMapping("/users")
@@ -54,7 +62,7 @@ public class UserController {
 		return "user-register";
 	}
 
-	@RequestMapping(value = "user-register", method = RequestMethod.POST)
+	@RequestMapping(value = "/user-register", method = RequestMethod.POST)
 	public String doRegister(@ModelAttribute("user") User user) {
 		userService.save(user);		
 		return "redirect:/user-register.html?success=true";
@@ -64,7 +72,15 @@ public class UserController {
 	public String transactions(Model model, Principal principal) {
 		String name = principal.getName();
 		model.addAttribute("user", userService.findOneWithAccounts(name));
+		model.addAttribute("categoriesOfUser", userService.findOneWithCategories(name));
 		return "user-transactions";
+	}
+	
+	@RequestMapping(value = "/user-transactions", method = RequestMethod.POST)
+	public String addTransaction(@ModelAttribute("transaction") Transaction transaction, Principal principal) {
+		String name = principal.getName();			
+		transactionService.save(transaction, name);
+		return "redirect:/user-transactions.html";
 	}
 	
 	@RequestMapping("/user-accounts")

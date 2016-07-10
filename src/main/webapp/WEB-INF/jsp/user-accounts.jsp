@@ -15,16 +15,18 @@
 		<tr>
 			<td style="text-align: center; vertical-align: middle;"><b>Name</b></td>
 			<td style="text-align: center; vertical-align: middle;"><b>Value</b></td>
-			<td style="text-align: center; vertical-align: middle;"><b>Edit</b></td>
 			<td style="text-align: center; vertical-align: middle;"><b>Align Balance</b></td>
+			<td style="text-align: center; vertical-align: middle;"><b>Rename</b></td>			
+			<td style="text-align: center; vertical-align: middle;"><b>Remove</b></td>
 			
 		</tr>		
 		<c:forEach items="${summaryOfAccounts}" var="summary">		
 			<tr>
 				<td style="text-align: center; vertical-align: middle;">${summary.key}</td>
 				<td style="text-align: center; vertical-align: middle;">${summary.value}</td>
-				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="" />" class="btn btn-warning" type="button">Edit</a></td>
-				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="" />" class="btn btn-primary" type="button">Align Balance</a></td>			
+				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="" />" class="btn btn-primary" type="button">Align Balance</a></td>
+				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="" />" class="btn btn-warning" type="button">Rename</a></td>					
+				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="" />" class="btn btn-danger" type="button">Remove</a></td>		
 			</tr>					
 		</c:forEach>	
 			<tr>
@@ -32,11 +34,13 @@
 			<td style="text-align: center; vertical-align: middle;"><b>Summary</b></td>
 			<td style="text-align: center; vertical-align: middle;"><b></b></td>
 			<td style="text-align: center; vertical-align: middle;"><b></b></td>
+			<td style="text-align: center; vertical-align: middle;"><b></b></td>
 			
 		</tr>
 			<tr>
 			<td style="text-align: center; vertical-align: middle;"><b></b></td>
-			<td style="text-align: center; vertical-align: middle;"><b>3762.00</b></td>
+			<td style="text-align: center; vertical-align: middle;"><b>3626.00</b></td>
+			<td style="text-align: center; vertical-align: middle;"><b></b></td>
 			<td style="text-align: center; vertical-align: middle;"><b></b></td>
 			<td style="text-align: center; vertical-align: middle;"><b></b></td>
 			

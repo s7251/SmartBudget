@@ -67,4 +67,7 @@ public class Subcategory {
 		this.name = name;
 	}
 
+	public String toString() {
+        return name;
+    }
 }

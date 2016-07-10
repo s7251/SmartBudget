@@ -15,6 +15,7 @@
     <li><a href="">Expenses by categories</a></li>
     <li><a href="">Influences by categories</a></li>
     <li><a href="">Balance of account</a></li> 
+    <li><a href="">Transactions</a></li> 
 
   </ul>
 </div>
