@@ -10,5 +10,6 @@ import pl.smartbudget.entity.User;
 public interface AccountRepository extends JpaRepository<Account, Integer> {
 
 	List<Account> findByUser(User user);
+	
 
 }

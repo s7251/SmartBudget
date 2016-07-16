@@ -10,5 +10,5 @@ import pl.smartbudget.entity.User;
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
 
 	List<Category> findByUser(User user);
-
-}
+	
+	}

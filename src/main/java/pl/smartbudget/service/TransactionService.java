@@ -1,6 +1,11 @@
 package pl.smartbudget.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -10,9 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pl.smartbudget.entity.Account;
+import pl.smartbudget.entity.Subcategory;
 import pl.smartbudget.entity.Transaction;
 import pl.smartbudget.entity.User;
+import pl.smartbudget.forms.TransactionForm;
 import pl.smartbudget.repository.AccountRepository;
+import pl.smartbudget.repository.SubcategoryRepository;
 import pl.smartbudget.repository.TransactionRepository;
 import pl.smartbudget.repository.UserRepository;
 
@@ -28,22 +36,26 @@ public class TransactionService {
 	@Autowired
 	private UserRepository userRepository;
 	
+	@Autowired
+	private SubcategoryRepository subcategoryRepository;
 	
-	public void save(Transaction transaction, String name) {
+	
+	
+	
+	public void save(TransactionForm transactionForm, String name) throws ParseException {
 		User user = userRepository.findByName(name);
-		transaction.setType(transaction.getType());
-		transaction.setAmount(transaction.getAmount());
-		transaction.setName(transaction.getName());
-		transaction.setDate(transaction.getDate());
-		transaction.setSubcategory(transaction.getSubcategory());			
-		Account accountOfTransaction = transaction.getAccount();
-		accountOfTransaction.setUser(user);
+		Transaction transaction = new Transaction();
+		Subcategory subcategoryOfAccount = subcategoryRepository.getOne(transactionForm.getSubcategoryId());
+		Account accountOfTransaction = accountRepository.findOne(transactionForm.getAccountId());
+		transaction.setType(transactionForm.getType());
+		transaction.setAmount(transactionForm.getAmount());
+		transaction.setName(transactionForm.getName());
+		transaction.setDate(new SimpleDateFormat("dd/MM/yyyy").parse(transactionForm.getDate()));			
+		transaction.setSubcategory(subcategoryOfAccount);
 		transaction.setAccount(accountOfTransaction);
-		transactionRepository.save(transaction);
+		accountOfTransaction.setUser(user);								
 		
-		
-	
-		
+		transactionRepository.save(transaction);		
 	}
 	
 	public List<Transaction> findInfluenceTransactionsByUser(String name) {
@@ -119,6 +131,53 @@ public class TransactionService {
 		}
 		
 		return transactionsSum;
+	}
+	
+	public List<Transaction> findAllTransactionOfUser(String name) {
+		User user = userRepository.findByName(name);
+		List<Transaction> allTransactionsByUser = new ArrayList();
+
+		List<Account> accounts = accountRepository.findByUser(user);
+
+		for (Account account : accounts) {
+			List<Transaction> transactions = transactionRepository.findByAccount(account);
+			for (Transaction transaction : transactions) {
+				
+				Date actualDate = new Date();
+				SimpleDateFormat mdyFormat = new SimpleDateFormat("yyyy-MM-dd");
+				String actualDateFormat = mdyFormat.format(actualDate);
+				
+				
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(actualDate);
+				int actualMonth = cal.get(Calendar.MONTH);
+				int actualYear = cal.get(Calendar.YEAR);
+				
+//			    int actualMonth = Integer.parseInt(actualDateFormat.substring(5, 7));
+//				int actualYear = Integer.parseInt(actualDateFormat.substring(0, 4));
+								
+				Calendar cal2 = Calendar.getInstance();
+				cal2.setTime(transaction.getDate());
+				int transactionMonth = cal2.get(Calendar.MONTH);
+				int transactionYear = cal2.get(Calendar.YEAR);
+					
+						
+//			    int transactionMonth = Integer.parseInt(transaction.getDate().toString().substring(5, 7));
+//				int transactionYear = Integer.parseInt(transaction.getDate().toString().substring(0, 4));			    
+								
+				if(actualMonth==transactionMonth && actualYear==transactionYear){
+				allTransactionsByUser.add(transaction);}
+			}
+		}		
+		
+				
+		Collections.sort(allTransactionsByUser, new Comparator<Transaction>() {
+			  public int compare(Transaction t1, Transaction t2) {
+			      return t1.getDate().compareTo(t2.getDate());
+			  }
+			});
+
+		return allTransactionsByUser;
 	}
 
 	

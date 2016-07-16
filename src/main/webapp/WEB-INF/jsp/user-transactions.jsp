@@ -39,15 +39,15 @@
 			<td><b>Account</b></td>
 			<td></td>
 		</tr>
-		<c:forEach items="${user.accounts}" var="account">
-		<c:forEach items="${account.transactions}" var="transaction">
-			<tr class="${transaction.type == 'expense' ? 'expensecolor' : 'influencecolor'}">
-				<td style="vertical-align: middle;">${transaction.type}</td>
-				<td style="vertical-align: middle;">${transaction.name}</td>
-				<td style="vertical-align: middle;">${transaction.amount}</td>
-				<td style="vertical-align: middle;">${transaction.date}</td>
-				<td style="vertical-align: middle;">${transaction.subcategory.name}</td>
-				<td style="vertical-align: middle;">${transaction.account.name}</td>
+		<c:forEach items="${userTransactions}" var="userTransactions">
+		
+			<tr class="${userTransactions.type == 'expense' ? 'expensecolor' : 'influencecolor'}">
+				<td style="vertical-align: middle;">${userTransactions.type}</td>
+				<td style="vertical-align: middle;">${userTransactions.name}</td>
+				<td style="vertical-align: middle;">${userTransactions.amount}</td>
+				<td style="vertical-align: middle;">${userTransactions.date}</td>
+				<td style="vertical-align: middle;">${userTransactions.subcategory.name}</td>
+				<td style="vertical-align: middle;">${userTransactions.account.name}</td>
 				<td>
 				<div class="btn-group">
   <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -61,14 +61,14 @@
 </div>
 				</td>
 			</tr>
-			</c:forEach>
+			
 		</c:forEach>
 	</table>
 
 </div>
 
 
-<form:form commandName="transaction" cssClass="form-horizontal">
+<form:form commandName="TransactionForm" cssClass="form-horizontal">
 	<!-- Modal -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
@@ -116,17 +116,12 @@
 					</div>
 									
 							<div class="form-group"	style="text-align: center; width: 800px; margin: 0 auto;">
-						<label for="subcategory" class="col-sm-2 control-label">Subcategory:</label>
+						<label for="category" class="col-sm-2 control-label">Subcategory:</label>
 						<div class="col-sm-10">
-						
-							<form:select class="form-control" path="subcategory"  style="text-align: left; width: 350px;">
-								<c:forEach items="${categoriesOfUser.categories}" var="category">
-									<c:forEach items="${category.subcategories}" var="subcategory">
-										<option>${subcategory}</option>
-									</c:forEach>
-								</c:forEach>
-
+						<form:select class="form-control" path="subcategoryId"  style="text-align: left; width: 350px;">
+									<form:options items="${subcategoriesMap}" />							
 							</form:select>
+							
 						
 						</div>
 					</div>
@@ -134,10 +129,8 @@
 					<div class="form-group"	style="text-align: center; width: 800px; margin: 0 auto;">
 						<label for="account" class="col-sm-2 control-label">Account:</label>
 						<div class="col-sm-10">
-							<form:select class="form-control" path="account"  style="text-align: left; width: 350px;">
-								<c:forEach items="${user.accounts}" var="account">									
-										<option>${account}</option>									
-								</c:forEach>
+							<form:select class="form-control" path="accountId"  style="text-align: left; width: 350px;">																
+										<form:options items="${accountsMap}" />								
 							</form:select>
 						</div>
 					</div>

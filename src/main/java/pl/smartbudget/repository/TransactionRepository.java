@@ -12,5 +12,6 @@ public interface TransactionRepository extends JpaRepository<Transaction, Intege
 	List<Transaction> findByAccount(Account account);
 	
 	List<Transaction> findByType(String type);
+	
 
 }

@@ -106,6 +106,7 @@ public class UserService {
 		user.setCategories(categories);
 		return user;
 	}
+	
 
 	public User findOneWithCategories(String name) {
 		User user = userRepository.findByName(name);

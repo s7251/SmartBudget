@@ -2,6 +2,7 @@ package pl.smartbudget.entity;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -21,6 +22,7 @@ public class Transaction {
 	private String name;
 	private String type;
 	private double amount;
+	
 	@Temporal(value=TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date date;

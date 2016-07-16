@@ -27,6 +27,12 @@ public class Subcategory {
 	@OneToMany(mappedBy = "subcategory")
 	List<SubcategoryLimit> subcategoryLimits;
 
+	public Subcategory() {}
+	
+	public Subcategory(String name) {
+		this.name = name;
+	}
+
 	public Category getCategory() {
 		return category;
 	}
