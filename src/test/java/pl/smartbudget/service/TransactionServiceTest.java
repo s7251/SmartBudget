@@ -1,6 +1,7 @@
 package pl.smartbudget.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,15 +14,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import pl.smartbudget.entity.Account;
 import pl.smartbudget.entity.Transaction;
 import pl.smartbudget.repository.AccountRepository;
 import pl.smartbudget.repository.TransactionRepository;
 import pl.smartbudget.repository.UserRepository;
-
-import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TransactionServiceTest {

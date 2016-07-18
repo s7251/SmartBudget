@@ -11,6 +11,7 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Category {
+	
 	@Id
 	@GeneratedValue
 	private Integer id;
@@ -55,5 +56,4 @@ public class Category {
 		this.name = name;
 	}
 
-	
 }

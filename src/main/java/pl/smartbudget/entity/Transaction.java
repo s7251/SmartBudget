@@ -2,7 +2,6 @@ package pl.smartbudget.entity;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,15 +14,15 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Transaction {
-	
+
 	@Id
 	@GeneratedValue
 	private Integer id;
 	private String name;
 	private String type;
 	private double amount;
-	
-	@Temporal(value=TemporalType.DATE)
+
+	@Temporal(value = TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date date;
 
@@ -35,14 +34,14 @@ public class Transaction {
 	@JoinColumn(name = "subcategory_id")
 	private Subcategory subcategory;
 
-	
-    public Transaction() { }
-	
+	public Transaction() {
+	}
+
 	public Transaction(double amount, String type) {
 		this.amount = amount;
 		this.type = type;
 	}
-	
+
 	public String getType() {
 		return type;
 	}
@@ -50,7 +49,7 @@ public class Transaction {
 	public void setType(String type) {
 		this.type = type;
 	}
-	
+
 	public Integer getId() {
 		return id;
 	}

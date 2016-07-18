@@ -1,7 +1,5 @@
 package pl.smartbudget.service;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -103,11 +101,6 @@ public class DbService {
 		subcategorySample1.setCategory(categorySample1);
 		subcategorySample1.setName("Salary");
 		subcategoryRepository.save(subcategorySample1);
-		
-//		Subcategory subcategorySample2 = new Subcategory();
-//		subcategorySample2.setCategory(categorySample1);
-//		subcategorySample2.setName("Bonus");
-//		subcategoryRepository.save(subcategorySample2);
 		
 		Subcategory subcategorySample3 = new Subcategory();
 		subcategorySample3.setCategory(categorySample2);

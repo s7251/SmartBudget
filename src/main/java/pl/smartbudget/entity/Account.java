@@ -25,12 +25,13 @@ public class Account {
 	@OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
 	List<Transaction> transactions;
 
-	public Account() {}
-	
+	public Account() {
+	}
+
 	public Account(String name) {
 		this.name = name;
 	}
-	
+
 	public User getUser() {
 		return user;
 	}
@@ -62,9 +63,9 @@ public class Account {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public String toString() {
-        return name;
-    }
+		return name;
+	}
 
 }

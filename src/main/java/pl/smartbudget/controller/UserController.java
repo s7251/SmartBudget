@@ -2,9 +2,6 @@ package pl.smartbudget.controller;
 
 import java.security.Principal;
 import java.text.ParseException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,9 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import pl.smartbudget.entity.Account;
-import pl.smartbudget.entity.Category;
-import pl.smartbudget.entity.Subcategory;
 import pl.smartbudget.entity.Transaction;
 import pl.smartbudget.entity.User;
 import pl.smartbudget.forms.TransactionForm;
@@ -31,13 +25,13 @@ public class UserController {
 
 	@Autowired
 	private TransactionService transactionService;
-	
+
 	@ModelAttribute("user")
 	public User constructUser() {
 		return new User();
 	}
-	
-    @ModelAttribute("transaction")
+
+	@ModelAttribute("transaction")
 	public Transaction constructTransaction() {
 		return new Transaction();
 	}
@@ -55,10 +49,10 @@ public class UserController {
 		model.addAttribute("user", userService.findOne(id));
 		return "user-detail";
 	}
-	
+
 	@RequestMapping("/user-profile")
 	public String profile(Model model, Principal principal) {
-		String name = principal.getName();		
+		String name = principal.getName();
 		model.addAttribute("user", userService.findOneByName(name));
 		return "user-profile";
 	}
@@ -70,7 +64,7 @@ public class UserController {
 
 	@RequestMapping(value = "/user-register", method = RequestMethod.POST)
 	public String doRegister(@ModelAttribute("user") User user) {
-		userService.save(user);		
+		userService.save(user);
 		return "redirect:/user-register.html?success=true";
 	}
 
@@ -78,41 +72,20 @@ public class UserController {
 	public String transactions(Model model, Principal principal) {
 		model.addAttribute("TransactionForm", new TransactionForm());
 		String name = principal.getName();
-		
-		Map<Integer,String> subcategoriesMap = new HashMap<Integer, String>();
-		List<Category> categories = userService.findOneWithCategories(name).getCategories();
-				
-		for(Category category : categories)
-		{			
-			List<Subcategory> subcategories = category.getSubcategories();
-			for(Subcategory subcategory : subcategories)
-			subcategoriesMap.put(subcategory.getId(), subcategory.getName());
-		}
-		
-		Map<Integer,String> accountsMap = new HashMap<Integer, String>();
-		List<Account> accounts = userService.findOneWithAccounts(name).getAccounts();
-		
-		for(Account account : accounts)
-		{
-			accountsMap.put(account.getId(), account.getName());
-		}
-		
-		
-		model.addAttribute("user", userService.findOneWithAccounts(name));	
-		model.addAttribute("userTransactions", transactionService.findAllTransactionOfUser(name));	
-		model.addAttribute("subcategoriesMap", subcategoriesMap);
-		model.addAttribute("accountsMap", accountsMap);
+		model.addAttribute("user", userService.findOneWithAccountsAndTransactions(name));
+		model.addAttribute("userTransactions", transactionService.findAllTransactionOfUserByActualMonth(name));
+		model.addAttribute("subcategoriesMap", userService.getSubcategoriesMapOfUser(name));
+		model.addAttribute("accountsMap", userService.getAccountsMapOfUser(name));
 		return "user-transactions";
 	}
-	
-	
+
 	@RequestMapping(value = "/user-transactions", method = RequestMethod.POST)
-	public String addTransaction(@ModelAttribute("TransactionForm") TransactionForm transaction, Principal principal) throws ParseException {
-		String name = principal.getName();			
+	public String addTransaction(@ModelAttribute("TransactionForm") TransactionForm transaction, Principal principal)	throws ParseException {
+		String name = principal.getName();
 		transactionService.save(transaction, name);
 		return "redirect:/user-transactions.html";
 	}
-	
+
 	@RequestMapping("/user-accounts")
 	public String accounts(Model model, Principal principal) {
 		String name = principal.getName();
@@ -120,26 +93,26 @@ public class UserController {
 		model.addAttribute("summaryOfAccounts", transactionService.summaryTransactionsOfAccounts(name));
 		return "user-accounts";
 	}
-	
+
 	@RequestMapping("/user-categories")
 	public String categories(Model model, Principal principal) {
 		String name = principal.getName();
-		model.addAttribute("user", userService.findOneWithCategories(name));		
+		model.addAttribute("user", userService.findOneWithCategoriesSubcategoriesAndSubcategoryLimit(name));
 		return "user-categories";
 	}
 
 	@RequestMapping("/user-budgetplan")
 	public String budgetplan(Model model, Principal principal) {
 		String name = principal.getName();
-		model.addAttribute("user", userService.findOneWithCategories(name));				
+		model.addAttribute("user", userService.findOneWithCategoriesSubcategoriesAndSubcategoryLimit(name));
 		return "user-budgetplan";
 	}
-	
+
 	@RequestMapping("/user-reports")
 	public String reports(Model model, Principal principal) {
 		String name = principal.getName();
-		model.addAttribute("user", userService.findOneWithCategories(name));				
+		model.addAttribute("user", userService.findOneWithCategoriesSubcategoriesAndSubcategoryLimit(name));
 		return "user-reports";
 	}
-	
+
 }

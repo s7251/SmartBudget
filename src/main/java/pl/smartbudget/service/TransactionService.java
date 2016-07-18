@@ -29,19 +29,16 @@ public class TransactionService {
 
 	@Autowired
 	private TransactionRepository transactionRepository;
-	
+
 	@Autowired
 	private AccountRepository accountRepository;
-	
+
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Autowired
 	private SubcategoryRepository subcategoryRepository;
-	
-	
-	
-	
+
 	public void save(TransactionForm transactionForm, String name) throws ParseException {
 		User user = userRepository.findByName(name);
 		Transaction transaction = new Transaction();
@@ -50,17 +47,17 @@ public class TransactionService {
 		transaction.setType(transactionForm.getType());
 		transaction.setAmount(transactionForm.getAmount());
 		transaction.setName(transactionForm.getName());
-		transaction.setDate(new SimpleDateFormat("dd/MM/yyyy").parse(transactionForm.getDate()));			
+		transaction.setDate(new SimpleDateFormat("dd/MM/yyyy").parse(transactionForm.getDate()));
 		transaction.setSubcategory(subcategoryOfAccount);
 		transaction.setAccount(accountOfTransaction);
-		accountOfTransaction.setUser(user);								
-		
-		transactionRepository.save(transaction);		
+		accountOfTransaction.setUser(user);
+
+		transactionRepository.save(transaction);
 	}
-	
+
 	public List<Transaction> findInfluenceTransactionsByUser(String name) {
 		User user = userRepository.findByName(name);
-		List<Transaction> influenceTransactions = new ArrayList();
+		List<Transaction> influenceTransactions = new ArrayList<Transaction>();
 
 		List<Account> accounts = accountRepository.findByUser(user);
 
@@ -71,14 +68,14 @@ public class TransactionService {
 					influenceTransactions.add(transaction);
 				}
 			}
-			
+
 		}
 		return influenceTransactions;
 	}
-	
+
 	public List<Transaction> findExpenseTransactionsByUser(String name) {
 		User user = userRepository.findByName(name);
-		List<Transaction> expenseTransactions = new ArrayList();
+		List<Transaction> expenseTransactions = new ArrayList<Transaction>();
 
 		List<Account> accounts = accountRepository.findByUser(user);
 
@@ -89,53 +86,51 @@ public class TransactionService {
 					expenseTransactions.add(transaction);
 				}
 			}
-			
 		}
 		return expenseTransactions;
 	}
 
-	
 	public Map<String, Double> summaryTransactionsOfAccounts(String name) {
-		
+
 		Map<String, Double> summaryOfAccounts = new HashMap<String, Double>();
-		
+
 		User user = userRepository.findByName(name);
 		List<Account> accounts = accountRepository.findByUser(user);
-		
-		for(Account account : accounts) {
-			List<Transaction> transactions =  transactionRepository.findByAccount(account);
+
+		for (Account account : accounts) {
+			List<Transaction> transactions = transactionRepository.findByAccount(account);
 			Double transactionsSum = processingTransactions(transactions);
-			
+
 			summaryOfAccounts.put(account.getName(), transactionsSum);
 		}
-		
+
 		return summaryOfAccounts;
 	}
 
 	private Double processingTransactions(List<Transaction> transactions) {
-		Double transactionsSum = new Double(0); 
-		
-		for(Transaction transaction : transactions) {
+		Double transactionsSum = new Double(0);
+
+		for (Transaction transaction : transactions) {
 			transactionsSum = transactionsCalculate(transactionsSum, transaction);
 		}
-		
+
 		return transactionsSum;
 	}
 
 	private Double transactionsCalculate(Double transactionsSum, Transaction transaction) {
-		
-		if(transaction.getType().equals("influence")) {
+
+		if (transaction.getType().equals("influence")) {
 			transactionsSum += transaction.getAmount();
 		} else {
 			transactionsSum -= transaction.getAmount();
 		}
-		
+
 		return transactionsSum;
 	}
 	
-	public List<Transaction> findAllTransactionOfUser(String name) {
+	public List<Transaction> findAllTransactionOfUserByActualMonth(String name) {
 		User user = userRepository.findByName(name);
-		List<Transaction> allTransactionsByUser = new ArrayList();
+		List<Transaction> allTransactionsByUser = new ArrayList<Transaction>();
 
 		List<Account> accounts = accountRepository.findByUser(user);
 
@@ -144,41 +139,46 @@ public class TransactionService {
 			for (Transaction transaction : transactions) {
 				
 				Date actualDate = new Date();
-				SimpleDateFormat mdyFormat = new SimpleDateFormat("yyyy-MM-dd");
-				String actualDateFormat = mdyFormat.format(actualDate);
-				
+				//SimpleDateFormat mdyFormat = new SimpleDateFormat("yyyy-MM-dd");
+				//String actualDateFormat = mdyFormat.format(actualDate);
 				
 				Calendar cal = Calendar.getInstance();
 				cal.setTime(actualDate);
 				int actualMonth = cal.get(Calendar.MONTH);
 				int actualYear = cal.get(Calendar.YEAR);
-				
-//			    int actualMonth = Integer.parseInt(actualDateFormat.substring(5, 7));
-//				int actualYear = Integer.parseInt(actualDateFormat.substring(0, 4));
+			
+				//int actualMonth = Integer.parseInt(actualDateFormat.substring(5, 7));
+				//int actualYear = Integer.parseInt(actualDateFormat.substring(0, 4));
 								
 				Calendar cal2 = Calendar.getInstance();
 				cal2.setTime(transaction.getDate());
 				int transactionMonth = cal2.get(Calendar.MONTH);
 				int transactionYear = cal2.get(Calendar.YEAR);
-					
-						
-//			    int transactionMonth = Integer.parseInt(transaction.getDate().toString().substring(5, 7));
-//				int transactionYear = Integer.parseInt(transaction.getDate().toString().substring(0, 4));			    
+									
+				//int transactionMonth = Integer.parseInt(transaction.getDate().toString().substring(5, 7));
+				//int transactionYear = Integer.parseInt(transaction.getDate().toString().substring(0, 4));			    
 								
 				if(actualMonth==transactionMonth && actualYear==transactionYear){
 				allTransactionsByUser.add(transaction);}
 			}
-		}		
-		
+		}				
 				
 		Collections.sort(allTransactionsByUser, new Comparator<Transaction>() {
-			  public int compare(Transaction t1, Transaction t2) {
-			      return t1.getDate().compareTo(t2.getDate());
-			  }
-			});
+			public int compare(Transaction t1, Transaction t2) {
+				return t1.getDate().compareTo(t2.getDate());
+			}
+		});
 
 		return allTransactionsByUser;
 	}
 
-	
+//	public String getDateByViewedTransactions(List<Transaction> transactions) {
+//		String transactionsDate = transactions.get(1).getDate().toString();
+//
+//		for (Transaction transaction : transactions) {
+//
+//		}
+//		return null;
+//	}
+
 }

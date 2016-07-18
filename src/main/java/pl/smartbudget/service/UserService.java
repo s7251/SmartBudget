@@ -1,7 +1,9 @@
 package pl.smartbudget.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
@@ -44,11 +46,9 @@ public class UserService {
 
 	@Autowired
 	private SubcategoryRepository subcategoryRepository;
-	
-	
+
 	@Autowired
 	private SubcategoryLimitRepository subcategoryLimitRepository;
-	
 
 	public List<User> findAll() {
 		return userRepository.findAll();
@@ -57,7 +57,7 @@ public class UserService {
 	public User findOne(int id) {
 		return userRepository.findOne(id);
 	}
-	
+
 	public User findOneByName(String name) {
 		return userRepository.findByName(name);
 	}
@@ -71,11 +71,28 @@ public class UserService {
 		user.setRoles(userRoles);
 
 		userRepository.save(user);
-
+	}
+	
+	public User findOneWithAccounts(String name) {
+		User user = userRepository.findByName(name);
+		return findOneWithAccountsAndTransactions(user.getId());
 	}
 
 	@Transactional
 	public User findOneWithAccounts(int id) {
+		User user = findOne(id);
+		List<Account> accounts = accountRepository.findByUser(user);
+		user.setAccounts(accounts);
+		return user;
+	}
+	
+	public User findOneWithAccountsAndTransactions(String name) {
+		User user = userRepository.findByName(name);
+		return findOneWithAccountsAndTransactions(user.getId());
+	}
+
+	@Transactional
+	public User findOneWithAccountsAndTransactions(int id) {
 		User user = findOne(id);
 		List<Account> accounts = accountRepository.findByUser(user);
 		for (Account account : accounts) {
@@ -86,33 +103,51 @@ public class UserService {
 		return user;
 	}
 
-	public User findOneWithAccounts(String name) {
+	public User findOneWithCategoriesSubcategoriesAndSubcategoryLimit(String name) {
 		User user = userRepository.findByName(name);
-		return findOneWithAccounts(user.getId());
+		return findOneWithCategoriesSubcategoriesAndSubcategoryLimit(user.getId());
 	}
 
 	@Transactional
-	public User findOneWithCategories(int id) {
+	public User findOneWithCategoriesSubcategoriesAndSubcategoryLimit(int id) {
 		User user = findOne(id);
 		List<Category> categories = categoryRepository.findByUser(user);
 		for (Category category : categories) {
 			List<Subcategory> subcategories = subcategoryRepository.findByCategory(category);
 			category.setSubcategories(subcategories);
-			for(Subcategory subcategory : subcategories){
+			for (Subcategory subcategory : subcategories) {
 				List<SubcategoryLimit> subcategoryLimit = subcategoryLimitRepository.findBySubcategory(subcategory);
 				subcategory.setSubcategoryLimits(subcategoryLimit);
-			}	
+			}
 		}
 		user.setCategories(categories);
 		return user;
 	}
-	
 
-	public User findOneWithCategories(String name) {
-		User user = userRepository.findByName(name);
-		return findOneWithCategories(user.getId());
+	@Transactional
+	public Map<Integer, String> getSubcategoriesMapOfUser(String name) {
+
+		Map<Integer, String> subcategoriesMap = new HashMap<Integer, String>();
+		List<Category> categories = findOneWithCategoriesSubcategoriesAndSubcategoryLimit(name).getCategories();
+
+		for (Category category : categories) {
+			List<Subcategory> subcategories = category.getSubcategories();
+			for (Subcategory subcategory : subcategories)
+				subcategoriesMap.put(subcategory.getId(), subcategory.getName());
+		}
+		return subcategoriesMap;
 	}
 
-	
+	@Transactional
+	public Map<Integer, String> getAccountsMapOfUser(String name) {
+
+		Map<Integer, String> accountsMap = new HashMap<Integer, String>();
+		List<Account> accounts = findOneWithAccountsAndTransactions(name).getAccounts();
+
+		for (Account account : accounts) {
+			accountsMap.put(account.getId(), account.getName());
+		}
+		return accountsMap;
+	}
 
 }

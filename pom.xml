@@ -7,8 +7,6 @@
 	<packaging>war</packaging>
 
 
-
-
 	<!-- Jetty, Maven Plugin -->
 	<build>
 		<plugins>
