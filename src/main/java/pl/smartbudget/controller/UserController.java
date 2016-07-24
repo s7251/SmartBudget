@@ -69,13 +69,30 @@ public class UserController {
 	}
 
 	@RequestMapping("/user-transactions")
-	public String transactions(Model model, Principal principal) {
+	public String transactions(Model model, Principal principal) throws ParseException {
 		model.addAttribute("TransactionForm", new TransactionForm());
 		String name = principal.getName();
 		model.addAttribute("user", userService.findOneWithAccountsAndTransactions(name));
 		model.addAttribute("userTransactions", transactionService.findAllTransactionOfUserByActualMonth(name));
 		model.addAttribute("subcategoriesMap", userService.getSubcategoriesMapOfUser(name));
 		model.addAttribute("accountsMap", userService.getAccountsMapOfUser(name));
+		model.addAttribute("actualMonth", transactionService.getActualDateByViewedTransactions(transactionService.findAllTransactionOfUserByActualMonth(name)));
+		model.addAttribute("nextMonthNav", transactionService.getNextMonthForNavigationByViewedTransactions(transactionService.findAllTransactionOfUserByActualMonth(name)));	
+		model.addAttribute("prevMonthNav", transactionService.getPrevMonthForNavigationByViewedTransactions(transactionService.findAllTransactionOfUserByActualMonth(name)));	
+		return "user-transactions";
+	}
+	
+	@RequestMapping("/user-transactions/{date}")
+	public String transactions(Model model, Principal principal, @PathVariable String date) throws ParseException {
+		model.addAttribute("TransactionForm", new TransactionForm());
+		String name = principal.getName();
+		model.addAttribute("user", userService.findOneWithAccountsAndTransactions(name));
+		model.addAttribute("userTransactions", transactionService.findAllTransactionOfUserByDate(name, date));
+		model.addAttribute("subcategoriesMap", userService.getSubcategoriesMapOfUser(name));
+		model.addAttribute("accountsMap", userService.getAccountsMapOfUser(name));
+		model.addAttribute("actualMonth", transactionService.getActualDateByViewedTransactions(transactionService.findAllTransactionOfUserByDate(name, date)));
+		model.addAttribute("nextMonthNav", transactionService.getNextMonthForNavigationByViewedTransactions(transactionService.findAllTransactionOfUserByDate(name, date)));	
+		model.addAttribute("prevMonthNav", transactionService.getPrevMonthForNavigationByViewedTransactions(transactionService.findAllTransactionOfUserByDate(name, date)));	
 		return "user-transactions";
 	}
 
@@ -84,6 +101,13 @@ public class UserController {
 		String name = principal.getName();
 		transactionService.save(transaction, name);
 		return "redirect:/user-transactions.html";
+	}
+	
+	@RequestMapping(value = "/user-transactions/{date}", method = RequestMethod.POST)
+	public String addTransaction(@ModelAttribute("TransactionForm") TransactionForm transaction, Principal principal, String date)	throws ParseException {
+		String name = principal.getName();
+		transactionService.save(transaction, name);
+		return "redirect:/user-transactions/{date}.html";
 	}
 
 	@RequestMapping("/user-accounts")

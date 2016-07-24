@@ -171,14 +171,107 @@ public class TransactionService {
 
 		return allTransactionsByUser;
 	}
+	
+	public List<Transaction> findAllTransactionOfUserByDate(String name, String date) {
+		User user = userRepository.findByName(name);
+		List<Transaction> allTransactionsByUser = new ArrayList<Transaction>();
 
-//	public String getDateByViewedTransactions(List<Transaction> transactions) {
-//		String transactionsDate = transactions.get(1).getDate().toString();
-//
-//		for (Transaction transaction : transactions) {
-//
-//		}
-//		return null;
-//	}
+		List<Account> accounts = accountRepository.findByUser(user);
+
+		for (Account account : accounts) {
+			List<Transaction> transactions = transactionRepository.findByAccount(account);
+			for (Transaction transaction : transactions) {
+				
+				//Date actualDate = new Date();
+				//SimpleDateFormat mdyFormat = new SimpleDateFormat("yyyy-MM-dd");
+				//String actualDateFormat = mdyFormat.format(actualDate);
+				
+				//Calendar cal = Calendar.getInstance();
+				//cal.setTime(actualDate);
+				//int actualMonth = cal.get(Calendar.MONTH);
+				//int actualYear = cal.get(Calendar.YEAR);
+			
+				int dateMonth = Integer.parseInt(date.substring(0, 2));
+				int dateYear = Integer.parseInt(date.substring(2, 6));
+								
+				//Calendar cal2 = Calendar.getInstance();
+				//cal2.setTime(transaction.getDate());
+				//int transactionMonth = cal2.get(Calendar.MONTH);
+				//int transactionYear = cal2.get(Calendar.YEAR);
+									
+				int transactionMonth = Integer.parseInt(transaction.getDate().toString().substring(5, 7));
+				int transactionYear = Integer.parseInt(transaction.getDate().toString().substring(0, 4));			    
+								
+				if(dateMonth==transactionMonth && dateYear==transactionYear){
+				allTransactionsByUser.add(transaction);}
+			}
+		}				
+				
+		Collections.sort(allTransactionsByUser, new Comparator<Transaction>() {
+			public int compare(Transaction t1, Transaction t2) {
+				return t1.getDate().compareTo(t2.getDate());
+			}
+		});
+
+		return allTransactionsByUser;
+	}
+	
+
+	public String getActualDateByViewedTransactions(List<Transaction> transactions) throws ParseException {
+		String actualMonthOfTransactions = "# No transactions for this month! Please Add.";
+		if(!transactions.isEmpty()){
+		actualMonthOfTransactions = transactions.get(0).getDate().toString().substring(0, 7);
+		}
+		return actualMonthOfTransactions;
+	}
+	
+	
+	public String getNextMonthForNavigationByViewedTransactions(List<Transaction> transactions) throws ParseException {
+		String nextDate = null;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+		if (!transactions.isEmpty()) {
+			String nextMonthOfTransactions = transactions.get(0).getDate().toString();
+			Calendar c = Calendar.getInstance();			
+			c.setTime(sdf.parse(nextMonthOfTransactions));
+			c.add(Calendar.MONTH, 1); // number of days to add
+			nextMonthOfTransactions = sdf.format(c.getTime()).substring(0, 7);
+			String nextYear = nextMonthOfTransactions.substring(0, 4);
+			String nextMonth = nextMonthOfTransactions.substring(5, 7);
+			nextDate = nextMonth + nextYear;
+		} else {
+			Date actualDate = new Date();			
+			String actualDateFormat = sdf.format(actualDate);
+			String actualMonth = actualDateFormat.substring(5, 7);
+			String actualYear = actualDateFormat.substring(0, 4);
+			nextDate = actualMonth + actualYear;
+		}
+
+		return nextDate;
+	}
+	
+	public String getPrevMonthForNavigationByViewedTransactions(List<Transaction> transactions) throws ParseException {					
+		String prevDate = null;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+		if (!transactions.isEmpty()) {
+			String nextMonthOfTransactions = transactions.get(0).getDate().toString();
+			Calendar c = Calendar.getInstance();			
+			c.setTime(sdf.parse(nextMonthOfTransactions));
+			c.add(Calendar.MONTH, -1); // number of days to add
+			nextMonthOfTransactions = sdf.format(c.getTime()).substring(0, 7);
+			String prevYear = nextMonthOfTransactions.substring(0, 4);
+			String prevMonth = nextMonthOfTransactions.substring(5, 7);
+			prevDate = prevMonth + prevYear;
+		} else {
+			Date actualDate = new Date();			
+			String actualDateFormat = sdf.format(actualDate);
+			String actualMonth = actualDateFormat.substring(5, 7);
+			String actualYear = actualDateFormat.substring(0, 4);
+			prevDate = actualMonth + actualYear;
+		}
+
+		return prevDate;
+	}
 
 }
