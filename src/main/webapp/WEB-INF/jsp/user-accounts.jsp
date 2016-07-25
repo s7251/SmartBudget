@@ -39,7 +39,7 @@
 		</tr>
 			<tr>
 			<td style="text-align: center; vertical-align: middle;"><b></b></td>
-			<td style="text-align: center; vertical-align: middle;"><b>3626.00</b></td>
+			<td style="text-align: center; vertical-align: middle;"><b>${summaryOfAllAccounts}</b></td>
 			<td style="text-align: center; vertical-align: middle;"><b></b></td>
 			<td style="text-align: center; vertical-align: middle;"><b></b></td>
 			<td style="text-align: center; vertical-align: middle;"><b></b></td>

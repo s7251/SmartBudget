@@ -106,6 +106,18 @@ public class TransactionService {
 
 		return summaryOfAccounts;
 	}
+	
+	public Double summaryTransactionsOfAllAccounts(String name){
+		Double sum = new Double(0);
+		Map<String, Double> summaryOfAccounts = summaryTransactionsOfAccounts(name);
+		
+		for (Map.Entry<String, Double> entry : summaryOfAccounts.entrySet()){
+			sum+=entry.getValue().intValue();
+		}
+		
+				
+		return sum;		
+	}
 
 	private Double processingTransactions(List<Transaction> transactions) {
 		Double transactionsSum = new Double(0);
