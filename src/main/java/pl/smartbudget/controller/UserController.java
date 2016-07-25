@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import pl.smartbudget.entity.Transaction;
+import pl.smartbudget.entity.Account;
+import pl.smartbudget.entity.Category;
 import pl.smartbudget.entity.User;
 import pl.smartbudget.forms.TransactionForm;
+import pl.smartbudget.service.AccountService;
+import pl.smartbudget.service.CategoryService;
 import pl.smartbudget.service.TransactionService;
 import pl.smartbudget.service.UserService;
 
@@ -25,15 +28,31 @@ public class UserController {
 
 	@Autowired
 	private TransactionService transactionService;
+	
+	@Autowired
+	private AccountService accountService;
+	
+	@Autowired
+	private CategoryService categoryService;
 
 	@ModelAttribute("user")
 	public User constructUser() {
 		return new User();
 	}
 
-	@ModelAttribute("transaction")
-	public Transaction constructTransaction() {
-		return new Transaction();
+//	@ModelAttribute("transaction")
+//	public Transaction constructTransaction() {
+//		return new Transaction();
+//	}
+	
+	@ModelAttribute("account")
+	public Account account() {
+		return new Account();
+	}
+	
+	@ModelAttribute("category")
+	public Category category() {
+		return new Category();
 	}
 
 	@RequestMapping("/users")
@@ -115,9 +134,15 @@ public class UserController {
 		String name = principal.getName();
 		model.addAttribute("user", userService.findOneWithAccounts(name));
 		model.addAttribute("summaryOfAccounts", transactionService.summaryTransactionsOfAccounts(name));
-		model.addAttribute("summaryOfAllAccounts", transactionService.summaryTransactionsOfAllAccounts(name));
-		
+		model.addAttribute("summaryOfAllAccounts", transactionService.summaryTransactionsOfAllAccounts(name));		
 		return "user-accounts";
+	}
+	
+	@RequestMapping(value = "/user-accounts", method = RequestMethod.POST)
+	public String addAccount(@ModelAttribute("account") Account account, Principal principal)	throws ParseException {
+		String name = principal.getName();
+		accountService.save(account, name);
+		return "redirect:/user-accounts.html";
 	}
 
 	@RequestMapping("/user-categories")
@@ -126,6 +151,20 @@ public class UserController {
 		model.addAttribute("user", userService.findOneWithCategoriesSubcategoriesAndSubcategoryLimit(name));
 		return "user-categories";
 	}
+	
+	@RequestMapping(value = "/user-categories", method = RequestMethod.POST)
+	public String addCategory(@ModelAttribute("category") Category category, Principal principal)	throws ParseException {
+		String name = principal.getName();
+		categoryService.save(category, name);
+		return "redirect:/user-categories.html";
+	}
+	
+//	@RequestMapping(value = "/user-categories", method = RequestMethod.POST)
+//	public String addAccount(@ModelAttribute("category") Category category, Principal principal)	throws ParseException {
+//		String name = principal.getName();
+//		categoryService.save(category, name);
+//		return "redirect:/user-categories.html";
+//	}
 
 	@RequestMapping("/user-budgetplan")
 	public String budgetplan(Model model, Principal principal) {

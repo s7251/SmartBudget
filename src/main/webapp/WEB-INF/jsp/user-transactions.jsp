@@ -24,7 +24,7 @@
 	<div class="panel-heading"><h1 class="panel-title">Transactions <span class="pull-right">${actualMonth}</span></h1></div>
 
 	<div class="panel-body">
-		<a href="<spring:url value="" />" class="btn btn-primary" type="button" data-toggle="modal" data-target="#myModal">Add transaction</a>
+		<a href="<spring:url value="" />" class="btn btn-primary" type="button" data-toggle="modal" data-target="#addTransactionModal">Add transaction</a>
 		<a href="<spring:url value="" />" class="btn btn-primary" type="button">Import bank transactions (CSV)</a>		
 	</div>
 	
@@ -71,7 +71,7 @@
 
 <form:form commandName="TransactionForm" cssClass="form-horizontal">
 	<!-- Modal -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+	<div class="modal fade" id="addTransactionModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
