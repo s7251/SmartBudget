@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import pl.smartbudget.entity.Account;
 import pl.smartbudget.entity.Category;
 import pl.smartbudget.entity.User;
+import pl.smartbudget.forms.SubcategoryForm;
 import pl.smartbudget.forms.TransactionForm;
 import pl.smartbudget.service.AccountService;
 import pl.smartbudget.service.CategoryService;
+import pl.smartbudget.service.SubcategoryService;
 import pl.smartbudget.service.TransactionService;
 import pl.smartbudget.service.UserService;
 
@@ -34,29 +36,32 @@ public class UserController {
 	
 	@Autowired
 	private CategoryService categoryService;
+	
+	@Autowired
+	private SubcategoryService subcategoryService;
 
 	@ModelAttribute("user")
 	public User constructUser() {
 		return new User();
 	}
 
-//	@ModelAttribute("transaction")
-//	public Transaction constructTransaction() {
-//		return new Transaction();
+//	@ModelAttribute("account")
+//	public Account account() {
+//		return new Account();
 //	}
 	
-	@ModelAttribute("account")
-	public Account account() {
-		return new Account();
-	}
-	
-	@ModelAttribute("category")
-	public Category category() {
-		return new Category();
-	}
+//	@ModelAttribute("category")
+//	public Category category() {
+//		return new Category();
+//	}
+
+//	@ModelAttribute("subcategory")
+//	public SubcategoryForm subcategory() {
+//		return new SubcategoryForm();
+//	}
 
 	@RequestMapping("/users")
-	public String users(Model model, Principal principal) {
+	public String users(Model model, Principal principal) {		
 		String name = principal.getName();
 		model.addAttribute("users", userService.findAll());
 		model.addAttribute("user", userService.findOneByName(name));
@@ -70,7 +75,7 @@ public class UserController {
 	}
 
 	@RequestMapping("/user-profile")
-	public String profile(Model model, Principal principal) {
+	public String profile(Model model, Principal principal) {				
 		String name = principal.getName();
 		model.addAttribute("user", userService.findOneByName(name));
 		return "user-profile";
@@ -131,6 +136,7 @@ public class UserController {
 
 	@RequestMapping("/user-accounts")
 	public String accounts(Model model, Principal principal) {
+		model.addAttribute("account", new Account());
 		String name = principal.getName();
 		model.addAttribute("user", userService.findOneWithAccounts(name));
 		model.addAttribute("summaryOfAccounts", transactionService.summaryTransactionsOfAccounts(name));
@@ -147,24 +153,26 @@ public class UserController {
 
 	@RequestMapping("/user-categories")
 	public String categories(Model model, Principal principal) {
+		model.addAttribute("subcategory", new SubcategoryForm());
+		model.addAttribute("category", new Category());
 		String name = principal.getName();
-		model.addAttribute("user", userService.findOneWithCategoriesSubcategoriesAndSubcategoryLimit(name));
+		model.addAttribute("user", userService.findOneWithCategoriesSubcategoriesAndSubcategoryLimit(name));		
 		return "user-categories";
 	}
 	
-	@RequestMapping(value = "/user-categories", method = RequestMethod.POST)
+	@RequestMapping(value = "/addCategories", method = RequestMethod.POST)
 	public String addCategory(@ModelAttribute("category") Category category, Principal principal)	throws ParseException {
 		String name = principal.getName();
 		categoryService.save(category, name);
 		return "redirect:/user-categories.html";
 	}
 	
-//	@RequestMapping(value = "/user-categories", method = RequestMethod.POST)
-//	public String addAccount(@ModelAttribute("category") Category category, Principal principal)	throws ParseException {
-//		String name = principal.getName();
-//		categoryService.save(category, name);
-//		return "redirect:/user-categories.html";
-//	}
+	@RequestMapping(value = "/addSubcategories", method = RequestMethod.POST)
+	public String addSubcategory(@ModelAttribute("subcategory") SubcategoryForm subcategory) {		
+		subcategoryService.save(subcategory);
+		return "redirect:/user-categories.html";
+	}
+
 
 	@RequestMapping("/user-budgetplan")
 	public String budgetplan(Model model, Principal principal) {
