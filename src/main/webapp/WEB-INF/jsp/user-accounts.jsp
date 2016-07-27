@@ -22,11 +22,11 @@
 		</tr>		
 		<c:forEach items="${summaryOfAccounts}" var="summary">		
 			<tr>
-				<td style="text-align: center; vertical-align: middle;">${summary.key}</td>
-				<td style="text-align: center; vertical-align: middle;">${summary.value}</td>
+				<td style="text-align: center; vertical-align: middle;">${summary.value.name}</td>
+				<td style="text-align: center; vertical-align: middle;">${summary.value.summaryOfAccount}</td>
 				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="" />" class="btn btn-primary" type="button">Align Balance</a></td>
 				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="" />" class="btn btn-warning" type="button">Rename</a></td>					
-				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="" />" class="btn btn-danger" type="button">Remove</a></td>		
+				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="/user-accounts/removeaccount/${summary.key}.html" />" class="btn btn-danger" type="button">Remove</a></td>		
 			</tr>					
 		</c:forEach>	
 			<tr>
@@ -39,7 +39,7 @@
 		</tr>
 			<tr>
 			<td style="text-align: center; vertical-align: middle;"><b></b></td>
-			<td style="text-align: center; vertical-align: middle;"><b>${summaryOfAllAccounts}</b></td>
+ 			<td style="text-align: center; vertical-align: middle;"><b>${summaryOfAllAccounts}</b></td> 
 			<td style="text-align: center; vertical-align: middle;"><b></b></td>
 			<td style="text-align: center; vertical-align: middle;"><b></b></td>
 			<td style="text-align: center; vertical-align: middle;"><b></b></td>

@@ -27,4 +27,9 @@ public class SubcategoryService {
 		subcategoryRepository.save(subcategory);		
 	}
 
+	public void delete(int id) {
+		subcategoryRepository.delete(id);
+		
+	}
+
 }

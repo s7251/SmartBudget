@@ -25,4 +25,8 @@ public class CategoryService {
 		categoryRepository.save(category);		
 	}
 
+	public void delete(int id) {
+		categoryRepository.delete(id);		
+	}
+
 }

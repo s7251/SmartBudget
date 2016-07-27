@@ -29,15 +29,15 @@
 		<c:forEach items="${user.categories}" var="category">
 			<tr class="${'categorycolor'}">
 				<td style="text-align: left; vertical-align: middle;">${category.name}</td>
-				<td style="text-align: center; vertical-align: middle;">	<a href="<spring:url value="" />" class="btn btn-primary" type="button" data-toggle="modal" data-target="#addSubcategoryModal">Add subcategory</a>	</td>
+				<td style="text-align: center; vertical-align: middle;">	<a href="<spring:url value="" />" class="btn btn-primary" type="button" data-toggle="modal" data-target="#addSubcategoryModal${category.id}">Add subcategory</a>	</td>
 				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="" />" class="btn btn-warning" type="button">Edit</a>	</td>
-				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="" />" class="btn btn-danger" type="button">Remove</a>	</td>			
+				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="/user-categories/removecategory/${category.id}.html" />" class="btn btn-danger" type="button">Remove</a>	</td>			
+		</tr>
 		
-		
-		<form:form mehod="post" modelAttribute="subcategory" action="/addSubcategories.html" cssClass="form-horizontal">	
+			<form:form mehod="post" modelAttribute="subcategory" action="/addSubcategories.html" cssClass="form-horizontal">	
 				<form:hidden path="categoryId" value="${category.id}" />
 	<!-- Modal -->
-	<div class="modal fade" id="addSubcategoryModal" tabindex="-1" role="dialog"
+	<div class="modal fade" id="addSubcategoryModal${category.id}" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -58,31 +58,29 @@
 					</div>
 					
 				</div>
+				<br><br>
 				<div class="modal-footer">
+				
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					<input type="submit" class="btn btn-success" value="Add" />
 				</div>
 			</div>
 		</div>
 	</div>
-</form:form>
+</form:form>	
 		
-		
-		
-		</tr>
+
 		<c:forEach items="${category.subcategories}" var="subcategory">
 			<tr class="${'subcategorycolor'}">
 				<td style="text-align: left; vertical-align: middle;">- ${subcategory.name}</td>				
 				<td></td>			
 				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="" />" class="btn btn-warning" type="button">Edit</a></td>	
-				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="" />" class="btn btn-danger" type="button">Remove</a>	</td>
-			</tr>		
-			
-			
+				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="/user-categories/removesubcategory/${subcategory.id}.html" />" class="btn btn-danger" type="button">Remove</a>	</td>
+			</tr>					
 			</c:forEach>
 		</c:forEach>
-	</table>
-		
+	
+		</table>
 		</div>
 		
 		<form:form mehod="post" modelAttribute="category" action="/addCategories.html" cssClass="form-horizontal">		

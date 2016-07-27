@@ -2,6 +2,7 @@ package pl.smartbudget.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -21,10 +22,10 @@ public class Subcategory {
 	@JoinColumn(name = "category_id")
 	private Category category;
 
-	@OneToMany(mappedBy = "subcategory")
+	@OneToMany(mappedBy = "subcategory", cascade=CascadeType.REMOVE)
 	List<Transaction> transactions;
 
-	@OneToMany(mappedBy = "subcategory")
+	@OneToMany(mappedBy = "subcategory", cascade=CascadeType.REMOVE)
 	List<SubcategoryLimit> subcategoryLimits;
 
 	public Subcategory() {

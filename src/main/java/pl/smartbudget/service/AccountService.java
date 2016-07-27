@@ -32,4 +32,9 @@ public class AccountService {
 		accountRepository.save(account);		
 	}
 
+	public void delete(int id) {
+		accountRepository.delete(id);	
+		
+	}
+
 }

@@ -90,18 +90,21 @@ public class TransactionService {
 		return expenseTransactions;
 	}
 
-	public Map<String, Double> summaryTransactionsOfAccounts(String name) {
+	public Map<Integer, Account> summaryTransactionsOfAccounts(String name) {
+		
+		
 
-		Map<String, Double> summaryOfAccounts = new HashMap<String, Double>();
+		Map<Integer, Account> summaryOfAccounts = new HashMap<Integer, Account>();
 
 		User user = userRepository.findByName(name);
-		List<Account> accounts = accountRepository.findByUser(user);
-
+		List<Account> accounts = accountRepository.findByUser(user);		
+		
 		for (Account account : accounts) {
 			List<Transaction> transactions = transactionRepository.findByAccount(account);
 			Double transactionsSum = processingTransactions(transactions);
-
-			summaryOfAccounts.put(account.getName(), transactionsSum);
+			
+			account.setSummaryOfAccount(transactionsSum);
+			summaryOfAccounts.put(account.getId(), account);
 		}
 
 		return summaryOfAccounts;
@@ -109,10 +112,10 @@ public class TransactionService {
 	
 	public Double summaryTransactionsOfAllAccounts(String name){
 		Double sum = new Double(0);
-		Map<String, Double> summaryOfAccounts = summaryTransactionsOfAccounts(name);
+		Map<Integer, Account> summaryOfAccounts = summaryTransactionsOfAccounts(name);
 		
-		for (Map.Entry<String, Double> entry : summaryOfAccounts.entrySet()){
-			sum+=entry.getValue().intValue();
+		for (Map.Entry<Integer, Account> entry : summaryOfAccounts.entrySet()){
+			sum+=entry.getValue().getSummaryOfAccount();
 		}
 		
 				
@@ -284,6 +287,11 @@ public class TransactionService {
 		}
 
 		return prevDate;
+	}
+
+	public void delete(int id) {
+		transactionRepository.delete(id);
+		
 	}
 
 }

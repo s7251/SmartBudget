@@ -57,7 +57,8 @@
   <ul class="dropdown-menu">
     <li><a href="">Edit</a></li>
     <li role="separator" class="divider"></li>
-    <li><a href="">Remove</a></li>
+    <li><a href="<spring:url value="/user-transactions/removetransaction/${userTransactions.id}.html" />" >Remove</a></li>    
+ 
   </ul>
 </div>
 				</td>

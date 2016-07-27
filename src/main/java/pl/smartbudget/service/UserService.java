@@ -150,4 +150,9 @@ public class UserService {
 		return accountsMap;
 	}
 
+	public void delete(int id) {
+		userRepository.delete(id);
+		
+	}
+
 }

@@ -20,7 +20,7 @@
 			<tr>
 				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="/users/${user.id}.html" />"><c:out value="${user.name}" /></a></td>
 				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="" />" class="btn btn-warning" type="button">Edit</a></td>					
-				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="" />" class="btn btn-danger" type="button">Remove</a></td>	
+				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="/users/removeuser/${user.id}.html" />" class="btn btn-danger" type="button">Remove</a></td>	
 			</tr>
 		</c:forEach>
 	</table>

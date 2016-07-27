@@ -45,27 +45,24 @@ public class UserController {
 		return new User();
 	}
 
-//	@ModelAttribute("account")
-//	public Account account() {
-//		return new Account();
-//	}
-	
-//	@ModelAttribute("category")
-//	public Category category() {
-//		return new Category();
-//	}
-
-//	@ModelAttribute("subcategory")
-//	public SubcategoryForm subcategory() {
-//		return new SubcategoryForm();
-//	}
-
 	@RequestMapping("/users")
 	public String users(Model model, Principal principal) {		
 		String name = principal.getName();
 		model.addAttribute("users", userService.findAll());
 		model.addAttribute("user", userService.findOneByName(name));
 		return "users";
+	}
+	
+	@RequestMapping("/users/removeuser/{id}")
+	public String removeUser(@PathVariable int id ){
+		userService.delete(id);
+		return "redirect:/users.html";
+	}
+	
+	@RequestMapping("/user-profile/removeprofile/{id}")
+	public String removeProfile(@PathVariable int id ){
+		userService.delete(id);
+		return "redirect:/logout";
 	}
 
 	@RequestMapping("/users/{id}")
@@ -119,6 +116,12 @@ public class UserController {
 		model.addAttribute("prevMonthNav", transactionService.getPrevMonthForNavigationByViewedTransactions(transactionService.findAllTransactionOfUserByDate(name, date)));	
 		return "user-transactions";
 	}
+	
+	@RequestMapping("/user-transactions/removetransaction/{id}")
+	public String removeTransaction(@PathVariable int id ){
+		transactionService.delete(id);
+		return "redirect:/user-transactions.html";
+	}
 
 	@RequestMapping(value = "/user-transactions", method = RequestMethod.POST)
 	public String addTransaction(@ModelAttribute("TransactionForm") TransactionForm transaction, Principal principal)	throws ParseException {
@@ -144,6 +147,12 @@ public class UserController {
 		return "user-accounts";
 	}
 	
+	@RequestMapping("/user-accounts/removeaccount/{id}")
+	public String removeAccount(@PathVariable int id ){
+		accountService.delete(id);
+		return "redirect:/user-accounts.html";
+	}
+	
 	@RequestMapping(value = "/user-accounts", method = RequestMethod.POST)
 	public String addAccount(@ModelAttribute("account") Account account, Principal principal)	throws ParseException {
 		String name = principal.getName();
@@ -158,6 +167,18 @@ public class UserController {
 		String name = principal.getName();
 		model.addAttribute("user", userService.findOneWithCategoriesSubcategoriesAndSubcategoryLimit(name));		
 		return "user-categories";
+	}
+	
+	@RequestMapping("/user-categories/removecategory/{id}")
+	public String removeCategory(@PathVariable int id ){
+		categoryService.delete(id);
+		return "redirect:/user-categories.html";
+	}
+	
+	@RequestMapping("/user-categories/removesubcategory/{id}")
+	public String removeSubcategory(@PathVariable int id ){
+		subcategoryService.delete(id);
+		return "redirect:/user-categories.html";
 	}
 	
 	@RequestMapping(value = "/addCategories", method = RequestMethod.POST)

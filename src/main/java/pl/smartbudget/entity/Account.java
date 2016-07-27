@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 @Entity
 public class Account {
@@ -17,12 +18,15 @@ public class Account {
 	@GeneratedValue
 	private Integer id;
 	private String name;
+	
+	@Transient 
+	private double summaryOfAccount;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	@OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "account", cascade = CascadeType.REMOVE)
 	List<Transaction> transactions;
 
 	public Account() {
@@ -66,6 +70,14 @@ public class Account {
 
 	public String toString() {
 		return name;
+	}
+	
+	public double getSummaryOfAccount() {
+		return summaryOfAccount;
+	}
+
+	public void setSummaryOfAccount(double summaryOfAccount) {
+		this.summaryOfAccount = summaryOfAccount;
 	}
 
 }
