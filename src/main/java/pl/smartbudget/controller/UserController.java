@@ -15,9 +15,11 @@ import pl.smartbudget.entity.Account;
 import pl.smartbudget.entity.Category;
 import pl.smartbudget.entity.User;
 import pl.smartbudget.forms.SubcategoryForm;
+import pl.smartbudget.forms.SubcategoryLimitForm;
 import pl.smartbudget.forms.TransactionForm;
 import pl.smartbudget.service.AccountService;
 import pl.smartbudget.service.CategoryService;
+import pl.smartbudget.service.SubcategoryLimitService;
 import pl.smartbudget.service.SubcategoryService;
 import pl.smartbudget.service.TransactionService;
 import pl.smartbudget.service.UserService;
@@ -39,6 +41,9 @@ public class UserController {
 	
 	@Autowired
 	private SubcategoryService subcategoryService;
+	
+	@Autowired
+	private SubcategoryLimitService subcategoryLimitService;	
 
 	@ModelAttribute("user")
 	public User constructUser() {
@@ -165,7 +170,7 @@ public class UserController {
 		model.addAttribute("subcategory", new SubcategoryForm());
 		model.addAttribute("category", new Category());
 		String name = principal.getName();
-		model.addAttribute("user", userService.findOneWithCategoriesSubcategoriesAndSubcategoryLimit(name));		
+		model.addAttribute("user", userService.findOneWithCategoriesAndSubcategories(name));		
 		return "user-categories";
 	}
 	
@@ -197,15 +202,23 @@ public class UserController {
 
 	@RequestMapping("/user-budgetplan")
 	public String budgetplan(Model model, Principal principal) {
+		model.addAttribute("subcategorylimit", new SubcategoryLimitForm());
 		String name = principal.getName();
 		model.addAttribute("user", userService.findOneWithCategoriesSubcategoriesAndSubcategoryLimit(name));
 		return "user-budgetplan";
+	}
+	
+	@RequestMapping(value = "/addSubcategoryLimit", method = RequestMethod.POST)
+	public String addCategory(@ModelAttribute("subcategorylimit") SubcategoryLimitForm subcategoryLimitForm, Principal principal)	throws ParseException {
+		String name = principal.getName();
+		subcategoryLimitService.save(subcategoryLimitForm, name);
+		return "redirect:/user-budgetplan.html";
 	}
 
 	@RequestMapping("/user-reports")
 	public String reports(Model model, Principal principal) {
 		String name = principal.getName();
-		model.addAttribute("user", userService.findOneWithCategoriesSubcategoriesAndSubcategoryLimit(name));
+		model.addAttribute("user", userService.findOneWithCategoriesAndSubcategories(name));
 		return "user-reports";
 	}
 

@@ -103,6 +103,23 @@ public class UserService {
 		return user;
 	}
 
+	public User findOneWithCategoriesAndSubcategories(String name) {
+		User user = userRepository.findByName(name);
+		return findOneWithCategoriesAndSubcategories(user.getId());
+	}
+
+	@Transactional
+	public User findOneWithCategoriesAndSubcategories(int id) {
+		User user = findOne(id);
+		List<Category> categories = categoryRepository.findByUser(user);
+		for (Category category : categories) {
+			List<Subcategory> subcategories = subcategoryRepository.findByCategory(category);
+			category.setSubcategories(subcategories);			
+		}
+		user.setCategories(categories);
+		return user;
+	}
+	
 	public User findOneWithCategoriesSubcategoriesAndSubcategoryLimit(String name) {
 		User user = userRepository.findByName(name);
 		return findOneWithCategoriesSubcategoriesAndSubcategoryLimit(user.getId());
@@ -128,7 +145,7 @@ public class UserService {
 	public Map<Integer, String> getSubcategoriesMapOfUser(String name) {
 
 		Map<Integer, String> subcategoriesMap = new HashMap<Integer, String>();
-		List<Category> categories = findOneWithCategoriesSubcategoriesAndSubcategoryLimit(name).getCategories();
+		List<Category> categories = findOneWithCategoriesAndSubcategories(name).getCategories();
 
 		for (Category category : categories) {
 			List<Subcategory> subcategories = category.getSubcategories();
