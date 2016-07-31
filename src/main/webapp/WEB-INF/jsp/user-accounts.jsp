@@ -29,7 +29,7 @@
 				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="/user-accounts/removeaccount/${summary.key}.html" />" class="btn btn-danger" type="button">Remove</a></td>		
 			</tr>		
 			
-			<form:form commandName="account" cssClass="form-horizontal">
+			<form:form mehod="post" modelAttribute="account" action="/renameAccount.html" cssClass="form-horizontal">
 			<form:hidden path="id" value="${summary.value.id}" />
 	<!-- Modal -->
 	<div class="modal fade" id="editAccountModal${summary.value.id}" tabindex="-1" role="dialog"
@@ -85,7 +85,7 @@
 </div>
 
 
-<form:form commandName="account" cssClass="form-horizontal">
+<form:form mehod="post" modelAttribute="account" action="/addAccount.html" cssClass="form-horizontal">
 	<!-- Modal -->
 	<div class="modal fade" id="addAccountModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">

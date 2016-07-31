@@ -54,6 +54,24 @@ public class TransactionService {
 
 		transactionRepository.save(transaction);
 	}
+	
+	
+	public void edit(TransactionForm transactionForm, String name) throws ParseException {
+		User user = userRepository.findByName(name);
+		Transaction transaction = new Transaction();
+		Subcategory subcategoryOfAccount = subcategoryRepository.getOne(transactionForm.getSubcategoryId());
+		Account accountOfTransaction = accountRepository.findOne(transactionForm.getAccountId());
+		transaction.setId(transactionForm.getId());
+		transaction.setType(transactionForm.getType());
+		transaction.setAmount(transactionForm.getAmount());
+		transaction.setName(transactionForm.getName());
+		transaction.setDate(new SimpleDateFormat("dd/MM/yyyy").parse(transactionForm.getDate()));
+		transaction.setSubcategory(subcategoryOfAccount);
+		transaction.setAccount(accountOfTransaction);
+		accountOfTransaction.setUser(user);
+
+		transactionRepository.save(transaction);
+	}
 
 	public List<Transaction> findInfluenceTransactionsByUser(String name) {
 		User user = userRepository.findByName(name);

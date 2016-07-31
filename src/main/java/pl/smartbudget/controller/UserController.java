@@ -135,12 +135,28 @@ public class UserController {
 		return "redirect:/user-transactions.html";
 	}
 	
+	@RequestMapping(value = "/editTransaction", method = RequestMethod.POST)
+	public String editTransaction(@ModelAttribute("TransactionForm") TransactionForm transaction, Principal principal)	throws ParseException {
+		String name = principal.getName();
+		transactionService.edit(transaction, name);
+		return "redirect:/user-transactions.html";
+	}
+	
 	@RequestMapping(value = "/user-transactions/{date}", method = RequestMethod.POST)
 	public String addTransaction(@ModelAttribute("TransactionForm") TransactionForm transaction, Principal principal, String date)	throws ParseException {
 		String name = principal.getName();
 		transactionService.save(transaction, name);
 		return "redirect:/user-transactions/{date}.html";
 	}
+	
+//	@RequestMapping(value = "/editTransaction/{date}", method = RequestMethod.POST)
+//	public String editTransaction(@ModelAttribute("TransactionForm") TransactionForm transaction, Principal principal, String date)	throws ParseException {
+//		String name = principal.getName();
+//		transactionService.edit(transaction, name);
+//		return "redirect:/user-transactions/{date}.html";
+//	}
+	
+	
 
 	@RequestMapping("/user-accounts")
 	public String accounts(Model model, Principal principal) {
@@ -158,8 +174,15 @@ public class UserController {
 		return "redirect:/user-accounts.html";
 	}
 	
-	@RequestMapping(value = "/user-accounts", method = RequestMethod.POST)
+	@RequestMapping(value = "/addAccount", method = RequestMethod.POST)
 	public String addAccount(@ModelAttribute("account") Account account, Principal principal)	throws ParseException {
+		String name = principal.getName();
+		accountService.save(account, name);
+		return "redirect:/user-accounts.html";
+	}
+	
+	@RequestMapping(value = "/renameAccount", method = RequestMethod.POST)
+	public String renameAccount(@ModelAttribute("account") Account account, Principal principal)	throws ParseException {
 		String name = principal.getName();
 		accountService.save(account, name);
 		return "redirect:/user-accounts.html";
@@ -186,16 +209,29 @@ public class UserController {
 		return "redirect:/user-categories.html";
 	}
 	
-	@RequestMapping(value = "/addCategories", method = RequestMethod.POST)
+	@RequestMapping(value = "/addCategory", method = RequestMethod.POST)
 	public String addCategory(@ModelAttribute("category") Category category, Principal principal)	throws ParseException {
 		String name = principal.getName();
 		categoryService.save(category, name);
 		return "redirect:/user-categories.html";
 	}
+
+	@RequestMapping(value = "/renameCategory", method = RequestMethod.POST)
+	public String renameCategory(@ModelAttribute("category") Category category, Principal principal)	throws ParseException {
+		String name = principal.getName();
+		categoryService.save(category, name);
+		return "redirect:/user-categories.html";
+	}
 	
-	@RequestMapping(value = "/addSubcategories", method = RequestMethod.POST)
+	@RequestMapping(value = "/addSubcategory", method = RequestMethod.POST)
 	public String addSubcategory(@ModelAttribute("subcategory") SubcategoryForm subcategory) {		
 		subcategoryService.save(subcategory);
+		return "redirect:/user-categories.html";
+	}
+	
+	@RequestMapping(value = "/renameSubcategory", method = RequestMethod.POST)
+	public String renameSubcategory(@ModelAttribute("subcategory") SubcategoryForm subcategory) {		
+		subcategoryService.rename(subcategory);
 		return "redirect:/user-categories.html";
 	}
 
@@ -209,9 +245,8 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/addSubcategoryLimit", method = RequestMethod.POST)
-	public String addCategory(@ModelAttribute("subcategorylimit") SubcategoryLimitForm subcategoryLimitForm, Principal principal)	throws ParseException {
-		String name = principal.getName();
-		subcategoryLimitService.save(subcategoryLimitForm, name);
+	public String addCategory(@ModelAttribute("subcategorylimit") SubcategoryLimitForm subcategoryLimitForm)	throws ParseException {
+		subcategoryLimitService.save(subcategoryLimitForm);
 		return "redirect:/user-budgetplan.html";
 	}
 

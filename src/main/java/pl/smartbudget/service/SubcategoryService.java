@@ -27,6 +27,16 @@ public class SubcategoryService {
 		subcategory.setCategory(categoryRepository.getOne(subcategoryForm.getCategoryId()));
 		subcategoryRepository.save(subcategory);		
 	}
+	
+	
+	public void rename(SubcategoryForm subcategoryForm) {
+		
+		Subcategory subcategory = new Subcategory();
+		subcategory.setId(subcategoryForm.getId());
+		subcategory.setName(subcategoryForm.getName());	
+		subcategory.setCategory(categoryRepository.getOne(subcategoryForm.getCategoryId()));
+		subcategoryRepository.save(subcategory);		
+	}
 
 	public void delete(int id) {
 		subcategoryRepository.delete(id);

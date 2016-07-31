@@ -55,13 +55,92 @@
     Change <span class="caret"></span>
   </button>
   <ul class="dropdown-menu">
-    <li><a href="">Edit</a></li>
+     <li><a href="<spring:url value="" />" data-toggle="modal" data-target="#editTransaction${userTransactions.id}">Edit</a></li>    
     <li role="separator" class="divider"></li>
     <li><a href="<spring:url value="/user-transactions/removetransaction/${userTransactions.id}.html" />" >Remove</a></li>    
  
   </ul>
 </div>
 				</td>
+			
+			<td width="0%">
+			
+			<form:form mehod="post" modelAttribute="TransactionForm" action="/editTransaction.html" cssClass="form-horizontal">
+			<form:hidden path="id" value="${userTransactions.id}" />
+	<!-- Modal -->
+	<div class="modal fade" id="editTransaction${userTransactions.id}" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Edit transaction</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group" style="text-align: left; width: 800px;">
+
+						<label for="name" class="col-sm-2 control-label">Type:</label>
+						<div class="col-sm-10">
+						<form:radiobutton path="type" value="influence" /> influence
+					    <form:radiobutton path="type" value="expense" /> expense	    
+					   
+						</div>
+					</div>
+					<div class="form-group"
+						style="text-align: center; width: 800px; margin: 0 auto;">
+						<label for="name" class="col-sm-2 control-label">Name:</label>
+						<div class="col-sm-10">
+							<form:input path="name" cssClass="form-control" style="width: 350px" value="${userTransactions.name}" placeholder="${userTransactions.name}" autofocus="autofocus" />
+						</div>
+					</div>
+
+					<div class="form-group"
+						style="text-align: center; width: 800px; margin: 0 auto;">
+						<label for="amount" class="col-sm-2 control-label">Amount:</label>
+						<div class="col-sm-10">
+							<form:input path="amount" value="${userTransactions.amount}" cssClass="form-control" style="width: 350px" placeholder="${userTransactions.amount}" autofocus="autofocus" />
+						</div>
+					</div>
+					<div class="form-group"	style="text-align: center; width: 800px; margin: 0 auto;">
+						<label for="date" class="col-sm-2 control-label">Date:</label>
+						<div class="col-sm-10">						
+						<form:input path="date" cssClass="form-control" style="width: 350px" placeholder="DD/MM/RRRR" autofocus="autofocus" data-options="formatter:myformatter,parser:myparser"/> 
+						</div>						
+						</div>									
+							<div class="form-group"	style="text-align: center; width: 800px; margin: 0 auto;">
+						<label for="category" class="col-sm-2 control-label">Subcategory:</label>
+						<div class="col-sm-10">
+						<form:select class="form-control" path="subcategoryId"  style="text-align: left; width: 350px;">
+									<form:option value="NONE">${userTransactions.subcategory}</form:option>
+									<form:options items="${subcategoriesMap}" />							
+							</form:select>
+							
+						
+						</div>
+					</div>
+
+					<div class="form-group"	style="text-align: center; width: 800px; margin: 0 auto;">
+						<label for="account" class="col-sm-2 control-label">Account:</label>
+						<div class="col-sm-10">
+							<form:select class="form-control" path="accountId"  style="text-align: left; width: 350px;">		
+							<form:option value="NONE">${userTransactions.account}</form:option>														
+										<form:options items="${accountsMap}" />								
+							</form:select>
+						</div>
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<input type="submit" class="btn btn-success" value="Edit" />
+				</div>
+			</div>
+		</div>
+	</div>
+</form:form>
+			</td>
 			</tr>
 			
 		</c:forEach>
@@ -109,14 +188,9 @@
 					<div class="form-group"	style="text-align: center; width: 800px; margin: 0 auto;">
 						<label for="date" class="col-sm-2 control-label">Date:</label>
 						<div class="col-sm-10">						
-<%-- 						<fmt:formatDate pattern='dd/MM/yyyy' type='date' value='${transaction.date}' var="formattedDate"/> --%>
-<%-- 						<form:input path="date" cssClass="form-control" style="width: 350px" placeholder="Please type date" autofocus="autofocus" id="date" name="date" data-format="dd/MM/yyyy" type="text" value="${formattedDate}"/> --%>
-<%-- 			        	<form:input path="date" cssClass="form-control" style="width: 350px" placeholder="Please type date" autofocus="autofocus"  value = "<fmt:formatDate value="${transaction.date}" pattern="dd-MM-yyyy" />"/>  --%>
 						<form:input path="date" cssClass="form-control" style="width: 350px" placeholder="DD/MM/RRRR" autofocus="autofocus" data-options="formatter:myformatter,parser:myparser"/> 
-						</div>
-
-					</div>
-									
+						</div>						
+						</div>									
 							<div class="form-group"	style="text-align: center; width: 800px; margin: 0 auto;">
 						<label for="category" class="col-sm-2 control-label">Subcategory:</label>
 						<div class="col-sm-10">
