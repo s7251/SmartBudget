@@ -8,6 +8,9 @@
    <style type="text/css">         
    tr.expensecolor { background: #ffe6e6; }
    tr.influencecolor { background: #b3ffb3; }
+   tr.alignpluscolor { background: white; }
+   tr.alignminuscolor { background: white; }
+   
 
     </style> 
  </head>
@@ -21,7 +24,8 @@
 
 <div class="panel panel-default">
 	<!-- Default panel contents -->
-	<div class="panel-heading"><h1 class="panel-title">Transactions <span class="pull-right">${actualMonth}</span></h1></div>
+	<div class="panel-heading"><h1 class="panel-title">Transactions <span class="pull-right">${date}<c:if test="${empty date}">${actualMonth}</c:if></span></h1></div>
+	
 
 	<div class="panel-body">
 		<a href="<spring:url value="" />" class="btn btn-primary" type="button" data-toggle="modal" data-target="#addTransactionModal">Add transaction</a>
@@ -36,13 +40,29 @@
 			<td><b>Name</b></td>
 			<td><b>Amount</b></td>
 			<td><b>Date</b></td>
-			<td><b>SubCategory</b></td>
+			<td><b>Subcategory</b></td>
 			<td><b>Account</b></td>
 			<td></td>
 		</tr>
 		<c:forEach items="${userTransactions}" var="userTransactions">
 		
-			<tr class="${userTransactions.type == 'expense' ? 'expensecolor' : 'influencecolor'}">
+
+<tr>
+			<c:choose>
+			
+    <c:when test="${userTransactions.type == 'expense'}">
+      <tr class="expensecolor">
+    </c:when>
+    <c:when test="${userTransactions.type == 'influence'}">
+       <tr class="influencecolor">
+    </c:when>   
+       <c:when test="${userTransactions.type == 'alignment +'}">
+       <tr class="alignpluscolor">
+    </c:when>   
+           <c:when test="${userTransactions.type == 'alignment -'}">
+       <tr class="alignminuscolor">
+    </c:when>      
+</c:choose>			
 				<td style="vertical-align: middle;">${userTransactions.type}</td>
 				<td style="vertical-align: middle;">${userTransactions.name}</td>
 				<td style="vertical-align: middle;">${userTransactions.amount}</td>
@@ -55,7 +75,11 @@
     Change <span class="caret"></span>
   </button>
   <ul class="dropdown-menu">
-     <li><a href="<spring:url value="" />" data-toggle="modal" data-target="#editTransaction${userTransactions.id}">Edit</a></li>    
+
+   <c:if test="${(userTransactions.type == 'expense' || userTransactions.type == 'influence')}">  
+     <li><a href="<spring:url value="" />" data-toggle="modal" data-target="#editTransaction${userTransactions.id}">Edit</a></li> 
+       </c:if>      
+ 
     <li role="separator" class="divider"></li>
     <li><a href="<spring:url value="/user-transactions/removetransaction/${userTransactions.id}.html" />" >Remove</a></li>    
  
@@ -65,7 +89,7 @@
 			
 			<td width="0%">
 			
-			<form:form mehod="post" modelAttribute="TransactionForm" action="/editTransaction.html" cssClass="form-horizontal">
+			<form:form mehod="post" modelAttribute="TransactionForm" action="/editTransaction/${actualMonthNav}.html" cssClass="form-horizontal">
 			<form:hidden path="id" value="${userTransactions.id}" />
 	<!-- Modal -->
 	<div class="modal fade" id="editTransaction${userTransactions.id}" tabindex="-1" role="dialog"
@@ -113,7 +137,7 @@
 						<label for="category" class="col-sm-2 control-label">Subcategory:</label>
 						<div class="col-sm-10">
 						<form:select class="form-control" path="subcategoryId"  style="text-align: left; width: 350px;">
-									<form:option value="NONE">${userTransactions.subcategory}</form:option>
+									<form:option value="${userTransactions.subcategory.id}">${userTransactions.subcategory.name}</form:option>
 									<form:options items="${subcategoriesMap}" />							
 							</form:select>
 							
@@ -125,7 +149,7 @@
 						<label for="account" class="col-sm-2 control-label">Account:</label>
 						<div class="col-sm-10">
 							<form:select class="form-control" path="accountId"  style="text-align: left; width: 350px;">		
-							<form:option value="NONE">${userTransactions.account}</form:option>														
+							<form:option value="${userTransactions.account.id}">${userTransactions.account.name}</form:option>														
 										<form:options items="${accountsMap}" />								
 							</form:select>
 						</div>

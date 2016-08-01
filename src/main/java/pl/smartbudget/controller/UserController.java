@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import pl.smartbudget.entity.Account;
 import pl.smartbudget.entity.Category;
 import pl.smartbudget.entity.User;
+import pl.smartbudget.forms.AlignBalanceForm;
 import pl.smartbudget.forms.SubcategoryForm;
 import pl.smartbudget.forms.SubcategoryLimitForm;
 import pl.smartbudget.forms.TransactionForm;
@@ -104,7 +105,7 @@ public class UserController {
 		model.addAttribute("accountsMap", userService.getAccountsMapOfUser(name));
 		model.addAttribute("actualMonth", transactionService.getActualDateByViewedTransactions(transactionService.findAllTransactionOfUserByActualMonth(name)));
 		model.addAttribute("nextMonthNav", transactionService.getNextMonthForNavigationByViewedTransactions(transactionService.findAllTransactionOfUserByActualMonth(name)));	
-		model.addAttribute("prevMonthNav", transactionService.getPrevMonthForNavigationByViewedTransactions(transactionService.findAllTransactionOfUserByActualMonth(name)));	
+		model.addAttribute("prevMonthNav", transactionService.getPrevMonthForNavigationByViewedTransactions(transactionService.findAllTransactionOfUserByActualMonth(name)));		
 		return "user-transactions";
 	}
 	
@@ -115,10 +116,11 @@ public class UserController {
 		model.addAttribute("user", userService.findOneWithAccountsAndTransactions(name));
 		model.addAttribute("userTransactions", transactionService.findAllTransactionOfUserByDate(name, date));
 		model.addAttribute("subcategoriesMap", userService.getSubcategoriesMapOfUser(name));
-		model.addAttribute("accountsMap", userService.getAccountsMapOfUser(name));
-		model.addAttribute("actualMonth", transactionService.getActualDateByViewedTransactions(transactionService.findAllTransactionOfUserByDate(name, date)));
-		model.addAttribute("nextMonthNav", transactionService.getNextMonthForNavigationByViewedTransactions(transactionService.findAllTransactionOfUserByDate(name, date)));	
-		model.addAttribute("prevMonthNav", transactionService.getPrevMonthForNavigationByViewedTransactions(transactionService.findAllTransactionOfUserByDate(name, date)));	
+		model.addAttribute("accountsMap", userService.getAccountsMapOfUser(name));	
+		model.addAttribute("nextMonthNav", transactionService.getNextMonthForNavigationByViewedTransactions(transactionService.findAllTransactionOfUserByDate(name, date)));
+		model.addAttribute("actualMonthNav", transactionService.geActualtMonthForNavigationByViewedTransactions(transactionService.findAllTransactionOfUserByDate(name, date)));
+		model.addAttribute("prevMonthNav", transactionService.getPrevMonthForNavigationByViewedTransactions(transactionService.findAllTransactionOfUserByDate(name, date)));
+		model.addAttribute("date", date);
 		return "user-transactions";
 	}
 	
@@ -135,10 +137,10 @@ public class UserController {
 		return "redirect:/user-transactions.html";
 	}
 	
-	@RequestMapping(value = "/editTransaction", method = RequestMethod.POST)
-	public String editTransaction(@ModelAttribute("TransactionForm") TransactionForm transaction, Principal principal)	throws ParseException {
+	@RequestMapping(value = "/alignBalance", method = RequestMethod.POST)
+	public String alignBalance(@ModelAttribute("AlignBalanceForm") AlignBalanceForm alignBalanceForm, Principal principal)	throws ParseException {
 		String name = principal.getName();
-		transactionService.edit(transaction, name);
+		transactionService.saveAlignBalance(alignBalanceForm, name);
 		return "redirect:/user-transactions.html";
 	}
 	
@@ -146,21 +148,21 @@ public class UserController {
 	public String addTransaction(@ModelAttribute("TransactionForm") TransactionForm transaction, Principal principal, String date)	throws ParseException {
 		String name = principal.getName();
 		transactionService.save(transaction, name);
-		return "redirect:/user-transactions/{date}.html";
+		return "redirect:/user-transactions/{date}.html";				
 	}
 	
-//	@RequestMapping(value = "/editTransaction/{date}", method = RequestMethod.POST)
-//	public String editTransaction(@ModelAttribute("TransactionForm") TransactionForm transaction, Principal principal, String date)	throws ParseException {
-//		String name = principal.getName();
-//		transactionService.edit(transaction, name);
-//		return "redirect:/user-transactions/{date}.html";
-//	}
+	@RequestMapping(value = "/editTransaction/{date}", method = RequestMethod.POST)
+	public String editTransaction(@ModelAttribute("TransactionForm") TransactionForm transaction, Principal principal, String date)	throws ParseException {
+		String name = principal.getName();
+		transactionService.edit(transaction, name);
+		return "redirect:/user-transactions/{date}.html";
+	}
+	//////
 	
-	
-
 	@RequestMapping("/user-accounts")
 	public String accounts(Model model, Principal principal) {
 		model.addAttribute("account", new Account());
+		model.addAttribute("AlignBalanceForm", new AlignBalanceForm());
 		String name = principal.getName();
 		model.addAttribute("user", userService.findOneWithAccounts(name));
 		model.addAttribute("summaryOfAccounts", transactionService.summaryTransactionsOfAccounts(name));
