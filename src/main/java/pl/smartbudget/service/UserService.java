@@ -120,20 +120,20 @@ public class UserService {
 		return user;
 	}
 	
-	public User findOneWithCategoriesSubcategoriesAndSubcategoryLimit(String name) {
+	public User findOneWithCategoriesSubcategoriesAndSubcategoryLimit(String name, String date) {
 		User user = userRepository.findByName(name);
-		return findOneWithCategoriesSubcategoriesAndSubcategoryLimit(user.getId());
+		return findOneWithCategoriesSubcategoriesAndSubcategoryLimit(user.getId(), date);
 	}
 
 	@Transactional
-	public User findOneWithCategoriesSubcategoriesAndSubcategoryLimit(int id) {
+	public User findOneWithCategoriesSubcategoriesAndSubcategoryLimit(int id, String date) {
 		User user = findOne(id);
 		List<Category> categories = categoryRepository.findByUser(user);
 		for (Category category : categories) {
 			List<Subcategory> subcategories = subcategoryRepository.findByCategory(category);
 			category.setSubcategories(subcategories);
 			for (Subcategory subcategory : subcategories) {
-				List<SubcategoryLimit> subcategoryLimit = subcategoryLimitRepository.findBySubcategory(subcategory);
+				List<SubcategoryLimit> subcategoryLimit = subcategoryLimitRepository.findBySubcategoryAndDate();
 				subcategory.setSubcategoryLimits(subcategoryLimit);
 			}
 		}

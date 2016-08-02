@@ -12,13 +12,13 @@
  </head>
 <nav>
   <ul class="pager">
-    <li class="previous"><a href="<spring:url value="" />"><span aria-hidden="true">&larr;</span> Previous Month</a></li>    
-    <li class="next"><a href="<spring:url value="" />">Next Month <span aria-hidden="true">&rarr;</span></a></li>
+    <li class="previous"><a href="<spring:url value="/user-budgetplan/${prevMonthNav}.html" />"><span aria-hidden="true">&larr;</span> Previous Month</a></li>     
+    <li class="next"><a href="<spring:url value="/user-budgetplan/${nextMonthNav}.html"/>">Next Month <span aria-hidden="true">&rarr;</span></a></li>
   </ul>
 </nav>
 <div class="panel panel-default">
 	<!-- Default panel contents -->
-		<div class="panel-heading"><h1 class="panel-title">Budget Plan <span class="pull-right"># 06.2016</span></h1></div>
+	<div class="panel-heading"><h1 class="panel-title">Transactions <span class="pull-right">${date}<c:if test="${empty date}">${actualMonth}</c:if></span></h1></div>
 	<div class="panel-body">
 	Below you can see budget plan of Categories.				
 	</div>
@@ -53,6 +53,8 @@
 				
 		<form:form mehod="post" modelAttribute="subcategorylimit" action="/addSubcategoryLimit.html" cssClass="form-horizontal">		
 		<form:hidden path="subcategoryId" value="${subcategory.id}" />
+		<c:if test="${not empty date}"><form:hidden path="date" value="${date}" /></c:if>
+ 		<c:if test="${empty date}"><form:hidden path="date" value="${actualMonth}" /></c:if>
 	<!-- Modal -->
 	<div class="modal fade" id="addSubcategoryLimitModal${subcategory.id}" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
@@ -62,7 +64,7 @@
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
-					<h4 class="modal-title" id="myModalLabel">Add budget to subcategory</h4>
+					<h4 class="modal-title" id="myModalLabel">Add budget to subcategory${actualMonth}</h4>
 				</div>
 				<div class="modal-body">
 				

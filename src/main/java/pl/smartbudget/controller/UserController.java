@@ -93,8 +93,38 @@ public class UserController {
 	public String doRegister(@ModelAttribute("user") User user) {
 		userService.save(user);
 		return "redirect:/user-register.html?success=true";
-	}
+		}
 
+	@RequestMapping("/user-budgetplan")
+	public String budgetplan(Model model, Principal principal) throws ParseException {
+		model.addAttribute("subcategorylimit", new SubcategoryLimitForm());
+		String name = principal.getName();
+		String date = transactionService.getActualDateByViewedTransactions(transactionService.findAllTransactionOfUserByActualMonth(name));
+		model.addAttribute("actualMonth", transactionService.getActualDateByViewedTransactions(transactionService.findAllTransactionOfUserByActualMonth(name)));
+		model.addAttribute("nextMonthNav", transactionService.getNextMonthForNavigationByViewedTransactions(transactionService.findAllTransactionOfUserByActualMonth(name)));	
+		model.addAttribute("prevMonthNav", transactionService.getPrevMonthForNavigationByViewedTransactions(transactionService.findAllTransactionOfUserByActualMonth(name)));		
+		model.addAttribute("user", userService.findOneWithCategoriesSubcategoriesAndSubcategoryLimit(name, date));
+		return "user-budgetplan";
+	}
+	
+	@RequestMapping("/user-budgetplan/{date}")
+	public String budgetplan(Model model, Principal principal, @PathVariable String date) throws ParseException {
+		model.addAttribute("subcategorylimit", new SubcategoryLimitForm());
+		String name = principal.getName();
+		model.addAttribute("nextMonthNav", transactionService.getNextMonthForNavigationByViewedTransactions(transactionService.findAllTransactionOfUserByDate(name, date)));
+		model.addAttribute("actualMonthNav", transactionService.geActualtMonthForNavigationByViewedTransactions(transactionService.findAllTransactionOfUserByDate(name, date)));
+		model.addAttribute("prevMonthNav", transactionService.getPrevMonthForNavigationByViewedTransactions(transactionService.findAllTransactionOfUserByDate(name, date)));		
+		model.addAttribute("user", userService.findOneWithCategoriesSubcategoriesAndSubcategoryLimit(name, date));
+		model.addAttribute("date", date);
+		return "user-budgetplan";
+	}
+	
+	@RequestMapping(value = "/addSubcategoryLimit", method = RequestMethod.POST)
+	public String addCategory(@ModelAttribute("subcategorylimit") SubcategoryLimitForm subcategoryLimitForm)	throws ParseException {
+		subcategoryLimitService.save(subcategoryLimitForm);
+		return "redirect:/user-budgetplan.html";
+	}
+	
 	@RequestMapping("/user-transactions")
 	public String transactions(Model model, Principal principal) throws ParseException {
 		model.addAttribute("TransactionForm", new TransactionForm());
@@ -235,21 +265,6 @@ public class UserController {
 	public String renameSubcategory(@ModelAttribute("subcategory") SubcategoryForm subcategory) {		
 		subcategoryService.rename(subcategory);
 		return "redirect:/user-categories.html";
-	}
-
-
-	@RequestMapping("/user-budgetplan")
-	public String budgetplan(Model model, Principal principal) {
-		model.addAttribute("subcategorylimit", new SubcategoryLimitForm());
-		String name = principal.getName();
-		model.addAttribute("user", userService.findOneWithCategoriesSubcategoriesAndSubcategoryLimit(name));
-		return "user-budgetplan";
-	}
-	
-	@RequestMapping(value = "/addSubcategoryLimit", method = RequestMethod.POST)
-	public String addCategory(@ModelAttribute("subcategorylimit") SubcategoryLimitForm subcategoryLimitForm)	throws ParseException {
-		subcategoryLimitService.save(subcategoryLimitForm);
-		return "redirect:/user-budgetplan.html";
 	}
 
 	@RequestMapping("/user-reports")

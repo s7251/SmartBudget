@@ -7,6 +7,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class SubcategoryLimit {
@@ -14,6 +18,9 @@ public class SubcategoryLimit {
 	@Id
 	@GeneratedValue
 	private Integer id;
+
+	@Temporal(value = TemporalType.DATE)
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date date;
 	private double amount;
 
@@ -52,4 +59,5 @@ public class SubcategoryLimit {
 	public void setDate(Date date) {
 		this.date = date;
 	}
+
 }

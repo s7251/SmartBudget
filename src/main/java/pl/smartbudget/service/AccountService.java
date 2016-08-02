@@ -15,7 +15,7 @@ public class AccountService {
 
 	@Autowired
 	private AccountRepository accountRepository;
-	
+
 	@Autowired
 	private UserRepository userRepository;
 
@@ -26,15 +26,15 @@ public class AccountService {
 
 	public void save(Account account, String name) {
 		User user = userRepository.findByName(name);
-		//Account account = new Account();		
-		account.setName(account.getName());	
+		// Account account = new Account();
+		account.setName(account.getName());
 		account.setUser(user);
-		accountRepository.save(account);		
+		accountRepository.save(account);
 	}
 
 	public void delete(int id) {
-		accountRepository.delete(id);	
-		
+		accountRepository.delete(id);
+
 	}
 
 }

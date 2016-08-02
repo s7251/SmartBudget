@@ -9,7 +9,6 @@ public class AlignBalanceForm {
 	private String date;
 	private Integer accountId;
 
-
 	public Integer getId() {
 		return id;
 	}
@@ -57,6 +56,5 @@ public class AlignBalanceForm {
 	public void setAccountId(Integer accountId) {
 		this.accountId = accountId;
 	}
-
 
 }

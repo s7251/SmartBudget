@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE xml>
-<entities>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><entities>
 	<entity>
 		<entity-name>pl.smartbudget.entity.Subcategory</entity-name>
 		<entity-width>120</entity-width>
@@ -15,7 +13,7 @@
 	<entity>
 		<entity-name>pl.smartbudget.entity.User</entity-name>
 		<entity-width>120</entity-width>
-		<entity-height>226</entity-height>
+		<entity-height>246</entity-height>
 		<entity-X-Coordinate>227</entity-X-Coordinate>
 		<entity-Y-Coordinate>17</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
@@ -26,20 +24,9 @@
 	<entity>
 		<entity-name>pl.smartbudget.entity.Transaction</entity-name>
 		<entity-width>120</entity-width>
-		<entity-height>206</entity-height>
+		<entity-height>226</entity-height>
 		<entity-X-Coordinate>475</entity-X-Coordinate>
 		<entity-Y-Coordinate>301</entity-Y-Coordinate>
-		<primary-collapsed>false</primary-collapsed>
-		<relation-collapsed>false</relation-collapsed>
-		<basic-collapsed>false</basic-collapsed>
-	</entity>
-
-	<entity>
-		<entity-name>pl.smartbudget.entity.SubcategoryLimit</entity-name>
-		<entity-width>120</entity-width>
-		<entity-height>186</entity-height>
-		<entity-X-Coordinate>700</entity-X-Coordinate>
-		<entity-Y-Coordinate>331</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -59,7 +46,7 @@
 	<entity>
 		<entity-name>pl.smartbudget.entity.Account</entity-name>
 		<entity-width>120</entity-width>
-		<entity-height>166</entity-height>
+		<entity-height>186</entity-height>
 		<entity-X-Coordinate>227</entity-X-Coordinate>
 		<entity-Y-Coordinate>310</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
@@ -73,6 +60,17 @@
 		<entity-height>146</entity-height>
 		<entity-X-Coordinate>20</entity-X-Coordinate>
 		<entity-Y-Coordinate>47</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>pl.smartbudget.entity.SubcategoryLimit</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>166</entity-height>
+		<entity-X-Coordinate>708</entity-X-Coordinate>
+		<entity-Y-Coordinate>343</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>

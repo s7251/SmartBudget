@@ -18,8 +18,8 @@ public class Account {
 	@GeneratedValue
 	private Integer id;
 	private String name;
-	
-	@Transient 
+
+	@Transient
 	private double summaryOfAccount;
 
 	@ManyToOne
@@ -71,7 +71,7 @@ public class Account {
 	public String toString() {
 		return name;
 	}
-	
+
 	public double getSummaryOfAccount() {
 		return summaryOfAccount;
 	}

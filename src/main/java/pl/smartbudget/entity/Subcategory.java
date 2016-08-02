@@ -22,10 +22,10 @@ public class Subcategory {
 	@JoinColumn(name = "category_id")
 	private Category category;
 
-	@OneToMany(mappedBy = "subcategory", cascade=CascadeType.REMOVE)
+	@OneToMany(mappedBy = "subcategory", cascade = CascadeType.REMOVE)
 	List<Transaction> transactions;
 
-	@OneToMany(mappedBy = "subcategory", cascade=CascadeType.REMOVE)
+	@OneToMany(mappedBy = "subcategory", cascade = CascadeType.REMOVE)
 	List<SubcategoryLimit> subcategoryLimits;
 
 	public Subcategory() {

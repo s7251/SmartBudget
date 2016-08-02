@@ -12,7 +12,7 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Category {
-	
+
 	@Id
 	@GeneratedValue
 	private Integer id;
@@ -22,7 +22,7 @@ public class Category {
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	@OneToMany(mappedBy = "category", cascade=CascadeType.REMOVE)
+	@OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE)
 	List<Subcategory> subcategories;
 
 	public User getUser() {
