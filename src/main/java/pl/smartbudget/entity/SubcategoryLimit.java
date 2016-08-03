@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -27,6 +28,18 @@ public class SubcategoryLimit {
 	@ManyToOne
 	@JoinColumn(name = "subcategory_id")
 	private Subcategory subcategory;
+
+	@Transient
+	private String summaryOfSpentMoney;
+
+
+	public String getSummaryOfSpentMoney() {
+		return summaryOfSpentMoney;
+	}
+
+	public void setSummaryOfSpentMoney(String summaryOfSpentMoney) {
+		this.summaryOfSpentMoney = summaryOfSpentMoney;
+	}
 
 	public Subcategory getSubcategory() {
 		return subcategory;

@@ -132,9 +132,16 @@ public class UserService {
 		for (Category category : categories) {
 			List<Subcategory> subcategories = subcategoryRepository.findByCategory(category);
 			category.setSubcategories(subcategories);
-			for (Subcategory subcategory : subcategories) {
-				List<SubcategoryLimit> subcategoryLimit = subcategoryLimitRepository.findBySubcategoryAndDate();
-				subcategory.setSubcategoryLimits(subcategoryLimit);
+			for (Subcategory subcategory : subcategories) {				
+				int month = Integer.parseInt(date.substring(0, 2));
+				int year = Integer.parseInt(date.substring(3, 7));				
+				List<SubcategoryLimit> subcategoryLimits = subcategoryLimitRepository.findBySubcategoryAndDate(subcategory.getId(), month, year );
+				subcategory.setSubcategoryLimits(subcategoryLimits);
+				for(SubcategoryLimit subcategoryLimit : subcategoryLimits){
+				
+					subcategoryLimit.setSummaryOfSpentMoney(transactionRepository.getSummaryOfSpentMoney(subcategory.getId(), month, year ));					
+					
+				}								
 			}
 		}
 		user.setCategories(categories);

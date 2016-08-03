@@ -25,6 +25,7 @@ public class SubcategoryLimitService {
 		String dateTodb = date.substring(3, 7) + "-" + date.substring(0, 2) + "-01";
 		SubcategoryLimit subcategoryLimit = new SubcategoryLimit();
 		subcategoryLimit.setAmount(subcategoryLimitForm.getAmount());
+		subcategoryLimit.setId(subcategoryLimitForm.getId());
 		subcategoryLimit.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(dateTodb));
 		subcategoryLimit.setSubcategory(subcategoryRepository.getOne(subcategoryLimitForm.getSubcategoryId()));
 		subcategoryLimitRepository.save(subcategoryLimit);
