@@ -2,6 +2,7 @@ package pl.smartbudget.service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ public class SubcategoryLimitService {
 	@Autowired
 	private SubcategoryRepository subcategoryRepository;
 
-	public void save(SubcategoryLimitForm subcategoryLimitForm) throws ParseException {
+	public void change(SubcategoryLimitForm subcategoryLimitForm) throws ParseException {
 		String date = subcategoryLimitForm.getDate();
 		String dateTodb = date.substring(3, 7) + "-" + date.substring(0, 2) + "-01";
 		SubcategoryLimit subcategoryLimit = new SubcategoryLimit();
@@ -29,6 +30,21 @@ public class SubcategoryLimitService {
 		subcategoryLimit.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(dateTodb));
 		subcategoryLimit.setSubcategory(subcategoryRepository.getOne(subcategoryLimitForm.getSubcategoryId()));
 		subcategoryLimitRepository.save(subcategoryLimit);
+	}
+	
+	public void add(SubcategoryLimitForm subcategoryLimitForm) throws ParseException {
+		String date = subcategoryLimitForm.getDate();
+		int month = Integer.parseInt(date.substring(0, 2));
+		int year = Integer.parseInt(date.substring(3, 7));	
+		List<SubcategoryLimit> subcategoryLimits = subcategoryLimitRepository.findBySubcategoryAndDate(subcategoryLimitForm.getSubcategoryId(),  month,  year );
+		if(subcategoryLimits.isEmpty()){	
+		String dateTodb = date.substring(3, 7) + "-" + date.substring(0, 2) + "-01";
+		SubcategoryLimit subcategoryLimit = new SubcategoryLimit();
+		subcategoryLimit.setAmount(subcategoryLimitForm.getAmount());	
+		subcategoryLimit.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(dateTodb));
+		subcategoryLimit.setSubcategory(subcategoryRepository.getOne(subcategoryLimitForm.getSubcategoryId()));
+		subcategoryLimitRepository.save(subcategoryLimit);
+		}
 	}
 
 	public void delete(int id) {

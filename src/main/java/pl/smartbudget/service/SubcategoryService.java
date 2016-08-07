@@ -13,10 +13,11 @@ import pl.smartbudget.repository.SubcategoryRepository;
 public class SubcategoryService {
 
 	@Autowired
-	private SubcategoryRepository subcategoryRepository;
+	private SubcategoryRepository subcategoryRepository;	
 
 	@Autowired
 	private CategoryRepository categoryRepository;
+
 
 	public void save(SubcategoryForm subcategoryForm) {
 		Subcategory subcategory = new Subcategory();
@@ -35,7 +36,6 @@ public class SubcategoryService {
 
 	public void delete(int id) {
 		subcategoryRepository.delete(id);
-
 	}
 
 	public void save(SubcategoryLimit subcategoryLimit, String name) {

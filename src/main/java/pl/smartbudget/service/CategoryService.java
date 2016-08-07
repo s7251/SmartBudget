@@ -18,8 +18,7 @@ public class CategoryService {
 	private UserRepository userRepository;
 
 	public void save(Category category, String name) {
-		User user = userRepository.findByName(name);
-		//Account account = new Account();		
+		User user = userRepository.findByName(name);				
 		category.setName(category.getName());	
 		category.setUser(user);
 		categoryRepository.save(category);		

@@ -29,7 +29,7 @@
 
 	<div class="panel-body">
 		<a href="<spring:url value="" />" class="btn btn-primary" type="button" data-toggle="modal" data-target="#addTransactionModal">Add transaction</a>
-		<a href="<spring:url value="" />" class="btn btn-primary" type="button">Import bank transactions (CSV)</a>		
+		
 	</div>
 	
 
@@ -89,7 +89,7 @@
 			
 			<td width="0%">
 			
-			<form:form mehod="post" modelAttribute="TransactionForm" action="/editTransaction/${actualMonthNav}.html" cssClass="form-horizontal">
+			<form:form mehod="post" modelAttribute="TransactionForm" action="/editTransaction/${date}.html" cssClass="form-horizontal">
 			<form:hidden path="id" value="${userTransactions.id}" />
 	<!-- Modal -->
 	<div class="modal fade" id="editTransaction${userTransactions.id}" tabindex="-1" role="dialog"

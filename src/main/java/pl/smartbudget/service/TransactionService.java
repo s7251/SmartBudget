@@ -123,9 +123,7 @@ public class TransactionService {
 		return expenseTransactions;
 	}
 
-	public Map<Integer, Account> summaryTransactionsOfAccounts(String name) {
-		
-		
+	public Map<Integer, Account> summaryTransactionsOfAccounts(String name) {		
 
 		Map<Integer, Account> summaryOfAccounts = new HashMap<Integer, Account>();
 
@@ -161,18 +159,16 @@ public class TransactionService {
 		for (Transaction transaction : transactions) {
 			transactionsSum = transactionsCalculate(transactionsSum, transaction);
 		}
-
 		return transactionsSum;
 	}
 
 	private Double transactionsCalculate(Double transactionsSum, Transaction transaction) {
 
-		if (transaction.getType().equals("influence")) {
+		if (transaction.getType().equals("influence") || transaction.getType().equals("alignment +")) {
 			transactionsSum += transaction.getAmount();
 		} else {
 			transactionsSum -= transaction.getAmount();
 		}
-
 		return transactionsSum;
 	}
 	
@@ -267,7 +263,7 @@ public class TransactionService {
 
 	public String getActualDateByViewedTransactions(List<Transaction> transactions) throws ParseException {
 		String actualMonthOfTransactions;
-		String actualYearOfTransactions ;
+		String actualYearOfTransactions;
 		
 		actualMonthOfTransactions = transactions.get(0).getDate().toString().substring(5, 7);
 		actualYearOfTransactions = transactions.get(0).getDate().toString().substring(0, 4);
@@ -276,24 +272,24 @@ public class TransactionService {
 	}
 	
 	
-	public String geActualtMonthForNavigationByViewedTransactions(List<Transaction> transactions) throws ParseException {
+	public String geActualtMonthForNavigationByViewedTransactions(List<Transaction> transactions)	throws ParseException {
 		String actualDateString = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 		if (!transactions.isEmpty()) {
 			String nextMonthOfTransactions = transactions.get(0).getDate().toString();
-			Calendar c = Calendar.getInstance();			
-			c.setTime(sdf.parse(nextMonthOfTransactions));			
+			Calendar c = Calendar.getInstance();
+			c.setTime(sdf.parse(nextMonthOfTransactions));
 			nextMonthOfTransactions = sdf.format(c.getTime()).substring(0, 7);
 			String nextYear = nextMonthOfTransactions.substring(0, 4);
 			String nextMonth = nextMonthOfTransactions.substring(5, 7);
-			actualDateString = nextMonth +"-"+ nextYear;
+			actualDateString = nextMonth + "-" + nextYear;
 		} else {
-			Date actualDate = new Date();			
+			Date actualDate = new Date();
 			String actualDateFormat = sdf.format(actualDate);
 			String actualMonth = actualDateFormat.substring(5, 7);
 			String actualYear = actualDateFormat.substring(0, 4);
-			actualDateString = actualMonth +"-"+ actualYear;
+			actualDateString = actualMonth + "-" + actualYear;
 		}
 
 		return actualDateString;

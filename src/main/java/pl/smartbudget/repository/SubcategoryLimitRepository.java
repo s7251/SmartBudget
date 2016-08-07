@@ -15,5 +15,4 @@ public interface SubcategoryLimitRepository extends JpaRepository<SubcategoryLim
 	@Query(value = "SELECT * FROM SUBCATEGORYLIMIT WHERE MONTH(DATE)= ?2 AND YEAR(DATE)= ?3 AND SUBCATEGORY_ID = ?1", nativeQuery = true)	
 	List<SubcategoryLimit> findBySubcategoryAndDate(int subcategoryId, int month, int year);
 
-
 }

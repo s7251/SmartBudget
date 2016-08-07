@@ -25,8 +25,7 @@ public class AccountService {
 	}
 
 	public void save(Account account, String name) {
-		User user = userRepository.findByName(name);
-		// Account account = new Account();
+		User user = userRepository.findByName(name);		
 		account.setName(account.getName());
 		account.setUser(user);
 		accountRepository.save(account);
