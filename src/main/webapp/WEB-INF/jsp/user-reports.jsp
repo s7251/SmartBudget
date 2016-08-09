@@ -12,8 +12,8 @@
    Generate report <span class="caret"></span>
   </button>
   <ul class="dropdown-menu">
+    <li><a href="<spring:url value="" />" data-toggle="modal" data-target="#influenceReport">Influences by categories</a></li>
     <li><a href="">Expenses by categories</a></li>
-    <li><a href="">Influences by categories</a></li>
     <li><a href="">Balance of account</a></li> 
     <li><a href="">Transactions</a></li> 
 
@@ -21,45 +21,43 @@
 </div>
 	</div>
 	
-<table class="table">
-	<thead>
-		<tr bgcolor="#efefef">
-			<th>Graph:</th>
-		</tr>
-	</thead>
-	<tbody>		
-		<tr>
-<td> <div  id="donutchart" style="width: 900px; height: 500px;"></div></td>
-		</tr>
-	</tbody>
-</table>
+
 
 </div>
 
 
+<form:form mehod="post" modelAttribute="ReportForm" action="/report-influences-by-categories.html" cssClass="form-horizontal">
+	<!-- Modal -->
+	<div class="modal fade" id="influenceReport" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Influences by categories</h4>
+				</div>
+				<div class="modal-body">
+				
+					<div class="form-group"
+						style="text-align: center; width: 800px; margin: 0 auto;">
+						<label for="name" class="col-sm-2 control-label">Date:</label>
+						<div class="col-sm-10">
+							<form:input path="date" cssClass="form-control" style="width: 350px" placeholder="DD/YYYY"	autofocus="autofocus" />
+						</div>
+					</div>
+					
+					</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<input type="submit" class="btn btn-success" value="Generate Report" />
+				</div>
+			</div>
+		</div>
+	</div>
+</form:form>
 
 
-	 <head>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-      google.charts.load("current", {packages:["corechart"]});
-      google.charts.setOnLoadCallback(drawChart);
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Subcategory', 'zł per month'],
-          ['Restaurant',     101.00],
-          ['Barber',      25.00],
-          ['Supermarket',  89.00],         
-        ]);
 
-        var options = {
-          title: 'Expenses by categories in 06.2016',
-          pieHole: 0.4,
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
-        chart.draw(data, options);
-      }
-    </script>
-  </head>
  

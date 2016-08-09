@@ -10,17 +10,20 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pl.smartbudget.entity.Account;
+import pl.smartbudget.entity.Category;
 import pl.smartbudget.entity.Subcategory;
 import pl.smartbudget.entity.Transaction;
 import pl.smartbudget.entity.User;
 import pl.smartbudget.forms.AlignBalanceForm;
 import pl.smartbudget.forms.TransactionForm;
 import pl.smartbudget.repository.AccountRepository;
+import pl.smartbudget.repository.CategoryRepository;
 import pl.smartbudget.repository.SubcategoryRepository;
 import pl.smartbudget.repository.TransactionRepository;
 import pl.smartbudget.repository.UserRepository;
@@ -39,6 +42,9 @@ public class TransactionService {
 
 	@Autowired
 	private SubcategoryRepository subcategoryRepository;
+	
+	@Autowired
+	private CategoryRepository categoryRepository;
 
 	public void save(TransactionForm transactionForm, String name) throws ParseException {
 		User user = userRepository.findByName(name);
@@ -86,6 +92,36 @@ public class TransactionService {
 		accountOfTransaction.setUser(user);
 
 		transactionRepository.save(transaction);
+	}
+	
+	public Map<String, Double> getMapOfSubcategoriesWithInfluencesByDate(String name) {
+		User user = userRepository.findByName(name);
+
+		Map<String, Double> mapOfSubcategories = new HashMap<String, Double>();
+
+		List<Category> categories = categoryRepository.findByUser(user);
+		for (Category category : categories) {
+			List<Subcategory> subcategories = subcategoryRepository.findByCategory(category);
+			category.setSubcategories(subcategories);
+
+			for (Subcategory subcategory : subcategories) {
+				List<Transaction> transactions = transactionRepository.findBySubcategory(subcategory);
+				Double amountOfTransactions = new Double(0);
+				for (Transaction transaction : transactions) {
+
+					if (transaction.getType().equals("influence")) {
+						amountOfTransactions += transaction.getAmount();
+					}
+				}
+				if (amountOfTransactions > 0) {
+					mapOfSubcategories.put(subcategory.getName(), amountOfTransactions);
+				}
+			}
+			user.setCategories(categories);
+
+		}
+		Map<String, Double> sortedMapOfSubcategories = new TreeMap<String, Double>(mapOfSubcategories);
+		return sortedMapOfSubcategories;
 	}
 
 	public List<Transaction> findInfluenceTransactionsByUser(String name) {
