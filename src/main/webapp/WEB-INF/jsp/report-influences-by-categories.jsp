@@ -42,7 +42,7 @@
           ['Subcategory', 'zł per month'],      
           <c:forEach items="${summaryOfAllAccounts}" var="entry">
           ['${entry.key}',   ${entry.value}],
-           </c:forEach>        
+           </c:forEach>          
           ]);           
         var options = {
           title: 'Influences by categories',

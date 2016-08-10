@@ -94,9 +94,12 @@ public class TransactionService {
 		transactionRepository.save(transaction);
 	}
 	
-	public Map<String, Double> getMapOfSubcategoriesWithInfluencesByDate(String name) {
+	public Map<String, Double> getMapOfSubcategoriesWithInfluencesByDate(String name, String date) {
 		User user = userRepository.findByName(name);
-
+		
+		int reportMonth = Integer.parseInt(date.substring(0, 2));
+		int reportYear= Integer.parseInt(date.substring(3, 7));
+		
 		Map<String, Double> mapOfSubcategories = new HashMap<String, Double>();
 
 		List<Category> categories = categoryRepository.findByUser(user);
@@ -108,8 +111,11 @@ public class TransactionService {
 				List<Transaction> transactions = transactionRepository.findBySubcategory(subcategory);
 				Double amountOfTransactions = new Double(0);
 				for (Transaction transaction : transactions) {
+									
+					int transactionMonth = Integer.parseInt(transaction.getDate().toString().substring(5, 7));
+					int transactionYear = Integer.parseInt(transaction.getDate().toString().substring(0, 4));	
 
-					if (transaction.getType().equals("influence")) {
+					if (transaction.getType().equals("influence") && reportMonth==transactionMonth && reportYear==transactionYear) {
 						amountOfTransactions += transaction.getAmount();
 					}
 				}

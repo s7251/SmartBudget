@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<%@ include file="../tiles-template/taglib.jsp"%>
+<%@ include file="../tiles-template/taglib.jsp"%>  
+
+    <link rel='stylesheet prefetch' href='http://netdna.bootstrapcdn.com/twitter-bootstrap/3.3.6/css/bootstrap-combined.min.css'>
+<link rel='stylesheet prefetch' href='https://s3-us-west-2.amazonaws.com/s.cdpn.io/2708/bootstrap-datetimepicker.min.css'>
 
 <div class="panel panel-default">
 	<!-- Default panel contents -->
@@ -16,18 +19,14 @@
     <li><a href="">Expenses by categories</a></li>
     <li><a href="">Balance of account</a></li> 
     <li><a href="">Transactions</a></li> 
-
   </ul>
+</div>	</div>	
 </div>
-	</div>
-	
-
-
-</div>
+  
 
 
 <form:form mehod="post" modelAttribute="ReportForm" action="/report-influences-by-categories.html" cssClass="form-horizontal">
-	<!-- Modal -->
+	<!-- Modal -->	
 	<div class="modal fade" id="influenceReport" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
@@ -46,8 +45,9 @@
 						<div class="col-sm-10">
 							<form:input path="date" cssClass="form-control" style="width: 350px" placeholder="DD/YYYY"	autofocus="autofocus" />
 						</div>
-					</div>
+					</div>			
 					
+						
 					</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -60,4 +60,3 @@
 
 
 
- 

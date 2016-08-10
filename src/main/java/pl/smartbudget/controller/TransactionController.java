@@ -66,14 +66,14 @@ public class TransactionController {
 	}
 	
 	@RequestMapping(value = "/user-transactions/{date}", method = RequestMethod.POST)
-	public String addTransaction(@ModelAttribute("TransactionForm") TransactionForm transaction, Principal principal, String date)	throws ParseException {
+	public String addTransaction(@ModelAttribute("TransactionForm") TransactionForm transaction, Principal principal, @PathVariable String date)	throws ParseException {
 		String name = principal.getName();
 		transactionService.save(transaction, name);
 		return "redirect:/user-transactions/{date}.html";				
 	}
 	
 	@RequestMapping(value = "/editTransaction/{date}", method = RequestMethod.POST)
-	public String editTransaction(@ModelAttribute("TransactionForm") TransactionForm transaction, Principal principal, String date)	throws ParseException {
+	public String editTransaction(@ModelAttribute("TransactionForm") TransactionForm transaction, Principal principal, @PathVariable String date)	throws ParseException {
 		String name = principal.getName();
 		transactionService.edit(transaction, name);
 		return "redirect:/user-transactions.html";
