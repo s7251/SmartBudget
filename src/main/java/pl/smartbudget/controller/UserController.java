@@ -1,6 +1,7 @@
 package pl.smartbudget.controller;
 
 import java.security.Principal;
+import java.text.ParseException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,6 +36,12 @@ public class UserController {
 	@RequestMapping("/users/removeuser/{id}")
 	public String removeUser(@PathVariable int id ){
 		userService.delete(id);
+		return "redirect:/users.html";
+	}
+	
+	@RequestMapping(value = "/renameUser", method = RequestMethod.POST)
+	public String renameUser(@ModelAttribute("user") User user)	throws ParseException {	
+		userService.save(user);
 		return "redirect:/users.html";
 	}
 	

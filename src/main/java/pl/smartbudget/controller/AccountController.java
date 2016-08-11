@@ -65,8 +65,6 @@ public class AccountController {
 		String name = principal.getName();
 		transactionService.saveAlignBalance(alignBalanceForm, name);
 		return "redirect:/user-transactions.html";
-	}
-
-	
+	}	
 
 }

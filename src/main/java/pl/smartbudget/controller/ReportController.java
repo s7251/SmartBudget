@@ -46,4 +46,19 @@ public class ReportController {
     	return "redirect:/report-influences-by-categories/"+date+".html";				
 	}
 	
+	@RequestMapping("/report-expenses-by-categories/{date}")
+	public String getExpenseReport(Model model, Principal principal, @PathVariable String date) {				
+		String name = principal.getName();
+		model.addAttribute("user", userService.findOneWithCategoriesAndSubcategories(name));
+		model.addAttribute("summaryOfAllAccounts", transactionService.getMapOfSubcategoriesWithExpensesByDate(name, date));	
+		
+		return "report-influences-by-categories";
+	}
+	
+	@RequestMapping(value = "/report-expenses-by-categories", method = RequestMethod.POST)
+	public String expenseReport(@ModelAttribute("ReportForm") ReportForm report)	 {
+		String date = report.getDate();
+    	return "redirect:/report-expenses-by-categories/"+date+".html";				
+	}
+	
 }

@@ -74,15 +74,21 @@
 		<put-attribute name="current" value="user-budgetplan" />		
 	</definition>
 	
-		<definition name="user-reports" extends="common">
+	<definition name="user-reports" extends="common">
 		<put-attribute name="title" value="User Reports" />
 		<put-attribute name="body" value="/WEB-INF/jsp/user-reports.jsp" />
 		<put-attribute name="current" value="user-reports" />		
 	</definition>
 	
-			<definition name="report-influences-by-categories" extends="common">
+	<definition name="report-influences-by-categories" extends="common">
 		<put-attribute name="title" value="User Reports" />
 		<put-attribute name="body" value="/WEB-INF/jsp/report-influences-by-categories.jsp" />
 		<put-attribute name="current" value="report-influences-by-categories" />		
+	</definition>
+	
+	<definition name="report-expenses-by-categories" extends="common">
+		<put-attribute name="title" value="User Reports" />
+		<put-attribute name="body" value="/WEB-INF/jsp/report-expenses-by-categories.jsp" />
+		<put-attribute name="current" value="report-expenses-by-categories" />		
 	</definition>
 </tiles-definitions>

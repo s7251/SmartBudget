@@ -89,7 +89,7 @@
 						style="text-align: center; width: 800px; margin: 0 auto;">
 						<label for="name" class="col-sm-2 control-label">Name:</label>
 						<div class="col-sm-10">
-							<form:input path="name" cssClass="form-control" style="width: 350px" placeholder="${category.name}"	autofocus="autofocus" />
+							<form:input path="name" cssClass="form-control" style="width: 350px" value="${category.name}"	autofocus="autofocus" />
 						 </div>
 					</div>
 					
@@ -134,7 +134,7 @@
 						style="text-align: center; width: 800px; margin: 0 auto;">
 						<label for="name" class="col-sm-2 control-label">Name:</label>
 						<div class="col-sm-10">
-							<form:input path="name" cssClass="form-control" style="width: 350px" placeholder="${subcategory.name}"	autofocus="autofocus" />
+							<form:input path="name" cssClass="form-control" style="width: 350px" value="${subcategory.name}"	autofocus="autofocus" />
 						 </div>
 					</div>
 					

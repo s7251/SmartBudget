@@ -72,7 +72,7 @@
 					<div class="form-group"	style="text-align: center; width: 800px; margin: 0 auto;">
 						<label for="date" class="col-sm-2 control-label">Date:</label>
 						<div class="col-sm-10">						
-						<form:input path="date" cssClass="form-control" style="width: 350px" placeholder="DD/MM/RRRR" autofocus="autofocus" data-options="formatter:myformatter,parser:myparser"/> 
+						<form:input path="date" cssClass="form-control" style="width: 350px" placeholder="DD-MM-RRRR" autofocus="autofocus" data-options="formatter:myformatter,parser:myparser"/> 
 						</div>						
 						</div>														
 
@@ -109,7 +109,7 @@
 						style="text-align: center; width: 800px; margin: 0 auto;">
 						<label for="name" class="col-sm-2 control-label">Name:</label>
 						<div class="col-sm-10">
-							<form:input path="name" cssClass="form-control" style="width: 350px" placeholder="${summary.value.name}" autofocus="autofocus" ></form:input>
+							<form:input path="name" cssClass="form-control" style="width: 350px" value="${summary.value.name}" autofocus="autofocus" ></form:input>
 						</div>
 					</div>
 					

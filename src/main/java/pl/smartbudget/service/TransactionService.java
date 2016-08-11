@@ -54,7 +54,7 @@ public class TransactionService {
 		transaction.setType(transactionForm.getType());
 		transaction.setAmount(transactionForm.getAmount());
 		transaction.setName(transactionForm.getName());
-		transaction.setDate(new SimpleDateFormat("dd/MM/yyyy").parse(transactionForm.getDate()));
+		transaction.setDate(new SimpleDateFormat("dd-MM-yyyy").parse(transactionForm.getDate()));
 		transaction.setSubcategory(subcategoryOfAccount);
 		transaction.setAccount(accountOfTransaction);
 		accountOfTransaction.setUser(user);
@@ -71,7 +71,7 @@ public class TransactionService {
 		transaction.setType(transactionForm.getType());
 		transaction.setAmount(transactionForm.getAmount());
 		transaction.setName(transactionForm.getName());
-		transaction.setDate(new SimpleDateFormat("dd/MM/yyyy").parse(transactionForm.getDate()));
+		transaction.setDate(new SimpleDateFormat("dd-MM-yyyy").parse(transactionForm.getDate()));
 		transaction.setSubcategory(subcategoryOfAccount);
 		transaction.setAccount(accountOfTransaction);
 		accountOfTransaction.setUser(user);
@@ -87,7 +87,7 @@ public class TransactionService {
 		transaction.setType(alignBalanceForm.getType());
 		transaction.setAmount(alignBalanceForm.getAmount());
 		transaction.setName(alignBalanceForm.getName());
-		transaction.setDate(new SimpleDateFormat("dd/MM/yyyy").parse(alignBalanceForm.getDate()));	
+		transaction.setDate(new SimpleDateFormat("dd-MM-yyyy").parse(alignBalanceForm.getDate()));	
 		transaction.setAccount(accountOfTransaction);
 		accountOfTransaction.setUser(user);
 
@@ -129,6 +129,43 @@ public class TransactionService {
 		Map<String, Double> sortedMapOfSubcategories = new TreeMap<String, Double>(mapOfSubcategories);
 		return sortedMapOfSubcategories;
 	}
+	
+	public Map<String, Double> getMapOfSubcategoriesWithExpensesByDate(String name, String date) {
+		User user = userRepository.findByName(name);
+		
+		int reportMonth = Integer.parseInt(date.substring(0, 2));
+		int reportYear= Integer.parseInt(date.substring(3, 7));
+		
+		Map<String, Double> mapOfSubcategories = new HashMap<String, Double>();
+
+		List<Category> categories = categoryRepository.findByUser(user);
+		for (Category category : categories) {
+			List<Subcategory> subcategories = subcategoryRepository.findByCategory(category);
+			category.setSubcategories(subcategories);
+
+			for (Subcategory subcategory : subcategories) {
+				List<Transaction> transactions = transactionRepository.findBySubcategory(subcategory);
+				Double amountOfTransactions = new Double(0);
+				for (Transaction transaction : transactions) {
+									
+					int transactionMonth = Integer.parseInt(transaction.getDate().toString().substring(5, 7));
+					int transactionYear = Integer.parseInt(transaction.getDate().toString().substring(0, 4));	
+
+					if (transaction.getType().equals("expense") && reportMonth==transactionMonth && reportYear==transactionYear) {
+						amountOfTransactions += transaction.getAmount();
+					}
+				}
+				if (amountOfTransactions > 0) {
+					mapOfSubcategories.put(subcategory.getName(), amountOfTransactions);
+				}
+			}
+			user.setCategories(categories);
+
+		}
+		Map<String, Double> sortedMapOfSubcategories = new TreeMap<String, Double>(mapOfSubcategories);
+		return sortedMapOfSubcategories;
+	}
+	
 
 	public List<Transaction> findInfluenceTransactionsByUser(String name) {
 		User user = userRepository.findByName(name);

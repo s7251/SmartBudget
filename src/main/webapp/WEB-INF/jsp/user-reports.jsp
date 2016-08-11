@@ -15,10 +15,9 @@
    Generate report <span class="caret"></span>
   </button>
   <ul class="dropdown-menu">
-    <li><a href="<spring:url value="" />" data-toggle="modal" data-target="#influenceReport">Influences by categories</a></li>
-    <li><a href="">Expenses by categories</a></li>
-    <li><a href="">Balance of account</a></li> 
-    <li><a href="">Transactions</a></li> 
+    <li><a href="<spring:url value="" />" data-toggle="modal" data-target="#influenceReport">Influences by subcategories</a></li>
+    <li><a href="<spring:url value="" />" data-toggle="modal" data-target="#expenseReport">Expenses by subcategories</a></li>
+    <li><a href="">Amount of Transactions</a></li> 
   </ul>
 </div>	</div>	
 </div>
@@ -35,7 +34,7 @@
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
-					<h4 class="modal-title" id="myModalLabel">Influences by categories</h4>
+					<h4 class="modal-title" id="myModalLabel">Influences by subcategories</h4>
 				</div>
 				<div class="modal-body">
 				
@@ -43,7 +42,40 @@
 						style="text-align: center; width: 800px; margin: 0 auto;">
 						<label for="name" class="col-sm-2 control-label">Date:</label>
 						<div class="col-sm-10">
-							<form:input path="date" cssClass="form-control" style="width: 350px" placeholder="DD/YYYY"	autofocus="autofocus" />
+							<form:input path="date" cssClass="form-control" style="width: 350px" placeholder="MM-YYYY"	autofocus="autofocus" />
+						</div>
+					</div>			
+					
+						
+					</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<input type="submit" class="btn btn-success" value="Generate Report" />
+				</div>
+			</div>
+		</div>
+	</div>
+</form:form>
+
+<form:form mehod="post" modelAttribute="ReportForm" action="/report-expenses-by-categories.html" cssClass="form-horizontal">
+	<!-- Modal -->	
+	<div class="modal fade" id="expenseReport" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Expenses by categories</h4>
+				</div>
+				<div class="modal-body">
+				
+					<div class="form-group"
+						style="text-align: center; width: 800px; margin: 0 auto;">
+						<label for="name" class="col-sm-2 control-label">Date:</label>
+						<div class="col-sm-10">
+							<form:input path="date" cssClass="form-control" style="width: 350px" placeholder="MM-YYYY"	autofocus="autofocus" />
 						</div>
 					</div>			
 					
