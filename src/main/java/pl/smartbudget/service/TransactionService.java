@@ -422,9 +422,30 @@ public class TransactionService {
 		return prevDate;
 	}
 
-	public void delete(int id) {
-		transactionRepository.delete(id);
+	
+	public void delete(int id, String name, String date) {
+		List<Account> userAccounts = accountRepository.findByUser(userRepository.findByName(name));
+		List<Transaction> userTransactions = new ArrayList<Transaction>();
 		
+		int viewedMonth = Integer.parseInt(date.substring(0, 2));
+		int viewedYear= Integer.parseInt(date.substring(3, 7));
+	
+		for(Account account : userAccounts){
+			List<Transaction> transactions = transactionRepository.findByAccount(account);
+			for(Transaction transaction: transactions){
+				
+				int transactionMonth = Integer.parseInt(transaction.getDate().toString().substring(5, 7));
+				int transactionYear = Integer.parseInt(transaction.getDate().toString().substring(0, 4));	
+				
+				if(viewedMonth==transactionMonth && viewedYear==transactionYear){
+				userTransactions.add(transaction);}
+			}
+		}
+		
+		if (userTransactions.size() != 1) {
+			transactionRepository.delete(id);
+		}
+
 	}
 
 }

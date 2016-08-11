@@ -1,6 +1,7 @@
 package pl.smartbudget.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,6 +70,46 @@ public class UserService {
 		List<Role> userRoles = new ArrayList<Role>();
 		userRoles.add(roleRepository.findByName("ROLE_USER"));
 		user.setRoles(userRoles);
+		
+			
+		Account account = new Account();
+		account.setUser(user);
+		account.setName("SampleAccount1");
+		accountRepository.save(account);
+		
+		Category categorySample = new Category();
+		categorySample.setUser(user);
+		categorySample.setName("SampleCategory1");
+		categoryRepository.save(categorySample);
+		
+		Subcategory subcategorySample = new Subcategory();
+		subcategorySample.setCategory(categorySample);
+		subcategorySample.setName("SampleSubcategory1");
+		subcategoryRepository.save(subcategorySample);
+		
+		SubcategoryLimit subcategoryLimitSample = new SubcategoryLimit();
+		subcategoryLimitSample.setSubcategory(subcategorySample);
+		subcategoryLimitSample.setAmount(200.00);
+		subcategoryLimitSample.setDate(new Date());		
+		subcategoryLimitRepository.save(subcategoryLimitSample);
+		
+		Transaction transaction = new Transaction();
+		transaction.setSubcategory(subcategorySample);
+		transaction.setAccount(account);
+		transaction.setType("influence");
+		transaction.setName("your first influence!");
+		transaction.setDate(new Date());
+		transaction.setAmount(999.00);
+		transactionRepository.save(transaction);
+		
+		Transaction transaction2 = new Transaction();
+		transaction2.setSubcategory(subcategorySample);
+		transaction2.setAccount(account);
+		transaction2.setType("expense");
+		transaction2.setName("your first expense!");
+		transaction2.setDate(new Date());
+		transaction2.setAmount(499.00);
+		transactionRepository.save(transaction2);
 
 		userRepository.save(user);
 	}

@@ -52,9 +52,10 @@ public class TransactionController {
 		return "user-transactions";
 	}
 	
-	@RequestMapping("/user-transactions/removetransaction/{id}")
-	public String removeTransaction(@PathVariable int id ){
-		transactionService.delete(id);
+	@RequestMapping("/user-transactions/removetransaction/{id}/{date}")
+	public String removeTransaction(@PathVariable int id, @PathVariable String date, Principal principal){
+		String name = principal.getName();
+		transactionService.delete(id, name, date);
 		return "redirect:/user-transactions.html";
 	}
 
