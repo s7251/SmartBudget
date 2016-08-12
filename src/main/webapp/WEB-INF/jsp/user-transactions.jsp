@@ -166,6 +166,16 @@
 			</tr>
 			
 		</c:forEach>
+		<tr>
+		<td></td>
+		<td style="text-align: right;"><b>month summary:</b></td>
+		<td><b>${monthSummary}</b></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		</tr>
 	</table>
 
 </div>

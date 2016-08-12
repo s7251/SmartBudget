@@ -17,7 +17,7 @@
   <ul class="dropdown-menu">
     <li><a href="<spring:url value="" />" data-toggle="modal" data-target="#influenceReport">Influences by subcategories</a></li>
     <li><a href="<spring:url value="" />" data-toggle="modal" data-target="#expenseReport">Expenses by subcategories</a></li>
-    <li><a href="">Amount of Transactions</a></li> 
+    <li><a href="">Transactions in time</a></li> 
   </ul>
 </div>	</div>	
 </div>
@@ -89,6 +89,5 @@
 		</div>
 	</div>
 </form:form>
-
 
 

@@ -5,7 +5,7 @@
 
 <div class="panel panel-default">
 	<!-- Default panel contents -->
-		<div class="panel-heading"><h1 class="panel-title">Influences by categories </h1></div>
+		<div class="panel-heading"><h1 class="panel-title">Expenses by subcategories </h1></div>
 		<div class="panel-body" >
 <a href="<spring:url value="/user-reports.html" />" class="btn btn-primary" type="button" >Back</a>
 <span class="pull-right">
@@ -17,7 +17,9 @@
 <table class="table">
 	<thead>
 		<tr bgcolor="#efefef">
-			<th>Graph:</th>
+			<th><h1 class="panel-title">Graph: <span class="pull-right">${date}</span></h1> </th>
+			
+			
 		</tr>
 	</thead>
 	<tbody>		
@@ -44,7 +46,7 @@
           ['${entry.key}', ${entry.value}], 
            </c:forEach>               ]);           
         var options = { 
-          title: 'Expenses by categories',
+          title: 'Expenses by categories in' ,
           pieHole: 0.4,
         };
         var chart = new google.visualization.PieChart(document.getElementById('donutchart'));

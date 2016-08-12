@@ -29,6 +29,7 @@ public class TransactionController {
 		String name = principal.getName();
 		model.addAttribute("user", userService.findOneWithAccountsAndTransactions(name));
 		model.addAttribute("userTransactions", transactionService.findAllTransactionOfUserByActualMonth(name));
+		model.addAttribute("monthSummary", transactionService.getSummaryOfActualMonth(name));
 		model.addAttribute("subcategoriesMap", userService.getSubcategoriesMapOfUser(name));
 		model.addAttribute("accountsMap", userService.getAccountsMapOfUser(name));
 		model.addAttribute("actualMonth", transactionService.getActualDateByViewedTransactions(transactionService.findAllTransactionOfUserByActualMonth(name)));
@@ -43,6 +44,7 @@ public class TransactionController {
 		String name = principal.getName();
 		model.addAttribute("user", userService.findOneWithAccountsAndTransactions(name));
 		model.addAttribute("userTransactions", transactionService.findAllTransactionOfUserByDate(name, date));
+		model.addAttribute("monthSummary", transactionService.getSummaryOfMonthByDate(name, date));
 		model.addAttribute("subcategoriesMap", userService.getSubcategoriesMapOfUser(name));
 		model.addAttribute("accountsMap", userService.getAccountsMapOfUser(name));	
 		model.addAttribute("nextMonthNav", transactionService.getNextMonthForNavigationByViewedTransactions(transactionService.findAllTransactionOfUserByDate(name, date)));

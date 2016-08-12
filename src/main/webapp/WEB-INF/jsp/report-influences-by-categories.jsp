@@ -5,7 +5,7 @@
 
 <div class="panel panel-default">
 	<!-- Default panel contents -->
-		<div class="panel-heading"><h1 class="panel-title">Influences by categories </h1></div>
+		<div class="panel-heading"><h1 class="panel-title">Influences by subcategories  </h1></div>
 		<div class="panel-body" >
 <a href="<spring:url value="/user-reports.html" />" class="btn btn-primary" type="button" >Back</a>
 <span class="pull-right">
@@ -17,12 +17,12 @@
 <table class="table">
 	<thead>
 		<tr bgcolor="#efefef">
-			<th>Graph:</th>
+		<th><h1 class="panel-title">Graph: <span class="pull-right">${date}</span></h1> </th>
 		</tr>
 	</thead>
 	<tbody>		
 		<tr>
-<td> <div  id="donutchart" style="width: 1100px; height: 500px;"></div>
+<td> <div id="donutchart" style="width: 1100px; height: 500px;"></div>
 
 </td>
 		</tr>
@@ -37,6 +37,7 @@
     <script type="text/javascript">
       google.charts.load("current", {packages:["corechart"]});
       google.charts.setOnLoadCallback(drawChart);
+      
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
           ['Subcategory', 'zł per month'],      
@@ -45,8 +46,9 @@
            </c:forEach>          
           ]);           
         var options = {
-          title: 'Influences by categories',
-          pieHole: 0.4,
+          title: 'Influences by categories in' + ${date},
+          pieHole: 0.5,
+   
         };
         var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
         chart.draw(data, options);

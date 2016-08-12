@@ -284,7 +284,8 @@ public class TransactionService {
 				if(actualMonth==transactionMonth && actualYear==transactionYear){
 				allTransactionsByUser.add(transaction);}
 			}
-		}				
+		}		
+	
 				
 		Collections.sort(allTransactionsByUser, new Comparator<Transaction>() {
 			public int compare(Transaction t1, Transaction t2) {
@@ -293,6 +294,30 @@ public class TransactionService {
 		});
 
 		return allTransactionsByUser;
+	}
+	
+	public Double getSummaryOfActualMonth(String name) {
+		Double transactionsSum = new Double(0);		
+		
+		List<Transaction> transactionOfActualMonth = new ArrayList<Transaction>();
+		transactionOfActualMonth.addAll(findAllTransactionOfUserByActualMonth(name));
+
+		for (Transaction transaction : transactionOfActualMonth) {
+			transactionsSum = transactionsCalculate(transactionsSum, transaction);
+		}
+		return transactionsSum;
+	}
+	
+	public Double getSummaryOfMonthByDate(String name, String date) {
+		Double transactionsSum = new Double(0);		
+		
+		List<Transaction> transactionOfMonthByDate = new ArrayList<Transaction>();
+		transactionOfMonthByDate.addAll(findAllTransactionOfUserByDate(name, date));
+
+		for (Transaction transaction : transactionOfMonthByDate) {
+			transactionsSum = transactionsCalculate(transactionsSum, transaction);
+		}
+		return transactionsSum;
 	}
 	
 	public List<Transaction> findAllTransactionOfUserByDate(String name, String date) {

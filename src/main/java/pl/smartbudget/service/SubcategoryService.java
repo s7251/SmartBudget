@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import pl.smartbudget.entity.Subcategory;
-import pl.smartbudget.entity.SubcategoryLimit;
 import pl.smartbudget.forms.SubcategoryForm;
 import pl.smartbudget.repository.CategoryRepository;
 import pl.smartbudget.repository.SubcategoryRepository;
@@ -37,10 +36,5 @@ public class SubcategoryService {
 	public void delete(int id) {
 		subcategoryRepository.delete(id);
 	}
-
-	public void save(SubcategoryLimit subcategoryLimit, String name) {
-		// TODO Auto-generated method stub
-
-	}
-
+	
 }

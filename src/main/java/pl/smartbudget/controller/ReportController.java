@@ -34,9 +34,9 @@ public class ReportController {
 	@RequestMapping("/report-influences-by-categories/{date}")
 	public String getInfluenceReport(Model model, Principal principal, @PathVariable String date) {				
 		String name = principal.getName();
+		model.addAttribute("date", date);
 		model.addAttribute("user", userService.findOneWithCategoriesAndSubcategories(name));
-		model.addAttribute("summaryOfAllAccounts", transactionService.getMapOfSubcategoriesWithInfluencesByDate(name, date));	
-		
+		model.addAttribute("summaryOfAllAccounts", transactionService.getMapOfSubcategoriesWithInfluencesByDate(name, date));			
 		return "report-influences-by-categories";
 	}
 	
@@ -50,9 +50,9 @@ public class ReportController {
 	public String getExpenseReport(Model model, Principal principal, @PathVariable String date) {				
 		String name = principal.getName();
 		model.addAttribute("user", userService.findOneWithCategoriesAndSubcategories(name));
-		model.addAttribute("summaryOfAllAccounts", transactionService.getMapOfSubcategoriesWithExpensesByDate(name, date));	
-		
-		return "report-influences-by-categories";
+		model.addAttribute("date", date);
+		model.addAttribute("summaryOfAllAccounts", transactionService.getMapOfSubcategoriesWithExpensesByDate(name, date));			
+		return "report-expenses-by-categories";
 	}
 	
 	@RequestMapping(value = "/report-expenses-by-categories", method = RequestMethod.POST)
