@@ -21,7 +21,7 @@ public class SubcategoryLimit {
 	private Integer id;
 
 	@Temporal(value = TemporalType.DATE)
-	@DateTimeFormat(pattern = "dd-MM-yyyy")
+	@DateTimeFormat(pattern = "dd.MM.yyyy")
 	private Date date;
 	private double amount;
 

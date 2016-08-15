@@ -34,25 +34,30 @@
 </div>
 
    
-	 <head>
+ <head>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
       google.charts.load("current", {packages:["corechart"]});
       google.charts.setOnLoadCallback(drawChart);
+      
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
           ['Subcategory', 'zł per month'],      
           <c:forEach items="${summaryOfAllAccounts}" var="entry">
-          ['${entry.key}', ${entry.value}], 
-           </c:forEach>               ]);           
-        var options = { 
-          title: 'Expenses by categories in' ,
-          pieHole: 0.4,
+          ['${entry.key}',   ${entry.value}],
+           </c:forEach>          
+          ]);           
+        var options = {
+          title: 'Expenses by subcategories in ' + ${date},
+          pieHole: 0.5,
+   
         };
         var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
         chart.draw(data, options);
       }
     </script>
   </head>
+  
+   
   
    

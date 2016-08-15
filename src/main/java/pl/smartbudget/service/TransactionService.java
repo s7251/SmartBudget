@@ -54,7 +54,7 @@ public class TransactionService {
 		transaction.setType(transactionForm.getType());
 		transaction.setAmount(transactionForm.getAmount());
 		transaction.setName(transactionForm.getName());
-		transaction.setDate(new SimpleDateFormat("dd-MM-yyyy").parse(transactionForm.getDate()));
+		transaction.setDate(new SimpleDateFormat("dd.MM.yyyy").parse(transactionForm.getDate()));
 		transaction.setSubcategory(subcategoryOfAccount);
 		transaction.setAccount(accountOfTransaction);
 		accountOfTransaction.setUser(user);
@@ -71,7 +71,7 @@ public class TransactionService {
 		transaction.setType(transactionForm.getType());
 		transaction.setAmount(transactionForm.getAmount());
 		transaction.setName(transactionForm.getName());
-		transaction.setDate(new SimpleDateFormat("dd-MM-yyyy").parse(transactionForm.getDate()));
+		transaction.setDate(new SimpleDateFormat("dd.MM.yyyy").parse(transactionForm.getDate()));
 		transaction.setSubcategory(subcategoryOfAccount);
 		transaction.setAccount(accountOfTransaction);
 		accountOfTransaction.setUser(user);
@@ -87,7 +87,7 @@ public class TransactionService {
 		transaction.setType(alignBalanceForm.getType());
 		transaction.setAmount(alignBalanceForm.getAmount());
 		transaction.setName(alignBalanceForm.getName());
-		transaction.setDate(new SimpleDateFormat("dd-MM-yyyy").parse(alignBalanceForm.getDate()));	
+		transaction.setDate(new SimpleDateFormat("dd.MM.yyyy").parse(alignBalanceForm.getDate()));	
 		transaction.setAccount(accountOfTransaction);
 		accountOfTransaction.setUser(user);
 

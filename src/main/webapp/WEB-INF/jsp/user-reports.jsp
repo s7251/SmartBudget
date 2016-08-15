@@ -42,7 +42,7 @@
 						style="text-align: center; width: 800px; margin: 0 auto;">
 						<label for="name" class="col-sm-2 control-label">Date:</label>
 						<div class="col-sm-10">
-							<form:input path="date" cssClass="form-control" style="width: 350px" placeholder="MM-YYYY"	autofocus="autofocus" />
+							<form:input path="date" cssClass="form-control" style="width: 350px" placeholder="MM.YYYY"	autofocus="autofocus" />
 						</div>
 					</div>			
 					
@@ -75,7 +75,7 @@
 						style="text-align: center; width: 800px; margin: 0 auto;">
 						<label for="name" class="col-sm-2 control-label">Date:</label>
 						<div class="col-sm-10">
-							<form:input path="date" cssClass="form-control" style="width: 350px" placeholder="MM-YYYY"	autofocus="autofocus" />
+							<form:input path="date" cssClass="form-control" style="width: 350px" placeholder="MM.YYYY"	autofocus="autofocus" />
 						</div>
 					</div>			
 					

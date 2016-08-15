@@ -46,7 +46,7 @@
            </c:forEach>          
           ]);           
         var options = {
-          title: 'Influences by categories in' + ${date},
+          title: 'Influences by subcategories in ' + ${date},
           pieHole: 0.5,
    
         };

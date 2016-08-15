@@ -23,7 +23,7 @@ public class Transaction {
 	private double amount;
 
 	@Temporal(value = TemporalType.DATE)
-	@DateTimeFormat(pattern = "dd-MM-yyyy")
+	@DateTimeFormat(pattern = "dd.MM.yyyy")
 	private Date date;
 
 	@ManyToOne
