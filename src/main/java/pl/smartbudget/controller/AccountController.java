@@ -66,5 +66,13 @@ public class AccountController {
 		transactionService.saveAlignBalance(alignBalanceForm, name);
 		return "redirect:/user-transactions.html";
 	}	
+	
+	@RequestMapping("/account-forecast/{id}")
+	public String detail(Model model, Principal principal, @PathVariable int id) {
+		String name = principal.getName();
+		model.addAttribute("user", userService.findOneWithAccounts(name));
+		model.addAttribute("summaryAccountsByMonths", transactionService.summaryAccountsByMonths(id, name));
+		return "account-forecast";
+	}
 
 }

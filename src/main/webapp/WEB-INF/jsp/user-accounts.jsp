@@ -15,6 +15,7 @@
 		<tr>
 			<td style="text-align: center; vertical-align: middle;"><b>Name</b></td>
 			<td style="text-align: center; vertical-align: middle;"><b>Value</b></td>
+			<td style="text-align: center; vertical-align: middle;"><b>Forecast</b></td>
 			<td style="text-align: center; vertical-align: middle;"><b>Align Balance</b></td>
 			<td style="text-align: center; vertical-align: middle;"><b>Rename</b></td>			
 			<td style="text-align: center; vertical-align: middle;"><b>Remove</b></td>
@@ -25,6 +26,10 @@
 			<tr>
 				<td style="text-align: center; vertical-align: middle;">${summary.value.name}</td>
 				<td style="text-align: center; vertical-align: middle;">${summary.value.summaryOfAccount}</td>
+				<td style="text-align: center; vertical-align: middle;">
+				
+				       <a href='<spring:url value="/account-forecast/${summary.value.id}.html"/>'><span style="font-size:2em;" class="glyphicon glyphicon-stats"></span> </a>
+				</td>
 				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="" />" class="btn btn-primary" type="button" data-toggle="modal" data-target="#alignBalance${summary.value.id}">Align Balance</a></td>
 				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="" />" class="btn btn-warning" type="button" data-toggle="modal" data-target="#editAccountModal${summary.value.id}">Rename</a></td>					
 				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="/user-accounts/removeaccount/${summary.key}.html" />" class="btn btn-danger" type="button">Remove</a></td>		
@@ -130,6 +135,7 @@
 			<tr>
 			<td style="text-align: center; vertical-align: middle;"><b></b></td>
 			<td style="text-align: center; vertical-align: middle;"><b>Summary</b></td>
+			<td style="text-align: center; vertical-align: middle;"></td>
 			<td style="text-align: center; vertical-align: middle;"><b></b></td>
 			<td style="text-align: center; vertical-align: middle;"><b></b></td>
 			<td style="text-align: center; vertical-align: middle;"><b></b></td>
@@ -139,6 +145,7 @@
 			<td style="text-align: center; vertical-align: middle;"><b></b></td>
  			<td style="text-align: center; vertical-align: middle;"><b>${summaryOfAllAccounts}</b></td> 
 			<td style="text-align: center; vertical-align: middle;"><b></b></td>
+		    <td style="text-align: center; vertical-align: middle;"><b></b></td>
 			<td style="text-align: center; vertical-align: middle;"><b></b></td>
 			<td style="text-align: center; vertical-align: middle;"><b></b></td>
 			<td style="text-align: center; vertical-align: middle;"><b></b></td>

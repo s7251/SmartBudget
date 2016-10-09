@@ -91,4 +91,10 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/report-expenses-by-categories.jsp" />
 		<put-attribute name="current" value="report-expenses-by-categories" />		
 	</definition>
+	
+	<definition name="account-forecast" extends="common">
+		<put-attribute name="title" value="Account forecast" />
+		<put-attribute name="body" value="/WEB-INF/jsp/account-forecast.jsp" />
+		<put-attribute name="current" value="account-forecast" />		
+	</definition>
 </tiles-definitions>

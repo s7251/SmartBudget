@@ -201,6 +201,40 @@ public class TransactionService {
 		}
 		return expenseTransactions;
 	}
+	
+	
+	/////////////////
+	
+	
+	public Map<String, Double> summaryAccountsByMonths(int id, String name) {
+		Map<String, Double> summaryOfAccounts = new HashMap<String, Double>();
+
+		Account account = accountRepository.findById(id);
+		List<Transaction> transactions = transactionRepository.findByAccount(account);
+
+		Calendar initDate = Calendar.getInstance();
+		initDate.setTime(transactions.get(0).getDate());
+		Double transactionsSum = new Double(0);
+
+		for (Transaction transaction : transactions) {
+			Calendar nextDate = Calendar.getInstance();
+			nextDate.setTime(transaction.getDate());
+			String transactionDate = String.valueOf(nextDate.get(Calendar.YEAR)) + "-"	+ String.valueOf(nextDate.get(Calendar.MONTH)) + "-01";
+			double initDateMonth = initDate.get(Calendar.MONTH);
+			double nextDateMonth = nextDate.get(Calendar.MONTH);
+			if (initDateMonth == nextDateMonth) {
+				transactionsSum = transactionsCalculate(transactionsSum, transaction);
+			} else {
+				summaryOfAccounts.put(transactionDate, transactionsSum);
+				transactionsSum = transactionsCalculate(transactionsSum, transaction);
+				initDate.add(Calendar.MONTH, 1);
+			}
+
+		}
+		return summaryOfAccounts;
+	}
+	
+	
 
 	public Map<Integer, Account> summaryTransactionsOfAccounts(String name) {		
 
@@ -220,17 +254,6 @@ public class TransactionService {
 		return summaryOfAccounts;
 	}
 	
-	public Double summaryTransactionsOfAllAccounts(String name){
-		Double sum = new Double(0);
-		Map<Integer, Account> summaryOfAccounts = summaryTransactionsOfAccounts(name);
-		
-		for (Map.Entry<Integer, Account> entry : summaryOfAccounts.entrySet()){
-			sum+=entry.getValue().getSummaryOfAccount();
-		}
-		
-				
-		return sum;		
-	}
 
 	private Double processingTransactions(List<Transaction> transactions) {
 		Double transactionsSum = new Double(0);
@@ -250,6 +273,19 @@ public class TransactionService {
 		}
 		return transactionsSum;
 	}
+	
+	public Double summaryTransactionsOfAllAccounts(String name){
+		Double sum = new Double(0);
+		Map<Integer, Account> summaryOfAccounts = summaryTransactionsOfAccounts(name);
+		
+		for (Map.Entry<Integer, Account> entry : summaryOfAccounts.entrySet()){
+			sum+=entry.getValue().getSummaryOfAccount();
+		}
+		
+				
+		return sum;		
+	}
+
 	
 	public List<Transaction> findAllTransactionOfUserByActualMonth(String name) {
 		User user = userRepository.findByName(name);

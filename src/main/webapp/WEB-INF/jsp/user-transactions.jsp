@@ -41,6 +41,7 @@
 			<td><b>Subcategory</b></td>
 			<td><b>Account</b></td>
 			<td></td>
+			<td></td>
 		</tr>
 		<c:forEach items="${userTransactions}" var="userTransactions">
 		

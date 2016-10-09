@@ -1,5 +1,7 @@
 package pl.smartbudget.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -134,6 +136,62 @@ public class DbService {
 		subcategoryLimitSample2.setDate(new Date());
 		subcategoryLimitRepository.save(subcategoryLimitSample2);
 		
+		Transaction transaction7 = new Transaction();
+		transaction7.setSubcategory(subcategorySample1);
+		transaction7.setAccount(account1);
+		transaction7.setType("influence");
+		transaction7.setName("monthly salary");
+		try {
+			transaction7.setDate(new SimpleDateFormat("dd.MM.yyyy").parse("01.07.2016"));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		transaction7.setAmount(4000.00);
+		transactionRepository.save(transaction7);
+		
+		Transaction transaction8 = new Transaction();
+		transaction8.setSubcategory(subcategorySample1);
+		transaction8.setAccount(account1);
+		transaction8.setType("influence");
+		transaction8.setName("monthly salary");
+		try {
+			transaction8.setDate(new SimpleDateFormat("dd.MM.yyyy").parse("01.08.2016"));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		transaction8.setAmount(5000.00);
+		transactionRepository.save(transaction8);
+		
+		Transaction transaction9 = new Transaction();
+		transaction9.setSubcategory(subcategorySample1);
+		transaction9.setAccount(account1);
+		transaction9.setType("influence");
+		transaction9.setName("monthly salary");
+		try {
+			transaction9.setDate(new SimpleDateFormat("dd.MM.yyyy").parse("01.08.2016"));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		transaction9.setAmount(1000.00);
+		transactionRepository.save(transaction9);
+		
+		Transaction transaction10 = new Transaction();
+		transaction10.setSubcategory(subcategorySample1);
+		transaction10.setAccount(account1);
+		transaction10.setType("influence");
+		transaction10.setName("monthly salary");
+		try {
+			transaction10.setDate(new SimpleDateFormat("dd.MM.yyyy").parse("01.09.2016"));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		transaction10.setAmount(1000.00);
+		transactionRepository.save(transaction10);
+		
 		Transaction transaction1 = new Transaction();
 		transaction1.setSubcategory(subcategorySample1);
 		transaction1.setAccount(account1);
@@ -188,6 +246,8 @@ public class DbService {
 		transaction6.setAmount(300.00);
 		transactionRepository.save(transaction6);
 		
+	
+		
 		// User
 		
 		User user1 = new User();
@@ -221,14 +281,15 @@ public class DbService {
 		subcategoryLimitSample10.setDate(new Date());		
 		subcategoryLimitRepository.save(subcategoryLimitSample10);
 		
-		Transaction transaction10 = new Transaction();
-		transaction10.setSubcategory(subcategorySample10);
-		transaction10.setAccount(account3);
-		transaction10.setType("influence");
-		transaction10.setName("tax refund");
-		transaction10.setDate(new Date());
-		transaction10.setAmount(999.00);
-		transactionRepository.save(transaction10);
+		Transaction transaction11 = new Transaction();
+		transaction11.setSubcategory(subcategorySample10);
+		transaction11.setAccount(account3);
+		transaction11.setType("influence");
+		transaction11.setName("tax refund");
+		transaction11.setDate(new Date());
+		transaction11.setAmount(999.00);		
+		transactionRepository.save(transaction11);
+		
 	
 	}
 }
