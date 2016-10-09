@@ -139,7 +139,7 @@ public class DbService {
 		Transaction transaction7 = new Transaction();
 		transaction7.setSubcategory(subcategorySample1);
 		transaction7.setAccount(account1);
-		transaction7.setType("influence");
+		transaction7.setType("income");
 		transaction7.setName("monthly salary");
 		try {
 			transaction7.setDate(new SimpleDateFormat("dd.MM.yyyy").parse("01.07.2016"));
@@ -153,7 +153,7 @@ public class DbService {
 		Transaction transaction8 = new Transaction();
 		transaction8.setSubcategory(subcategorySample1);
 		transaction8.setAccount(account1);
-		transaction8.setType("influence");
+		transaction8.setType("income");
 		transaction8.setName("monthly salary");
 		try {
 			transaction8.setDate(new SimpleDateFormat("dd.MM.yyyy").parse("01.08.2016"));
@@ -167,7 +167,7 @@ public class DbService {
 		Transaction transaction9 = new Transaction();
 		transaction9.setSubcategory(subcategorySample1);
 		transaction9.setAccount(account1);
-		transaction9.setType("influence");
+		transaction9.setType("income");
 		transaction9.setName("monthly salary");
 		try {
 			transaction9.setDate(new SimpleDateFormat("dd.MM.yyyy").parse("01.08.2016"));
@@ -181,7 +181,7 @@ public class DbService {
 		Transaction transaction10 = new Transaction();
 		transaction10.setSubcategory(subcategorySample1);
 		transaction10.setAccount(account1);
-		transaction10.setType("influence");
+		transaction10.setType("income");
 		transaction10.setName("monthly salary");
 		try {
 			transaction10.setDate(new SimpleDateFormat("dd.MM.yyyy").parse("01.09.2016"));
@@ -195,7 +195,7 @@ public class DbService {
 		Transaction transaction1 = new Transaction();
 		transaction1.setSubcategory(subcategorySample1);
 		transaction1.setAccount(account1);
-		transaction1.setType("influence");
+		transaction1.setType("income");
 		transaction1.setName("monthly salary");
 		transaction1.setDate(new Date());
 		transaction1.setAmount(3600.00);
@@ -231,7 +231,7 @@ public class DbService {
 		Transaction transaction5 = new Transaction();
 		transaction5.setSubcategory(subcategorySample6);
 		transaction5.setAccount(account1);
-		transaction5.setType("influence");
+		transaction5.setType("income");
 		transaction5.setName("bank deposit (6months)");
 		transaction5.setDate(new Date());
 		transaction5.setAmount(77.00);
@@ -240,7 +240,7 @@ public class DbService {
 		Transaction transaction6 = new Transaction();
 		transaction6.setSubcategory(subcategorySample1);
 		transaction6.setAccount(account2);
-		transaction6.setType("influence");
+		transaction6.setType("income");
 		transaction6.setName("bonus");
 		transaction6.setDate(new Date());
 		transaction6.setAmount(300.00);
@@ -284,7 +284,7 @@ public class DbService {
 		Transaction transaction11 = new Transaction();
 		transaction11.setSubcategory(subcategorySample10);
 		transaction11.setAccount(account3);
-		transaction11.setType("influence");
+		transaction11.setType("income");
 		transaction11.setName("tax refund");
 		transaction11.setDate(new Date());
 		transaction11.setAmount(999.00);		

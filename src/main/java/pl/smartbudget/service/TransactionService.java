@@ -94,7 +94,7 @@ public class TransactionService {
 		transactionRepository.save(transaction);
 	}
 	
-	public Map<String, Double> getMapOfSubcategoriesWithInfluencesByDate(String name, String date) {
+	public Map<String, Double> getMapOfSubcategoriesWithIncomesByDate(String name, String date) {
 		User user = userRepository.findByName(name);
 		
 		int reportMonth = Integer.parseInt(date.substring(0, 2));
@@ -115,7 +115,7 @@ public class TransactionService {
 					int transactionMonth = Integer.parseInt(transaction.getDate().toString().substring(5, 7));
 					int transactionYear = Integer.parseInt(transaction.getDate().toString().substring(0, 4));	
 
-					if (transaction.getType().equals("influence") && reportMonth==transactionMonth && reportYear==transactionYear) {
+					if (transaction.getType().equals("income") && reportMonth==transactionMonth && reportYear==transactionYear) {
 						amountOfTransactions += transaction.getAmount();
 					}
 				}
@@ -167,22 +167,22 @@ public class TransactionService {
 	}
 	
 
-	public List<Transaction> findInfluenceTransactionsByUser(String name) {
+	public List<Transaction> findIncomeTransactionsByUser(String name) {
 		User user = userRepository.findByName(name);
-		List<Transaction> influenceTransactions = new ArrayList<Transaction>();
+		List<Transaction> incomeTransactions = new ArrayList<Transaction>();
 
 		List<Account> accounts = accountRepository.findByUser(user);
 
 		for (Account account : accounts) {
 			List<Transaction> transactions = transactionRepository.findByAccount(account);
 			for (Transaction transaction : transactions) {
-				if (transaction.getType() == "influence") {
-					influenceTransactions.add(transaction);
+				if (transaction.getType() == "income") {
+					incomeTransactions.add(transaction);
 				}
 			}
 
 		}
-		return influenceTransactions;
+		return incomeTransactions;
 	}
 
 	public List<Transaction> findExpenseTransactionsByUser(String name) {
@@ -194,7 +194,7 @@ public class TransactionService {
 		for (Account account : accounts) {
 			List<Transaction> transactions = transactionRepository.findByAccount(account);
 			for (Transaction transaction : transactions) {
-				if (transaction.getType() == "influence") {
+				if (transaction.getType() == "income") {
 					expenseTransactions.add(transaction);
 				}
 			}
@@ -214,14 +214,19 @@ public class TransactionService {
 
 		Calendar initDate = Calendar.getInstance();
 		initDate.setTime(transactions.get(0).getDate());
+		Calendar lastDate = Calendar.getInstance();
+		lastDate.setTime(transactions.get(transactions.size()-1).getDate());
+		lastDate.add(Calendar.MONTH, 1);
 		Double transactionsSum = new Double(0);
 
 		for (Transaction transaction : transactions) {
 			Calendar nextDate = Calendar.getInstance();
 			nextDate.setTime(transaction.getDate());
 			String transactionDate = String.valueOf(nextDate.get(Calendar.YEAR)) + "-"	+ String.valueOf(nextDate.get(Calendar.MONTH)) + "-01";
+			String lastTransactionDate = String.valueOf(lastDate.get(Calendar.YEAR)) + "-"	+ String.valueOf(lastDate.get(Calendar.MONTH)) + "-01";
 			double initDateMonth = initDate.get(Calendar.MONTH);
 			double nextDateMonth = nextDate.get(Calendar.MONTH);
+			double lastDateMonth = lastDate.get(Calendar.MONTH);
 			if (initDateMonth == nextDateMonth) {
 				transactionsSum = transactionsCalculate(transactionsSum, transaction);
 			} else {
@@ -229,6 +234,12 @@ public class TransactionService {
 				transactionsSum = transactionsCalculate(transactionsSum, transaction);
 				initDate.add(Calendar.MONTH, 1);
 			}
+			
+			if(transaction.equals(transactions.get(transactions.size()-1))){
+				summaryOfAccounts.put(lastTransactionDate, transactionsSum);
+			}
+			
+			
 
 		}
 		return summaryOfAccounts;
@@ -266,7 +277,7 @@ public class TransactionService {
 
 	private Double transactionsCalculate(Double transactionsSum, Transaction transaction) {
 
-		if (transaction.getType().equals("influence") || transaction.getType().equals("alignment +")) {
+		if (transaction.getType().equals("income") || transaction.getType().equals("alignment +")) {
 			transactionsSum += transaction.getAmount();
 		} else {
 			transactionsSum -= transaction.getAmount();

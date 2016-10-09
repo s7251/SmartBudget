@@ -31,19 +31,19 @@ public class ReportController {
 		return "user-reports";
 	}
 	
-	@RequestMapping("/report-influences-by-categories/{date}")
-	public String getInfluenceReport(Model model, Principal principal, @PathVariable String date) {				
+	@RequestMapping("/report-incomes-by-categories/{date}")
+	public String getIncomeReport(Model model, Principal principal, @PathVariable String date) {				
 		String name = principal.getName();
 		model.addAttribute("date", date);
 		model.addAttribute("user", userService.findOneWithCategoriesAndSubcategories(name));
-		model.addAttribute("summaryOfAllAccounts", transactionService.getMapOfSubcategoriesWithInfluencesByDate(name, date));			
-		return "report-influences-by-categories";
+		model.addAttribute("summaryOfAllAccounts", transactionService.getMapOfSubcategoriesWithIncomesByDate(name, date));			
+		return "report-incomes-by-categories";
 	}
 	
-	@RequestMapping(value = "/report-influences-by-categories", method = RequestMethod.POST)
-	public String influenceReport(@ModelAttribute("ReportForm") ReportForm report)	 {
+	@RequestMapping(value = "/report-incomes-by-categories", method = RequestMethod.POST)
+	public String incomeReport(@ModelAttribute("ReportForm") ReportForm report)	 {
 		String date = report.getDate();
-    	return "redirect:/report-influences-by-categories/"+date+".html";				
+    	return "redirect:/report-incomes-by-categories/"+date+".html";				
 	}
 	
 	@RequestMapping("/report-expenses-by-categories/{date}")

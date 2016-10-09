@@ -5,7 +5,7 @@
 
 <div class="panel panel-default">
 	<!-- Default panel contents -->
-		<div class="panel-heading"><h1 class="panel-title">Influences by subcategories  </h1></div>
+		<div class="panel-heading"><h1 class="panel-title">Incomes by subcategories  </h1></div>
 		<div class="panel-body" >
 <a href="<spring:url value="/user-reports.html" />" class="btn btn-primary" type="button" >Back</a>
 <span class="pull-right">
@@ -46,7 +46,7 @@
            </c:forEach>          
           ]);           
         var options = {
-          title: 'Influences by subcategories in ' + ${date},
+          title: 'Incomes by subcategories in ' + ${date},
           pieHole: 0.5,
    
         };

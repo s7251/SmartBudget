@@ -7,7 +7,7 @@
  <head>
    <style type="text/css">         
    tr.expensecolor { background: #ffe6e6; }
-   tr.influencecolor { background: #b3ffb3; }
+   tr.incomecolor { background: #b3ffb3; }
    tr.alignpluscolor { background: white; }
    tr.alignminuscolor { background: white; }
     </style> 
@@ -52,8 +52,8 @@
     <c:when test="${userTransactions.type == 'expense'}">
       <tr class="expensecolor">
     </c:when>
-    <c:when test="${userTransactions.type == 'influence'}">
-       <tr class="influencecolor">
+    <c:when test="${userTransactions.type == 'income'}">
+       <tr class="incomecolor">
     </c:when>   
        <c:when test="${userTransactions.type == 'alignment +'}">
        <tr class="alignpluscolor">
@@ -75,7 +75,7 @@
   </button>
   <ul class="dropdown-menu">
 
-   <c:if test="${(userTransactions.type == 'expense' || userTransactions.type == 'influence')}">  
+   <c:if test="${(userTransactions.type == 'expense' || userTransactions.type == 'income')}">  
      <li><a href="<spring:url value="" />" data-toggle="modal" data-target="#editTransaction${userTransactions.id}">Edit</a></li> 
        </c:if>      
  
@@ -106,7 +106,7 @@
 
 						<label for="name" class="col-sm-2 control-label">Type:</label>
 						<div class="col-sm-10">
-						<form:radiobutton path="type" value="influence" /> influence
+						<form:radiobutton path="type" value="income" /> income
 					    <form:radiobutton path="type" value="expense" /> expense	    
 					   
 						</div>
@@ -199,7 +199,7 @@
 
 						<label for="name" class="col-sm-2 control-label">Type:</label>
 						<div class="col-sm-10">
-						<form:radiobutton path="type" value="influence" /> influence
+						<form:radiobutton path="type" value="income" /> income
 					    <form:radiobutton path="type" value="expense" /> expense
 						</div>
 					</div>

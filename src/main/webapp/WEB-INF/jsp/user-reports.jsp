@@ -15,7 +15,7 @@
    Generate report <span class="caret"></span>
   </button>
   <ul class="dropdown-menu">
-    <li><a href="<spring:url value="" />" data-toggle="modal" data-target="#influenceReport">Influences by subcategories</a></li>
+    <li><a href="<spring:url value="" />" data-toggle="modal" data-target="#incomeReport">Incomes by subcategories</a></li>
     <li><a href="<spring:url value="" />" data-toggle="modal" data-target="#expenseReport">Expenses by subcategories</a></li>
     <li><a href="">Transactions in time</a></li> 
   </ul>
@@ -24,9 +24,9 @@
   
 
 
-<form:form mehod="post" modelAttribute="ReportForm" action="/report-influences-by-categories.html" cssClass="form-horizontal">
+<form:form mehod="post" modelAttribute="ReportForm" action="/report-incomes-by-categories.html" cssClass="form-horizontal">
 	<!-- Modal -->	
-	<div class="modal fade" id="influenceReport" tabindex="-1" role="dialog"
+	<div class="modal fade" id="incomeReport" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -34,7 +34,7 @@
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
-					<h4 class="modal-title" id="myModalLabel">Influences by subcategories</h4>
+					<h4 class="modal-title" id="myModalLabel">Incomes by subcategories</h4>
 				</div>
 				<div class="modal-body">
 				
