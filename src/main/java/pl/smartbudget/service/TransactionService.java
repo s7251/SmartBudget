@@ -27,6 +27,13 @@ import pl.smartbudget.repository.CategoryRepository;
 import pl.smartbudget.repository.SubcategoryRepository;
 import pl.smartbudget.repository.TransactionRepository;
 import pl.smartbudget.repository.UserRepository;
+import weka.classifiers.evaluation.NumericPrediction;
+import weka.classifiers.functions.LinearRegression;
+import weka.classifiers.timeseries.WekaForecaster;
+import weka.core.Attribute;
+import weka.core.DenseInstance;
+import weka.core.FastVector;
+import weka.core.Instances;
 
 @Service
 public class TransactionService {
@@ -206,6 +213,138 @@ public class TransactionService {
 	/////////////////
 	
 	
+	public ArrayList<Double> forecasting(Map<String, Double> summaryOfAccounts){
+		
+		ArrayList<Double> listOfPredictedData = new ArrayList<Double>();
+		try {			 
+			// load the wine data
+
+			Attribute Attribute1 = new Attribute("passenger_numbers");
+			Attribute Attribute2 = new Attribute("Date", "yyyy-MM-dd");
+
+			// Make the feature vector
+			FastVector fvWekaAttributes = new FastVector(2);
+			fvWekaAttributes.addElement(Attribute1);
+			fvWekaAttributes.addElement(Attribute2);
+
+			// Create an empty training set
+			Instances wine = new Instances("airline_passengers", fvWekaAttributes, 10);
+
+			// Set class index
+			wine.setClassIndex(0);
+			
+			
+
+			double[] attValues = new double[wine.numAttributes()];
+			
+			
+			for (Map.Entry<String, Double> entry : summaryOfAccounts.entrySet()) {
+				attValues = new double[wine.numAttributes()];
+			    attValues[0] = entry.getValue();
+				attValues[1] = wine.attribute("Date").parseDate(entry.getKey());
+				wine.add(new DenseInstance(1.0, attValues));
+			}
+			
+//			attValues = new double[wine.numAttributes()];
+//			attValues[0] = 118;
+//			attValues[1] = wine.attribute("Date").parseDate("1949-02-01");
+//			wine.add(new DenseInstance(1.0, attValues));
+//
+//			attValues = new double[wine.numAttributes()];
+//			attValues[0] = 132;
+//			attValues[1] = wine.attribute("Date").parseDate("1949-03-01");
+//			wine.add(new DenseInstance(1.0, attValues));
+//
+//			attValues = new double[wine.numAttributes()];
+//			attValues[0] = 129;
+//			attValues[1] = wine.attribute("Date").parseDate("1949-04-01");
+//			wine.add(new DenseInstance(1.0, attValues));
+//
+//			attValues = new double[wine.numAttributes()];
+//			attValues[0] = 121;
+//			attValues[1] = wine.attribute("Date").parseDate("1949-05-01");
+//			wine.add(new DenseInstance(1.0, attValues));
+//
+//			attValues = new double[wine.numAttributes()];
+//			attValues[0] = 135;
+//			attValues[1] = wine.attribute("Date").parseDate("1949-06-01");
+//			wine.add(new DenseInstance(1.0, attValues));
+//
+//			attValues = new double[wine.numAttributes()];
+//			attValues[0] = 148;
+//			attValues[1] = wine.attribute("Date").parseDate("1949-07-01");
+//			wine.add(new DenseInstance(1.0, attValues));
+
+			// Instances wine = new Instances(new BufferedReader(new
+			// FileReader(pathToWineData)));
+
+			// new forecaster
+			WekaForecaster forecaster = new WekaForecaster();
+
+			// set the targets we want to forecast. This method calls
+			// setFieldsToLag() on the lag maker object for us
+			forecaster.setFieldsToForecast("passenger_numbers");
+
+			// default underlying classifier is SMOreg (SVM) - we'll use
+			// gaussian processes for regression instead
+			//forecaster.setBaseForecaster(new GaussianProcesses());
+			forecaster.setBaseForecaster(new LinearRegression());
+			
+
+			forecaster.getTSLagMaker().setTimeStampField("Date"); // date time
+																	// stamp
+			forecaster.getTSLagMaker().setMinLag(1);
+			forecaster.getTSLagMaker().setMaxLag(12); // monthly data
+
+			// add a month of the year indicator field
+			forecaster.getTSLagMaker().setAddMonthOfYear(true);
+
+			// add a quarter of the year indicator field
+			forecaster.getTSLagMaker().setAddQuarterOfYear(true);
+
+			// build the model
+			forecaster.buildForecaster(wine, System.out);
+
+			// prime the forecaster with enough recent historical data
+			// to cover up to the maximum lag. In our case, we could just supply
+			// the 12 most recent historical instances, as this covers our
+			// maximum
+			// lag period
+			forecaster.primeForecaster(wine);
+
+			// forecast for 12 units (months) beyond the end of the
+			// training data
+			List<List<NumericPrediction>> forecast = forecaster.forecast(12, System.out);
+
+			// output the predictions. Outer list is over the steps; inner list
+			// is over
+			// the targets
+			for (int i = 0; i < 12; i++) {
+				List<NumericPrediction> predsAtStep = forecast.get(i);
+				for (int j = 0; j < 1; j++) {
+					NumericPrediction predForTarget = predsAtStep.get(j);
+					listOfPredictedData.add(predForTarget.predicted());
+					System.out.print("" + predForTarget.predicted() + " ");
+				}
+				System.out.println();
+			}
+
+			// we can continue to use the trained forecaster for further
+			// forecasting
+			// by priming with the most recent historical data (as it becomes
+			// available).
+			// At some stage it becomes prudent to re-build the model using
+			// current
+			// historical data.
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		
+		return listOfPredictedData;
+	}
+	
+	
 	public Map<String, Double> summaryAccountsByMonths(int id, String name) {
 		Map<String, Double> summaryOfAccounts = new HashMap<String, Double>();
 
@@ -218,15 +357,15 @@ public class TransactionService {
 		lastDate.setTime(transactions.get(transactions.size()-1).getDate());
 		lastDate.add(Calendar.MONTH, 1);
 		Double transactionsSum = new Double(0);
+		
 
 		for (Transaction transaction : transactions) {
 			Calendar nextDate = Calendar.getInstance();
 			nextDate.setTime(transaction.getDate());
-			String transactionDate = String.valueOf(nextDate.get(Calendar.YEAR)) + "-"	+ String.valueOf(nextDate.get(Calendar.MONTH)) + "-01";
+			String transactionDate = String.valueOf(nextDate.get(Calendar.YEAR)) + "-"	+ String.valueOf(nextDate.get(Calendar.MONTH)) + "-01";			
 			String lastTransactionDate = String.valueOf(lastDate.get(Calendar.YEAR)) + "-"	+ String.valueOf(lastDate.get(Calendar.MONTH)) + "-01";
 			double initDateMonth = initDate.get(Calendar.MONTH);
 			double nextDateMonth = nextDate.get(Calendar.MONTH);
-			double lastDateMonth = lastDate.get(Calendar.MONTH);
 			if (initDateMonth == nextDateMonth) {
 				transactionsSum = transactionsCalculate(transactionsSum, transaction);
 			} else {
@@ -238,10 +377,17 @@ public class TransactionService {
 			if(transaction.equals(transactions.get(transactions.size()-1))){
 				summaryOfAccounts.put(lastTransactionDate, transactionsSum);
 			}
-			
-			
-
 		}
+		
+		Calendar lastDateforForecast = Calendar.getInstance();
+		lastDateforForecast=lastDate;
+		for(Double forecastEntry : forecasting(summaryOfAccounts)){
+			lastDateforForecast.add(Calendar.MONTH, 1);
+			String lastDateforForecastEntry = String.valueOf(lastDateforForecast.get(Calendar.YEAR)) + "-"	+ String.valueOf(lastDateforForecast.get(Calendar.MONTH)) + "-01";
+			summaryOfAccounts.put(lastDateforForecastEntry, forecastEntry);
+			
+		}
+		
 		return summaryOfAccounts;
 	}
 	

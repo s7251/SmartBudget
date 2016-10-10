@@ -36,7 +36,41 @@
 	</properties>
 
 	<dependencies>
+	
+	    <!-- Weka -->
+	
+		<!-- https://mvnrepository.com/artifact/nz.ac.waikato.cms.weka/weka-stable -->
+		<dependency>
+ 		   <groupId>nz.ac.waikato.cms.weka</groupId>
+ 		   <artifactId>weka-stable</artifactId>
+ 		   <version>3.8.0</version>
+		</dependency>
 
+	
+		<!-- https://mvnrepository.com/artifact/jfree/jcommon -->
+		<dependency>
+   		 <groupId>jfree</groupId>
+  		  <artifactId>jcommon</artifactId>
+   		 <version>1.0.16</version>
+		</dependency>
+	
+  	
+		   <!-- https://mvnrepository.com/artifact/nz.ac.waikato.cms.weka/timeseriesForecasting -->
+		<dependency>
+ 		   <groupId>nz.ac.waikato.cms.weka</groupId>
+ 		   <artifactId>timeseriesForecasting</artifactId>
+  		  <version>1.0.23</version>
+	   </dependency>
+
+		<!-- https://mvnrepository.com/artifact/jfree/jfreechart -->
+		<dependency>
+   		 	<groupId>jfree</groupId>
+   			 <artifactId>jfreechart</artifactId>
+   			 <version>1.0.13</version>
+		</dependency>
+
+		<!-- Tests -->
+		
 		<!-- http://mvnrepository.com/artifact/junit/junit -->
 		
 		<dependency>
