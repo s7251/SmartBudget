@@ -246,7 +246,47 @@ public class DbService {
 		transaction6.setAmount(300.00);
 		transactionRepository.save(transaction6);
 		
-	
+//		Transaction transaction12 = new Transaction();
+//		transaction12.setSubcategory(subcategorySample1);
+//		transaction12.setAccount(account1);
+//		transaction12.setType("income");
+//		transaction12.setName("monthly salary");
+//		try {
+//			transaction12.setDate(new SimpleDateFormat("dd.MM.yyyy").parse("01.11.2016"));
+//		} catch (ParseException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		transaction12.setAmount(4000.00);
+//		transactionRepository.save(transaction12);
+//		
+//		Transaction transaction13 = new Transaction();
+//		transaction13.setSubcategory(subcategorySample1);
+//		transaction13.setAccount(account1);
+//		transaction13.setType("income");
+//		transaction13.setName("monthly salary");
+//		try {
+//			transaction13.setDate(new SimpleDateFormat("dd.MM.yyyy").parse("01.12.2016"));
+//		} catch (ParseException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		transaction13.setAmount(4000.00);
+//		transactionRepository.save(transaction13);
+//	
+//		Transaction transaction14 = new Transaction();
+//		transaction14.setSubcategory(subcategorySample1);
+//		transaction14.setAccount(account1);
+//		transaction14.setType("income");
+//		transaction14.setName("monthly salary");
+//		try {
+//			transaction14.setDate(new SimpleDateFormat("dd.MM.yyyy").parse("01.01.2017"));
+//		} catch (ParseException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		transaction14.setAmount(4000.00);
+//		transactionRepository.save(transaction14);
 		
 		// User
 		

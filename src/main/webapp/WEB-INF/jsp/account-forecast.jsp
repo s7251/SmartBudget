@@ -13,59 +13,50 @@
 <table class="table">
 	<thead>
 		<tr bgcolor="#efefef">
-			<th><h1 class="panel-title">Graph: <span class="pull-right">Account name</span></h1> </th>
-			
-			
+			<th><h1 class="panel-title">Graph: <span class="pull-right">${accountName}</span></h1> </th>		
 		</tr>
 	</thead>
-	<tbody>		
-		<tr>
-<td> ${summaryAccountsByMonths}
-
-
+	<tbody>	
+	<tr>
+<td>
 <div id="curve_chart" style="width: 1100px; height: 500px"></div>
-</td>
-		</tr>
+</td>		
+</tr>
+	<c:forEach items="${summaryAccountsByMonths}" var="summary">
+	<tr>
+	<td>
+	<b>${summary.key}</b> = ${summary.value}
+	</td>
+	</tr>
+	</c:forEach>			
 	</tbody>
 </table>
 
 </div>
-
-
   <head>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawChart);
-
       function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-                                                          
-                                                          
-                                               
-                                                                   
-          ['Month', 'Month Summary'],
+        var data = google.visualization.arrayToDataTable([                                                        
+          ['Month', 'Prievious Month Summary'],
           <c:forEach items="${summaryAccountsByMonths}" var="entry">
-          ['${entry.key}',  ${entry.value}],
-         
+          ['${entry.key}',  ${entry.value}],         
           </c:forEach>  
         ]);
-
         var options = {
           title: 'Forecasting',
           curveType: 'function',
           legend: { position: 'bottom' }
         };
-
         var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-
         chart.draw(data, options);
       }
     </script>
   </head>
 
 
-  
    
   
    

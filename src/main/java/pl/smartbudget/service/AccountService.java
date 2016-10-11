@@ -36,4 +36,9 @@ public class AccountService {
 
 	}
 
+	public String findById(int id) {
+		Account account = accountRepository.findById(id);
+		return account.getName();
+	}
+
 }

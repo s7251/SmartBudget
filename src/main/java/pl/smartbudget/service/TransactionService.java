@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -28,7 +29,7 @@ import pl.smartbudget.repository.SubcategoryRepository;
 import pl.smartbudget.repository.TransactionRepository;
 import pl.smartbudget.repository.UserRepository;
 import weka.classifiers.evaluation.NumericPrediction;
-import weka.classifiers.functions.LinearRegression;
+import weka.classifiers.functions.GaussianProcesses;
 import weka.classifiers.timeseries.WekaForecaster;
 import weka.core.Attribute;
 import weka.core.DenseInstance;
@@ -217,9 +218,9 @@ public class TransactionService {
 		
 		ArrayList<Double> listOfPredictedData = new ArrayList<Double>();
 		try {			 
-			// load the wine data
-
-			Attribute Attribute1 = new Attribute("passenger_numbers");
+			
+			// load the summary data
+			Attribute Attribute1 = new Attribute("monthsummary_forecast");
 			Attribute Attribute2 = new Attribute("Date", "yyyy-MM-dd");
 
 			// Make the feature vector
@@ -228,71 +229,34 @@ public class TransactionService {
 			fvWekaAttributes.addElement(Attribute2);
 
 			// Create an empty training set
-			Instances wine = new Instances("airline_passengers", fvWekaAttributes, 10);
+			Instances summary = new Instances("month_summary", fvWekaAttributes, 10);
 
 			// Set class index
-			wine.setClassIndex(0);
-			
-			
+			summary.setClassIndex(0);		
 
-			double[] attValues = new double[wine.numAttributes()];
-			
+			double[] attValues = new double[summary.numAttributes()];			
 			
 			for (Map.Entry<String, Double> entry : summaryOfAccounts.entrySet()) {
-				attValues = new double[wine.numAttributes()];
+				attValues = new double[summary.numAttributes()];
 			    attValues[0] = entry.getValue();
-				attValues[1] = wine.attribute("Date").parseDate(entry.getKey());
-				wine.add(new DenseInstance(1.0, attValues));
+				attValues[1] = summary.attribute("Date").parseDate(entry.getKey());
+				summary.add(new DenseInstance(1.0, attValues));
 			}
 			
-//			attValues = new double[wine.numAttributes()];
-//			attValues[0] = 118;
-//			attValues[1] = wine.attribute("Date").parseDate("1949-02-01");
-//			wine.add(new DenseInstance(1.0, attValues));
-//
-//			attValues = new double[wine.numAttributes()];
-//			attValues[0] = 132;
-//			attValues[1] = wine.attribute("Date").parseDate("1949-03-01");
-//			wine.add(new DenseInstance(1.0, attValues));
-//
-//			attValues = new double[wine.numAttributes()];
-//			attValues[0] = 129;
-//			attValues[1] = wine.attribute("Date").parseDate("1949-04-01");
-//			wine.add(new DenseInstance(1.0, attValues));
-//
-//			attValues = new double[wine.numAttributes()];
-//			attValues[0] = 121;
-//			attValues[1] = wine.attribute("Date").parseDate("1949-05-01");
-//			wine.add(new DenseInstance(1.0, attValues));
-//
-//			attValues = new double[wine.numAttributes()];
-//			attValues[0] = 135;
-//			attValues[1] = wine.attribute("Date").parseDate("1949-06-01");
-//			wine.add(new DenseInstance(1.0, attValues));
-//
-//			attValues = new double[wine.numAttributes()];
-//			attValues[0] = 148;
-//			attValues[1] = wine.attribute("Date").parseDate("1949-07-01");
-//			wine.add(new DenseInstance(1.0, attValues));
-
-			// Instances wine = new Instances(new BufferedReader(new
-			// FileReader(pathToWineData)));
-
 			// new forecaster
 			WekaForecaster forecaster = new WekaForecaster();
 
 			// set the targets we want to forecast. This method calls
 			// setFieldsToLag() on the lag maker object for us
-			forecaster.setFieldsToForecast("passenger_numbers");
+			forecaster.setFieldsToForecast("monthsummary_forecast");
 
 			// default underlying classifier is SMOreg (SVM) - we'll use
 			// gaussian processes for regression instead
-			//forecaster.setBaseForecaster(new GaussianProcesses());
-			forecaster.setBaseForecaster(new LinearRegression());
+			forecaster.setBaseForecaster(new GaussianProcesses());
+			//forecaster.setBaseForecaster(new LinearRegression());
 			
 
-			forecaster.getTSLagMaker().setTimeStampField("Date"); // date time
-																	// stamp
+			forecaster.getTSLagMaker().setTimeStampField("Date"); // date time																
 			forecaster.getTSLagMaker().setMinLag(1);
 			forecaster.getTSLagMaker().setMaxLag(12); // monthly data
 
@@ -303,23 +267,23 @@ public class TransactionService {
 			forecaster.getTSLagMaker().setAddQuarterOfYear(true);
 
 			// build the model
-			forecaster.buildForecaster(wine, System.out);
+			forecaster.buildForecaster(summary, System.out);
 
 			// prime the forecaster with enough recent historical data
 			// to cover up to the maximum lag. In our case, we could just supply
 			// the 12 most recent historical instances, as this covers our
 			// maximum
 			// lag period
-			forecaster.primeForecaster(wine);
+			forecaster.primeForecaster(summary);
 
 			// forecast for 12 units (months) beyond the end of the
 			// training data
-			List<List<NumericPrediction>> forecast = forecaster.forecast(12, System.out);
+			List<List<NumericPrediction>> forecast = forecaster.forecast(24, System.out);
 
 			// output the predictions. Outer list is over the steps; inner list
 			// is over
 			// the targets
-			for (int i = 0; i < 12; i++) {
+			for (int i = 0; i < 24; i++) {
 				List<NumericPrediction> predsAtStep = forecast.get(i);
 				for (int j = 0; j < 1; j++) {
 					NumericPrediction predForTarget = predsAtStep.get(j);
@@ -346,7 +310,7 @@ public class TransactionService {
 	
 	
 	public Map<String, Double> summaryAccountsByMonths(int id, String name) {
-		Map<String, Double> summaryOfAccounts = new HashMap<String, Double>();
+		Map<String, Double> summaryOfAccounts = new LinkedHashMap<String, Double>();
 
 		Account account = accountRepository.findById(id);
 		List<Transaction> transactions = transactionRepository.findByAccount(account);
@@ -356,24 +320,22 @@ public class TransactionService {
 		Calendar lastDate = Calendar.getInstance();
 		lastDate.setTime(transactions.get(transactions.size()-1).getDate());
 		lastDate.add(Calendar.MONTH, 1);
-		Double transactionsSum = new Double(0);
-		
+		Double transactionsSum = new Double(0);		
 
 		for (Transaction transaction : transactions) {
 			Calendar nextDate = Calendar.getInstance();
 			nextDate.setTime(transaction.getDate());
-			String transactionDate = String.valueOf(nextDate.get(Calendar.YEAR)) + "-"	+ String.valueOf(nextDate.get(Calendar.MONTH)) + "-01";			
-			String lastTransactionDate = String.valueOf(lastDate.get(Calendar.YEAR)) + "-"	+ String.valueOf(lastDate.get(Calendar.MONTH)) + "-01";
-			double initDateMonth = initDate.get(Calendar.MONTH);
-			double nextDateMonth = nextDate.get(Calendar.MONTH);
+			String transactionDate = String.valueOf(nextDate.get(Calendar.YEAR)) + "-"	+ String.valueOf(nextDate.get(Calendar.MONTH)+1)  + "-1";			
+			String lastTransactionDate = String.valueOf(lastDate.get(Calendar.YEAR)) + "-"	+ String.valueOf(lastDate.get(Calendar.MONTH)+1) + "-1";
+			double initDateMonth = initDate.get(Calendar.MONTH)+1;
+			double nextDateMonth = nextDate.get(Calendar.MONTH)+1;
 			if (initDateMonth == nextDateMonth) {
 				transactionsSum = transactionsCalculate(transactionsSum, transaction);
 			} else {
 				summaryOfAccounts.put(transactionDate, transactionsSum);
 				transactionsSum = transactionsCalculate(transactionsSum, transaction);
 				initDate.add(Calendar.MONTH, 1);
-			}
-			
+			}			
 			if(transaction.equals(transactions.get(transactions.size()-1))){
 				summaryOfAccounts.put(lastTransactionDate, transactionsSum);
 			}
@@ -383,11 +345,9 @@ public class TransactionService {
 		lastDateforForecast=lastDate;
 		for(Double forecastEntry : forecasting(summaryOfAccounts)){
 			lastDateforForecast.add(Calendar.MONTH, 1);
-			String lastDateforForecastEntry = String.valueOf(lastDateforForecast.get(Calendar.YEAR)) + "-"	+ String.valueOf(lastDateforForecast.get(Calendar.MONTH)) + "-01";
-			summaryOfAccounts.put(lastDateforForecastEntry, forecastEntry);
-			
-		}
-		
+			String lastDateforForecastEntry = String.valueOf(lastDateforForecast.get(Calendar.YEAR)) + "-"	+ String.valueOf(lastDateforForecast.get(Calendar.MONTH)+1) + "-1";
+			summaryOfAccounts.put(lastDateforForecastEntry, (double)Math.round(forecastEntry));			
+		}		
 		return summaryOfAccounts;
 	}
 	
