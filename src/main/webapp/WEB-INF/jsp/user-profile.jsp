@@ -7,7 +7,7 @@
 	<!-- Default panel contents -->
 		<div class="panel-heading"><h1 class="panel-title">User Profile </h1></div>
 	<div class="panel-body">			
-			<a href="<spring:url value="/user-profile/removeprofile/${user.id}.html" />" class="btn btn-danger" type="button">Remove account</a>		
+			<c:if test="${(user.name != 'admin' )}"><a href="<spring:url value="/user-profile/removeprofile/${user.id}.html" />" class="btn btn-danger" type="button">Remove account</a></c:if> 		
 	</div>
 	
 <table class="table">

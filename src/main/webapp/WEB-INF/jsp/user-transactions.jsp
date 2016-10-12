@@ -10,6 +10,8 @@
    tr.incomecolor { background: #b3ffb3; }
    tr.alignpluscolor { background: white; }
    tr.alignminuscolor { background: white; }
+   tr.transferpluscolor { background: white; }
+   tr.transferminuscolor { background: white; }
     </style> 
  </head>
 
@@ -61,6 +63,12 @@
            <c:when test="${userTransactions.type == 'alignment -'}">
        <tr class="alignminuscolor">
     </c:when>      
+     <c:when test="${userTransactions.type == 'internal transfer +'}">
+       <tr class="transferpluscolor">
+    </c:when>   
+           <c:when test="${userTransactions.type == 'internal transfer -'}">
+       <tr class="transferminuscolor">
+    </c:when> 
 </c:choose>			
 				<td style="vertical-align: middle;">${userTransactions.type}</td>
 				<td style="vertical-align: middle;">${userTransactions.name}</td>

@@ -22,6 +22,7 @@ import pl.smartbudget.entity.Subcategory;
 import pl.smartbudget.entity.Transaction;
 import pl.smartbudget.entity.User;
 import pl.smartbudget.forms.AlignBalanceForm;
+import pl.smartbudget.forms.InternalTransferForm;
 import pl.smartbudget.forms.TransactionForm;
 import pl.smartbudget.repository.AccountRepository;
 import pl.smartbudget.repository.CategoryRepository;
@@ -100,6 +101,31 @@ public class TransactionService {
 		accountOfTransaction.setUser(user);
 
 		transactionRepository.save(transaction);
+	}
+	
+	public void saveInternalTransfer(InternalTransferForm internalTransferForm, String name) throws ParseException {
+		User user = userRepository.findByName(name);
+		Transaction transactionFromAccount = new Transaction();		
+		Account accountFrom = accountRepository.findOne(internalTransferForm.getFromAccountId());
+		transactionFromAccount.setType("internal transfer -");
+		transactionFromAccount.setAmount(internalTransferForm.getAmount());
+		transactionFromAccount.setName(internalTransferForm.getName());
+		transactionFromAccount.setDate(new SimpleDateFormat("dd.MM.yyyy").parse(internalTransferForm.getDate()));
+		transactionFromAccount.setAccount(accountFrom);
+		accountFrom.setUser(user);
+
+		transactionRepository.save(transactionFromAccount);
+		
+		Transaction transactionToAccount = new Transaction();
+		Account accountTo = accountRepository.findOne(internalTransferForm.getToAccountId());
+		transactionToAccount.setType("internal transfer +");
+		transactionToAccount.setAmount(internalTransferForm.getAmount());
+		transactionToAccount.setName(internalTransferForm.getName());
+		transactionToAccount.setDate(new SimpleDateFormat("dd.MM.yyyy").parse(internalTransferForm.getDate()));
+		transactionToAccount.setAccount(accountTo);
+		accountTo.setUser(user);
+
+		transactionRepository.save(transactionToAccount);
 	}
 	
 	public Map<String, Double> getMapOfSubcategoriesWithIncomesByDate(String name, String date) {
@@ -202,7 +228,7 @@ public class TransactionService {
 		for (Account account : accounts) {
 			List<Transaction> transactions = transactionRepository.findByAccount(account);
 			for (Transaction transaction : transactions) {
-				if (transaction.getType() == "income") {
+				if (transaction.getType() == "expense") {
 					expenseTransactions.add(transaction);
 				}
 			}
@@ -383,7 +409,7 @@ public class TransactionService {
 
 	private Double transactionsCalculate(Double transactionsSum, Transaction transaction) {
 
-		if (transaction.getType().equals("income") || transaction.getType().equals("alignment +")) {
+		if (transaction.getType().equals("income") || transaction.getType().equals("alignment +") || transaction.getType().equals("internal transfer +"))   {
 			transactionsSum += transaction.getAmount();
 		} else {
 			transactionsSum -= transaction.getAmount();
@@ -625,5 +651,7 @@ public class TransactionService {
 		}
 
 	}
+
+
 
 }

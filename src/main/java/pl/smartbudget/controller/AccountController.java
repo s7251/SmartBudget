@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import pl.smartbudget.entity.Account;
 import pl.smartbudget.forms.AlignBalanceForm;
+import pl.smartbudget.forms.InternalTransferForm;
 import pl.smartbudget.service.AccountService;
 import pl.smartbudget.service.TransactionService;
 import pl.smartbudget.service.UserService;
@@ -31,9 +32,11 @@ public class AccountController {
 	
 	@RequestMapping("/user-accounts")
 	public String accounts(Model model, Principal principal) {
+		String name = principal.getName();
 		model.addAttribute("account", new Account());
 		model.addAttribute("AlignBalanceForm", new AlignBalanceForm());
-		String name = principal.getName();
+		model.addAttribute("InternalTransferForm", new InternalTransferForm());
+		model.addAttribute("accountsMap", userService.getAccountsMapOfUser(name));		
 		model.addAttribute("user", userService.findOneWithAccounts(name));
 		model.addAttribute("summaryOfAccounts", transactionService.summaryTransactionsOfAccounts(name));
 		model.addAttribute("summaryOfAllAccounts", transactionService.summaryTransactionsOfAllAccounts(name));		
@@ -64,6 +67,13 @@ public class AccountController {
 	public String alignBalance(@ModelAttribute("AlignBalanceForm") AlignBalanceForm alignBalanceForm, Principal principal)	throws ParseException {
 		String name = principal.getName();
 		transactionService.saveAlignBalance(alignBalanceForm, name);
+		return "redirect:/user-transactions.html";
+	}	
+	
+	@RequestMapping(value = "/internalTransfer", method = RequestMethod.POST)
+	public String internalTransfer(@ModelAttribute("InternalTransferForm") InternalTransferForm internalTransferForm, Principal principal)	throws ParseException {
+		String name = principal.getName();
+		transactionService.saveInternalTransfer(internalTransferForm, name);
 		return "redirect:/user-transactions.html";
 	}	
 	
