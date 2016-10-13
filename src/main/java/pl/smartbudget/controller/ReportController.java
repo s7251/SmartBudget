@@ -61,4 +61,34 @@ public class ReportController {
     	return "redirect:/report-expenses-by-categories/"+date+".html";				
 	}
 	
+	@RequestMapping("/report-incomes-in-time/{date}")
+	public String getIncomeInTimeReport(Model model, Principal principal, @PathVariable String date) {				
+		String name = principal.getName();
+		model.addAttribute("user", userService.findOneWithCategoriesAndSubcategories(name));
+		model.addAttribute("date", date);
+		model.addAttribute("transactionsInTime", transactionService.getMapOfIncomeTransactionInTime(name, date));			
+		return "report-incomes-in-time";
+	}
+	
+	@RequestMapping(value = "/report-incomes-in-time", method = RequestMethod.POST)
+	public String incomeInTime(@ModelAttribute("ReportForm") ReportForm report)	 {
+		String date = report.getDate();
+    	return "redirect:/report-incomes-in-time/"+date+".html";				
+	}
+	
+	@RequestMapping("/report-expenses-in-time/{date}")
+	public String getExpenseInTimeReport(Model model, Principal principal, @PathVariable String date) {				
+		String name = principal.getName();
+		model.addAttribute("user", userService.findOneWithCategoriesAndSubcategories(name));
+		model.addAttribute("date", date);
+		model.addAttribute("transactionsInTime", transactionService.getMapOfExpenseTransactionInTime(name, date));			
+		return "report-expenses-in-time";
+	}
+	
+	@RequestMapping(value = "/report-expenses-in-time", method = RequestMethod.POST)
+	public String expenseInTime(@ModelAttribute("ReportForm") ReportForm report)	 {
+		String date = report.getDate();
+    	return "redirect:/report-expenses-in-time/"+date+".html";				
+	}
+	
 }

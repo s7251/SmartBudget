@@ -199,8 +199,42 @@ public class TransactionService {
 		Map<String, Double> sortedMapOfSubcategories = new TreeMap<String, Double>(mapOfSubcategories);
 		return sortedMapOfSubcategories;
 	}
+	///////////////////////////////////////////////////
 	
-
+	public Map<String, Double> getMapOfIncomeTransactionInTime(String name, String year){
+		Map<String, Double> incomeTransactionsInTime = new LinkedHashMap<String, Double>();
+		
+		User user = userRepository.findByName(name);
+		
+		for(int month=1; month<13; month++){
+		Double sumOfMonth = transactionRepository.getSummaryOfIncomeTransaction(user.getId(), month, Integer.parseInt(year));
+		if(sumOfMonth==null){
+			sumOfMonth=(double) 0;			
+		}
+		incomeTransactionsInTime.put(month+"."+year, sumOfMonth);
+		}
+		
+		return incomeTransactionsInTime;
+	}
+	
+	public Map<String, Double> getMapOfExpenseTransactionInTime(String name, String year){
+		Map<String, Double> expenseTransactionsInTime = new LinkedHashMap<String, Double>();
+		
+		User user = userRepository.findByName(name);
+		
+		for(int month=1; month<13; month++){
+		Double sumOfMonth = transactionRepository.getSummaryOfExpenseTransaction(user.getId(), month, Integer.parseInt(year));
+		if(sumOfMonth==null){
+			sumOfMonth=(double) 0;			
+		}
+		expenseTransactionsInTime.put(month+"."+year, sumOfMonth);
+		}
+		
+		return expenseTransactionsInTime;
+	}
+   //////////////////////////////////////////////////
+	
+	
 	public List<Transaction> findIncomeTransactionsByUser(String name) {
 		User user = userRepository.findByName(name);
 		List<Transaction> incomeTransactions = new ArrayList<Transaction>();
@@ -651,6 +685,8 @@ public class TransactionService {
 		}
 
 	}
+
+
 
 
 

@@ -92,6 +92,18 @@
 		<put-attribute name="current" value="report-expenses-by-categories" />		
 	</definition>
 	
+	<definition name="report-incomes-in-time" extends="common">
+		<put-attribute name="title" value="User Reports" />
+		<put-attribute name="body" value="/WEB-INF/jsp/report-incomes-in-time.jsp" />
+		<put-attribute name="current" value="report-incomes-in-time" />		
+	</definition>
+	
+	<definition name="report-expenses-in-time" extends="common">
+		<put-attribute name="title" value="User Reports" />
+		<put-attribute name="body" value="/WEB-INF/jsp/report-expenses-in-time.jsp" />
+		<put-attribute name="current" value="report-expenses-in-time" />		
+	</definition>
+	
 	<definition name="account-forecast" extends="common">
 		<put-attribute name="title" value="Account forecast" />
 		<put-attribute name="body" value="/WEB-INF/jsp/account-forecast.jsp" />

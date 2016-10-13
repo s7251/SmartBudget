@@ -18,8 +18,14 @@ public interface TransactionRepository extends JpaRepository<Transaction, Intege
 	@Query(value = "SELECT SUM(AMOUNT)  FROM TRANSACTION WHERE MONTH(DATE)= ?2 AND YEAR(DATE)= ?3 AND SUBCATEGORY_ID = ?1 AND TYPE= 'expense'", nativeQuery = true)	
 	String getSummaryOfSpentMoney(Integer id, int month, int year);
 
-   
+	@Query(value = "SELECT SUM(AMOUNT)  FROM TRANSACTION  T JOIN ACCOUNT A ON (T.ACCOUNT_ID = A.ID) WHERE MONTH(DATE)= ?2 AND YEAR(DATE)= ?3 AND USER_ID=?1 AND TYPE= 'income'", nativeQuery = true)	
+	Double getSummaryOfIncomeTransaction(Integer id, int month, int year);
+	
+	@Query(value = "SELECT SUM(AMOUNT)  FROM TRANSACTION  T JOIN ACCOUNT A ON (T.ACCOUNT_ID = A.ID) WHERE MONTH(DATE)= ?2 AND YEAR(DATE)= ?3 AND USER_ID=?1 AND TYPE= 'expense'", nativeQuery = true)	
+	Double getSummaryOfExpenseTransaction(Integer id, int month, int year);
 	
 	List<Transaction> findBySubcategory(Subcategory subcategory);
+
+
 
 }
