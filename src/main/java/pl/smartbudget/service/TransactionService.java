@@ -374,6 +374,11 @@ public class TransactionService {
 
 		Account account = accountRepository.findById(id);
 		List<Transaction> transactions = transactionRepository.findByAccount(account);
+		Collections.sort(transactions, new Comparator<Transaction>() {
+			  public int compare(Transaction o1, Transaction o2) {
+			      return o1.getDate().compareTo(o2.getDate());
+			  }
+			});
 
 		Calendar initDate = Calendar.getInstance();
 		initDate.setTime(transactions.get(0).getDate());

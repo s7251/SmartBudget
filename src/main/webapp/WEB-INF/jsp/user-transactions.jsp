@@ -21,6 +21,14 @@
     <li class="next"><a href="<spring:url value="/user-transactions/${nextMonthNav}.html"/>">Next Month <span aria-hidden="true">&rarr;</span></a></li>
   </ul>
 </nav>
+<div class="alert alert-info alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>Forecast (expenses by subcategory):</strong> .
+</div>
+<!-- <div class="alert alert-warning alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>Attention! probably unexpected expenses:</strong> .
+</div> -->
 
 <div class="panel panel-default">
 	<!-- Default panel contents -->
