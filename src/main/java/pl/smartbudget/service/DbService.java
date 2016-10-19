@@ -1,8 +1,7 @@
 package pl.smartbudget.service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -141,12 +140,11 @@ public class DbService {
 		transaction7.setAccount(account1);
 		transaction7.setType("income");
 		transaction7.setName("monthly salary");
-		try {
-			transaction7.setDate(new SimpleDateFormat("dd.MM.yyyy").parse("01.07.2016"));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Calendar transaction7Cal = Calendar.getInstance();
+		transaction7Cal.add(Calendar.MONTH, -3); //07.2016
+		Date transaction7Date = transaction7Cal.getTime();
+		transaction7.setDate(transaction7Date);
+	
 		transaction7.setAmount(4000.00);
 		transactionRepository.save(transaction7);
 		
@@ -155,12 +153,10 @@ public class DbService {
 		transaction12.setAccount(account1);
 		transaction12.setType("expense");
 		transaction12.setName("shopping in supermarket");
-		try {
-			transaction12.setDate(new SimpleDateFormat("dd.MM.yyyy").parse("01.07.2016"));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Calendar transaction12Cal = Calendar.getInstance();
+		transaction12Cal.add(Calendar.MONTH, -3); //07.2016
+		Date transaction12Date = transaction12Cal.getTime();
+		transaction12.setDate(transaction12Date);
 		transaction12.setAmount(100.00);
 		transactionRepository.save(transaction12);
 		
@@ -169,12 +165,10 @@ public class DbService {
 		transaction8.setAccount(account1);
 		transaction8.setType("income");
 		transaction8.setName("monthly salary");
-		try {
-			transaction8.setDate(new SimpleDateFormat("dd.MM.yyyy").parse("01.08.2016"));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Calendar transaction8Cal = Calendar.getInstance();
+		transaction8Cal.add(Calendar.MONTH, -2); //08.2016
+		Date transaction8Date = transaction8Cal.getTime();
+		transaction8.setDate(transaction8Date);
 		transaction8.setAmount(5000.00);
 		transactionRepository.save(transaction8);
 		
@@ -183,12 +177,10 @@ public class DbService {
 		transaction9.setAccount(account1);
 		transaction9.setType("income");
 		transaction9.setName("monthly salary");
-		try {
-			transaction9.setDate(new SimpleDateFormat("dd.MM.yyyy").parse("01.08.2016"));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Calendar transaction9Cal = Calendar.getInstance();
+		transaction9Cal.add(Calendar.MONTH, -2); //08.2016
+		Date transaction9Date = transaction9Cal.getTime();
+		transaction9.setDate(transaction9Date);
 		transaction9.setAmount(1000.00);
 		transactionRepository.save(transaction9);
 		
@@ -197,12 +189,10 @@ public class DbService {
 		transaction13.setAccount(account1);
 		transaction13.setType("expense");
 		transaction13.setName("shopping in supermarket");
-		try {
-			transaction13.setDate(new SimpleDateFormat("dd.MM.yyyy").parse("01.08.2016"));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Calendar transaction13Cal = Calendar.getInstance();
+		transaction13Cal.add(Calendar.MONTH, -2); //08.2016
+		Date transaction13Date = transaction13Cal.getTime();
+		transaction13.setDate(transaction13Date);
 		transaction13.setAmount(200.00);
 		transactionRepository.save(transaction13);
 		
@@ -211,12 +201,10 @@ public class DbService {
 		transaction10.setAccount(account1);
 		transaction10.setType("income");
 		transaction10.setName("monthly salary");
-		try {
-			transaction10.setDate(new SimpleDateFormat("dd.MM.yyyy").parse("01.09.2016"));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Calendar transaction10Cal = Calendar.getInstance();
+		transaction10Cal.add(Calendar.MONTH, -1); //09.2016
+		Date transaction10Date = transaction10Cal.getTime();
+		transaction10.setDate(transaction10Date);
 		transaction10.setAmount(1000.00);
 		transactionRepository.save(transaction10);
 		
@@ -225,12 +213,10 @@ public class DbService {
 		transaction14.setAccount(account1);
 		transaction14.setType("expense");
 		transaction14.setName("dinner in restaurant");
-		try {
-			transaction14.setDate(new SimpleDateFormat("dd.MM.yyyy").parse("01.09.2016"));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Calendar transaction14Cal = Calendar.getInstance();
+		transaction14Cal.add(Calendar.MONTH, -1); //09.2016
+		Date transaction14Date = transaction14Cal.getTime();
+		transaction14.setDate(transaction14Date);
 		transaction14.setAmount(300.00);
 		transactionRepository.save(transaction14);
 		

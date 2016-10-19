@@ -37,6 +37,7 @@ import weka.core.DenseInstance;
 import weka.core.FastVector;
 import weka.core.Instances;
 
+
 @Service
 public class TransactionService {
 
@@ -354,47 +355,78 @@ public class TransactionService {
 		Account account = accountRepository.findById(id);
 		List<Transaction> transactions = transactionRepository.findByAccount(account);
 		Collections.sort(transactions, new Comparator<Transaction>() {
-			  public int compare(Transaction o1, Transaction o2) {
-			      return o1.getDate().compareTo(o2.getDate());
-			  }
-			});
+			public int compare(Transaction o1, Transaction o2) {
+				return o1.getDate().compareTo(o2.getDate());
+			}
+		});
 
 		Calendar initDate = Calendar.getInstance();
 		initDate.setTime(transactions.get(0).getDate());
 		Calendar lastDate = Calendar.getInstance();
-		lastDate.setTime(transactions.get(transactions.size()-1).getDate());
+		lastDate.setTime(transactions.get(transactions.size() - 1).getDate());
 		lastDate.add(Calendar.MONTH, 1);
-		Double transactionsSum = new Double(0);		
+		Double transactionsSum = new Double(0);
 
 		for (Transaction transaction : transactions) {
 			Calendar nextDate = Calendar.getInstance();
 			nextDate.setTime(transaction.getDate());
-			String transactionDate = String.valueOf(nextDate.get(Calendar.YEAR)) + "-"	+ String.valueOf(nextDate.get(Calendar.MONTH)+1)  + "-1";			
-			String lastTransactionDate = String.valueOf(lastDate.get(Calendar.YEAR)) + "-"	+ String.valueOf(lastDate.get(Calendar.MONTH)+1) + "-1";
-			double initDateMonth = initDate.get(Calendar.MONTH)+1;
-			double nextDateMonth = nextDate.get(Calendar.MONTH)+1;
-			//Date nextDates = nextDate.getTime();
-			//Date initDates = initDate.getTime();
-			//int diffInDays = (int) ((initDates.getTime() - nextDates.getTime()) / (1000 * 60 * 60 * 24));
+			
+			String lastTransactionDate = String.valueOf(lastDate.get(Calendar.YEAR)) + "-"
+					+ String.valueOf(lastDate.get(Calendar.MONTH) + 1) + "-1";
+
+			double initDateMonth = initDate.get(Calendar.MONTH) + 1;
+			//double initDateMonthCounter = initDateMonth;
+			double nextDateMonth = nextDate.get(Calendar.MONTH) + 1;
+			int diffYear = nextDate.get(Calendar.YEAR) - initDate.get(Calendar.YEAR);
+			int diffMonth = diffYear * 12 + nextDate.get(Calendar.MONTH) - initDate.get(Calendar.MONTH);
+			Calendar prevDate = Calendar.getInstance();
+			prevDate = nextDate;
+			// double nextDateCounter = nextDateMonth;
+			// int nextYear=0;
+			// while(nextDateMonth - initDateMonth > 1){
+			while (diffMonth > 1) {
+				// int monthDiff = (int)nextDateMonth - (int)initDateMonth;
+				// nextDateCounter++;
+				// if(nextDateCounter>12){nextYear=1;}
+				// String transactionDates =
+				// String.valueOf(initDate.get(Calendar.YEAR)+nextYear) + "-" +
+				// String.valueOf(nextDate.get(Calendar.MONTH)-monthDiff+2) +
+				// "-1";
+				// summaryOfAccounts.put(transactionDates, transactionsSum);
+				initDate.add(Calendar.MONTH, 1);
+				initDateMonth = initDate.get(Calendar.MONTH) + 1;
+				diffMonth--;
+				// transactionDate = String.valueOf(nextDate.get(Calendar.YEAR))
+				// + "-" +
+				// String.valueOf(nextDate.get(Calendar.MONTH)-monthDiff+1) +
+				// "-1";
+				prevDate.add(Calendar.MONTH, -1);
+			}
+			
+			String transactionDate = String.valueOf(prevDate.get(Calendar.YEAR)) + "-"
+					+ String.valueOf(prevDate.get(Calendar.MONTH) + 1) + "-1";
+
 			if (initDateMonth == nextDateMonth) {
 				transactionsSum = transactionsCalculate(transactionsSum, transaction);
 			} else {
 				summaryOfAccounts.put(transactionDate, transactionsSum);
 				transactionsSum = transactionsCalculate(transactionsSum, transaction);
 				initDate.add(Calendar.MONTH, 1);
-			}			
-			if(transaction.equals(transactions.get(transactions.size()-1))){
+			}
+
+			if (transaction.equals(transactions.get(transactions.size() - 1))) {
 				summaryOfAccounts.put(lastTransactionDate, transactionsSum);
 			}
 		}
-		
+
 		Calendar lastDateforForecast = Calendar.getInstance();
-		lastDateforForecast=lastDate;
-		for(Double forecastEntry : forecasting(summaryOfAccounts)){
+		lastDateforForecast = lastDate;
+		for (Double forecastEntry : forecasting(summaryOfAccounts)) {
 			lastDateforForecast.add(Calendar.MONTH, 1);
-			String lastDateforForecastEntry = String.valueOf(lastDateforForecast.get(Calendar.YEAR)) + "-"	+ String.valueOf(lastDateforForecast.get(Calendar.MONTH)+1) + "-1";
-			summaryOfAccounts.put(lastDateforForecastEntry, (double)Math.round(forecastEntry));			
-		}		
+			String lastDateforForecastEntry = String.valueOf(lastDateforForecast.get(Calendar.YEAR)) + "-"
+					+ String.valueOf(lastDateforForecast.get(Calendar.MONTH) + 1) + "-1";
+			summaryOfAccounts.put(lastDateforForecastEntry, (double) Math.round(forecastEntry));
+		}
 		return summaryOfAccounts;
 	}
 	

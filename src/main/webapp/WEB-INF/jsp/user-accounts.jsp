@@ -26,17 +26,13 @@
 			<tr>
 				<td style="text-align: center; vertical-align: middle;">${summary.value.name}</td>
 				<td style="text-align: center; vertical-align: middle;">${summary.value.summaryOfAccount}</td>
-				<td style="text-align: center; vertical-align: middle;">
-				
-				       <a href='<spring:url value="/account-forecast/${summary.value.id}.html"/>'><span style="font-size:2em;" class="glyphicon glyphicon-stats"></span> </a>
+				<td style="text-align: center; vertical-align: middle;">		     
+			<a href='<spring:url value="/account-forecast/${summary.value.id}.html"/>'><span style="font-size:2em;" class="glyphicon glyphicon-stats"></span> </a>
 				</td>
 				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="" />" class="btn btn-primary" type="button" data-toggle="modal" data-target="#alignBalance${summary.value.id}">Align Balance</a></td>
 				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="" />" class="btn btn-warning" type="button" data-toggle="modal" data-target="#editAccountModal${summary.value.id}">Rename</a></td>					
 				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="/user-accounts/removeaccount/${summary.key}.html" />" class="btn btn-danger" type="button">Remove</a></td>		
-			
-			
-			<td>
-			
+			<td>			
 			<form:form mehod="post" modelAttribute="AlignBalanceForm" action="/alignBalance.html" cssClass="form-horizontal">
 			<form:hidden path="accountId" value="${summary.value.id}" />
 	<!-- Modal -->

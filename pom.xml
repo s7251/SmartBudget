@@ -37,6 +37,14 @@
 
 	<dependencies>
 	
+	   <!-- JodaTime -->
+	
+	   <dependency>
+ 		    <groupId>joda-time</groupId>
+  			<artifactId>joda-time</artifactId>
+ 		    <version>2.9.4</version>
+	   </dependency>
+	
 	    <!-- Weka -->
 	
 		<!-- https://mvnrepository.com/artifact/nz.ac.waikato.cms.weka/weka-stable -->
