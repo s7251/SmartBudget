@@ -150,6 +150,20 @@ public class DbService {
 		transaction7.setAmount(4000.00);
 		transactionRepository.save(transaction7);
 		
+		Transaction transaction12 = new Transaction();
+		transaction12.setSubcategory(subcategorySample3);
+		transaction12.setAccount(account1);
+		transaction12.setType("expense");
+		transaction12.setName("shopping in supermarket");
+		try {
+			transaction12.setDate(new SimpleDateFormat("dd.MM.yyyy").parse("01.07.2016"));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		transaction12.setAmount(100.00);
+		transactionRepository.save(transaction12);
+		
 		Transaction transaction8 = new Transaction();
 		transaction8.setSubcategory(subcategorySample1);
 		transaction8.setAccount(account1);
@@ -178,6 +192,20 @@ public class DbService {
 		transaction9.setAmount(1000.00);
 		transactionRepository.save(transaction9);
 		
+		Transaction transaction13 = new Transaction();
+		transaction13.setSubcategory(subcategorySample3);
+		transaction13.setAccount(account1);
+		transaction13.setType("expense");
+		transaction13.setName("shopping in supermarket");
+		try {
+			transaction13.setDate(new SimpleDateFormat("dd.MM.yyyy").parse("01.08.2016"));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		transaction13.setAmount(200.00);
+		transactionRepository.save(transaction13);
+		
 		Transaction transaction10 = new Transaction();
 		transaction10.setSubcategory(subcategorySample1);
 		transaction10.setAccount(account1);
@@ -191,6 +219,20 @@ public class DbService {
 		}
 		transaction10.setAmount(1000.00);
 		transactionRepository.save(transaction10);
+		
+		Transaction transaction14 = new Transaction();
+		transaction14.setSubcategory(subcategorySample4);
+		transaction14.setAccount(account1);
+		transaction14.setType("expense");
+		transaction14.setName("dinner in restaurant");
+		try {
+			transaction14.setDate(new SimpleDateFormat("dd.MM.yyyy").parse("01.09.2016"));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		transaction14.setAmount(300.00);
+		transactionRepository.save(transaction14);
 		
 		Transaction transaction1 = new Transaction();
 		transaction1.setSubcategory(subcategorySample1);

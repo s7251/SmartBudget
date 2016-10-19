@@ -35,6 +35,7 @@ public class TransactionController {
 		model.addAttribute("actualMonth", transactionService.getActualDateByViewedTransactions(transactionService.findAllTransactionOfUserByActualMonth(name)));
 		model.addAttribute("nextMonthNav", transactionService.getNextMonthForNavigationByViewedTransactions(transactionService.findAllTransactionOfUserByActualMonth(name)));	
 		model.addAttribute("prevMonthNav", transactionService.getPrevMonthForNavigationByViewedTransactions(transactionService.findAllTransactionOfUserByActualMonth(name)));		
+		model.addAttribute("subcategoriesForecast", transactionService.getSubcategoriesForecastForActualMonth(name));
 		return "user-transactions";
 	}
 	

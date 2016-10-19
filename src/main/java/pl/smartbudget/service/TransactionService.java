@@ -199,8 +199,7 @@ public class TransactionService {
 		Map<String, Double> sortedMapOfSubcategories = new TreeMap<String, Double>(mapOfSubcategories);
 		return sortedMapOfSubcategories;
 	}
-	///////////////////////////////////////////////////
-	
+		
 	public Map<String, Double> getMapOfIncomeTransactionInTime(String name, String year){
 		Map<String, Double> incomeTransactionsInTime = new LinkedHashMap<String, Double>();
 		
@@ -216,24 +215,6 @@ public class TransactionService {
 		
 		return incomeTransactionsInTime;
 	}
-	
-	public Map<String, Double> getMapOfExpenseTransactionInTime(String name, String year){
-		Map<String, Double> expenseTransactionsInTime = new LinkedHashMap<String, Double>();
-		
-		User user = userRepository.findByName(name);
-		
-		for(int month=1; month<13; month++){
-		Double sumOfMonth = transactionRepository.getSummaryOfExpenseTransaction(user.getId(), month, Integer.parseInt(year));
-		if(sumOfMonth==null){
-			sumOfMonth=(double) 0;			
-		}
-		expenseTransactionsInTime.put(month+"."+year, sumOfMonth);
-		}
-		
-		return expenseTransactionsInTime;
-	}
-   //////////////////////////////////////////////////
-	
 	
 	public List<Transaction> findIncomeTransactionsByUser(String name) {
 		User user = userRepository.findByName(name);
@@ -270,9 +251,7 @@ public class TransactionService {
 		return expenseTransactions;
 	}
 	
-	
-	/////////////////
-	
+		
 	
 	public ArrayList<Double> forecasting(Map<String, Double> summaryOfAccounts){
 		
@@ -394,6 +373,9 @@ public class TransactionService {
 			String lastTransactionDate = String.valueOf(lastDate.get(Calendar.YEAR)) + "-"	+ String.valueOf(lastDate.get(Calendar.MONTH)+1) + "-1";
 			double initDateMonth = initDate.get(Calendar.MONTH)+1;
 			double nextDateMonth = nextDate.get(Calendar.MONTH)+1;
+			//Date nextDates = nextDate.getTime();
+			//Date initDates = initDate.getTime();
+			//int diffInDays = (int) ((initDates.getTime() - nextDates.getTime()) / (1000 * 60 * 60 * 24));
 			if (initDateMonth == nextDateMonth) {
 				transactionsSum = transactionsCalculate(transactionsSum, transaction);
 			} else {
@@ -467,8 +449,7 @@ public class TransactionService {
 				
 		return sum;		
 	}
-
-	
+   
 	public List<Transaction> findAllTransactionOfUserByActualMonth(String name) {
 		User user = userRepository.findByName(name);
 		List<Transaction> allTransactionsByUser = new ArrayList<Transaction>();
@@ -690,8 +671,83 @@ public class TransactionService {
 		}
 
 	}
+	
+	public Map<String, Double> getMapOfExpenseTransactionInTime(String name, String year){
+		Map<String, Double> expenseTransactionsInTime = new LinkedHashMap<String, Double>();
+		
+		User user = userRepository.findByName(name);
+		
+		for(int month=1; month<13; month++){
+		Double sumOfMonth = transactionRepository.getSummaryOfExpenseTransaction(user.getId(), month, Integer.parseInt(year));
+		if(sumOfMonth==null){
+			sumOfMonth=(double) 0;			
+		}
+		expenseTransactionsInTime.put(month+"."+year, sumOfMonth);
+		}
+		
+		return expenseTransactionsInTime;
+	}
 
-
+	 ///////////////////////////////////////////////////
+		public Map<String, Double> getSubcategoriesForecastForActualMonth(String name){
+			Map<String, Double> subcategoriesForecast = new LinkedHashMap<String, Double>();
+			Map<String, LinkedHashMap<String, Double>> dataForForecast = new LinkedHashMap<String, LinkedHashMap<String, Double>>();
+			User user = userRepository.findByName(name);
+			
+			//Transaction firstTransaction = new Transaction();			
+			//firstTransaction = transactionRepository.getFirstTransactionsByUser(user.getId());
+			//List<Transaction> transactionsOfUser = transactionRepository.getTransactionsByUser(user.getId());
+						
+			//Date actualDate = new Date();
+			
+			//Calendar cal = Calendar.getInstance();
+			//cal.setTime(actualDate);
+			//int actualMonth = cal.get(Calendar.MONTH);
+			//int actualYear = cal.get(Calendar.YEAR);
+			
+			//Calendar cal2 = Calendar.getInstance();
+			//cal2.setTime(firstTransaction.getDate());
+			//int firstTransactionMonth = cal2.get(Calendar.MONTH);
+			//int firstTransactionYear = cal2.get(Calendar.YEAR);
+			
+			List<Category> categories = categoryRepository.findByUser(user);
+			for (Category category : categories) {
+				List<Subcategory> subcategories = subcategoryRepository.findByCategory(category);
+				category.setSubcategories(subcategories);
+				for (Subcategory subcategory : subcategories) {
+					List<Transaction> transactions = transactionRepository.getExpensesByUserAndSubcategory(user.getId(), subcategory.getId());
+					LinkedHashMap<String, Double> subcategoryYearSummary = new LinkedHashMap<String, Double>();
+					if(transactions.size()!=0){
+					Calendar initDate = Calendar.getInstance();
+				    initDate.setTime(transactions.get(0).getDate());
+					Double transactionsSum = new Double(0);	
+					
+					for (Transaction transaction : transactions){
+							
+						Calendar nextDate = Calendar.getInstance();
+						nextDate.setTime(transaction.getDate());
+						String transactionDate = String.valueOf(nextDate.get(Calendar.YEAR)) + "-"	+ String.valueOf(nextDate.get(Calendar.MONTH)+1)  + "-1";	
+						double initDateMonth = initDate.get(Calendar.MONTH)+1;
+						double nextDateMonth = nextDate.get(Calendar.MONTH)+1;
+						if (initDateMonth == nextDateMonth) {
+							transactionsSum = transactionsCalculate(transactionsSum, transaction);
+						} else {
+							subcategoryYearSummary.put(transactionDate, transactionsSum);
+							transactionsSum = new Double(0);	
+							transactionsSum = transactionsCalculate(transactionsSum, transaction);
+							initDate.add(Calendar.MONTH, 1);								
+						}	
+					}
+					dataForForecast.put(subcategory.getName(), subcategoryYearSummary);
+				}
+					
+				}
+			}
+			
+			
+			return subcategoriesForecast;
+		}
+		 ///////////////////////////////////////////////////
 
 
 
