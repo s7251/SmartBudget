@@ -2,11 +2,12 @@
 	pageEncoding="UTF-8"%>
 
 <%@ include file="../tiles-template/taglib.jsp"%>
- 
+
  <head>
    <style type="text/css">         
    tr.categorycolor { background: #efefef; }
    tr.subcategorycolor { background: white; }
+   tr.subcategorycolorinactive { background: #ffe6e6; }
 
     </style> 
  </head>
@@ -41,8 +42,13 @@
 				<td></td>	
 				<td></td>			
 		</tr>
-		<c:forEach items="${category.subcategories}" var="subcategory">		
+		<c:forEach items="${category.subcategories}" var="subcategory">	
+			<c:if test="${fn:length(subcategory.subcategoryLimits) == 0 }">	
+			<tr class="${'subcategorycolorinactive'}">
+			</c:if>
+			<c:if test="${fn:length(subcategory.subcategoryLimits) > 0 }">	
 			<tr class="${'subcategorycolor'}">
+			</c:if>
 				<td style="text-align: left; vertical-align: middle;">- ${subcategory.name}</td>							
 				<td style=" text-align: center; vertical-align: middle;">
 				<c:forEach items="${subcategory.subcategoryLimits}" var="subcategorylimits">
@@ -90,13 +96,20 @@
 				<c:forEach items="${subcategory.subcategoryLimits}" var="subcategorylimits">
 				${subcategorylimits.summaryOfSpentMoney}
 				
-				
+			
 				
 				</c:forEach>
 				</td>	
-<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="/user-budgetplan/addsubcategorylimit/${subcategory.id}.html" />" class="btn btn-primary" type="button"  data-toggle="modal" data-target="#addSubcategoryLimitModal${subcategory.id}">Set Budget</a>	
-				</td>
-				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="/user-budgetplan/changesubcategorylimit/${subcategory.id}.html" />" class="btn btn-primary" type="button"  data-toggle="modal" data-target="#changeSubcategoryLimitModal${subcategory.id}">Change Budget</a>	
+<td style="text-align: center; vertical-align: middle;">
+
+<c:if test="${fn:length(subcategory.subcategoryLimits) == 0 }">
+<a href="<spring:url value="/user-budgetplan/addsubcategorylimit/${subcategory.id}.html" />" class="btn btn-primary" type="button"  data-toggle="modal" data-target="#addSubcategoryLimitModal${subcategory.id}">Set Budget</a>	
+	</c:if>		</td>	
+
+				<td style="text-align: center; vertical-align: middle;">
+					<c:if test="${fn:length(subcategory.subcategoryLimits) > 0 }">
+				<a href="<spring:url value="/user-budgetplan/changesubcategorylimit/${subcategory.id}.html" />" class="btn btn-primary" type="button"  data-toggle="modal" data-target="#changeSubcategoryLimitModal${subcategory.id}">Change Budget</a>	
+				</c:if>
 				</td>
 							
 							
@@ -132,7 +145,7 @@
 					<br><br>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<input type="submit" class="btn btn-success" value="Add" />
+					<input type="submit" class="btn btn-success" value="Set" />
 				</div>
 			</div>
 		</div>
