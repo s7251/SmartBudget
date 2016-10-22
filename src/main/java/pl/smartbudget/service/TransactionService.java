@@ -31,6 +31,7 @@ import pl.smartbudget.repository.TransactionRepository;
 import pl.smartbudget.repository.UserRepository;
 import weka.classifiers.evaluation.NumericPrediction;
 import weka.classifiers.functions.GaussianProcesses;
+import weka.classifiers.functions.LinearRegression;
 import weka.classifiers.timeseries.WekaForecaster;
 import weka.core.Attribute;
 import weka.core.DenseInstance;
@@ -254,7 +255,7 @@ public class TransactionService {
 	
 		
 	
-	public ArrayList<Double> forecasting(Map<String, Double> summaryOfAccounts){
+	public ArrayList<Double> accountSummaryForecasting(Map<String, Double> summaryOfAccounts){
 		
 		ArrayList<Double> listOfPredictedData = new ArrayList<Double>();
 		try {			 
@@ -292,7 +293,7 @@ public class TransactionService {
 
 			// default underlying classifier is SMOreg (SVM) - we'll use
 			// gaussian processes for regression instead
-			forecaster.setBaseForecaster(new GaussianProcesses());
+			//forecaster.setBaseForecaster(new GaussianProcesses());
 			//forecaster.setBaseForecaster(new LinearRegression());
 			
 
@@ -301,7 +302,7 @@ public class TransactionService {
 			forecaster.getTSLagMaker().setMaxLag(12); // monthly data
 
 			// add a month of the year indicator field
-			forecaster.getTSLagMaker().setAddMonthOfYear(true);
+			forecaster.getTSLagMaker().setAddMonthOfYear(false);
 
 			// add a quarter of the year indicator field
 			forecaster.getTSLagMaker().setAddQuarterOfYear(true);
@@ -421,7 +422,7 @@ public class TransactionService {
 
 		Calendar lastDateforForecast = Calendar.getInstance();
 		lastDateforForecast = lastDate;
-		for (Double forecastEntry : forecasting(summaryOfAccounts)) {
+		for (Double forecastEntry : accountSummaryForecasting(summaryOfAccounts)) {
 			lastDateforForecast.add(Calendar.MONTH, 1);
 			String lastDateforForecastEntry = String.valueOf(lastDateforForecast.get(Calendar.YEAR)) + "-"
 					+ String.valueOf(lastDateforForecast.get(Calendar.MONTH) + 1) + "-1";
@@ -719,6 +720,109 @@ public class TransactionService {
 		
 		return expenseTransactionsInTime;
 	}
+	
+	//////////////////////////////////////////////////
+	
+public Double subcategoriesForecasting(Map<String, Double> summaryOfAccounts){
+		
+		ArrayList<Double> listOfPredictedData = new ArrayList<Double>();
+		try {			 
+			
+			// load the summary data
+			Attribute Attribute1 = new Attribute("monthsummary_forecast");
+			Attribute Attribute2 = new Attribute("Date", "yyyy-MM-dd");
+
+			// Make the feature vector
+			FastVector fvWekaAttributes = new FastVector(2);
+			fvWekaAttributes.addElement(Attribute1);
+			fvWekaAttributes.addElement(Attribute2);
+
+			// Create an empty training set
+			Instances summary = new Instances("month_summary", fvWekaAttributes, 10);
+
+			// Set class index
+			summary.setClassIndex(0);		
+
+			double[] attValues = new double[summary.numAttributes()];			
+			
+			for (Map.Entry<String, Double> entry : summaryOfAccounts.entrySet()) {
+				attValues = new double[summary.numAttributes()];
+			    attValues[0] = entry.getValue();
+				attValues[1] = summary.attribute("Date").parseDate(entry.getKey());
+				summary.add(new DenseInstance(1.0, attValues));
+			}
+			
+			// new forecaster
+			WekaForecaster forecaster = new WekaForecaster();
+
+			// set the targets we want to forecast. This method calls
+			// setFieldsToLag() on the lag maker object for us
+			forecaster.setFieldsToForecast("monthsummary_forecast");
+
+			// default underlying classifier is SMOreg (SVM) - we'll use
+			// gaussian processes for regression instead
+			//forecaster.setBaseForecaster(new GaussianProcesses());
+			//forecaster.setBaseForecaster(new LinearRegression());
+			
+
+			forecaster.getTSLagMaker().setTimeStampField("Date"); // date time																
+			forecaster.getTSLagMaker().setMinLag(1);
+			forecaster.getTSLagMaker().setMaxLag(12); // monthly data
+
+			// add a month of the year indicator field
+			forecaster.getTSLagMaker().setAddMonthOfYear(true);
+
+			// add a quarter of the year indicator field
+			forecaster.getTSLagMaker().setAddQuarterOfYear(true);
+
+			// build the model
+			forecaster.buildForecaster(summary, System.out);
+
+			// prime the forecaster with enough recent historical data
+			// to cover up to the maximum lag. In our case, we could just supply
+			// the 12 most recent historical instances, as this covers our
+			// maximum
+			// lag period
+			forecaster.primeForecaster(summary);
+
+			// forecast for 12 units (months) beyond the end of the
+			// training data
+			List<List<NumericPrediction>> forecast = forecaster.forecast(1, System.out);
+
+			// output the predictions. Outer list is over the steps; inner list
+			// is over
+			// the targets
+			for (int i = 0; i < 1; i++) {
+				List<NumericPrediction> predsAtStep = forecast.get(i);
+				for (int j = 0; j < 1; j++) {
+					NumericPrediction predForTarget = predsAtStep.get(j);
+					listOfPredictedData.add(predForTarget.predicted());
+					System.out.print("" + predForTarget.predicted() + " ");
+				}
+				System.out.println();
+			}
+
+			// we can continue to use the trained forecaster for further
+			// forecasting
+			// by priming with the most recent historical data (as it becomes
+			// available).
+			// At some stage it becomes prudent to re-build the model using
+			// current
+			// historical data.
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		
+		if(listOfPredictedData.size()>0){
+		return listOfPredictedData.get(listOfPredictedData.size() - 1);}
+		else{
+			return 0.0;
+		}
+		
+		
+	}
+	
 
 	 ///////////////////////////////////////////////////
 		public Map<String, Double> getSubcategoriesForecastForActualMonth(String name){
@@ -748,6 +852,11 @@ public class TransactionService {
 				category.setSubcategories(subcategories);
 				for (Subcategory subcategory : subcategories) {
 					List<Transaction> transactions = transactionRepository.getExpensesByUserAndSubcategory(user.getId(), subcategory.getId());
+					Collections.sort(transactions, new Comparator<Transaction>() {
+						public int compare(Transaction o1, Transaction o2) {
+							return o1.getDate().compareTo(o2.getDate());
+						}
+					});
 					LinkedHashMap<String, Double> subcategoryYearSummary = new LinkedHashMap<String, Double>();
 					if(transactions.size()!=0){
 					Calendar initDate = Calendar.getInstance();
@@ -758,17 +867,39 @@ public class TransactionService {
 							
 						Calendar nextDate = Calendar.getInstance();
 						nextDate.setTime(transaction.getDate());
-						String transactionDate = String.valueOf(nextDate.get(Calendar.YEAR)) + "-"	+ String.valueOf(nextDate.get(Calendar.MONTH)+1)  + "-1";	
+						Calendar lastDate = Calendar.getInstance();
+						lastDate.setTime(transactions.get(transactions.size() - 1).getDate());
+						lastDate.add(Calendar.MONTH, 1);
+						int diffYear = nextDate.get(Calendar.YEAR) - initDate.get(Calendar.YEAR);
+						int diffMonth = diffYear * 12 + nextDate.get(Calendar.MONTH) - initDate.get(Calendar.MONTH);
+						Calendar prevDate = Calendar.getInstance();
+						prevDate = nextDate;
+						
 						double initDateMonth = initDate.get(Calendar.MONTH)+1;
 						double nextDateMonth = nextDate.get(Calendar.MONTH)+1;
+						while (diffMonth > 1) {
+							
+							initDate.add(Calendar.MONTH, 1);
+							initDateMonth = initDate.get(Calendar.MONTH) + 1;
+							diffMonth--;
+						
+							prevDate.add(Calendar.MONTH, -1);
+						}
+						String transactionDate = String.valueOf(prevDate.get(Calendar.YEAR)) + "-"	+ String.valueOf(prevDate.get(Calendar.MONTH)+1)  + "-1";
+						String lastTransactionDate = String.valueOf(lastDate.get(Calendar.YEAR)) + "-"	+ String.valueOf(lastDate.get(Calendar.MONTH) + 1) + "-1";
+						
 						if (initDateMonth == nextDateMonth) {
 							transactionsSum = transactionsCalculate(transactionsSum, transaction);
 						} else {
-							subcategoryYearSummary.put(transactionDate, transactionsSum);
+							subcategoryYearSummary.put(transactionDate, Math.abs(transactionsSum));
 							transactionsSum = new Double(0);	
 							transactionsSum = transactionsCalculate(transactionsSum, transaction);
 							initDate.add(Calendar.MONTH, 1);								
 						}	
+						
+						if (transaction.equals(transactions.get(transactions.size() - 1))) {
+							subcategoryYearSummary.put(lastTransactionDate, Math.abs(transactionsSum));
+						}
 					}
 					dataForForecast.put(subcategory.getName(), subcategoryYearSummary);
 				}
@@ -777,7 +908,14 @@ public class TransactionService {
 			}
 			
 			
-			return subcategoriesForecast;
+			for (Map.Entry<String, LinkedHashMap<String, Double>> entry : dataForForecast.entrySet()) {
+			     LinkedHashMap<String, Double> value = entry.getValue();
+			    			    
+			    subcategoriesForecast.put(entry.getKey(), (double) Math.round(subcategoriesForecasting(value)));
+			    
+			}
+			
+		return subcategoriesForecast;
 		}
 		 ///////////////////////////////////////////////////
 

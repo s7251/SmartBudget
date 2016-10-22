@@ -135,41 +135,100 @@ public class DbService {
 		subcategoryLimitSample2.setDate(new Date());
 		subcategoryLimitRepository.save(subcategoryLimitSample2);
 		
+		Transaction transaction1 = new Transaction();
+		transaction1.setSubcategory(subcategorySample1);
+		transaction1.setAccount(account1);
+		transaction1.setType("income");
+		transaction1.setName("monthly salary");
+		Calendar transaction1Cal = Calendar.getInstance();
+		transaction1Cal.add(Calendar.MONTH, -11); //10.2015
+		Date transaction1Date = transaction1Cal.getTime();
+		transaction1.setDate(transaction1Date);	
+		transaction1.setAmount(4000.00);
+		transactionRepository.save(transaction1);
+		
+		Transaction transaction2 = new Transaction();
+		transaction2.setSubcategory(subcategorySample3);
+		transaction2.setAccount(account1);
+		transaction2.setType("expense");
+		transaction2.setName("shopping in supermarket");
+		Calendar transaction2Cal = Calendar.getInstance();
+		transaction2Cal.add(Calendar.MONTH, -11); //10.2015
+		Date transaction2Date = transaction2Cal.getTime();
+		transaction2.setDate(transaction2Date);
+		transaction2.setAmount(100.00);
+		transactionRepository.save(transaction2);
+		
+		Transaction transaction3 = new Transaction();
+		transaction3.setSubcategory(subcategorySample1);
+		transaction3.setAccount(account1);
+		transaction3.setType("income");
+		transaction3.setName("monthly salary");
+		Calendar transaction3Cal = Calendar.getInstance();
+		transaction3Cal.add(Calendar.MONTH, -10); //11.2015
+		Date transaction3Date = transaction3Cal.getTime();
+		transaction3.setDate(transaction3Date);	
+		transaction3.setAmount(4000.00);
+		transactionRepository.save(transaction3);
+		
+		Transaction transaction4 = new Transaction();
+		transaction4.setSubcategory(subcategorySample3);
+		transaction4.setAccount(account1);
+		transaction4.setType("expense");
+		transaction4.setName("shopping in supermarket");
+		Calendar transaction4Cal = Calendar.getInstance();
+		transaction4Cal.add(Calendar.MONTH, -10); //11.2015
+		Date transaction4Date = transaction4Cal.getTime();
+		transaction4.setDate(transaction4Date);
+		transaction4.setAmount(100.00);
+		transactionRepository.save(transaction4);
+		
+		Transaction transaction5 = new Transaction();
+		transaction5.setSubcategory(subcategorySample1);
+		transaction5.setAccount(account1);
+		transaction5.setType("income");
+		transaction5.setName("monthly salary");
+		Calendar transaction5Cal = Calendar.getInstance();
+		transaction5Cal.add(Calendar.MONTH, -9); //12.2015
+		Date transaction5Date = transaction5Cal.getTime();
+		transaction5.setDate(transaction5Date);	
+		transaction5.setAmount(4000.00);
+		transactionRepository.save(transaction5);
+		
+		Transaction transaction6 = new Transaction();
+		transaction6.setSubcategory(subcategorySample3);
+		transaction6.setAccount(account1);
+		transaction6.setType("expense");
+		transaction6.setName("shopping in supermarket");
+		Calendar transaction6Cal = Calendar.getInstance();
+		transaction6Cal.add(Calendar.MONTH, -9); //12.2015
+		Date transaction6Date = transaction6Cal.getTime();
+		transaction6.setDate(transaction6Date);
+		transaction6.setAmount(100.00);
+		transactionRepository.save(transaction6);
+		
 		Transaction transaction7 = new Transaction();
 		transaction7.setSubcategory(subcategorySample1);
 		transaction7.setAccount(account1);
 		transaction7.setType("income");
 		transaction7.setName("monthly salary");
 		Calendar transaction7Cal = Calendar.getInstance();
-		transaction7Cal.add(Calendar.MONTH, -3); //07.2016
+		transaction7Cal.add(Calendar.MONTH, -8); //01.2016
 		Date transaction7Date = transaction7Cal.getTime();
-		transaction7.setDate(transaction7Date);
-	
+		transaction7.setDate(transaction7Date);	
 		transaction7.setAmount(4000.00);
 		transactionRepository.save(transaction7);
 		
-		Transaction transaction12 = new Transaction();
-		transaction12.setSubcategory(subcategorySample3);
-		transaction12.setAccount(account1);
-		transaction12.setType("expense");
-		transaction12.setName("shopping in supermarket");
-		Calendar transaction12Cal = Calendar.getInstance();
-		transaction12Cal.add(Calendar.MONTH, -3); //07.2016
-		Date transaction12Date = transaction12Cal.getTime();
-		transaction12.setDate(transaction12Date);
-		transaction12.setAmount(100.00);
-		transactionRepository.save(transaction12);
-		
 		Transaction transaction8 = new Transaction();
-		transaction8.setSubcategory(subcategorySample1);
+		transaction8.setSubcategory(subcategorySample3);
 		transaction8.setAccount(account1);
-		transaction8.setType("income");
-		transaction8.setName("monthly salary");
+		transaction8.setType("expense");
+		transaction8.setName("shopping in supermarket");
 		Calendar transaction8Cal = Calendar.getInstance();
-		transaction8Cal.add(Calendar.MONTH, -2); //08.2016
+		transaction8Cal.add(Calendar.MONTH, -8); //01.2016
 		Date transaction8Date = transaction8Cal.getTime();
 		transaction8.setDate(transaction8Date);
-		transaction8.setAmount(5000.00);
+		transaction8.setAmount(100.00);
 		transactionRepository.save(transaction8);
 		
 		Transaction transaction9 = new Transaction();
@@ -178,144 +237,259 @@ public class DbService {
 		transaction9.setType("income");
 		transaction9.setName("monthly salary");
 		Calendar transaction9Cal = Calendar.getInstance();
-		transaction9Cal.add(Calendar.MONTH, -2); //08.2016
+		transaction9Cal.add(Calendar.MONTH, -7); //02.2016
 		Date transaction9Date = transaction9Cal.getTime();
-		transaction9.setDate(transaction9Date);
-		transaction9.setAmount(1000.00);
+		transaction9.setDate(transaction9Date);	
+		transaction9.setAmount(4000.00);
 		transactionRepository.save(transaction9);
 		
-		Transaction transaction13 = new Transaction();
-		transaction13.setSubcategory(subcategorySample3);
-		transaction13.setAccount(account1);
-		transaction13.setType("expense");
-		transaction13.setName("shopping in supermarket");
-		Calendar transaction13Cal = Calendar.getInstance();
-		transaction13Cal.add(Calendar.MONTH, -2); //08.2016
-		Date transaction13Date = transaction13Cal.getTime();
-		transaction13.setDate(transaction13Date);
-		transaction13.setAmount(200.00);
-		transactionRepository.save(transaction13);
-		
 		Transaction transaction10 = new Transaction();
-		transaction10.setSubcategory(subcategorySample1);
+		transaction10.setSubcategory(subcategorySample3);
 		transaction10.setAccount(account1);
-		transaction10.setType("income");
-		transaction10.setName("monthly salary");
+		transaction10.setType("expense");
+		transaction10.setName("shopping in supermarket");
 		Calendar transaction10Cal = Calendar.getInstance();
-		transaction10Cal.add(Calendar.MONTH, -1); //09.2016
+		transaction10Cal.add(Calendar.MONTH, -7); //02.2016
 		Date transaction10Date = transaction10Cal.getTime();
 		transaction10.setDate(transaction10Date);
-		transaction10.setAmount(1000.00);
+		transaction10.setAmount(100.00);
 		transactionRepository.save(transaction10);
 		
+		Transaction transaction11 = new Transaction();
+		transaction11.setSubcategory(subcategorySample1);
+		transaction11.setAccount(account1);
+		transaction11.setType("income");
+		transaction11.setName("monthly salary");
+		Calendar transaction11Cal = Calendar.getInstance();
+		transaction11Cal.add(Calendar.MONTH, -6); //03.2016
+		Date transaction11Date = transaction11Cal.getTime();
+		transaction11.setDate(transaction11Date);	
+		transaction11.setAmount(4000.00);
+		transactionRepository.save(transaction11);
+		
+		Transaction transaction12 = new Transaction();
+		transaction12.setSubcategory(subcategorySample3);
+		transaction12.setAccount(account1);
+		transaction12.setType("expense");
+		transaction12.setName("shopping in supermarket");
+		Calendar transaction12Cal = Calendar.getInstance();
+		transaction12Cal.add(Calendar.MONTH, -6); //03.2016
+		Date transaction12Date = transaction12Cal.getTime();
+		transaction12.setDate(transaction12Date);
+		transaction12.setAmount(100.00);
+		transactionRepository.save(transaction12);
+		
+		Transaction transaction13 = new Transaction();
+		transaction13.setSubcategory(subcategorySample1);
+		transaction13.setAccount(account1);
+		transaction13.setType("income");
+		transaction13.setName("monthly salary");
+		Calendar transaction13Cal = Calendar.getInstance();
+		transaction13Cal.add(Calendar.MONTH, -5); //04.2016
+		Date transaction13Date = transaction13Cal.getTime();
+		transaction13.setDate(transaction13Date);	
+		transaction13.setAmount(4000.00);
+		transactionRepository.save(transaction13);
+		
 		Transaction transaction14 = new Transaction();
-		transaction14.setSubcategory(subcategorySample4);
+		transaction14.setSubcategory(subcategorySample3);
 		transaction14.setAccount(account1);
 		transaction14.setType("expense");
-		transaction14.setName("dinner in restaurant");
+		transaction14.setName("shopping in supermarket");
 		Calendar transaction14Cal = Calendar.getInstance();
-		transaction14Cal.add(Calendar.MONTH, -1); //09.2016
+		transaction14Cal.add(Calendar.MONTH, -5); //04.2016
 		Date transaction14Date = transaction14Cal.getTime();
 		transaction14.setDate(transaction14Date);
-		transaction14.setAmount(300.00);
+		transaction14.setAmount(100.00);
 		transactionRepository.save(transaction14);
 		
-		Transaction transaction1 = new Transaction();
-		transaction1.setSubcategory(subcategorySample1);
-		transaction1.setAccount(account1);
-		transaction1.setType("income");
-		transaction1.setName("monthly salary");
-		transaction1.setDate(new Date());
-		transaction1.setAmount(3600.00);
-		transactionRepository.save(transaction1);
+		Transaction transaction15 = new Transaction();
+		transaction15.setSubcategory(subcategorySample1);
+		transaction15.setAccount(account1);
+		transaction15.setType("income");
+		transaction15.setName("monthly salary");
+		Calendar transaction15Cal = Calendar.getInstance();
+		transaction15Cal.add(Calendar.MONTH, -4); //05.2016
+		Date transaction15Date = transaction15Cal.getTime();
+		transaction15.setDate(transaction15Date);	
+		transaction15.setAmount(4000.00);
+		transactionRepository.save(transaction15);
 		
-		Transaction transaction2 = new Transaction();
-		transaction2.setSubcategory(subcategorySample3);
-		transaction2.setAccount(account2);
-		transaction2.setType("expense");
-		transaction2.setName("shopping in supermarket");
-		transaction2.setDate(new Date());
-		transaction2.setAmount(89.00);
-		transactionRepository.save(transaction2);
+		Transaction transaction16 = new Transaction();
+		transaction16.setSubcategory(subcategorySample3);
+		transaction16.setAccount(account1);
+		transaction16.setType("expense");
+		transaction16.setName("shopping in supermarket");
+		Calendar transaction16Cal = Calendar.getInstance();
+		transaction16Cal.add(Calendar.MONTH, -4); //05.2016
+		Date transaction16Date = transaction16Cal.getTime();
+		transaction16.setDate(transaction16Date);
+		transaction16.setAmount(100.00);
+		transactionRepository.save(transaction16);
+			
+		Transaction transaction19 = new Transaction();
+		transaction19.setSubcategory(subcategorySample1);
+		transaction19.setAccount(account1);
+		transaction19.setType("income");
+		transaction19.setName("monthly salary");
+		Calendar transaction19Cal = Calendar.getInstance();
+		transaction19Cal.add(Calendar.MONTH, -3); //07.2016
+		Date transaction19Date = transaction19Cal.getTime();
+		transaction19.setDate(transaction19Date);	
+		transaction19.setAmount(4000.00);
+		transactionRepository.save(transaction19);
 		
-		Transaction transaction3 = new Transaction();
-		transaction3.setSubcategory(subcategorySample4);
-		transaction3.setAccount(account1);
-		transaction3.setType("expense");
-		transaction3.setName("dinner in restaurant");
-		transaction3.setDate(new Date());
-		transaction3.setAmount(237.00);
-		transactionRepository.save(transaction3);
+		Transaction transaction20 = new Transaction();
+		transaction20.setSubcategory(subcategorySample3);
+		transaction20.setAccount(account1);
+		transaction20.setType("expense");
+		transaction20.setName("shopping in supermarket");
+		Calendar transaction20Cal = Calendar.getInstance();
+		transaction20Cal.add(Calendar.MONTH, -3); //07.2016
+		Date transaction20Date = transaction20Cal.getTime();
+		transaction20.setDate(transaction20Date);
+		transaction20.setAmount(100.00);
+		transactionRepository.save(transaction20);
 		
-		Transaction transaction4 = new Transaction();
-		transaction4.setSubcategory(subcategorySample5);
-		transaction4.setAccount(account1);
-		transaction4.setType("expense");
-		transaction4.setName("haircut");
-		transaction4.setDate(new Date());
-		transaction4.setAmount(25.00);
-		transactionRepository.save(transaction4);
+		Transaction transaction21 = new Transaction();
+		transaction21.setSubcategory(subcategorySample1);
+		transaction21.setAccount(account1);
+		transaction21.setType("income");
+		transaction21.setName("monthly salary");
+		Calendar transaction21Cal = Calendar.getInstance();
+		transaction21Cal.add(Calendar.MONTH, -2); //08.2016
+		Date transaction21Date = transaction21Cal.getTime();
+		transaction21.setDate(transaction21Date);
+		transaction21.setAmount(5000.00);
+		transactionRepository.save(transaction21);
 		
-		Transaction transaction5 = new Transaction();
-		transaction5.setSubcategory(subcategorySample6);
-		transaction5.setAccount(account1);
-		transaction5.setType("income");
-		transaction5.setName("bank deposit (6months)");
-		transaction5.setDate(new Date());
-		transaction5.setAmount(77.00);
-		transactionRepository.save(transaction5);
+		Transaction transaction22 = new Transaction();
+		transaction22.setSubcategory(subcategorySample1);
+		transaction22.setAccount(account1);
+		transaction22.setType("income");
+		transaction22.setName("monthly salary");
+		Calendar transaction22Cal = Calendar.getInstance();
+		transaction22Cal.add(Calendar.MONTH, -2); //08.2016
+		Date transaction22Date = transaction22Cal.getTime();
+		transaction22.setDate(transaction22Date);
+		transaction22.setAmount(1000.00);
+		transactionRepository.save(transaction22);
 		
-		Transaction transaction6 = new Transaction();
-		transaction6.setSubcategory(subcategorySample1);
-		transaction6.setAccount(account2);
-		transaction6.setType("income");
-		transaction6.setName("bonus");
-		transaction6.setDate(new Date());
-		transaction6.setAmount(300.00);
-		transactionRepository.save(transaction6);
+		Transaction transaction23 = new Transaction();
+		transaction23.setSubcategory(subcategorySample3);
+		transaction23.setAccount(account1);
+		transaction23.setType("expense");
+		transaction23.setName("shopping in supermarket");
+		Calendar transaction23Cal = Calendar.getInstance();
+		transaction23Cal.add(Calendar.MONTH, -2); //08.2016
+		Date transaction23Date = transaction23Cal.getTime();
+		transaction23.setDate(transaction23Date);
+		transaction23.setAmount(200.00);
+		transactionRepository.save(transaction23);
 		
-//		Transaction transaction12 = new Transaction();
-//		transaction12.setSubcategory(subcategorySample1);
-//		transaction12.setAccount(account1);
-//		transaction12.setType("income");
-//		transaction12.setName("monthly salary");
-//		try {
-//			transaction12.setDate(new SimpleDateFormat("dd.MM.yyyy").parse("01.11.2016"));
-//		} catch (ParseException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		transaction12.setAmount(4000.00);
-//		transactionRepository.save(transaction12);
-//		
-//		Transaction transaction13 = new Transaction();
-//		transaction13.setSubcategory(subcategorySample1);
-//		transaction13.setAccount(account1);
-//		transaction13.setType("income");
-//		transaction13.setName("monthly salary");
-//		try {
-//			transaction13.setDate(new SimpleDateFormat("dd.MM.yyyy").parse("01.12.2016"));
-//		} catch (ParseException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		transaction13.setAmount(4000.00);
-//		transactionRepository.save(transaction13);
-//	
-//		Transaction transaction14 = new Transaction();
-//		transaction14.setSubcategory(subcategorySample1);
-//		transaction14.setAccount(account1);
-//		transaction14.setType("income");
-//		transaction14.setName("monthly salary");
-//		try {
-//			transaction14.setDate(new SimpleDateFormat("dd.MM.yyyy").parse("01.01.2017"));
-//		} catch (ParseException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		transaction14.setAmount(4000.00);
-//		transactionRepository.save(transaction14);
+		Transaction transaction24 = new Transaction();
+		transaction24.setSubcategory(subcategorySample1);
+		transaction24.setAccount(account1);
+		transaction24.setType("income");
+		transaction24.setName("monthly salary");
+		Calendar transaction24Cal = Calendar.getInstance();
+		transaction24Cal.add(Calendar.MONTH, -1); //09.2016
+		Date transaction24Date = transaction10Cal.getTime();
+		transaction24.setDate(transaction24Date);
+		transaction24.setAmount(1000.00);
+		transactionRepository.save(transaction24);
 		
+		Transaction transaction25 = new Transaction();
+		transaction25.setSubcategory(subcategorySample4);
+		transaction25.setAccount(account1);
+		transaction25.setType("expense");
+		transaction25.setName("dinner in restaurant");
+		Calendar transaction25Cal = Calendar.getInstance();
+		transaction25Cal.add(Calendar.MONTH, -1); //09.2016
+		Date transaction25Date = transaction25Cal.getTime();
+		transaction25.setDate(transaction25Date);
+		transaction25.setAmount(300.00);
+		transactionRepository.save(transaction25);
+		
+		Transaction transaction26 = new Transaction();
+		transaction26.setSubcategory(subcategorySample4);
+		transaction26.setAccount(account1);
+		transaction26.setType("expense");
+		transaction26.setName("dinner in restaurant");
+		Calendar transaction26Cal = Calendar.getInstance();
+		transaction26Cal.add(Calendar.MONTH, -1); //09.2016
+		Date transaction26Date = transaction26Cal.getTime();
+		transaction26.setDate(transaction26Date);
+		transaction26.setAmount(300.00);
+		transactionRepository.save(transaction26);
+		
+		Transaction transaction27 = new Transaction();
+		transaction27.setSubcategory(subcategorySample4);
+		transaction27.setAccount(account1);
+		transaction27.setType("expense");
+		transaction27.setName("dinner in restaurant");
+		Calendar transaction27Cal = Calendar.getInstance();
+		transaction27Cal.add(Calendar.MONTH, -1); //09.2016
+		Date transaction27Date = transaction27Cal.getTime();
+		transaction27.setDate(transaction27Date);
+		transaction27.setAmount(300.00);
+		transactionRepository.save(transaction27);
+		
+		Transaction transaction28 = new Transaction();
+		transaction28.setSubcategory(subcategorySample1);
+		transaction28.setAccount(account1);
+		transaction28.setType("income");
+		transaction28.setName("monthly salary");
+		transaction28.setDate(new Date());
+		transaction28.setAmount(3600.00);
+		transactionRepository.save(transaction28);
+		
+		Transaction transaction29 = new Transaction();
+		transaction29.setSubcategory(subcategorySample3);
+		transaction29.setAccount(account2);
+		transaction29.setType("expense");
+		transaction29.setName("shopping in supermarket");
+		transaction29.setDate(new Date());
+		transaction29.setAmount(89.00);
+		transactionRepository.save(transaction29);
+		
+		Transaction transaction30 = new Transaction();
+		transaction30.setSubcategory(subcategorySample4);
+		transaction30.setAccount(account1);
+		transaction30.setType("expense");
+		transaction30.setName("dinner in restaurant");
+		transaction30.setDate(new Date());
+		transaction30.setAmount(237.00);
+		transactionRepository.save(transaction30);
+		
+		Transaction transaction31 = new Transaction();
+		transaction31.setSubcategory(subcategorySample5);
+		transaction31.setAccount(account1);
+		transaction31.setType("expense");
+		transaction31.setName("haircut");
+		transaction31.setDate(new Date());
+		transaction31.setAmount(25.00);
+		transactionRepository.save(transaction31);
+		
+		Transaction transaction32 = new Transaction();
+		transaction32.setSubcategory(subcategorySample6);
+		transaction32.setAccount(account1);
+		transaction32.setType("income");
+		transaction32.setName("bank deposit (6months)");
+		transaction32.setDate(new Date());
+		transaction32.setAmount(77.00);
+		transactionRepository.save(transaction32);
+		
+		Transaction transaction33 = new Transaction();
+		transaction33.setSubcategory(subcategorySample1);
+		transaction33.setAccount(account2);
+		transaction33.setType("income");
+		transaction33.setName("bonus");
+		transaction33.setDate(new Date());
+		transaction33.setAmount(300.00);
+		transactionRepository.save(transaction33);
+
+
 		// User
 		
 		User user1 = new User();
@@ -349,14 +523,14 @@ public class DbService {
 		subcategoryLimitSample10.setDate(new Date());		
 		subcategoryLimitRepository.save(subcategoryLimitSample10);
 		
-		Transaction transaction11 = new Transaction();
-		transaction11.setSubcategory(subcategorySample10);
-		transaction11.setAccount(account3);
-		transaction11.setType("income");
-		transaction11.setName("tax refund");
-		transaction11.setDate(new Date());
-		transaction11.setAmount(999.00);		
-		transactionRepository.save(transaction11);
+		Transaction transaction100 = new Transaction();
+		transaction100.setSubcategory(subcategorySample10);
+		transaction100.setAccount(account3);
+		transaction100.setType("income");
+		transaction100.setName("tax refund");
+		transaction100.setDate(new Date());
+		transaction100.setAmount(999.00);		
+		transactionRepository.save(transaction100);
 		
 	
 	}

@@ -114,7 +114,7 @@
 							
 							
 							
-				</tr>		
+						
 				
 									<form:form mehod="post" modelAttribute="subcategorylimit" action="/addSubcategoryLimit.html" cssClass="form-horizontal">		
 		<form:hidden path="subcategoryId" value="${subcategory.id}" />		

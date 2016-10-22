@@ -21,10 +21,11 @@
     <li class="next"><a href="<spring:url value="/user-transactions/${nextMonthNav}.html"/>">Next Month <span aria-hidden="true">&rarr;</span></a></li>
   </ul>
 </nav>
+<c:if test="${not empty subcategoriesForecast}">
 <div class="alert alert-info alert-dismissible" role="alert">
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  <strong>Forecast (expenses by subcategory): </strong> ${subcategoriesForecast}
-</div>
+  <strong>Forecast (expenses by subcategory): </strong> <br><c:forEach items="${subcategoriesForecast}" var="subforecast">${subforecast.key}:<strong> ${subforecast.value}</strong><br></c:forEach>
+</div></c:if>
 <!-- <div class="alert alert-warning alert-dismissible" role="alert">
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
   <strong>Attention! probably unexpected expenses:</strong> .
