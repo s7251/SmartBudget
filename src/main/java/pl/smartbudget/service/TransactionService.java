@@ -30,8 +30,6 @@ import pl.smartbudget.repository.SubcategoryRepository;
 import pl.smartbudget.repository.TransactionRepository;
 import pl.smartbudget.repository.UserRepository;
 import weka.classifiers.evaluation.NumericPrediction;
-import weka.classifiers.functions.GaussianProcesses;
-import weka.classifiers.functions.LinearRegression;
 import weka.classifiers.timeseries.WekaForecaster;
 import weka.core.Attribute;
 import weka.core.DenseInstance;
@@ -375,32 +373,16 @@ public class TransactionService {
 			String lastTransactionDate = String.valueOf(lastDate.get(Calendar.YEAR)) + "-"
 					+ String.valueOf(lastDate.get(Calendar.MONTH) + 1) + "-1";
 
-			double initDateMonth = initDate.get(Calendar.MONTH) + 1;
-			//double initDateMonthCounter = initDateMonth;
+			double initDateMonth = initDate.get(Calendar.MONTH) + 1;	
 			double nextDateMonth = nextDate.get(Calendar.MONTH) + 1;
 			int diffYear = nextDate.get(Calendar.YEAR) - initDate.get(Calendar.YEAR);
 			int diffMonth = diffYear * 12 + nextDate.get(Calendar.MONTH) - initDate.get(Calendar.MONTH);
 			Calendar prevDate = Calendar.getInstance();
-			prevDate = nextDate;
-			// double nextDateCounter = nextDateMonth;
-			// int nextYear=0;
-			// while(nextDateMonth - initDateMonth > 1){
-			while (diffMonth > 1) {
-				// int monthDiff = (int)nextDateMonth - (int)initDateMonth;
-				// nextDateCounter++;
-				// if(nextDateCounter>12){nextYear=1;}
-				// String transactionDates =
-				// String.valueOf(initDate.get(Calendar.YEAR)+nextYear) + "-" +
-				// String.valueOf(nextDate.get(Calendar.MONTH)-monthDiff+2) +
-				// "-1";
-				// summaryOfAccounts.put(transactionDates, transactionsSum);
+			prevDate = nextDate;		
+			while (diffMonth > 1) {		
 				initDate.add(Calendar.MONTH, 1);
 				initDateMonth = initDate.get(Calendar.MONTH) + 1;
-				diffMonth--;
-				// transactionDate = String.valueOf(nextDate.get(Calendar.YEAR))
-				// + "-" +
-				// String.valueOf(nextDate.get(Calendar.MONTH)-monthDiff+1) +
-				// "-1";
+				diffMonth--;		
 				prevDate.add(Calendar.MONTH, -1);
 			}
 			
@@ -721,7 +703,6 @@ public class TransactionService {
 		return expenseTransactionsInTime;
 	}
 	
-	//////////////////////////////////////////////////
 	
 public Double subcategoriesForecasting(Map<String, Double> summaryOfAccounts){
 		
@@ -820,38 +801,34 @@ public Double subcategoriesForecasting(Map<String, Double> summaryOfAccounts){
 			return 0.0;
 		}
 		
-		
 	}
 	
 
-	 ///////////////////////////////////////////////////
 		public Map<String, Double> getSubcategoriesForecastForActualMonth(String name){
 			Map<String, Double> subcategoriesForecast = new LinkedHashMap<String, Double>();
 			Map<String, LinkedHashMap<String, Double>> dataForForecast = new LinkedHashMap<String, LinkedHashMap<String, Double>>();
 			User user = userRepository.findByName(name);
 			
-			//Transaction firstTransaction = new Transaction();			
-			//firstTransaction = transactionRepository.getFirstTransactionsByUser(user.getId());
-			//List<Transaction> transactionsOfUser = transactionRepository.getTransactionsByUser(user.getId());
+			Date actualDate = new Date();
+			Calendar actualDateCal = Calendar.getInstance();
+			actualDateCal.setTime(actualDate);
 						
-			//Date actualDate = new Date();
-			
-			//Calendar cal = Calendar.getInstance();
-			//cal.setTime(actualDate);
-			//int actualMonth = cal.get(Calendar.MONTH);
-			//int actualYear = cal.get(Calendar.YEAR);
-			
-			//Calendar cal2 = Calendar.getInstance();
-			//cal2.setTime(firstTransaction.getDate());
-			//int firstTransactionMonth = cal2.get(Calendar.MONTH);
-			//int firstTransactionYear = cal2.get(Calendar.YEAR);
-			
 			List<Category> categories = categoryRepository.findByUser(user);
 			for (Category category : categories) {
 				List<Subcategory> subcategories = subcategoryRepository.findByCategory(category);
 				category.setSubcategories(subcategories);
 				for (Subcategory subcategory : subcategories) {
 					List<Transaction> transactions = transactionRepository.getExpensesByUserAndSubcategory(user.getId(), subcategory.getId());
+					List<Transaction> found = new ArrayList<Transaction>();
+					for(Transaction transaction : transactions){
+						Calendar nextDate = Calendar.getInstance();
+						nextDate.setTime(transaction.getDate());						
+						
+						if(actualDateCal.get(Calendar.MONTH)<nextDate.get(Calendar.MONTH) && actualDateCal.get(Calendar.YEAR)<=nextDate.get(Calendar.YEAR)){
+							found.add(transaction);
+						}
+					}
+					transactions.removeAll(found);
 					Collections.sort(transactions, new Comparator<Transaction>() {
 						public int compare(Transaction o1, Transaction o2) {
 							return o1.getDate().compareTo(o2.getDate());
@@ -863,10 +840,9 @@ public Double subcategoriesForecasting(Map<String, Double> summaryOfAccounts){
 				    initDate.setTime(transactions.get(0).getDate());
 					Double transactionsSum = new Double(0);	
 					
-					for (Transaction transaction : transactions){
-							
+					for (Transaction transaction : transactions){												
 						Calendar nextDate = Calendar.getInstance();
-						nextDate.setTime(transaction.getDate());
+						nextDate.setTime(transaction.getDate());			
 						Calendar lastDate = Calendar.getInstance();
 						lastDate.setTime(transactions.get(transactions.size() - 1).getDate());
 						lastDate.add(Calendar.MONTH, 1);
@@ -877,17 +853,15 @@ public Double subcategoriesForecasting(Map<String, Double> summaryOfAccounts){
 						
 						double initDateMonth = initDate.get(Calendar.MONTH)+1;
 						double nextDateMonth = nextDate.get(Calendar.MONTH)+1;
-						while (diffMonth > 1) {
-							
+						
+						while (diffMonth > 1) {							
 							initDate.add(Calendar.MONTH, 1);
 							initDateMonth = initDate.get(Calendar.MONTH) + 1;
-							diffMonth--;
-						
+							diffMonth--;						
 							prevDate.add(Calendar.MONTH, -1);
 						}
 						String transactionDate = String.valueOf(prevDate.get(Calendar.YEAR)) + "-"	+ String.valueOf(prevDate.get(Calendar.MONTH)+1)  + "-1";
-						String lastTransactionDate = String.valueOf(lastDate.get(Calendar.YEAR)) + "-"	+ String.valueOf(lastDate.get(Calendar.MONTH) + 1) + "-1";
-						
+												
 						if (initDateMonth == nextDateMonth) {
 							transactionsSum = transactionsCalculate(transactionsSum, transaction);
 						} else {
@@ -895,29 +869,24 @@ public Double subcategoriesForecasting(Map<String, Double> summaryOfAccounts){
 							transactionsSum = new Double(0);	
 							transactionsSum = transactionsCalculate(transactionsSum, transaction);
 							initDate.add(Calendar.MONTH, 1);								
-						}	
-						
-						if (transaction.equals(transactions.get(transactions.size() - 1))) {
-							subcategoryYearSummary.put(lastTransactionDate, Math.abs(transactionsSum));
-						}
+						}							
 					}
 					dataForForecast.put(subcategory.getName(), subcategoryYearSummary);
 				}
 					
 				}
 			}
-			
-			
+						
 			for (Map.Entry<String, LinkedHashMap<String, Double>> entry : dataForForecast.entrySet()) {
 			     LinkedHashMap<String, Double> value = entry.getValue();
-			    			    
-			    subcategoriesForecast.put(entry.getKey(), (double) Math.round(subcategoriesForecasting(value)));
-			    
+			     double subcategoryValue = (double) Math.round(subcategoriesForecasting(value));
+			    			    if(subcategoryValue>0){
+			    subcategoriesForecast.put(entry.getKey(), subcategoryValue );}			    
 			}
 			
 		return subcategoriesForecast;
 		}
-		 ///////////////////////////////////////////////////
+
 
 
 
