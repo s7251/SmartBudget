@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import pl.smartbudget.entity.Account;
@@ -65,7 +66,8 @@ public class UserService {
 
 	public void save(User user) {
 		user.setEnabled(true);
-		user.setPassword(user.getPassword());
+		BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+		user.setPassword(bcrypt.encode(user.getPassword()));
 
 		List<Role> userRoles = new ArrayList<Role>();
 		userRoles.add(roleRepository.findByName("ROLE_USER"));

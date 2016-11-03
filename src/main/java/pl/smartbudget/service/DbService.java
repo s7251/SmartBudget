@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import pl.smartbudget.entity.Account;
@@ -59,7 +60,8 @@ public class DbService {
 		
 		User userAdmin = new User();
 		userAdmin.setName("admin");
-		userAdmin.setPassword("admin");
+		BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+		userAdmin.setPassword(bcrypt.encode("admin"));
 		userAdmin.setEmail("admin@admin.pl");
 		userAdmin.setEnabled(true);
 		List<Role> adminRoles = new ArrayList<Role>();
@@ -141,7 +143,7 @@ public class DbService {
 		transaction1.setType("income");
 		transaction1.setName("monthly salary");
 		Calendar transaction1Cal = Calendar.getInstance();
-		transaction1Cal.add(Calendar.MONTH, -11); //10.2015
+		transaction1Cal.add(Calendar.MONTH, -11); //12.2015
 		Date transaction1Date = transaction1Cal.getTime();
 		transaction1.setDate(transaction1Date);	
 		transaction1.setAmount(4000.00);
@@ -153,10 +155,10 @@ public class DbService {
 		transaction2.setType("expense");
 		transaction2.setName("shopping in supermarket");
 		Calendar transaction2Cal = Calendar.getInstance();
-		transaction2Cal.add(Calendar.MONTH, -11); //10.2015
+		transaction2Cal.add(Calendar.MONTH, -11); //12.2015
 		Date transaction2Date = transaction2Cal.getTime();
 		transaction2.setDate(transaction2Date);
-		transaction2.setAmount(100.00);
+		transaction2.setAmount(200.00);
 		transactionRepository.save(transaction2);
 		
 		Transaction transaction3 = new Transaction();
@@ -165,7 +167,7 @@ public class DbService {
 		transaction3.setType("income");
 		transaction3.setName("monthly salary");
 		Calendar transaction3Cal = Calendar.getInstance();
-		transaction3Cal.add(Calendar.MONTH, -10); //11.2015
+		transaction3Cal.add(Calendar.MONTH, -10); //01.2015
 		Date transaction3Date = transaction3Cal.getTime();
 		transaction3.setDate(transaction3Date);	
 		transaction3.setAmount(4000.00);
@@ -177,10 +179,10 @@ public class DbService {
 		transaction4.setType("expense");
 		transaction4.setName("shopping in supermarket");
 		Calendar transaction4Cal = Calendar.getInstance();
-		transaction4Cal.add(Calendar.MONTH, -10); //11.2015
+		transaction4Cal.add(Calendar.MONTH, -10); //01.2015
 		Date transaction4Date = transaction4Cal.getTime();
 		transaction4.setDate(transaction4Date);
-		transaction4.setAmount(100.00);
+		transaction4.setAmount(340.00);
 		transactionRepository.save(transaction4);
 		
 		Transaction transaction5 = new Transaction();
@@ -189,7 +191,7 @@ public class DbService {
 		transaction5.setType("income");
 		transaction5.setName("monthly salary");
 		Calendar transaction5Cal = Calendar.getInstance();
-		transaction5Cal.add(Calendar.MONTH, -9); //12.2015
+		transaction5Cal.add(Calendar.MONTH, -9); //02.2015
 		Date transaction5Date = transaction5Cal.getTime();
 		transaction5.setDate(transaction5Date);	
 		transaction5.setAmount(4000.00);
@@ -201,10 +203,10 @@ public class DbService {
 		transaction6.setType("expense");
 		transaction6.setName("shopping in supermarket");
 		Calendar transaction6Cal = Calendar.getInstance();
-		transaction6Cal.add(Calendar.MONTH, -9); //12.2015
+		transaction6Cal.add(Calendar.MONTH, -9); //02.2015
 		Date transaction6Date = transaction6Cal.getTime();
 		transaction6.setDate(transaction6Date);
-		transaction6.setAmount(100.00);
+		transaction6.setAmount(220.00);
 		transactionRepository.save(transaction6);
 		
 		Transaction transaction7 = new Transaction();
@@ -213,7 +215,7 @@ public class DbService {
 		transaction7.setType("income");
 		transaction7.setName("monthly salary");
 		Calendar transaction7Cal = Calendar.getInstance();
-		transaction7Cal.add(Calendar.MONTH, -8); //01.2016
+		transaction7Cal.add(Calendar.MONTH, -8); //03.2016
 		Date transaction7Date = transaction7Cal.getTime();
 		transaction7.setDate(transaction7Date);	
 		transaction7.setAmount(4000.00);
@@ -225,10 +227,10 @@ public class DbService {
 		transaction8.setType("expense");
 		transaction8.setName("shopping in supermarket");
 		Calendar transaction8Cal = Calendar.getInstance();
-		transaction8Cal.add(Calendar.MONTH, -8); //01.2016
+		transaction8Cal.add(Calendar.MONTH, -8); //03.2016
 		Date transaction8Date = transaction8Cal.getTime();
 		transaction8.setDate(transaction8Date);
-		transaction8.setAmount(100.00);
+		transaction8.setAmount(410.00);
 		transactionRepository.save(transaction8);
 		
 		Transaction transaction9 = new Transaction();
@@ -237,7 +239,7 @@ public class DbService {
 		transaction9.setType("income");
 		transaction9.setName("monthly salary");
 		Calendar transaction9Cal = Calendar.getInstance();
-		transaction9Cal.add(Calendar.MONTH, -7); //02.2016
+		transaction9Cal.add(Calendar.MONTH, -7); //04.2016
 		Date transaction9Date = transaction9Cal.getTime();
 		transaction9.setDate(transaction9Date);	
 		transaction9.setAmount(4000.00);
@@ -249,10 +251,10 @@ public class DbService {
 		transaction10.setType("expense");
 		transaction10.setName("shopping in supermarket");
 		Calendar transaction10Cal = Calendar.getInstance();
-		transaction10Cal.add(Calendar.MONTH, -7); //02.2016
+		transaction10Cal.add(Calendar.MONTH, -7); //04.2016
 		Date transaction10Date = transaction10Cal.getTime();
 		transaction10.setDate(transaction10Date);
-		transaction10.setAmount(100.00);
+		transaction10.setAmount(160.00);
 		transactionRepository.save(transaction10);
 		
 		Transaction transaction11 = new Transaction();
@@ -261,7 +263,7 @@ public class DbService {
 		transaction11.setType("income");
 		transaction11.setName("monthly salary");
 		Calendar transaction11Cal = Calendar.getInstance();
-		transaction11Cal.add(Calendar.MONTH, -6); //03.2016
+		transaction11Cal.add(Calendar.MONTH, -6); //05.2016
 		Date transaction11Date = transaction11Cal.getTime();
 		transaction11.setDate(transaction11Date);	
 		transaction11.setAmount(4000.00);
@@ -273,10 +275,10 @@ public class DbService {
 		transaction12.setType("expense");
 		transaction12.setName("shopping in supermarket");
 		Calendar transaction12Cal = Calendar.getInstance();
-		transaction12Cal.add(Calendar.MONTH, -6); //03.2016
+		transaction12Cal.add(Calendar.MONTH, -6); //05.2016
 		Date transaction12Date = transaction12Cal.getTime();
 		transaction12.setDate(transaction12Date);
-		transaction12.setAmount(100.00);
+		transaction12.setAmount(190.00);
 		transactionRepository.save(transaction12);
 		
 		Transaction transaction13 = new Transaction();
@@ -285,7 +287,7 @@ public class DbService {
 		transaction13.setType("income");
 		transaction13.setName("monthly salary");
 		Calendar transaction13Cal = Calendar.getInstance();
-		transaction13Cal.add(Calendar.MONTH, -5); //04.2016
+		transaction13Cal.add(Calendar.MONTH, -5); //06.2016
 		Date transaction13Date = transaction13Cal.getTime();
 		transaction13.setDate(transaction13Date);	
 		transaction13.setAmount(4000.00);
@@ -297,10 +299,10 @@ public class DbService {
 		transaction14.setType("expense");
 		transaction14.setName("shopping in supermarket");
 		Calendar transaction14Cal = Calendar.getInstance();
-		transaction14Cal.add(Calendar.MONTH, -5); //04.2016
+		transaction14Cal.add(Calendar.MONTH, -5); //06.2016
 		Date transaction14Date = transaction14Cal.getTime();
 		transaction14.setDate(transaction14Date);
-		transaction14.setAmount(100.00);
+		transaction14.setAmount(280.00);
 		transactionRepository.save(transaction14);
 		
 		Transaction transaction15 = new Transaction();
@@ -309,7 +311,7 @@ public class DbService {
 		transaction15.setType("income");
 		transaction15.setName("monthly salary");
 		Calendar transaction15Cal = Calendar.getInstance();
-		transaction15Cal.add(Calendar.MONTH, -4); //05.2016
+		transaction15Cal.add(Calendar.MONTH, -4); //07.2016
 		Date transaction15Date = transaction15Cal.getTime();
 		transaction15.setDate(transaction15Date);	
 		transaction15.setAmount(4000.00);
@@ -321,10 +323,10 @@ public class DbService {
 		transaction16.setType("expense");
 		transaction16.setName("shopping in supermarket");
 		Calendar transaction16Cal = Calendar.getInstance();
-		transaction16Cal.add(Calendar.MONTH, -4); //05.2016
+		transaction16Cal.add(Calendar.MONTH, -4); //07.2016
 		Date transaction16Date = transaction16Cal.getTime();
 		transaction16.setDate(transaction16Date);
-		transaction16.setAmount(100.00);
+		transaction16.setAmount(140.00);
 		transactionRepository.save(transaction16);
 			
 		Transaction transaction19 = new Transaction();
@@ -333,7 +335,7 @@ public class DbService {
 		transaction19.setType("income");
 		transaction19.setName("monthly salary");
 		Calendar transaction19Cal = Calendar.getInstance();
-		transaction19Cal.add(Calendar.MONTH, -3); //07.2016
+		transaction19Cal.add(Calendar.MONTH, -3); //08.2016
 		Date transaction19Date = transaction19Cal.getTime();
 		transaction19.setDate(transaction19Date);	
 		transaction19.setAmount(4000.00);
@@ -345,10 +347,10 @@ public class DbService {
 		transaction20.setType("expense");
 		transaction20.setName("shopping in supermarket");
 		Calendar transaction20Cal = Calendar.getInstance();
-		transaction20Cal.add(Calendar.MONTH, -3); //07.2016
+		transaction20Cal.add(Calendar.MONTH, -3); //08.2016
 		Date transaction20Date = transaction20Cal.getTime();
 		transaction20.setDate(transaction20Date);
-		transaction20.setAmount(100.00);
+		transaction20.setAmount(330.00);
 		transactionRepository.save(transaction20);
 		
 		Transaction transaction21 = new Transaction();
@@ -357,7 +359,7 @@ public class DbService {
 		transaction21.setType("income");
 		transaction21.setName("monthly salary");
 		Calendar transaction21Cal = Calendar.getInstance();
-		transaction21Cal.add(Calendar.MONTH, -2); //08.2016
+		transaction21Cal.add(Calendar.MONTH, -2); //09.2016
 		Date transaction21Date = transaction21Cal.getTime();
 		transaction21.setDate(transaction21Date);
 		transaction21.setAmount(5000.00);
@@ -369,7 +371,7 @@ public class DbService {
 		transaction22.setType("income");
 		transaction22.setName("monthly salary");
 		Calendar transaction22Cal = Calendar.getInstance();
-		transaction22Cal.add(Calendar.MONTH, -2); //08.2016
+		transaction22Cal.add(Calendar.MONTH, -2); //09.2016
 		Date transaction22Date = transaction22Cal.getTime();
 		transaction22.setDate(transaction22Date);
 		transaction22.setAmount(1000.00);
@@ -381,23 +383,11 @@ public class DbService {
 		transaction23.setType("expense");
 		transaction23.setName("shopping in supermarket");
 		Calendar transaction23Cal = Calendar.getInstance();
-		transaction23Cal.add(Calendar.MONTH, -2); //08.2016
+		transaction23Cal.add(Calendar.MONTH, -2); //09.2016
 		Date transaction23Date = transaction23Cal.getTime();
 		transaction23.setDate(transaction23Date);
-		transaction23.setAmount(200.00);
+		transaction23.setAmount(220.00);
 		transactionRepository.save(transaction23);
-		
-		Transaction transaction24 = new Transaction();
-		transaction24.setSubcategory(subcategorySample1);
-		transaction24.setAccount(account1);
-		transaction24.setType("income");
-		transaction24.setName("monthly salary");
-		Calendar transaction24Cal = Calendar.getInstance();
-		transaction24Cal.add(Calendar.MONTH, -1); //09.2016
-		Date transaction24Date = transaction10Cal.getTime();
-		transaction24.setDate(transaction24Date);
-		transaction24.setAmount(1000.00);
-		transactionRepository.save(transaction24);
 		
 		Transaction transaction25 = new Transaction();
 		transaction25.setSubcategory(subcategorySample4);
@@ -405,11 +395,35 @@ public class DbService {
 		transaction25.setType("expense");
 		transaction25.setName("dinner in restaurant");
 		Calendar transaction25Cal = Calendar.getInstance();
-		transaction25Cal.add(Calendar.MONTH, -1); //09.2016
+		transaction25Cal.add(Calendar.MONTH, -2); //09.2016
 		Date transaction25Date = transaction25Cal.getTime();
 		transaction25.setDate(transaction25Date);
 		transaction25.setAmount(300.00);
 		transactionRepository.save(transaction25);
+		
+		Transaction transaction34 = new Transaction();
+		transaction34.setSubcategory(subcategorySample5);
+		transaction34.setAccount(account1);
+		transaction34.setType("expense");
+		transaction34.setName("haircut");
+		Calendar transaction34Cal = Calendar.getInstance();
+		transaction34Cal.add(Calendar.MONTH, -2); //09.2016
+		Date transaction34Date = transaction34Cal.getTime();
+		transaction34.setDate(transaction34Date);
+		transaction34.setAmount(25.00);
+		transactionRepository.save(transaction34);
+		
+		Transaction transaction24 = new Transaction();
+		transaction24.setSubcategory(subcategorySample1);
+		transaction24.setAccount(account1);
+		transaction24.setType("income");
+		transaction24.setName("monthly salary");
+		Calendar transaction24Cal = Calendar.getInstance();
+		transaction24Cal.add(Calendar.MONTH, -1); //10.2016
+		Date transaction24Date = transaction10Cal.getTime();
+		transaction24.setDate(transaction24Date);
+		transaction24.setAmount(1000.00);
+		transactionRepository.save(transaction24);
 		
 		Transaction transaction26 = new Transaction();
 		transaction26.setSubcategory(subcategorySample4);
@@ -417,10 +431,10 @@ public class DbService {
 		transaction26.setType("expense");
 		transaction26.setName("dinner in restaurant");
 		Calendar transaction26Cal = Calendar.getInstance();
-		transaction26Cal.add(Calendar.MONTH, -1); //09.2016
+		transaction26Cal.add(Calendar.MONTH, -1); //10.2016
 		Date transaction26Date = transaction26Cal.getTime();
 		transaction26.setDate(transaction26Date);
-		transaction26.setAmount(300.00);
+		transaction26.setAmount(600.00);
 		transactionRepository.save(transaction26);
 		
 		Transaction transaction27 = new Transaction();
@@ -429,11 +443,23 @@ public class DbService {
 		transaction27.setType("expense");
 		transaction27.setName("dinner in restaurant");
 		Calendar transaction27Cal = Calendar.getInstance();
-		transaction27Cal.add(Calendar.MONTH, -1); //09.2016
+		transaction27Cal.add(Calendar.MONTH, -1); //10.2016
 		Date transaction27Date = transaction27Cal.getTime();
 		transaction27.setDate(transaction27Date);
 		transaction27.setAmount(300.00);
 		transactionRepository.save(transaction27);
+		
+		Transaction transaction35 = new Transaction();
+		transaction35.setSubcategory(subcategorySample5);
+		transaction35.setAccount(account1);
+		transaction35.setType("expense");
+		transaction35.setName("haircut");
+		Calendar transaction35Cal = Calendar.getInstance();
+		transaction35Cal.add(Calendar.MONTH, -1); //10.2016
+		Date transaction35Date = transaction35Cal.getTime();
+		transaction35.setDate(transaction35Date);
+		transaction35.setAmount(30.00);
+		transactionRepository.save(transaction35);
 		
 		Transaction transaction28 = new Transaction();
 		transaction28.setSubcategory(subcategorySample1);
@@ -494,7 +520,7 @@ public class DbService {
 		
 		User user1 = new User();
 		user1.setName("user");
-		user1.setPassword("user");
+		user1.setPassword(bcrypt.encode("user"));
 		user1.setEmail("user@user.pl");	
 		user1.setEnabled(true);
 		List<Role> userRoles = new ArrayList<Role>();
