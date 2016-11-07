@@ -1,6 +1,8 @@
 package pl.smartbudget.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.method.P;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import pl.smartbudget.entity.Subcategory;
@@ -33,8 +35,14 @@ public class SubcategoryService {
 		subcategoryRepository.save(subcategory);
 	}
 
-	public void delete(int id) {
+	@PreAuthorize("#userNameBySubcategoryId == authentication.name")
+	public void delete(int id,  @P("userNameBySubcategoryId") String userNameBySubcategoryId) {
 		subcategoryRepository.delete(id);
 	}
-	
+
+	public Subcategory findOne(int id) {		
+		return subcategoryRepository.findOne(id);
+	}
+
+		
 }

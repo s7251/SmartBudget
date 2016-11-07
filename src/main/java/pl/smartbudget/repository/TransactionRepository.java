@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import pl.smartbudget.entity.Account;
 import pl.smartbudget.entity.Subcategory;
 import pl.smartbudget.entity.Transaction;
-import pl.smartbudget.entity.User;
 
 public interface TransactionRepository extends JpaRepository<Transaction, Integer> {
 

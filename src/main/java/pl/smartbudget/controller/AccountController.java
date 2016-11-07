@@ -58,8 +58,10 @@ public class AccountController {
 	}
 	
 	@RequestMapping("/user-accounts/removeaccount/{id}")
-	public String removeAccount(@PathVariable int id ){
-		accountService.delete(id);
+	public String removeAccount(@PathVariable int id, Principal principal){
+		Account account = accountService.findOne(id);
+		String name = principal.getName();
+		accountService.delete(account, name);
 		return "redirect:/user-accounts.html";
 	}
 		

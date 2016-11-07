@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import pl.smartbudget.entity.Transaction;
 import pl.smartbudget.forms.TransactionForm;
 import pl.smartbudget.service.TransactionService;
 import pl.smartbudget.service.UserService;
@@ -58,7 +59,9 @@ public class TransactionController {
 	@RequestMapping("/user-transactions/removetransaction/{id}/{date}")
 	public String removeTransaction(@PathVariable int id, @PathVariable String date, Principal principal){
 		String name = principal.getName();
-		transactionService.delete(id, name, date);
+		Transaction transaction = transactionService.findOne(id);
+		String userNameByTransactionId = userService.findUserNameByTransactionId(transaction);		
+		transactionService.delete(transaction, name, date, userNameByTransactionId);
 		return "redirect:/user-transactions.html";
 	}
 

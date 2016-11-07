@@ -34,8 +34,9 @@ public class UserController {
 	}
 	
 	@RequestMapping("/users/removeuser/{id}")
-	public String removeUser(@PathVariable int id ){
-		userService.delete(id);
+	public String removeUser(@PathVariable int id){
+		String name = userService.findOne(id).getName();
+		userService.delete(id, name);
 		return "redirect:/users.html";
 	}
 	
@@ -46,8 +47,9 @@ public class UserController {
 	}
 	
 	@RequestMapping("/user-profile/removeprofile/{id}")
-	public String removeProfile(@PathVariable int id ){
-		userService.delete(id);
+	public String removeProfile(@PathVariable int id){
+		String name = userService.findOne(id).getName();
+		userService.delete(id, name);
 		return "redirect:/logout";
 	}
 

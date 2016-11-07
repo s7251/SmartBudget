@@ -14,6 +14,8 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.method.P;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import pl.smartbudget.entity.Account;
@@ -580,12 +582,18 @@ public class TransactionService {
 	
 
 	public String getActualDateByViewedTransactions(List<Transaction> transactions) throws ParseException {
-		String actualMonthOfTransactions;
-		String actualYearOfTransactions;
+		Date actualDate = new Date();		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(actualDate);
+		int actualMonth = cal.get(Calendar.MONTH)+1;
+		int actualYear = cal.get(Calendar.YEAR);
+		String actualMonthOfTransactions=String.valueOf(actualMonth);
+		String actualYearOfTransactions=String.valueOf(actualYear);
 		
+		if(transactions.size()>0){
 		actualMonthOfTransactions = transactions.get(0).getDate().toString().substring(5, 7);
 		actualYearOfTransactions = transactions.get(0).getDate().toString().substring(0, 4);
-		
+		}
 		return actualMonthOfTransactions+"-"+actualYearOfTransactions;
 	}
 	
@@ -661,8 +669,8 @@ public class TransactionService {
 		return prevDate;
 	}
 
-	
-	public void delete(int id, String name, String date) {
+	@PreAuthorize("#userNameByTransactionId == authentication.name")
+	public void delete(Transaction transaction, String name, String date, @P("userNameByTransactionId") String userNameByTransactionId) {
 		List<Account> userAccounts = accountRepository.findByUser(userRepository.findByName(name));
 		List<Transaction> userTransactions = new ArrayList<Transaction>();
 		
@@ -671,18 +679,18 @@ public class TransactionService {
 	
 		for(Account account : userAccounts){
 			List<Transaction> transactions = transactionRepository.findByAccount(account);
-			for(Transaction transaction: transactions){
+			for(Transaction t: transactions){
 				
 				int transactionMonth = Integer.parseInt(transaction.getDate().toString().substring(5, 7));
 				int transactionYear = Integer.parseInt(transaction.getDate().toString().substring(0, 4));	
 				
 				if(viewedMonth==transactionMonth && viewedYear==transactionYear){
-				userTransactions.add(transaction);}
+				userTransactions.add(t);}
 			}
 		}
 		
-		if (userTransactions.size() != 1) {
-			transactionRepository.delete(id);
+		if (userTransactions.size() > 1) {
+			transactionRepository.delete(transaction);
 		}
 
 	}
@@ -885,6 +893,10 @@ public Double subcategoriesForecasting(Map<String, Double> summaryOfAccounts){
 			}
 			
 		return subcategoriesForecast;
+		}
+
+		public Transaction findOne(int id) {			
+			return transactionRepository.findOne(id);
 		}
 
 

@@ -49,8 +49,11 @@ public class CategoryController {
 	}
 	
 	@RequestMapping("/user-categories/removecategory/{id}")
-	public String removeCategory(@PathVariable int id ){
-		categoryService.delete(id);
+	public String removeCategory(@PathVariable int id,  Principal principal){
+		Category category = categoryService.findOne(id);
+		String name = principal.getName();		
+		String userNameByCategoryId = userService.findUserNameByCategoryId(category);	
+		categoryService.delete(category, name, userNameByCategoryId);
 		return "redirect:/user-categories.html";
 	}
 	
