@@ -105,7 +105,7 @@
 			
 			<td width="0%">
 			
-			<form:form mehod="post" modelAttribute="TransactionForm" action="/editTransaction/${date}.html" cssClass="form-horizontal">
+			<form:form mehod="post" modelAttribute="TransactionForm" action="/editTransaction/${date}.html" cssClass="form-horizontal editTransactionForm">
 			<form:hidden path="id" value="${userTransactions.id}" />
 	<!-- Modal -->
 	<div class="modal fade" id="editTransaction${userTransactions.id}" tabindex="-1" role="dialog"
@@ -119,7 +119,7 @@
 					<h4 class="modal-title" id="myModalLabel">Edit transaction</h4>
 				</div>
 				<div class="modal-body">
-					<div class="form-group" style="text-align: left; width: 800px;">
+					<div class="form-group" style="text-align: left; width: 600px;">
 
 						<label for="name" class="col-sm-2 control-label">Type:</label>
 						<div class="col-sm-10">
@@ -129,7 +129,7 @@
 						</div>
 					</div>
 					<div class="form-group"
-						style="text-align: center; width: 800px; margin: 0 auto;">
+						style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="name" class="col-sm-2 control-label">Name:</label>
 						<div class="col-sm-10">
 							<form:input path="name" cssClass="form-control" style="width: 350px" value="${userTransactions.name}" placeholder="${userTransactions.name}" autofocus="autofocus" />
@@ -137,31 +137,29 @@
 					</div>
 
 					<div class="form-group"
-						style="text-align: center; width: 800px; margin: 0 auto;">
+						style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="amount" class="col-sm-2 control-label">Amount:</label>
 						<div class="col-sm-10">
 							<form:input path="amount" value="${userTransactions.amount}" cssClass="form-control" style="width: 350px" placeholder="${userTransactions.amount}" autofocus="autofocus" />
 						</div>
 					</div>
-					<div class="form-group"	style="text-align: center; width: 800px; margin: 0 auto;">
+					<div class="form-group"	style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="date" class="col-sm-2 control-label">Date:</label>
 						<div class="col-sm-10">						
 						<form:input path="date" cssClass="form-control" style="width: 350px" placeholder="DD.MM.RRRR" autofocus="autofocus" data-options="formatter:myformatter,parser:myparser"/> 
 						</div>						
 						</div>									
-							<div class="form-group"	style="text-align: center; width: 800px; margin: 0 auto;">
+							<div class="form-group"	style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="category" class="col-sm-2 control-label">Subcategory:</label>
 						<div class="col-sm-10">
 						<form:select class="form-control" path="subcategoryId"  style="text-align: left; width: 350px;">
 									<form:option value="${userTransactions.subcategory.id}">${userTransactions.subcategory.name}</form:option>
 									<form:options items="${subcategoriesMap}" />							
-							</form:select>
-							
-						
+							</form:select>						
 						</div>
 					</div>
 
-					<div class="form-group"	style="text-align: center; width: 800px; margin: 0 auto;">
+					<div class="form-group"	style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="account" class="col-sm-2 control-label">Account:</label>
 						<div class="col-sm-10">
 							<form:select class="form-control" path="accountId"  style="text-align: left; width: 350px;">		
@@ -199,7 +197,7 @@
 </div>
 
 
-<form:form commandName="TransactionForm" cssClass="form-horizontal">
+<form:form commandName="TransactionForm" cssClass="form-horizontal addTransactionForm">
 	<!-- Modal -->
 	<div class="modal fade" id="addTransactionModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
@@ -212,16 +210,16 @@
 					<h4 class="modal-title" id="myModalLabel">Add transaction</h4>
 				</div>
 				<div class="modal-body">
-					<div class="form-group" style="text-align: left; width: 800px;">
+					<div class="form-group" style="text-align: left; width: 600px;">
 
 						<label for="name" class="col-sm-2 control-label">Type:</label>
 						<div class="col-sm-10">
-						<form:radiobutton path="type" value="income" /> income
-					    <form:radiobutton path="type" value="expense" /> expense
+						<form:radiobutton path="type" value="income" name="type" /> income
+					    <form:radiobutton path="type" value="expense" name="type" /> expense
 						</div>
 					</div>
 					<div class="form-group"
-						style="text-align: center; width: 800px; margin: 0 auto;">
+						style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="name" class="col-sm-2 control-label">Name:</label>
 						<div class="col-sm-10">
 							<form:input path="name" cssClass="form-control" style="width: 350px" placeholder="Please type name of transaction"	autofocus="autofocus" />
@@ -229,30 +227,27 @@
 					</div>
 
 					<div class="form-group"
-						style="text-align: center; width: 800px; margin: 0 auto;">
+						style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="amount" class="col-sm-2 control-label">Amount:</label>
 						<div class="col-sm-10">
 							<form:input path="amount" cssClass="form-control" style="width: 350px" placeholder="Please type amount" autofocus="autofocus" />
 						</div>
 					</div>
-					<div class="form-group"	style="text-align: center; width: 800px; margin: 0 auto;">
+					<div class="form-group"	style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="date" class="col-sm-2 control-label">Date:</label>
 						<div class="col-sm-10">						
 						<form:input path="date" cssClass="form-control" style="width: 350px" placeholder="DD.MM.RRRR" autofocus="autofocus" data-options="formatter:myformatter,parser:myparser"/> 
 						</div>						
 						</div>									
-							<div class="form-group"	style="text-align: center; width: 800px; margin: 0 auto;">
+							<div class="form-group"	style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="category" class="col-sm-2 control-label">Subcategory:</label>
 						<div class="col-sm-10">
 						<form:select class="form-control" path="subcategoryId"  style="text-align: left; width: 350px;">
 									<form:options items="${subcategoriesMap}" />							
-							</form:select>
-							
-						
+							</form:select>					
 						</div>
 					</div>
-
-					<div class="form-group"	style="text-align: center; width: 800px; margin: 0 auto;">
+					<div class="form-group"	style="text-align: center; width:600px; margin: 0 auto;">
 						<label for="account" class="col-sm-2 control-label">Account:</label>
 						<div class="col-sm-10">
 							<form:select class="form-control" path="accountId"  style="text-align: left; width: 350px;">																
@@ -270,3 +265,104 @@
 		</div>
 	</div>
 </form:form>
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+	
+$.validator.addMethod(
+    "date",
+    function(value, element) {        
+        return value.match(/^(0[1-9]|1[0-9]|2[0-8]|29((?=.([0][13-9]|1[0-2])|(?=.(0[1-9]|1[0-2]).([0-9]{2}(0[48]|[13579][26]|[2468][048])|([02468][048]|[13579][26])00))))|30(?=.(0[13-9]|1[0-2]))|31(?=.(0[13578]|1[02]))).(0[1-9]|1[0-2]).[0-9]{4}$/);
+    },
+    "Please enter a date in the format dd.mm.yyyy"
+);
+	
+	$(".addTransactionForm").validate(
+		{
+			rules: {
+				type: {
+					required : true,								
+				},
+				name: {
+					required : true,
+					minlength : 4,				
+				},
+				amount: {
+					required : true,
+					number: true,
+					min: 0.01
+				},
+				date: {
+					required : true,
+					date : true
+				},
+				 
+			},		
+			
+			highlight: function(element) {
+				$(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+			},
+			unhighlight: function(element) {
+				$(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+			},		
+			messages: {
+				 type: {
+					 required: ""				     
+				 }
+			       
+			    }
+		}
+	);
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	
+$.validator.addMethod(
+    "date",
+    function(value, element) {        
+        return value.match(/^(0[1-9]|1[0-9]|2[0-8]|29((?=.([0][13-9]|1[0-2])|(?=.(0[1-9]|1[0-2]).([0-9]{2}(0[48]|[13579][26]|[2468][048])|([02468][048]|[13579][26])00))))|30(?=.(0[13-9]|1[0-2]))|31(?=.(0[13578]|1[02]))).(0[1-9]|1[0-2]).[0-9]{4}$/);
+    },
+    "Please enter a date in the format dd.mm.yyyy"
+);
+	
+	$(".editTransactionForm").validate(
+		{
+			rules: {
+				type: {
+					required : true,								
+				},
+				name: {
+					required : true,
+					minlength : 4,				
+				},
+				amount: {
+					required : true,
+					number: true,
+					min: 0.01
+				},
+				date: {
+					required : true,
+					date : true
+				},
+				 
+			},		
+			
+			highlight: function(element) {
+				$(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+			},
+			unhighlight: function(element) {
+				$(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+			},		
+			messages: {
+				 type: {
+					 required: ""				     
+				 }
+			       
+			    }
+		}
+	);
+});
+</script>
