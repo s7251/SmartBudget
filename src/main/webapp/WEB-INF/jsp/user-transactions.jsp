@@ -105,7 +105,7 @@
 			
 			<td width="0%">
 			
-			<form:form mehod="post" modelAttribute="TransactionForm" action="/editTransaction/${date}.html" cssClass="form-horizontal editTransactionForm">
+			<form:form mehod="post" modelAttribute="TransactionForm" action="/editTransaction/${date}.html" cssClass="form-horizontal" id="form">
 			<form:hidden path="id" value="${userTransactions.id}" />
 	<!-- Modal -->
 	<div class="modal fade" id="editTransaction${userTransactions.id}" tabindex="-1" role="dialog"
@@ -197,7 +197,7 @@
 </div>
 
 
-<form:form commandName="TransactionForm" cssClass="form-horizontal addTransactionForm">
+<form:form commandName="TransactionForm" cssClass="form-horizontal" id="form">
 	<!-- Modal -->
 	<div class="modal fade" id="addTransactionModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
@@ -266,21 +266,18 @@
 	</div>
 </form:form>
 
-
 <script type="text/javascript">
 $(document).ready(function() {
-	
-$.validator.addMethod(
-    "date",
-    function(value, element) {        
-        return value.match(/^(0[1-9]|1[0-9]|2[0-8]|29((?=.([0][13-9]|1[0-2])|(?=.(0[1-9]|1[0-2]).([0-9]{2}(0[48]|[13579][26]|[2468][048])|([02468][048]|[13579][26])00))))|30(?=.(0[13-9]|1[0-2]))|31(?=.(0[13578]|1[02]))).(0[1-9]|1[0-2]).[0-9]{4}$/);
-    },
-    "Please enter a date in the format dd.mm.yyyy"
-);
-	
-	$(".addTransactionForm").validate(
-		{
-			rules: {
+	$.validator.addMethod(
+		    "date",
+		    function(value, element) {        
+		        return value.match(/^(0[1-9]|1[0-9]|2[0-8]|29((?=.([0][13-9]|1[0-2])|(?=.(0[1-9]|1[0-2]).([0-9]{2}(0[48]|[13579][26]|[2468][048])|([02468][048]|[13579][26])00))))|30(?=.(0[13-9]|1[0-2]))|31(?=.(0[13578]|1[02]))).(0[1-9]|1[0-2]).[0-9]{4}$/);
+		    },
+		    "Please enter a date in the format dd.mm.yyyy"
+		);
+    $('form').each(function() {  
+        $(this).validate({       
+        	rules: {
 				type: {
 					required : true,								
 				},
@@ -298,7 +295,7 @@ $.validator.addMethod(
 					date : true
 				},
 				 
-			},		
+			},			
 			
 			highlight: function(element) {
 				$(element).closest('.form-group').removeClass('has-success').addClass('has-error');
@@ -312,57 +309,9 @@ $.validator.addMethod(
 				 }
 			       
 			    }
-		}
-	);
-});
-</script>
+        });
+    });
 
-<script type="text/javascript">
-$(document).ready(function() {
-	
-$.validator.addMethod(
-    "date",
-    function(value, element) {        
-        return value.match(/^(0[1-9]|1[0-9]|2[0-8]|29((?=.([0][13-9]|1[0-2])|(?=.(0[1-9]|1[0-2]).([0-9]{2}(0[48]|[13579][26]|[2468][048])|([02468][048]|[13579][26])00))))|30(?=.(0[13-9]|1[0-2]))|31(?=.(0[13578]|1[02]))).(0[1-9]|1[0-2]).[0-9]{4}$/);
-    },
-    "Please enter a date in the format dd.mm.yyyy"
-);
-	
-	$(".editTransactionForm").validate(
-		{
-			rules: {
-				type: {
-					required : true,								
-				},
-				name: {
-					required : true,
-					minlength : 4,				
-				},
-				amount: {
-					required : true,
-					number: true,
-					min: 0.01
-				},
-				date: {
-					required : true,
-					date : true
-				},
-				 
-			},		
-			
-			highlight: function(element) {
-				$(element).closest('.form-group').removeClass('has-success').addClass('has-error');
-			},
-			unhighlight: function(element) {
-				$(element).closest('.form-group').removeClass('has-error').addClass('has-success');
-			},		
-			messages: {
-				 type: {
-					 required: ""				     
-				 }
-			       
-			    }
-		}
-	);
 });
 </script>
+		

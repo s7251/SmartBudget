@@ -25,7 +25,7 @@
   
 
 
-<form:form mehod="post" modelAttribute="ReportForm" action="/report-incomes-by-categories.html" cssClass="form-horizontal">
+<form:form mehod="post" modelAttribute="ReportForm" action="/report-incomes-by-categories.html" cssClass="form-horizontal incomesBySub">
 	<!-- Modal -->	
 	<div class="modal fade" id="incomeReport" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
@@ -40,7 +40,7 @@
 				<div class="modal-body">
 				
 					<div class="form-group"
-						style="text-align: center; width: 800px; margin: 0 auto;">
+						style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="name" class="col-sm-2 control-label">Date:</label>
 						<div class="col-sm-10">
 							<form:input path="date" cssClass="form-control" style="width: 350px" placeholder="MM.YYYY"	autofocus="autofocus" />
@@ -58,7 +58,7 @@
 	</div>
 </form:form>
 
-<form:form mehod="post" modelAttribute="ReportForm" action="/report-expenses-by-categories.html" cssClass="form-horizontal">
+<form:form mehod="post" modelAttribute="ReportForm" action="/report-expenses-by-categories.html" cssClass="form-horizontal expensesBySub">
 	<!-- Modal -->	
 	<div class="modal fade" id="expenseReport" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
@@ -73,7 +73,7 @@
 				<div class="modal-body">
 				
 					<div class="form-group"
-						style="text-align: center; width: 800px; margin: 0 auto;">
+						style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="name" class="col-sm-2 control-label">Date:</label>
 						<div class="col-sm-10">
 							<form:input path="date" cssClass="form-control" style="width: 350px" placeholder="MM.YYYY"	autofocus="autofocus" />
@@ -92,7 +92,7 @@
 </form:form>
 
 
-<form:form mehod="post" modelAttribute="ReportForm" action="/report-incomes-in-time.html" cssClass="form-horizontal">
+<form:form mehod="post" modelAttribute="ReportForm" action="/report-incomes-in-time.html" cssClass="form-horizontal incomesInTime">
 	<!-- Modal -->	
 	<div class="modal fade" id="incomeInTimeReport" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
@@ -107,7 +107,7 @@
 				<div class="modal-body">
 				
 					<div class="form-group"
-						style="text-align: center; width: 800px; margin: 0 auto;">
+						style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="name" class="col-sm-2 control-label">Date:</label>
 						<div class="col-sm-10">
 							<form:input path="date" cssClass="form-control" style="width: 350px" placeholder="YYYY"	autofocus="autofocus" />
@@ -125,7 +125,7 @@
 	</div>
 </form:form>
 
-<form:form mehod="post" modelAttribute="ReportForm" action="/report-expenses-in-time.html" cssClass="form-horizontal">
+<form:form mehod="post" modelAttribute="ReportForm" action="/report-expenses-in-time.html" cssClass="form-horizontal expensesInTime">
 	<!-- Modal -->	
 	<div class="modal fade" id="expenseInTimeReport" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
@@ -140,7 +140,7 @@
 				<div class="modal-body">
 				
 					<div class="form-group"
-						style="text-align: center; width: 800px; margin: 0 auto;">
+						style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="name" class="col-sm-2 control-label">Date:</label>
 						<div class="col-sm-10">
 							<form:input path="date" cssClass="form-control" style="width: 350px" placeholder="YYYY"	autofocus="autofocus" />
@@ -157,3 +157,131 @@
 		</div>
 	</div>
 </form:form>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	
+$.validator.addMethod(
+    "date",
+    function(value, element) {        
+        return value.match(/^(0[1-9]|1[012])[.][0-9]{4}$/);
+    },
+    "Please enter a date in the format mm.yyyy"
+);
+	
+	$(".incomesBySub").validate(
+		{
+			rules: {				
+				date: {
+					required : true,
+					date : true
+				},
+				 
+			},		
+			
+			highlight: function(element) {
+				$(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+			},
+			unhighlight: function(element) {
+				$(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+			},					
+		}
+	);
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	
+$.validator.addMethod(
+    "date",
+    function(value, element) {        
+        return value.match(/^(0[1-9]|1[012])[.][0-9]{4}$/);
+    },
+    "Please enter a date in the format mm.yyyy"
+);
+	
+	$(".expensesBySub").validate(
+		{
+			rules: {				
+				date: {
+					required : true,
+					date : true
+				},
+				 
+			},		
+			
+			highlight: function(element) {
+				$(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+			},
+			unhighlight: function(element) {
+				$(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+			},					
+		}
+	);
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	
+$.validator.addMethod(
+    "date",
+    function(value, element) {        
+        return value.match(/^[0-9]{4}$/);
+    },
+    "Please enter a date in the format yyyy"
+);
+	
+	$(".incomesInTime").validate(
+		{
+			rules: {				
+				date: {
+					required : true,
+					date : true
+				},
+				 
+			},		
+			
+			highlight: function(element) {
+				$(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+			},
+			unhighlight: function(element) {
+				$(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+			},					
+		}
+	);
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	
+$.validator.addMethod(
+    "date",
+    function(value, element) {        
+        return value.match(/^[0-9]{4}$/);
+    },
+    "Please enter a date in the format yyyy"
+);
+	
+	$(".expensesInTime").validate(
+		{
+			rules: {				
+				date: {
+					required : true,
+					date : true
+				},
+				 
+			},		
+			
+			highlight: function(element) {
+				$(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+			},
+			unhighlight: function(element) {
+				$(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+			},					
+		}
+	);
+});
+</script>

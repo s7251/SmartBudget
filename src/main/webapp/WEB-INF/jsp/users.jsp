@@ -23,9 +23,9 @@
 				<c:if test="${(users.name != 'admin' )}">  
 				<a href="<spring:url value="" />" class="btn btn-warning" type="button" data-toggle="modal" data-target="#renameUserModal${users.id}">Rename</a>    </c:if>      </td>					
 				<td style="text-align: center; vertical-align: middle;">
-				<c:if test="${(users.name != 'admin' )}"> <a href="<spring:url value="/users/removeuser/${users.id}.html" />" class="btn btn-danger" type="button">Remove</a></c:if>  </td>	
+				<c:if test="${(users.name != 'admin' )}"> <a href="<spring:url value="/users/removeuser/${users.id}.html" />" class="btn btn-danger" type="button">Remove</a></c:if>  
 		
-		<form:form mehod="post" modelAttribute="user" action="/renameUser.html" cssClass="form-horizontal">
+		<form:form mehod="post" modelAttribute="user" action="/renameUser.html" cssClass="form-horizontal" id="form">
 			<form:hidden path="id" value="${users.id}" />
 			<form:hidden path="password" value="${users.password}" />
 			<form:hidden path="email" value="${users.email}" />
@@ -44,7 +44,7 @@
 				<div class="modal-body">
 				
 					<div class="form-group"
-						style="text-align: center; width: 800px; margin: 0 auto;">
+						style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="name" class="col-sm-2 control-label">Name:</label>
 						<div class="col-sm-10">
 							<form:input path="name" cssClass="form-control" style="width: 350px" autofocus="autofocus" value="${users.name}"></form:input>
@@ -52,7 +52,7 @@
 					</div>
 					
 					</div>
-					<br><br>
+					
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					<input type="submit" class="btn btn-success" value="Rename" />
@@ -61,7 +61,7 @@
 		</div>
 	</div>
 </form:form>
-		
+		</td>	
 			</tr>
 			
 						
@@ -71,3 +71,27 @@
 	</table>
 	</div>
 	
+	
+	<script type="text/javascript">
+$(document).ready(function() {
+
+    $('form').each(function() {  
+        $(this).validate({       
+            rules: {				
+				name: {
+					required : true,
+					minlength : 4,				
+				},								 
+			},		
+			
+			highlight: function(element) {
+				$(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+			},
+			unhighlight: function(element) {
+				$(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+			},		
+        });
+    });
+
+});
+</script>

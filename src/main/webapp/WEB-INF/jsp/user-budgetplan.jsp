@@ -54,7 +54,7 @@
 				<c:forEach items="${subcategory.subcategoryLimits}" var="subcategorylimits">
 				${subcategorylimits.amount}	
 								
-				<form:form mehod="post" modelAttribute="subcategorylimit" action="/changeSubcategoryLimit.html" cssClass="form-horizontal">		
+				<form:form mehod="post" modelAttribute="subcategorylimit" action="/changeSubcategoryLimit.html" cssClass="form-horizontal" id="form">		
 		<form:hidden path="subcategoryId" value="${subcategory.id}" />
 		<form:hidden path="id" value="${subcategorylimits.id}" />
 		<c:if test="${not empty date}"><form:hidden path="date" value="${date}" /></c:if>
@@ -73,7 +73,7 @@
 				<div class="modal-body">
 				
 					<div class="form-group"
-						style="text-align: center; width: 800px; margin: 0 auto;">
+						style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="amount" class="col-sm-2 control-label">Value:</label>
 						<div class="col-sm-10">
 							<form:input path="amount" value="${subcategorylimits.amount}"cssClass="form-control" style="width: 350px" placeholder="Please set value"	autofocus="autofocus" />
@@ -109,14 +109,9 @@
 				<td style="text-align: center; vertical-align: middle;">
 					<c:if test="${fn:length(subcategory.subcategoryLimits) > 0 }">
 				<a href="<spring:url value="/user-budgetplan/changesubcategorylimit/${subcategory.id}.html" />" class="btn btn-primary" type="button"  data-toggle="modal" data-target="#changeSubcategoryLimitModal${subcategory.id}">Change Budget</a>	
-				</c:if>
-				</td>
-							
-							
-							
-						
+				</c:if>						
 				
-									<form:form mehod="post" modelAttribute="subcategorylimit" action="/addSubcategoryLimit.html" cssClass="form-horizontal">		
+		<form:form mehod="post" modelAttribute="subcategorylimit" action="/addSubcategoryLimit.html" cssClass="form-horizontal" id="form">		
 		<form:hidden path="subcategoryId" value="${subcategory.id}" />		
 		<c:if test="${not empty date}"><form:hidden path="date" value="${date}" /></c:if>
  		<c:if test="${empty date}"><form:hidden path="date" value="${actualMonth}" /></c:if>
@@ -134,15 +129,14 @@
 				<div class="modal-body">
 				
 					<div class="form-group"
-						style="text-align: center; width: 800px; margin: 0 auto;">
+						style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="amount" class="col-sm-2 control-label">Value:</label>
 						<div class="col-sm-10">
 							<form:input path="amount" cssClass="form-control" style="width: 350px" placeholder="Please set value"	autofocus="autofocus" />
 						</div>
 					</div>
 					
-					</div>
-					<br><br>
+					</div>					
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					<input type="submit" class="btn btn-success" value="Set" />
@@ -150,22 +144,40 @@
 			</div>
 		</div>
 	</div>
-</form:form>
-
-		
-			</c:forEach>
-			
-			
-			
+</form:form>	</td>
+			</c:forEach>		
 		</c:forEach>
-	</table>
 		
+			</table>		
 		</div>
 		
 		
 	
 		
-		
+		<script type="text/javascript">
+$(document).ready(function() {
+
+    $('form').each(function() {  
+        $(this).validate({       
+            rules: {				
+            	amount: {
+					required : true,
+					number: true,
+					min: 0.01
+				},						 
+			},		
+			
+			highlight: function(element) {
+				$(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+			},
+			unhighlight: function(element) {
+				$(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+			},		
+        });
+    });
+
+});
+</script>
 
 
 

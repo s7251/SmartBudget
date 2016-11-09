@@ -33,7 +33,7 @@
 				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="" />" class="btn btn-warning" type="button" data-toggle="modal" data-target="#editAccountModal${summary.value.id}">Rename</a></td>					
 				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="/user-accounts/removeaccount/${summary.key}.html" />" class="btn btn-danger" type="button">Remove</a></td>		
 			<td>			
-			<form:form mehod="post" modelAttribute="AlignBalanceForm" action="/alignBalance.html" cssClass="form-horizontal">
+			<form:form mehod="post" modelAttribute="AlignBalanceForm" action="/alignBalance.html" cssClass="form-horizontal" id="form">
 			<form:hidden path="accountId" value="${summary.value.id}" />
 	<!-- Modal -->
 	<div class="modal fade" id="alignBalance${summary.value.id}" tabindex="-1" role="dialog"
@@ -47,7 +47,7 @@
 					<h4 class="modal-title" id="myModalLabel">Alignment of Balance (${summary.value.name})</h4>
 				</div>
 				<div class="modal-body">
-					<div class="form-group" style="text-align: left; width: 800px;">
+					<div class="form-group" style="text-align: left; width: 600px;">
 
 						<label for="name" class="col-sm-2 control-label">Type:</label>
 						<div class="col-sm-10">
@@ -57,7 +57,7 @@
 						</div>
 					</div>
 					<div class="form-group"
-						style="text-align: center; width: 800px; margin: 0 auto;">
+						style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="name" class="col-sm-2 control-label">Name:</label>
 						<div class="col-sm-10">
 							<form:input path="name" cssClass="form-control" style="width: 350px" placeholder="please type cause of alignment" autofocus="autofocus" />
@@ -65,13 +65,13 @@
 					</div>
 
 					<div class="form-group"
-						style="text-align: center; width: 800px; margin: 0 auto;">
+						style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="amount" class="col-sm-2 control-label">Amount:</label>
 						<div class="col-sm-10">
 							<form:input path="amount" cssClass="form-control" style="width: 350px" placeholder="please type amount" autofocus="autofocus" />
 						</div>
 					</div>
-					<div class="form-group"	style="text-align: center; width: 800px; margin: 0 auto;">
+					<div class="form-group"	style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="date" class="col-sm-2 control-label">Date:</label>
 						<div class="col-sm-10">						
 						<form:input path="date" cssClass="form-control" style="width: 350px" placeholder="DD.MM.RRRR" autofocus="autofocus" data-options="formatter:myformatter,parser:myparser"/> 
@@ -87,12 +87,8 @@
 		</div>
 	</div>
 </form:form>
-			</td>
-			
-			
-			</tr>		
-			
-			<form:form mehod="post" modelAttribute="account" action="/renameAccount.html" cssClass="form-horizontal">
+
+		<form:form mehod="post" modelAttribute="account" action="/renameAccount.html" cssClass="form-horizontal" id="form">
 			<form:hidden path="id" value="${summary.value.id}" />
 	<!-- Modal -->
 	<div class="modal fade" id="editAccountModal${summary.value.id}" tabindex="-1" role="dialog"
@@ -108,7 +104,7 @@
 				<div class="modal-body">
 				
 					<div class="form-group"
-						style="text-align: center; width: 800px; margin: 0 auto;">
+						style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="name" class="col-sm-2 control-label">Name:</label>
 						<div class="col-sm-10">
 							<form:input path="name" cssClass="form-control" style="width: 350px" value="${summary.value.name}" autofocus="autofocus" ></form:input>
@@ -116,8 +112,7 @@
 					</div>
 					
 					</div>
-					<br><br>
-				<div class="modal-footer">
+					<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					<input type="submit" class="btn btn-success" value="Rename" />
 				</div>
@@ -125,6 +120,12 @@
 		</div>
 	</div>
 </form:form>
+			</td>
+			
+			
+			</tr>		
+			
+	
 			
 						
 		</c:forEach>	
@@ -150,7 +151,7 @@
 </div>
 
 
-<form:form mehod="post" modelAttribute="account" action="/addAccount.html" cssClass="form-horizontal">
+<form:form mehod="post" modelAttribute="account" action="/addAccount.html" cssClass="form-horizontal" id="form">
 	<!-- Modal -->
 	<div class="modal fade" id="addAccountModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
@@ -165,7 +166,7 @@
 				<div class="modal-body">
 				
 					<div class="form-group"
-						style="text-align: center; width: 800px; margin: 0 auto;">
+						style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="name" class="col-sm-2 control-label">Name:</label>
 						<div class="col-sm-10">
 							<form:input path="name" cssClass="form-control" style="width: 350px" placeholder="Please type name of account"	autofocus="autofocus" />
@@ -184,7 +185,7 @@
 
 
 
-<form:form mehod="post" modelAttribute="InternalTransferForm" action="/internalTransfer.html"cssClass="form-horizontal">
+<form:form mehod="post" modelAttribute="InternalTransferForm" action="/internalTransfer.html"cssClass="form-horizontal" id="form">
 	<!-- Modal -->
 	<div class="modal fade" id="internalTransferModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
@@ -199,7 +200,7 @@
 				<div class="modal-body">
 					
 					<div class="form-group"
-						style="text-align: center; width: 800px; margin: 0 auto;">
+						style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="name" class="col-sm-2 control-label">Name:</label>
 						<div class="col-sm-10">
 							<form:input path="name" cssClass="form-control" style="width: 350px" placeholder="Please type name of transaction"	autofocus="autofocus" />
@@ -207,20 +208,20 @@
 					</div>
 
 					<div class="form-group"
-						style="text-align: center; width: 800px; margin: 0 auto;">
+						style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="amount" class="col-sm-2 control-label">Amount:</label>
 						<div class="col-sm-10">
 							<form:input path="amount" cssClass="form-control" style="width: 350px" placeholder="Please type amount" autofocus="autofocus" />
 						</div>
 					</div>
-					<div class="form-group"	style="text-align: center; width: 800px; margin: 0 auto;">
+					<div class="form-group"	style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="date" class="col-sm-2 control-label">Date:</label>
 						<div class="col-sm-10">						
 						<form:input path="date" cssClass="form-control" style="width: 350px" placeholder="DD.MM.RRRR" autofocus="autofocus" data-options="formatter:myformatter,parser:myparser"/> 
 						</div>						
 						</div>									
-							<div class="form-group"	style="text-align: center; width: 800px; margin: 0 auto;">
-						<label for="fromAccount" class="col-sm-2 control-label">From Account:</label>
+							<div class="form-group"	style="text-align: center; width: 600px; margin: 0 auto;">
+						<label for="fromAccount" class="col-sm-2 control-label">From:</label>
 						<div class="col-sm-10">
 						<form:select class="form-control" path="fromAccountId"  style="text-align: left; width: 350px;">
 									<form:options items="${accountsMap}" />							
@@ -229,8 +230,8 @@
 						</div>
 					</div>
 
-					<div class="form-group"	style="text-align: center; width: 800px; margin: 0 auto;">
-						<label for="toAccount" class="col-sm-2 control-label">To Account :</label>
+					<div class="form-group"	style="text-align: center; width: 600px; margin: 0 auto;">
+						<label for="toAccount" class="col-sm-2 control-label">To:</label>
 						<div class="col-sm-10">
 							<form:select class="form-control" path="toAccountId"  style="text-align: left; width: 350px;">																
 										<form:options items="${accountsMap}" />								
@@ -247,4 +248,54 @@
 		</div>
 	</div>
 </form:form>
+		
+		
+<script type="text/javascript">
+$(document).ready(function() {
+	$.validator.addMethod(
+		    "date",
+		    function(value, element) {        
+		        return value.match(/^(0[1-9]|1[0-9]|2[0-8]|29((?=.([0][13-9]|1[0-2])|(?=.(0[1-9]|1[0-2]).([0-9]{2}(0[48]|[13579][26]|[2468][048])|([02468][048]|[13579][26])00))))|30(?=.(0[13-9]|1[0-2]))|31(?=.(0[13578]|1[02]))).(0[1-9]|1[0-2]).[0-9]{4}$/);
+		    },
+		    "Please enter a date in the format dd.mm.yyyy"
+		);
+    $('form').each(function() {  
+        $(this).validate({       
+        	rules: {
+				type: {
+					required : true,								
+				},
+				name: {
+					required : true,
+					minlength : 4,				
+				},
+				amount: {
+					required : true,
+					number: true,
+					min: 0.01
+				},
+				date: {
+					required : true,
+					date : true
+				},
+				 
+			},			
+			
+			highlight: function(element) {
+				$(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+			},
+			unhighlight: function(element) {
+				$(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+			},		
+			messages: {
+				 type: {
+					 required: ""				     
+				 }
+			       
+			    }
+        });
+    });
+
+});
+</script>
 		
