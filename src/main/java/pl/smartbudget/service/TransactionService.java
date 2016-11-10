@@ -681,8 +681,8 @@ public class TransactionService {
 			List<Transaction> transactions = transactionRepository.findByAccount(account);
 			for(Transaction t: transactions){
 				
-				int transactionMonth = Integer.parseInt(transaction.getDate().toString().substring(5, 7));
-				int transactionYear = Integer.parseInt(transaction.getDate().toString().substring(0, 4));	
+				int transactionMonth = Integer.parseInt(t.getDate().toString().substring(5, 7));
+				int transactionYear = Integer.parseInt(t.getDate().toString().substring(0, 4));	
 				
 				if(viewedMonth==transactionMonth && viewedYear==transactionYear){
 				userTransactions.add(t);}

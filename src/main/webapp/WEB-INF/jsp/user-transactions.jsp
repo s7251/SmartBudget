@@ -3,7 +3,11 @@
 
 <%@ include file="../tiles-template/taglib.jsp"%>
 
- 
+<!-- Include Bootstrap Datepicker -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css" />
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
+
  <head>
    <style type="text/css">         
    tr.expensecolor { background: #ffe6e6; }
@@ -12,6 +16,10 @@
    tr.alignminuscolor { background: white; }
    tr.transferpluscolor { background: white; }
    tr.transferminuscolor { background: white; }
+   #eventForm .form-control-feedback {
+    top: 0;
+    right: -15px;
+}
     </style> 
  </head>
 
@@ -105,7 +113,7 @@
 			
 			<td width="0%">
 			
-			<form:form mehod="post" modelAttribute="TransactionForm" action="/editTransaction/${date}.html" cssClass="form-horizontal" id="form">
+			<form:form mehod="post" modelAttribute="TransactionForm" action="/editTransaction/${date}.html" cssClass="form-horizontal">
 			<form:hidden path="id" value="${userTransactions.id}" />
 	<!-- Modal -->
 	<div class="modal fade" id="editTransaction${userTransactions.id}" tabindex="-1" role="dialog"
@@ -145,9 +153,12 @@
 					</div>
 					<div class="form-group"	style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="date" class="col-sm-2 control-label">Date:</label>
-						<div class="col-sm-10">						
-						<form:input path="date" cssClass="form-control" style="width: 350px" placeholder="DD.MM.RRRR" autofocus="autofocus" data-options="formatter:myformatter,parser:myparser"/> 
-						</div>						
+						 <div class="col-sm-8">
+            <div class="input-group input-append date" id="datePicker1">
+                <form:input type="text" class="form-control" placeholder="DD.MM.RRRR" path="date" />
+                <span class="input-group-addon add-on" ><span class="glyphicon glyphicon-calendar"></span></span>
+            </div>
+        </div>					
 						</div>									
 							<div class="form-group"	style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="category" class="col-sm-2 control-label">Subcategory:</label>
@@ -197,7 +208,7 @@
 </div>
 
 
-<form:form commandName="TransactionForm" cssClass="form-horizontal" id="form">
+<form:form commandName="TransactionForm" cssClass="form-horizontal" >
 	<!-- Modal -->
 	<div class="modal fade" id="addTransactionModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
@@ -235,10 +246,13 @@
 					</div>
 					<div class="form-group"	style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="date" class="col-sm-2 control-label">Date:</label>
-						<div class="col-sm-10">						
-						<form:input path="date" cssClass="form-control" style="width: 350px" placeholder="DD.MM.RRRR" autofocus="autofocus" data-options="formatter:myformatter,parser:myparser"/> 
-						</div>						
-						</div>									
+						 <div class="col-sm-8">
+            <div class="input-group input-append date" id="datePicker2">
+                <form:input type="text" class="form-control" placeholder="DD.MM.RRRR" path="date" />
+                <span class="input-group-addon add-on" ><span class="glyphicon glyphicon-calendar"></span></span>
+            </div>
+        </div>					
+						</div>										
 							<div class="form-group"	style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="category" class="col-sm-2 control-label">Subcategory:</label>
 						<div class="col-sm-10">
@@ -266,19 +280,21 @@
 	</div>
 </form:form>
 
-<script type="text/javascript">
+	
+<script>
 $(document).ready(function() {
-	$.validator.addMethod(
-		    "date",
-		    function(value, element) {        
-		        return value.match(/^(0[1-9]|1[0-9]|2[0-8]|29((?=.([0][13-9]|1[0-2])|(?=.(0[1-9]|1[0-2]).([0-9]{2}(0[48]|[13579][26]|[2468][048])|([02468][048]|[13579][26])00))))|30(?=.(0[13-9]|1[0-2]))|31(?=.(0[13578]|1[02]))).(0[1-9]|1[0-2]).[0-9]{4}$/);
-		    },
-		    "Please enter a date in the format dd.mm.yyyy"
-		);
+    $('#datePicker1')
+        .datepicker({
+            format: 'dd.mm.yyyy',            
+        })
+           $('#datePicker2')
+        .datepicker({
+            format: 'dd.mm.yyyy',            
+        })
     $('form').each(function() {  
         $(this).validate({       
         	rules: {
-				type: {
+        		type: {
 					required : true,								
 				},
 				name: {
@@ -291,12 +307,9 @@ $(document).ready(function() {
 					min: 0.01
 				},
 				date: {
-					required : true,
-					date : true
-				},
-				 
-			},			
-			
+					required : true,					
+				},				 
+			},					
 			highlight: function(element) {
 				$(element).closest('.form-group').removeClass('has-success').addClass('has-error');
 			},
@@ -304,14 +317,17 @@ $(document).ready(function() {
 				$(element).closest('.form-group').removeClass('has-error').addClass('has-success');
 			},		
 			messages: {
-				 type: {
+				type: {
 					 required: ""				     
-				 }
-			       
+				 },
+				date: {
+					 required: ""				     
+				 }			       
 			    }
         });
     });
 
 });
 </script>
+
 		

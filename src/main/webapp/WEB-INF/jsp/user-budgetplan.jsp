@@ -163,7 +163,7 @@ $(document).ready(function() {
             	amount: {
 					required : true,
 					number: true,
-					min: 0.01
+					min: 0.00
 				},						 
 			},		
 			

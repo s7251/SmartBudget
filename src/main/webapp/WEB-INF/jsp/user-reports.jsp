@@ -3,7 +3,18 @@
 
 <%@ include file="../tiles-template/taglib.jsp"%>  
 
-    <link rel='stylesheet prefetch' href='http://netdna.bootstrapcdn.com/twitter-bootstrap/3.3.6/css/bootstrap-combined.min.css'>
+<style type="text/css">
+#eventForm .form-control-feedback {
+    top: 0;
+    right: -15px;
+}
+</style>
+
+<!-- Include Bootstrap Datepicker -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css" />
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
+<link rel='stylesheet prefetch' href='http://netdna.bootstrapcdn.com/twitter-bootstrap/3.3.6/css/bootstrap-combined.min.css'>
 <link rel='stylesheet prefetch' href='https://s3-us-west-2.amazonaws.com/s.cdpn.io/2708/bootstrap-datetimepicker.min.css'>
 
 <div class="panel panel-default">
@@ -25,7 +36,7 @@
   
 
 
-<form:form mehod="post" modelAttribute="ReportForm" action="/report-incomes-by-categories.html" cssClass="form-horizontal incomesBySub">
+<form:form mehod="post" modelAttribute="ReportForm" action="/report-incomes-by-categories.html" cssClass="form-horizontal">
 	<!-- Modal -->	
 	<div class="modal fade" id="incomeReport" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
@@ -42,8 +53,11 @@
 					<div class="form-group"
 						style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="name" class="col-sm-2 control-label">Date:</label>
-						<div class="col-sm-10">
-							<form:input path="date" cssClass="form-control" style="width: 350px" placeholder="MM.YYYY"	autofocus="autofocus" />
+						<div class="col-sm-8">
+						 <div class="input-group input-append date" id="datePicker4">
+                <form:input type="text" class="form-control" placeholder="MM.RRRR" path="date" />
+                <span class="input-group-addon add-on" ><span class="glyphicon glyphicon-calendar"></span></span>
+            </div>
 						</div>
 					</div>			
 					
@@ -58,7 +72,7 @@
 	</div>
 </form:form>
 
-<form:form mehod="post" modelAttribute="ReportForm" action="/report-expenses-by-categories.html" cssClass="form-horizontal expensesBySub">
+<form:form mehod="post" modelAttribute="ReportForm" action="/report-expenses-by-categories.html" cssClass="form-horizontal">
 	<!-- Modal -->	
 	<div class="modal fade" id="expenseReport" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
@@ -75,8 +89,11 @@
 					<div class="form-group"
 						style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="name" class="col-sm-2 control-label">Date:</label>
-						<div class="col-sm-10">
-							<form:input path="date" cssClass="form-control" style="width: 350px" placeholder="MM.YYYY"	autofocus="autofocus" />
+						<div class="col-sm-8">
+							   <div class="input-group input-append date" id="datePicker3">
+                <form:input type="text" class="form-control" placeholder="MM.RRRR" path="date" />
+                <span class="input-group-addon add-on" ><span class="glyphicon glyphicon-calendar"></span></span>
+            </div>
 						</div>
 					</div>			
 					
@@ -92,7 +109,7 @@
 </form:form>
 
 
-<form:form mehod="post" modelAttribute="ReportForm" action="/report-incomes-in-time.html" cssClass="form-horizontal incomesInTime">
+<form:form mehod="post" modelAttribute="ReportForm" action="/report-incomes-in-time.html" cssClass="form-horizontal">
 	<!-- Modal -->	
 	<div class="modal fade" id="incomeInTimeReport" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
@@ -109,9 +126,12 @@
 					<div class="form-group"
 						style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="name" class="col-sm-2 control-label">Date:</label>
-						<div class="col-sm-10">
-							<form:input path="date" cssClass="form-control" style="width: 350px" placeholder="YYYY"	autofocus="autofocus" />
-						</div>
+						<div class="col-sm-8">
+            <div class="input-group input-append date" id="datePicker2">
+                <form:input type="text" class="form-control" placeholder="RRRR" path="date" />
+                <span class="input-group-addon add-on" ><span class="glyphicon glyphicon-calendar"></span></span>
+            </div>
+        </div>
 					</div>			
 					
 						
@@ -125,8 +145,8 @@
 	</div>
 </form:form>
 
-<form:form mehod="post" modelAttribute="ReportForm" action="/report-expenses-in-time.html" cssClass="form-horizontal expensesInTime">
-	<!-- Modal -->	
+<form:form mehod="post" modelAttribute="ReportForm" action="/report-expenses-in-time.html" cssClass="form-horizontal">
+	<!-- Modal	 -->
 	<div class="modal fade" id="expenseInTimeReport" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
@@ -138,15 +158,16 @@
 					<h4 class="modal-title" id="myModalLabel">Expenses in time</h4>
 				</div>
 				<div class="modal-body">
-				
-					<div class="form-group"
-						style="text-align: center; width: 600px; margin: 0 auto;">
-						<label for="name" class="col-sm-2 control-label">Date:</label>
-						<div class="col-sm-10">
-							<form:input path="date" cssClass="form-control" style="width: 350px" placeholder="YYYY"	autofocus="autofocus" />
-						</div>
-					</div>			
-					
+									
+					    <div class="form-group" style="text-align: center; width: 600px; margin: 0 auto;">
+        <label for="date" class="col-sm-2 control-label">Date:</label>
+        <div class="col-sm-8">
+            <div class="input-group input-append date" id="datePicker1">
+                <form:input type="text" class="form-control" placeholder="RRRR" path="date" />
+                <span class="input-group-addon add-on" ><span class="glyphicon glyphicon-calendar"></span></span>
+            </div>
+        </div>
+    </div>
 						
 					</div>
 				<div class="modal-footer">
@@ -158,130 +179,49 @@
 	</div>
 </form:form>
 
-<script type="text/javascript">
+<script>
 $(document).ready(function() {
-	
-$.validator.addMethod(
-    "date",
-    function(value, element) {        
-        return value.match(/^(0[1-9]|1[012])[.][0-9]{4}$/);
-    },
-    "Please enter a date in the format mm.yyyy"
-);
-	
-	$(".incomesBySub").validate(
-		{
-			rules: {				
+    $('#datePicker1')
+        .datepicker({
+            format: 'yyyy',
+            minViewMode: 2,
+        })      
+        $('#datePicker2')
+        .datepicker({
+            format: 'yyyy',
+            minViewMode: 2,
+        })
+        $('#datePicker3')
+        .datepicker({
+            format: 'mm.yyyy',
+            minViewMode: 1,
+        })
+        $('#datePicker4')
+        .datepicker({
+            format: 'mm.yyyy',
+            minViewMode: 1,
+        })
+    $('form').each(function() {  
+        $(this).validate({       
+        	rules: {				
 				date: {
-					required : true,
-					date : true
-				},
-				 
-			},		
-			
+					required : true,					
+				},				 
+			},						
 			highlight: function(element) {
 				$(element).closest('.form-group').removeClass('has-success').addClass('has-error');
 			},
 			unhighlight: function(element) {
 				$(element).closest('.form-group').removeClass('has-error').addClass('has-success');
-			},					
-		}
-	);
+			},		
+			messages: {
+				date: {
+					 required: ""				     
+				 }			       
+			    }
+        });
+    });
+
 });
 </script>
 
-<script type="text/javascript">
-$(document).ready(function() {
-	
-$.validator.addMethod(
-    "date",
-    function(value, element) {        
-        return value.match(/^(0[1-9]|1[012])[.][0-9]{4}$/);
-    },
-    "Please enter a date in the format mm.yyyy"
-);
-	
-	$(".expensesBySub").validate(
-		{
-			rules: {				
-				date: {
-					required : true,
-					date : true
-				},
-				 
-			},		
-			
-			highlight: function(element) {
-				$(element).closest('.form-group').removeClass('has-success').addClass('has-error');
-			},
-			unhighlight: function(element) {
-				$(element).closest('.form-group').removeClass('has-error').addClass('has-success');
-			},					
-		}
-	);
-});
-</script>
-
-<script type="text/javascript">
-$(document).ready(function() {
-	
-$.validator.addMethod(
-    "date",
-    function(value, element) {        
-        return value.match(/^[0-9]{4}$/);
-    },
-    "Please enter a date in the format yyyy"
-);
-	
-	$(".incomesInTime").validate(
-		{
-			rules: {				
-				date: {
-					required : true,
-					date : true
-				},
-				 
-			},		
-			
-			highlight: function(element) {
-				$(element).closest('.form-group').removeClass('has-success').addClass('has-error');
-			},
-			unhighlight: function(element) {
-				$(element).closest('.form-group').removeClass('has-error').addClass('has-success');
-			},					
-		}
-	);
-});
-</script>
-
-<script type="text/javascript">
-$(document).ready(function() {
-	
-$.validator.addMethod(
-    "date",
-    function(value, element) {        
-        return value.match(/^[0-9]{4}$/);
-    },
-    "Please enter a date in the format yyyy"
-);
-	
-	$(".expensesInTime").validate(
-		{
-			rules: {				
-				date: {
-					required : true,
-					date : true
-				},
-				 
-			},		
-			
-			highlight: function(element) {
-				$(element).closest('.form-group').removeClass('has-success').addClass('has-error');
-			},
-			unhighlight: function(element) {
-				$(element).closest('.form-group').removeClass('has-error').addClass('has-success');
-			},					
-		}
-	);
-});
-</script>
