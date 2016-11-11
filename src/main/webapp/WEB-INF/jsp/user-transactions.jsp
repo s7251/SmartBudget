@@ -154,8 +154,8 @@
 					<div class="form-group"	style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="date" class="col-sm-2 control-label">Date:</label>
 						 <div class="col-sm-8">
-            <div class="input-group input-append date" id="datePicker1">
-                <form:input type="text" class="form-control" placeholder="DD.MM.RRRR" path="date" />
+            <div class="input-group input-append date">
+                <form:input type="text" class="form-control datePicker" placeholder="DD.MM.RRRR" path="date" />
                 <span class="input-group-addon add-on" ><span class="glyphicon glyphicon-calendar"></span></span>
             </div>
         </div>					
@@ -247,8 +247,8 @@
 					<div class="form-group"	style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="date" class="col-sm-2 control-label">Date:</label>
 						 <div class="col-sm-8">
-            <div class="input-group input-append date" id="datePicker2">
-                <form:input type="text" class="form-control" placeholder="DD.MM.RRRR" path="date" />
+            <div class="input-group input-append date">
+                <form:input type="text" class="form-control datePicker" placeholder="DD.MM.RRRR" path="date" />
                 <span class="input-group-addon add-on" ><span class="glyphicon glyphicon-calendar"></span></span>
             </div>
         </div>					
@@ -282,15 +282,15 @@
 
 	
 <script>
-$(document).ready(function() {
-    $('#datePicker1')
+$(document).ready(function() {	
+	var startDate = new Date(${year},  ${month}-1, 1); 
+	var lastDate = new Date(${year}, ${month}, 0); 
+    $('.datePicker')
         .datepicker({
             format: 'dd.mm.yyyy',            
-        })
-           $('#datePicker2')
-        .datepicker({
-            format: 'dd.mm.yyyy',            
-        })
+            startDate: startDate,
+            endDate: lastDate
+        })          
     $('form').each(function() {  
         $(this).validate({       
         	rules: {

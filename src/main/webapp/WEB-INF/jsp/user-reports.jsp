@@ -54,8 +54,8 @@
 						style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="name" class="col-sm-2 control-label">Date:</label>
 						<div class="col-sm-8">
-						 <div class="input-group input-append date" id="datePicker4">
-                <form:input type="text" class="form-control" placeholder="MM.RRRR" path="date" />
+						 <div class="input-group input-append date" >
+                <form:input type="text" class="form-control datePicker2" placeholder="MM.RRRR" path="date" />
                 <span class="input-group-addon add-on" ><span class="glyphicon glyphicon-calendar"></span></span>
             </div>
 						</div>
@@ -90,8 +90,8 @@
 						style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="name" class="col-sm-2 control-label">Date:</label>
 						<div class="col-sm-8">
-							   <div class="input-group input-append date" id="datePicker3">
-                <form:input type="text" class="form-control" placeholder="MM.RRRR" path="date" />
+							   <div class="input-group input-append date">
+                <form:input type="text" class="form-control datePicker2" placeholder="MM.RRRR" path="date" />
                 <span class="input-group-addon add-on" ><span class="glyphicon glyphicon-calendar"></span></span>
             </div>
 						</div>
@@ -127,8 +127,8 @@
 						style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="name" class="col-sm-2 control-label">Date:</label>
 						<div class="col-sm-8">
-            <div class="input-group input-append date" id="datePicker2">
-                <form:input type="text" class="form-control" placeholder="RRRR" path="date" />
+            <div class="input-group input-append date">
+                <form:input type="text" class="form-control datePicker1" placeholder="RRRR" path="date" />
                 <span class="input-group-addon add-on" ><span class="glyphicon glyphicon-calendar"></span></span>
             </div>
         </div>
@@ -162,8 +162,8 @@
 					    <div class="form-group" style="text-align: center; width: 600px; margin: 0 auto;">
         <label for="date" class="col-sm-2 control-label">Date:</label>
         <div class="col-sm-8">
-            <div class="input-group input-append date" id="datePicker1">
-                <form:input type="text" class="form-control" placeholder="RRRR" path="date" />
+            <div class="input-group input-append date">
+                <form:input type="text" class="form-control datePicker1" placeholder="RRRR" path="date" />
                 <span class="input-group-addon add-on" ><span class="glyphicon glyphicon-calendar"></span></span>
             </div>
         </div>
@@ -181,26 +181,16 @@
 
 <script>
 $(document).ready(function() {
-    $('#datePicker1')
+    $('.datePicker1')
         .datepicker({
             format: 'yyyy',
             minViewMode: 2,
         })      
-        $('#datePicker2')
-        .datepicker({
-            format: 'yyyy',
-            minViewMode: 2,
-        })
-        $('#datePicker3')
+        $('.datePicker2')
         .datepicker({
             format: 'mm.yyyy',
             minViewMode: 1,
-        })
-        $('#datePicker4')
-        .datepicker({
-            format: 'mm.yyyy',
-            minViewMode: 1,
-        })
+        })      
     $('form').each(function() {  
         $(this).validate({       
         	rules: {				

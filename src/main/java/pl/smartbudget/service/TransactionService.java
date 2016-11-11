@@ -597,6 +597,40 @@ public class TransactionService {
 		return actualMonthOfTransactions+"-"+actualYearOfTransactions;
 	}
 	
+	public String getMonthByViewedTransactionsByActualMonth(List<Transaction> transactions) throws ParseException {
+		Date actualDate = new Date();		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(actualDate);
+		int actualMonth = cal.get(Calendar.MONTH)+1;		
+		String actualMonthOfTransactions=String.valueOf(actualMonth);
+		
+		if(transactions.size()>0){
+		actualMonthOfTransactions = transactions.get(0).getDate().toString().substring(5, 7);		
+		}
+		return actualMonthOfTransactions;
+	}
+	
+	public String getMonthByOtherMonth(String date) throws ParseException {		
+		return date.toString().substring(0, 2);
+	}
+	
+	public String getYearByOtherMonth(String date) throws ParseException {		
+		return date.toString().substring(3, 7);
+	}
+	
+	public String geYearByViewedTransactionsByActualMonth(List<Transaction> transactions) throws ParseException {
+		Date actualDate = new Date();		
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(actualDate);
+		int actualYear = cal.get(Calendar.YEAR);
+		String actualYearOfTransactions=String.valueOf(actualYear);		
+		if(transactions.size()>0){
+		actualYearOfTransactions = transactions.get(0).getDate().toString().substring(0, 4);
+		}
+		return actualYearOfTransactions;
+	}
+	
+
 	
 	public String geActualtMonthForNavigationByViewedTransactions(List<Transaction> transactions)	throws ParseException {
 		String actualDateString = null;
