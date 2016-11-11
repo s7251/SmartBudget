@@ -51,11 +51,29 @@ $(document).ready(function() {
 			rules: {
 				name: {
 					required : true,
-					minlength : 4,				
+					minlength : 4,	
+					remote : {
+						url: "<spring:url value='/user-available.html' />",
+						type: "get",
+						data: {
+							name: function() {
+								return $("#name").val();
+							}
+						}
+					}
 				},
 				email: {
 					required : true,
 					email: true,
+					remote : {
+						url: "<spring:url value='/email-available.html' />",
+						type: "get",
+						data: {
+							name: function() {
+								return $("#email").val();
+							}
+						}
+					}
 				},
 				password: {
 					required : true,
@@ -73,6 +91,14 @@ $(document).ready(function() {
 			unhighlight: function(element) {
 				$(element).closest('.form-group').removeClass('has-error').addClass('has-success');
 			},		
+			messages: {
+				name: {
+					remote: "This user exist in system!"
+				},
+				email: {
+					remote: "This e-mail address exist in system!"
+			}
+			}
 		}
 	);
 });

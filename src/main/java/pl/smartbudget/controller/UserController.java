@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import pl.smartbudget.entity.User;
 import pl.smartbudget.service.UserService;
@@ -76,5 +78,19 @@ public class UserController {
 		userService.save(user);
 		return "redirect:/user-register.html?success=true";
 		}
+	
+	@RequestMapping("/user-available")
+	@ResponseBody
+	public String userAvailable(@RequestParam String name) {
+		Boolean userAvailable = userService.findOneByName(name) == null;
+		return userAvailable.toString();
+	}
+	
+	@RequestMapping("/email-available")
+	@ResponseBody
+	public String emailAvailable(@RequestParam String email) {
+		Boolean emailAvailable = userService.findOneByEmail(email) == null;
+		return emailAvailable.toString();
+	}
 
 }
