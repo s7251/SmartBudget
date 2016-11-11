@@ -22,5 +22,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
 	@Query(value = "SELECT NAME FROM USER U JOIN CATEGORY C ON (C.USER_ID = U.ID) JOIN SUBCATEGORY S ON (S.CATEGORY_ID = C.ID) WHERE S.ID=?1", nativeQuery = true)	
 	String findUserNameBySubcategoryId(Subcategory subcategory);
+
+	User findByEmail(String email);
 	
 }

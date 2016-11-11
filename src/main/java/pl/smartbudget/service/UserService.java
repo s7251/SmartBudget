@@ -240,4 +240,8 @@ public class UserService {
 		String userName = userRepository.findUserNameBySubcategoryId(subcategory);
 		return userName;
 	}
+
+	public User findOneByEmail(String email) {		
+		return userRepository.findByEmail(email);
+	}
 }
