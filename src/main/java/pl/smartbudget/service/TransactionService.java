@@ -360,7 +360,7 @@ public class TransactionService {
 				return o1.getDate().compareTo(o2.getDate());
 			}
 		});
-
+if(transactions.isEmpty() == false){
 		Calendar initDate = Calendar.getInstance();
 		initDate.setTime(transactions.get(0).getDate());
 		Calendar lastDate = Calendar.getInstance();
@@ -403,7 +403,7 @@ public class TransactionService {
 				summaryOfAccounts.put(lastTransactionDate, transactionsSum);
 			}
 		}
-
+	
 		Calendar lastDateforForecast = Calendar.getInstance();
 		lastDateforForecast = lastDate;
 		for (Double forecastEntry : accountSummaryForecasting(summaryOfAccounts)) {
@@ -411,6 +411,11 @@ public class TransactionService {
 			String lastDateforForecastEntry = String.valueOf(lastDateforForecast.get(Calendar.YEAR)) + "-"
 					+ String.valueOf(lastDateforForecast.get(Calendar.MONTH) + 1) + "-1";
 			summaryOfAccounts.put(lastDateforForecastEntry, (double) Math.round(forecastEntry));
+		}
+}
+		if(summaryOfAccounts.isEmpty()){
+			Calendar actualDate = Calendar.getInstance();
+			summaryOfAccounts.put(actualDate.get(Calendar.YEAR) + "-" + String.valueOf(actualDate.get(Calendar.MONTH) + 2) + "-1", 0.0);
 		}
 		return summaryOfAccounts;
 	}

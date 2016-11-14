@@ -48,7 +48,7 @@
            </c:forEach>          
           ]);           
         var options = {
-          title: 'Expenses by subcategories in ' + ${date},
+          title: 'Expenses by subcategories in ' + '${date}',
           pieHole: 0.5,
    
         };
