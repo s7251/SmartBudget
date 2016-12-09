@@ -26,7 +26,7 @@
 	<table class="table table-striped">
 		<tr>
 			<td style="text-align: center; vertical-align: middle;"><b>Name</b></td>
-			<td style="text-align: center; vertical-align: middle;"><b>Value</b></td>
+			<td style="text-align: center; vertical-align: middle;"><b>Account Balance</b></td>
 			<td style="text-align: center; vertical-align: middle;"><b>Forecast</b></td>
 			<td style="text-align: center; vertical-align: middle;"><b>Align Balance</b></td>
 			<td style="text-align: center; vertical-align: middle;"><b>Rename</b></td>			
@@ -37,7 +37,7 @@
 		<c:forEach items="${summaryOfAccounts}" var="summary">		
 			<tr>
 				<td style="text-align: center; vertical-align: middle;">${summary.value.name}</td>
-				<td style="text-align: center; vertical-align: middle;">${summary.value.summaryOfAccount}</td>
+				<td style="text-align: center; vertical-align: middle;"><fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${summary.value.summaryOfAccount}" type="currency"/> </td>
 				<td style="text-align: center; vertical-align: middle;">		     
 			<a href='<spring:url value="/account-forecast/${summary.value.id}.html"/>'><span style="font-size:2em;" class="glyphicon glyphicon-stats"></span> </a>
 				</td>
@@ -53,7 +53,7 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Cancel">
 						<span aria-hidden="true">&times;</span>
 					</button>
 					<h4 class="modal-title" id="myModalLabel">Alignment of Balance (${summary.value.name})</h4>
@@ -70,9 +70,9 @@
 					</div>
 					<div class="form-group"
 						style="text-align: center; width: 600px; margin: 0 auto;">
-						<label for="name" class="col-sm-2 control-label">Name:</label>
+						<label for="name" class="col-sm-2 control-label">Memo:</label>
 						<div class="col-sm-10">
-							<form:input path="name" cssClass="form-control" style="width: 350px" placeholder="please type cause of alignment" autofocus="autofocus" />
+							<form:input path="memo" cssClass="form-control" style="width: 350px" placeholder="please type cause of alignment" autofocus="autofocus" />
 						</div>
 					</div>
 
@@ -95,7 +95,7 @@
 
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 					<input type="submit" class="btn btn-success" value="Align Balance" />
 				</div>
 			</div>
@@ -111,7 +111,7 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Cancel">
 						<span aria-hidden="true">&times;</span>
 					</button>
 					<h4 class="modal-title" id="myModalLabel">Rename account</h4>
@@ -128,7 +128,7 @@
 					
 					</div>
 					<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 					<input type="submit" class="btn btn-success" value="Rename" />
 				</div>
 			</div>
@@ -146,7 +146,7 @@
 		</c:forEach>	
 			<tr>
 			<td style="text-align: center; vertical-align: middle;"><b></b></td>
-			<td style="text-align: center; vertical-align: middle;"><b>Summary</b></td>
+			<td style="text-align: center; vertical-align: middle;"><b>Total Balance</b></td>
 			<td style="text-align: center; vertical-align: middle;"></td>
 			<td style="text-align: center; vertical-align: middle;"><b></b></td>
 			<td style="text-align: center; vertical-align: middle;"><b></b></td>
@@ -155,7 +155,7 @@
 		</tr>
 			<tr>
 			<td style="text-align: center; vertical-align: middle;"><b></b></td>
- 			<td style="text-align: center; vertical-align: middle;"><b>${summaryOfAllAccounts}</b></td> 
+ 			<td style="text-align: center; vertical-align: middle;"><b><fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${summaryOfAllAccounts}" type="currency"/> </b></td> 
 			<td style="text-align: center; vertical-align: middle;"><b></b></td>
 		    <td style="text-align: center; vertical-align: middle;"><b></b></td>
 			<td style="text-align: center; vertical-align: middle;"><b></b></td>
@@ -173,7 +173,7 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Cancel">
 						<span aria-hidden="true">&times;</span>
 					</button>
 					<h4 class="modal-title" id="myModalLabel">Add account</h4>
@@ -190,7 +190,7 @@
 					
 					</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 					<input type="submit" class="btn btn-success" value="Add" />
 				</div>
 			</div>
@@ -207,7 +207,7 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Cancel">
 						<span aria-hidden="true">&times;</span>
 					</button>
 					<h4 class="modal-title" id="myModalLabel">Internal Transfer</h4>
@@ -216,9 +216,9 @@
 					
 					<div class="form-group"
 						style="text-align: center; width: 600px; margin: 0 auto;">
-						<label for="name" class="col-sm-2 control-label">Name:</label>
+						<label for="memo" class="col-sm-2 control-label">Memo:</label>
 						<div class="col-sm-10">
-							<form:input path="name" cssClass="form-control" style="width: 350px" placeholder="Please type name of transaction"	autofocus="autofocus" />
+							<form:input path="memo" cssClass="form-control" style="width: 350px" placeholder="Please type memo of transaction"	autofocus="autofocus" />
 						</div>
 					</div>
 
@@ -259,7 +259,7 @@
 
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 					<input type="submit" class="btn btn-success" value="Add" />
 				</div>
 			</div>
@@ -270,6 +270,14 @@
 		
 <script>
 $(document).ready(function() {
+	jQuery.validator.addMethod(
+		    "money",
+		    function(value, element) {
+		        var isValidMoney = /^\d{0,4}(\.\d{0,2})?$/.test(value);
+		        return this.optional(element) || isValidMoney;
+		    },
+		    "Please type amount in 0.00 format"
+		);
     $('.datePicker')
         .datepicker({
             format: 'dd.mm.yyyy',            
@@ -287,7 +295,8 @@ $(document).ready(function() {
 				amount: {
 					required : true,
 					number: true,
-					min: 0.01
+					min: 0.01,
+					money: true
 				},
 				date: {
 					required : true,					
@@ -300,6 +309,9 @@ $(document).ready(function() {
 				$(element).closest('.form-group').removeClass('has-error').addClass('has-success');
 			},		
 			messages: {
+				amount: {
+					number: "Please type amount in 0.00 format"				     
+				 },				
 				type: {
 					 required: ""				     
 				 },

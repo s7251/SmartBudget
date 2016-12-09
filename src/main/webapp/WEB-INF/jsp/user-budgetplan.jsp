@@ -52,7 +52,7 @@
 				<td style="text-align: left; vertical-align: middle;">- ${subcategory.name}</td>							
 				<td style=" text-align: center; vertical-align: middle;">
 				<c:forEach items="${subcategory.subcategoryLimits}" var="subcategorylimits">
-				${subcategorylimits.amount}	
+				<fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${subcategorylimits.amount}	" type="currency"/> 
 								
 				<form:form mehod="post" modelAttribute="subcategorylimit" action="/changeSubcategoryLimit.html" cssClass="form-horizontal" id="form">		
 		<form:hidden path="subcategoryId" value="${subcategory.id}" />
@@ -65,10 +65,10 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Cancel">
 						<span aria-hidden="true">&times;</span>
 					</button>
-					<h4 style=" text-align: left;" class="modal-title" id="myModalLabel">Change subcategory budget  </h4>
+					<h4 style=" text-align: left;" class="modal-title" id="myModalLabel">Change subcategory budget (${subcategory.name})  </h4>
 				</div>
 				<div class="modal-body">
 				
@@ -83,7 +83,7 @@
 					</div>
 					
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 					<input type="submit" class="btn btn-success" value="Change" />
 				</div>
 			</div>
@@ -94,7 +94,7 @@
 				</td>					
 				<td style="text-align: center; vertical-align: middle;">
 				<c:forEach items="${subcategory.subcategoryLimits}" var="subcategorylimits">
-				${subcategorylimits.summaryOfSpentMoney}
+				<fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${subcategorylimits.summaryOfSpentMoney}" type="currency"/> 
 				
 			
 				
@@ -121,10 +121,10 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Cancel">
 						<span aria-hidden="true">&times;</span>
 					</button>
-					<h4 class="modal-title" id="myModalLabel">Set budget to subcategory </h4>
+					<h4 class="modal-title" id="myModalLabel" style="text-align: left">Set budget to subcategory (${subcategory.name}) </h4>
 				</div>
 				<div class="modal-body">
 				
@@ -138,7 +138,7 @@
 					
 					</div>					
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 					<input type="submit" class="btn btn-success" value="Set" />
 				</div>
 			</div>
@@ -156,14 +156,22 @@
 		
 		<script type="text/javascript">
 $(document).ready(function() {
-
+	jQuery.validator.addMethod(
+		    "money",
+		    function(value, element) {
+		        var isValidMoney = /^\d{0,4}(\.\d{0,2})?$/.test(value);
+		        return this.optional(element) || isValidMoney;
+		    },
+		    "Please type amount in 0.00 format"
+		);
     $('form').each(function() {  
         $(this).validate({       
             rules: {				
             	amount: {
 					required : true,
 					number: true,
-					min: 0.00
+					min: 0.00,
+					money: true
 				},						 
 			},		
 			
@@ -173,6 +181,10 @@ $(document).ready(function() {
 			unhighlight: function(element) {
 				$(element).closest('.form-group').removeClass('has-error').addClass('has-success');
 			},		
+			messages: {
+				amount: {
+					number: "Please type amount in 0.00 format"				     
+				 }}
         });
     });
 

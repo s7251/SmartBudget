@@ -22,10 +22,12 @@
 <div id="curve_chart" style="width: 1100px; height: 500px"></div>
 </td>		
 </tr>
-	<c:forEach items="${summaryAccountsByMonths}" var="summary">
+	<c:forEach items="${forecastDataByAccount}" var="summary">
 	<tr>
 	<td>
-	<b>${summary.key}</b> = ${summary.value}
+	<span class="pull-right">
+	<b>${summary.key}</b> = <fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${summary.value}" type="currency"/>
+	</span> 
 	</td>
 	</tr>
 	</c:forEach>			
@@ -41,7 +43,7 @@
       function drawChart() {
         var data = google.visualization.arrayToDataTable([                                                        
           ['Month', 'Prievious Month Summary'],
-          <c:forEach items="${summaryAccountsByMonths}" var="entry">
+          <c:forEach items="${forecastDataByAccount}" var="entry">
           ['${entry.key}',  ${entry.value}],         
           </c:forEach>  
         ]);

@@ -101,7 +101,7 @@ public class UserService {
 		transaction.setSubcategory(subcategorySample);
 		transaction.setAccount(account);
 		transaction.setType("income");
-		transaction.setName("your first income!");
+		transaction.setMemo("your first income!");
 		transaction.setDate(new Date());
 		transaction.setAmount(999.00);
 		transactionRepository.save(transaction);
@@ -110,11 +110,24 @@ public class UserService {
 		transaction2.setSubcategory(subcategorySample);
 		transaction2.setAccount(account);
 		transaction2.setType("expense");
-		transaction2.setName("your first expense!");
+		transaction2.setMemo("your first expense!");
 		transaction2.setDate(new Date());
 		transaction2.setAmount(499.00);
 		transactionRepository.save(transaction2);
 
+		userRepository.save(user);
+	}
+	
+	
+	public void update(User user) {
+		//user.setEnabled(true);
+		BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+		user.setPassword(bcrypt.encode(user.getPassword()));
+
+		List<Role> userRoles = new ArrayList<Role>();
+		userRoles.add(roleRepository.findByName("ROLE_USER"));
+		user.setRoles(userRoles);
+		
 		userRepository.save(user);
 	}
 	
@@ -244,4 +257,5 @@ public class UserService {
 	public User findOneByEmail(String email) {		
 		return userRepository.findByEmail(email);
 	}
-}
+
+	}

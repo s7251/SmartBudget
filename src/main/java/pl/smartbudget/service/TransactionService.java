@@ -1,5 +1,6 @@
 package pl.smartbudget.service;
 
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -64,7 +65,7 @@ public class TransactionService {
 		Account accountOfTransaction = accountRepository.findOne(transactionForm.getAccountId());
 		transaction.setType(transactionForm.getType());
 		transaction.setAmount(transactionForm.getAmount());
-		transaction.setName(transactionForm.getName());
+		transaction.setMemo(transactionForm.getMemo());
 		transaction.setDate(new SimpleDateFormat("dd.MM.yyyy").parse(transactionForm.getDate()));
 		transaction.setSubcategory(subcategoryOfAccount);
 		transaction.setAccount(accountOfTransaction);
@@ -81,7 +82,7 @@ public class TransactionService {
 		transaction.setId(transactionForm.getId());
 		transaction.setType(transactionForm.getType());
 		transaction.setAmount(transactionForm.getAmount());
-		transaction.setName(transactionForm.getName());
+		transaction.setMemo(transactionForm.getMemo());
 		transaction.setDate(new SimpleDateFormat("dd.MM.yyyy").parse(transactionForm.getDate()));
 		transaction.setSubcategory(subcategoryOfAccount);
 		transaction.setAccount(accountOfTransaction);
@@ -97,7 +98,7 @@ public class TransactionService {
 		Account accountOfTransaction = accountRepository.findOne(alignBalanceForm.getAccountId());
 		transaction.setType(alignBalanceForm.getType());
 		transaction.setAmount(alignBalanceForm.getAmount());
-		transaction.setName(alignBalanceForm.getName());
+		transaction.setMemo(alignBalanceForm.getMemo());
 		transaction.setDate(new SimpleDateFormat("dd.MM.yyyy").parse(alignBalanceForm.getDate()));	
 		transaction.setAccount(accountOfTransaction);
 		accountOfTransaction.setUser(user);
@@ -111,7 +112,7 @@ public class TransactionService {
 		Account accountFrom = accountRepository.findOne(internalTransferForm.getFromAccountId());
 		transactionFromAccount.setType("internal transfer -");
 		transactionFromAccount.setAmount(internalTransferForm.getAmount());
-		transactionFromAccount.setName(internalTransferForm.getName());
+		transactionFromAccount.setMemo(internalTransferForm.getMemo());
 		transactionFromAccount.setDate(new SimpleDateFormat("dd.MM.yyyy").parse(internalTransferForm.getDate()));
 		transactionFromAccount.setAccount(accountFrom);
 		accountFrom.setUser(user);
@@ -122,7 +123,7 @@ public class TransactionService {
 		Account accountTo = accountRepository.findOne(internalTransferForm.getToAccountId());
 		transactionToAccount.setType("internal transfer +");
 		transactionToAccount.setAmount(internalTransferForm.getAmount());
-		transactionToAccount.setName(internalTransferForm.getName());
+		transactionToAccount.setMemo(internalTransferForm.getMemo());
 		transactionToAccount.setDate(new SimpleDateFormat("dd.MM.yyyy").parse(internalTransferForm.getDate()));
 		transactionToAccount.setAccount(accountTo);
 		accountTo.setUser(user);
@@ -166,6 +167,16 @@ public class TransactionService {
 		return sortedMapOfSubcategories;
 	}
 	
+	public double getSummaryOfIncomesBySubcategoriesAndDate(String name, String date){
+		double summary=0;
+		Map<String, Double> sortedMapOfSubcategoriesWithAmount = new HashMap<String, Double>(getMapOfSubcategoriesWithIncomesByDate(name, date));
+		
+		for (Double value : sortedMapOfSubcategoriesWithAmount.values()) {
+		    summary+=value;
+		}
+		return summary;
+	}
+	
 	public Map<String, Double> getMapOfSubcategoriesWithExpensesByDate(String name, String date) {
 		User user = userRepository.findByName(name);
 		
@@ -201,6 +212,17 @@ public class TransactionService {
 		Map<String, Double> sortedMapOfSubcategories = new TreeMap<String, Double>(mapOfSubcategories);
 		return sortedMapOfSubcategories;
 	}
+	
+	public double getSummaryOfExpensesBySubcategoriesAndDate(String name, String date){
+		double summary=0;
+		Map<String, Double> sortedMapOfSubcategoriesWithAmount = new HashMap<String, Double>(getMapOfSubcategoriesWithExpensesByDate(name, date));
+		
+		for (Double value : sortedMapOfSubcategoriesWithAmount.values()) {
+		    summary+=value;
+		}
+		return summary;
+	}
+	
 		
 	public Map<String, Double> getMapOfIncomeTransactionInTime(String name, String year){
 		Map<String, Double> incomeTransactionsInTime = new LinkedHashMap<String, Double>();
@@ -350,7 +372,7 @@ public class TransactionService {
 	}
 	
 	
-	public Map<String, Double> summaryAccountsByMonths(int id, String name) {
+	public Map<String, Double> forecastByAccount(int id, String name) {
 		Map<String, Double> summaryOfAccounts = new LinkedHashMap<String, Double>();
 
 		Account account = accountRepository.findById(id);
@@ -743,7 +765,7 @@ if(transactions.isEmpty() == false){
 		Double sumOfMonth = transactionRepository.getSummaryOfExpenseTransaction(user.getId(), month, Integer.parseInt(year));
 		if(sumOfMonth==null){
 			sumOfMonth=(double) 0;			
-		}
+		}		
 		expenseTransactionsInTime.put(month+"."+year, sumOfMonth);
 		}
 		

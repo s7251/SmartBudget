@@ -18,7 +18,7 @@ public class Transaction {
 	@Id
 	@GeneratedValue
 	private Integer id;
-	private String name;
+	private String memo;
 	private String type;
 	private double amount;
 
@@ -58,12 +58,12 @@ public class Transaction {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getMemo() {
+		return memo;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setMemo(String memo) {
+		this.memo = memo;
 	}
 
 	public double getAmount() {

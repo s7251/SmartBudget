@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import pl.smartbudget.entity.Transaction;
+import pl.smartbudget.forms.InternalTransferForm;
 import pl.smartbudget.forms.TransactionForm;
 import pl.smartbudget.service.TransactionService;
 import pl.smartbudget.service.UserService;
@@ -27,6 +28,7 @@ public class TransactionController {
 	@RequestMapping("/user-transactions")
 	public String transactions(Model model, Principal principal) throws ParseException {
 		model.addAttribute("TransactionForm", new TransactionForm());
+		model.addAttribute("InternalTransferForm", new InternalTransferForm());
 		String name = principal.getName();
 		model.addAttribute("user", userService.findOneWithAccountsAndTransactions(name));
 		model.addAttribute("userTransactions", transactionService.findAllTransactionOfUserByActualMonth(name));
@@ -45,6 +47,7 @@ public class TransactionController {
 	@RequestMapping("/user-transactions/{date}")
 	public String transactions(Model model, Principal principal, @PathVariable String date) throws ParseException {
 		model.addAttribute("TransactionForm", new TransactionForm());
+		model.addAttribute("InternalTransferForm", new InternalTransferForm());
 		String name = principal.getName();
 		model.addAttribute("user", userService.findOneWithAccountsAndTransactions(name));
 		model.addAttribute("userTransactions", transactionService.findAllTransactionOfUserByDate(name, date));
@@ -56,7 +59,7 @@ public class TransactionController {
 		model.addAttribute("prevMonthNav", transactionService.getPrevMonthForNavigationByViewedTransactions(transactionService.findAllTransactionOfUserByDate(name, date)));
 		model.addAttribute("date", date);
 		model.addAttribute("month", transactionService.getMonthByOtherMonth(date));
-		model.addAttribute("year", transactionService.getYearByOtherMonth(date));
+		model.addAttribute("year", transactionService.getYearByOtherMonth(date));		
 		return "user-transactions";
 	}
 	
@@ -89,5 +92,12 @@ public class TransactionController {
 		transactionService.edit(transaction, name);
 		return "redirect:/user-transactions.html";
 	}
+	
+	@RequestMapping(value = "/internalTransferFormTransactions", method = RequestMethod.POST)
+	public String internalTransfer(@ModelAttribute("InternalTransferForm") InternalTransferForm internalTransferForm, Principal principal)	throws ParseException {
+		String name = principal.getName();
+		transactionService.saveInternalTransfer(internalTransferForm, name);
+		return "redirect:/user-transactions.html";
+	}	
 		
 	}

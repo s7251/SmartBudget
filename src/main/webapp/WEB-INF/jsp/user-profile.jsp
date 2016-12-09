@@ -7,7 +7,8 @@
 	<!-- Default panel contents -->
 		<div class="panel-heading"><h1 class="panel-title">User Profile </h1></div>
 	<div class="panel-body">			
-			<c:if test="${(user.name != 'admin' )}"><a href="<spring:url value="/user-profile/removeprofile/${user.id}.html" />" class="btn btn-danger" type="button">Remove account</a></c:if> 		
+			<c:if test="${(user.name != 'admin' )}"><a href="<spring:url value="/user-profile/removeprofile/${user.id}.html" />" class="btn btn-danger" type="button">Remove account</a></c:if> 
+			<a href="<spring:url value="" />" class="btn btn-warning" type="button" data-toggle="modal" data-target="#changePasswordModal">Change password</a>		
 	</div>
 	
 <table class="table">
@@ -19,10 +20,7 @@
 	<tbody>		
 		<tr>
 			<td><b>username:</b> ${user.name}</td>
-		</tr>
-		<tr>
-			<td><b>id:</b> ${user.id}</td>
-		</tr>
+		</tr>		
 		<tr>
 			<td><b>email:</b> ${user.email}</td>
 		</tr>
@@ -30,3 +28,75 @@
 </table>
 
 </div>
+
+
+<form:form mehod="post" modelAttribute="user" action="/change-password.html" cssClass="form-horizontal changePasswordForm">
+<form:hidden path="id" value="${user.id}" />
+<form:hidden path="name" value="${user.name}" />
+<form:hidden path="email" value="${user.email}" />
+<form:hidden path="enabled" value="1" />
+	<!-- Modal	 -->
+	<div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Cancel">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Change your password:</h4>
+				</div>
+				<div class="modal-body">
+									
+				<div class="form-group"
+						style="text-align: center; width: 600px; margin: 0 auto;">
+						<label for="password" class="col-sm-2 control-label">Password:</label>
+						<div class="col-sm-10">
+							<form:password path="password" cssClass="form-control" style="width: 350px" placeholder="Please type your new password"	autofocus="autofocus" />
+						</div>
+					</div>
+					
+					<div class="form-group"
+						style="text-align: center; width: 600px; margin: 0 auto;">
+						<label for="password" class="col-sm-2 control-label">Re-type:</label>
+						<div class="col-sm-10">
+							<input type="password" name="password_again" id="password_again" class="form-control" style="width: 350px" placeholder="Please re-type your new password"	autofocus="autofocus" />
+						</div>
+					</div>
+    		</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<input type="submit" class="btn btn-success" value="Change Password" />
+				</div>
+			</div>
+		</div>
+	</div>
+</form:form>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	$(".changePasswordForm").validate(
+		{
+			rules: {						
+				password: {
+					required : true,
+					minlength : 4,
+				},
+				password_again: {
+					required : true,
+					minlength : 4,
+					equalTo: "#password"
+				},
+			},
+			highlight: function(element) {
+				$(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+			},
+			unhighlight: function(element) {
+				$(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+			},		
+		
+		}
+	);
+});
+</script>

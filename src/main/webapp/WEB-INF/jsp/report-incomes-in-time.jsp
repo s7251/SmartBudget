@@ -8,7 +8,9 @@
 		<div class="panel-heading"><h1 class="panel-title">Incomes by subcategories  </h1></div>
 		<div class="panel-body" >
 <a href="<spring:url value="/user-reports.html" />" class="btn btn-primary" type="button" >Back</a>
+<a href="<spring:url value="/csv-report-incomes-in-time/${date}.html" />" class="btn btn-primary" type="button" >Download CSV</a>
 
+	
 	</div>
 <table class="table">
 	<thead>
@@ -28,12 +30,25 @@
 		<c:forEach items="${transactionsInTime}" var="entry">
 	<tr>
 	<td>
-	<b>${entry.key}</b> = ${entry.value}
+	<span class="pull-right">
+	
+
+
+
+	
+<b>${entry.key}</b> = <fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${entry.value}" type="currency"/>  </span> 
 	</td>
 	</tr>
 	</c:forEach>	
+	
+	
+	
 	</tbody>
 </table>
+
+
+
+
 
 </div>
 
@@ -67,4 +82,11 @@
       }
     </script>
   </head>
+  
+  
+  
+  
+  
+  
+
    

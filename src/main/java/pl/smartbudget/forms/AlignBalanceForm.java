@@ -3,7 +3,7 @@ package pl.smartbudget.forms;
 public class AlignBalanceForm {
 
 	private Integer id;
-	private String name;
+	private String memo;
 	private String type;
 	private double amount;
 	private String date;
@@ -17,12 +17,12 @@ public class AlignBalanceForm {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getMemo() {
+		return memo;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setMemo(String memo) {
+		this.memo = memo;
 	}
 
 	public String getType() {

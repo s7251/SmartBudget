@@ -8,7 +8,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import pl.smartbudget.entity.Account;
-import pl.smartbudget.entity.Category;
 import pl.smartbudget.entity.User;
 import pl.smartbudget.repository.AccountRepository;
 import pl.smartbudget.repository.UserRepository;
@@ -24,7 +23,7 @@ public class AccountService {
 
 	public List<Account> findAll() {
 		return accountRepository.findAll();
-
+		
 	}
 
 	public void save(Account account, String name) {

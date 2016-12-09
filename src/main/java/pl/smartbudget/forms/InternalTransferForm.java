@@ -3,7 +3,7 @@ package pl.smartbudget.forms;
 public class InternalTransferForm {
 
 	private Integer id;
-	private String name;
+	private String memo;
 	private String type;
 	private double amount;
 	private String date;
@@ -18,12 +18,12 @@ public class InternalTransferForm {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getMemo() {
+		return memo;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setName(String memo) {
+		this.memo = memo;
 	}
 
 	public String getType() {

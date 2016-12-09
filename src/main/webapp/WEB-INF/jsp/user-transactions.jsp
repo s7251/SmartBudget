@@ -31,8 +31,8 @@
 </nav>
 <c:if test="${not empty subcategoriesForecast}">
 <div class="alert alert-info alert-dismissible" role="alert">
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  <strong>Forecast for actual month (expenses by subcategory): </strong> <br><c:forEach items="${subcategoriesForecast}" var="subforecast">${subforecast.key}:<strong> ${subforecast.value}</strong><br></c:forEach>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Cancel"><span aria-hidden="true">&times;</span></button>
+  <strong>Forecast for actual month (expenses by subcategory): </strong> <br><c:forEach items="${subcategoriesForecast}" var="subforecast">${subforecast.key}: <strong><fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${subforecast.value}" type="currency"/> </strong><br></c:forEach>
 </div></c:if>
 <!-- <div class="alert alert-warning alert-dismissible" role="alert">
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -46,7 +46,7 @@
 
 	<div class="panel-body">
 		<a href="<spring:url value="" />" class="btn btn-primary" type="button" data-toggle="modal" data-target="#addTransactionModal">Add transaction</a>
-		
+		<a href="<spring:url value="" />" class="btn btn-primary" type="button" data-toggle="modal" data-target="#internalTransferModal">Internal Transfer</a>
 	</div>
 	
 
@@ -54,7 +54,7 @@
 	<table class="table">
 		<tr>
 			<td><b>Type</b></td>
-			<td><b>Name</b></td>
+			<td><b>Memo</b></td>
 			<td><b>Amount</b></td>
 			<td><b>Date</b></td>
 			<td><b>Subcategory</b></td>
@@ -88,8 +88,8 @@
     </c:when> 
 </c:choose>			
 				<td style="vertical-align: middle;">${userTransactions.type}</td>
-				<td style="vertical-align: middle;">${userTransactions.name}</td>
-				<td style="vertical-align: middle;">${userTransactions.amount}</td>
+				<td style="vertical-align: middle;">${userTransactions.memo}</td>
+				<td style="vertical-align: middle;"><fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${userTransactions.amount}" type="currency"/></td>
 				<td style="vertical-align: middle;">${userTransactions.date}</td>
 				<td style="vertical-align: middle;">${userTransactions.subcategory.name}</td>
 				<td style="vertical-align: middle;">${userTransactions.account.name}</td>
@@ -121,7 +121,7 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Cancel">
 						<span aria-hidden="true">&times;</span>
 					</button>
 					<h4 class="modal-title" id="myModalLabel">Edit transaction</h4>
@@ -129,7 +129,7 @@
 				<div class="modal-body">
 					<div class="form-group" style="text-align: left; width: 600px;">
 
-						<label for="name" class="col-sm-2 control-label">Type:</label>
+						<label for="memo" class="col-sm-2 control-label">Type:</label>
 						<div class="col-sm-10">
 						<form:radiobutton path="type" value="income" /> income
 					    <form:radiobutton path="type" value="expense" /> expense	    
@@ -138,9 +138,9 @@
 					</div>
 					<div class="form-group"
 						style="text-align: center; width: 600px; margin: 0 auto;">
-						<label for="name" class="col-sm-2 control-label">Name:</label>
+						<label for="memo" class="col-sm-2 control-label">Memo:</label>
 						<div class="col-sm-10">
-							<form:input path="name" cssClass="form-control" style="width: 350px" value="${userTransactions.name}" placeholder="${userTransactions.name}" autofocus="autofocus" />
+							<form:input path="memo" cssClass="form-control" style="width: 350px" value="${userTransactions.memo}" placeholder="${userTransactions.memo}" autofocus="autofocus" />
 						</div>
 					</div>
 
@@ -182,7 +182,7 @@
 
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 					<input type="submit" class="btn btn-success" value="Edit" />
 				</div>
 			</div>
@@ -196,7 +196,7 @@
 		<tr>
 		<td></td>
 		<td style="text-align: right;"><b>month summary:</b></td>
-		<td><b>${monthSummary}</b></td>
+		<td><b><fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${monthSummary}" type="currency"/> </b></td>
 		<td></td>
 		<td></td>
 		<td></td>
@@ -208,14 +208,14 @@
 </div>
 
 
-<form:form commandName="TransactionForm" cssClass="form-horizontal" >
+<form:form modelAttribute="TransactionForm" action="/user-transactions.html" cssClass="form-horizontal" id="form">
 	<!-- Modal -->
 	<div class="modal fade" id="addTransactionModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Cancel">
 						<span aria-hidden="true">&times;</span>
 					</button>
 					<h4 class="modal-title" id="myModalLabel">Add transaction</h4>
@@ -223,7 +223,7 @@
 				<div class="modal-body">
 					<div class="form-group" style="text-align: left; width: 600px;">
 
-						<label for="name" class="col-sm-2 control-label">Type:</label>
+						<label for="type" class="col-sm-2 control-label">Type:</label>
 						<div class="col-sm-10">
 						<form:radiobutton path="type" value="income" name="type" /> income
 					    <form:radiobutton path="type" value="expense" name="type" /> expense
@@ -231,9 +231,9 @@
 					</div>
 					<div class="form-group"
 						style="text-align: center; width: 600px; margin: 0 auto;">
-						<label for="name" class="col-sm-2 control-label">Name:</label>
+						<label for="memo" class="col-sm-2 control-label">Memo:</label>
 						<div class="col-sm-10">
-							<form:input path="name" cssClass="form-control" style="width: 350px" placeholder="Please type name of transaction"	autofocus="autofocus" />
+							<form:input path="memo" cssClass="form-control" style="width: 350px" placeholder="Please type memo of transaction"	autofocus="autofocus" />
 						</div>
 					</div>
 
@@ -272,7 +272,7 @@
 
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 					<input type="submit" class="btn btn-success" value="Add" />
 				</div>
 			</div>
@@ -280,9 +280,83 @@
 	</div>
 </form:form>
 
+<form:form mehod="post" modelAttribute="InternalTransferForm" action="/internalTransferFormTransactions.html" cssClass="form-horizontal" id="form">
+	<!-- Modal -->
+	<div class="modal fade" id="internalTransferModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Cancel">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Internal Transfer</h4>
+				</div>
+				<div class="modal-body">
+					
+					<div class="form-group"
+						style="text-align: center; width: 600px; margin: 0 auto;">
+						<label for="memo" class="col-sm-2 control-label">Memo:</label>
+						<div class="col-sm-10">
+							<form:input path="memo" cssClass="form-control" style="width: 350px" placeholder="Please type memo of transaction"	autofocus="autofocus" />
+						</div>
+					</div>
+
+					<div class="form-group"
+						style="text-align: center; width: 600px; margin: 0 auto;">
+						<label for="amount" class="col-sm-2 control-label">Amount:</label>
+						<div class="col-sm-10">
+							<form:input path="amount" cssClass="form-control" style="width: 350px" placeholder="Please type amount" autofocus="autofocus" />
+						</div>
+					</div>
+					<div class="form-group"	style="text-align: center; width: 600px; margin: 0 auto;">
+						<label for="date" class="col-sm-2 control-label">Date:</label>
+						<div class="col-sm-8">						
+						<div class="input-group input-append date">
+                <form:input type="text" class="form-control datePicker" placeholder="DD.MM.RRRR" path="date" />
+                <span class="input-group-addon add-on" ><span class="glyphicon glyphicon-calendar"></span></span>
+            </div>
+						</div>						
+						</div>									
+							<div class="form-group"	style="text-align: center; width: 600px; margin: 0 auto;">
+						<label for="fromAccount" class="col-sm-2 control-label">From:</label>
+						<div class="col-sm-10">
+						<form:select class="form-control" path="fromAccountId"  style="text-align: left; width: 350px;">
+									<form:options items="${accountsMap}" />							
+							</form:select>		
+						
+						</div>
+					</div>
+
+					<div class="form-group"	style="text-align: center; width: 600px; margin: 0 auto;">
+						<label for="toAccount" class="col-sm-2 control-label">To:</label>
+						<div class="col-sm-10">
+							<form:select class="form-control" path="toAccountId"  style="text-align: left; width: 350px;">																
+										<form:options items="${accountsMap}" />								
+							</form:select>
+						</div>
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<input type="submit" class="btn btn-success" value="Add" />
+				</div>
+			</div>
+		</div>
+	</div>
+</form:form>
 	
 <script>
 $(document).ready(function() {	
+	jQuery.validator.addMethod(
+		    "money",
+		    function(value, element) {
+		        var isValidMoney = /^\d{0,4}(\.\d{0,2})?$/.test(value);
+		        return this.optional(element) || isValidMoney;
+		    },
+		    "Please type amount in 0.00 format"
+		);
 	var startDate = new Date(${year},  ${month}-1, 1); 
 	var lastDate = new Date(${year}, ${month}, 0); 
     $('.datePicker')
@@ -297,14 +371,15 @@ $(document).ready(function() {
         		type: {
 					required : true,								
 				},
-				name: {
+				memo: {
 					required : true,
 					minlength : 4,				
 				},
 				amount: {
 					required : true,
-					number: true,
-					min: 0.01
+ 					number: true,
+					min: 0.01,					
+					money: true
 				},
 				date: {
 					required : true,					
@@ -316,7 +391,10 @@ $(document).ready(function() {
 			unhighlight: function(element) {
 				$(element).closest('.form-group').removeClass('has-error').addClass('has-success');
 			},		
-			messages: {
+			messages: {		
+				amount: {
+					number: "Please type amount in 0.00 format"				     
+				 },			
 				type: {
 					 required: ""				     
 				 },

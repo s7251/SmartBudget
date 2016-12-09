@@ -8,10 +8,12 @@
 		<div class="panel-heading"><h1 class="panel-title">Incomes by subcategories  </h1></div>
 		<div class="panel-body" >
 <a href="<spring:url value="/user-reports.html" />" class="btn btn-primary" type="button" >Back</a>
+<a href="<spring:url value="/csv-report-incomes-by-subcategories/${date}.html" />" class="btn btn-primary" type="button" >Download CSV</a>
 <span class="pull-right">
  <c:forEach items="${summaryOfAllAccounts}" var="entry">
-         ${entry.key}: <b>${entry.value}</b> <br>
-           </c:forEach>
+         ${entry.key}: <b><fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${entry.value}" type="currency"/> </b> <br>
+           </c:forEach>-<br>
+          <b>Summary of incomes: <fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${summary}" type="currency"/></b>
           </span>
 	</div>
 <table class="table">

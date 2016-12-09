@@ -141,7 +141,7 @@ public class DbService {
 		transaction1.setSubcategory(subcategorySample1);
 		transaction1.setAccount(account1);
 		transaction1.setType("income");
-		transaction1.setName("monthly salary");
+		transaction1.setMemo("monthly salary");
 		Calendar transaction1Cal = Calendar.getInstance();
 		transaction1Cal.add(Calendar.MONTH, -11); //12.2015
 		Date transaction1Date = transaction1Cal.getTime();
@@ -153,7 +153,7 @@ public class DbService {
 		transaction2.setSubcategory(subcategorySample3);
 		transaction2.setAccount(account1);
 		transaction2.setType("expense");
-		transaction2.setName("shopping in supermarket");
+		transaction2.setMemo("shopping in supermarket");
 		Calendar transaction2Cal = Calendar.getInstance();
 		transaction2Cal.add(Calendar.MONTH, -11); //12.2015
 		Date transaction2Date = transaction2Cal.getTime();
@@ -165,7 +165,7 @@ public class DbService {
 		transaction3.setSubcategory(subcategorySample1);
 		transaction3.setAccount(account1);
 		transaction3.setType("income");
-		transaction3.setName("monthly salary");
+		transaction3.setMemo("monthly salary");
 		Calendar transaction3Cal = Calendar.getInstance();
 		transaction3Cal.add(Calendar.MONTH, -10); //01.2015
 		Date transaction3Date = transaction3Cal.getTime();
@@ -177,7 +177,7 @@ public class DbService {
 		transaction4.setSubcategory(subcategorySample3);
 		transaction4.setAccount(account1);
 		transaction4.setType("expense");
-		transaction4.setName("shopping in supermarket");
+		transaction4.setMemo("shopping in supermarket");
 		Calendar transaction4Cal = Calendar.getInstance();
 		transaction4Cal.add(Calendar.MONTH, -10); //01.2015
 		Date transaction4Date = transaction4Cal.getTime();
@@ -189,7 +189,7 @@ public class DbService {
 		transaction5.setSubcategory(subcategorySample1);
 		transaction5.setAccount(account1);
 		transaction5.setType("income");
-		transaction5.setName("monthly salary");
+		transaction5.setMemo("monthly salary");
 		Calendar transaction5Cal = Calendar.getInstance();
 		transaction5Cal.add(Calendar.MONTH, -9); //02.2015
 		Date transaction5Date = transaction5Cal.getTime();
@@ -201,7 +201,7 @@ public class DbService {
 		transaction6.setSubcategory(subcategorySample3);
 		transaction6.setAccount(account1);
 		transaction6.setType("expense");
-		transaction6.setName("shopping in supermarket");
+		transaction6.setMemo("shopping in supermarket");
 		Calendar transaction6Cal = Calendar.getInstance();
 		transaction6Cal.add(Calendar.MONTH, -9); //02.2015
 		Date transaction6Date = transaction6Cal.getTime();
@@ -213,7 +213,7 @@ public class DbService {
 		transaction7.setSubcategory(subcategorySample1);
 		transaction7.setAccount(account1);
 		transaction7.setType("income");
-		transaction7.setName("monthly salary");
+		transaction7.setMemo("monthly salary");
 		Calendar transaction7Cal = Calendar.getInstance();
 		transaction7Cal.add(Calendar.MONTH, -8); //03.2016
 		Date transaction7Date = transaction7Cal.getTime();
@@ -225,7 +225,7 @@ public class DbService {
 		transaction8.setSubcategory(subcategorySample3);
 		transaction8.setAccount(account1);
 		transaction8.setType("expense");
-		transaction8.setName("shopping in supermarket");
+		transaction8.setMemo("shopping in supermarket");
 		Calendar transaction8Cal = Calendar.getInstance();
 		transaction8Cal.add(Calendar.MONTH, -8); //03.2016
 		Date transaction8Date = transaction8Cal.getTime();
@@ -237,7 +237,7 @@ public class DbService {
 		transaction9.setSubcategory(subcategorySample1);
 		transaction9.setAccount(account1);
 		transaction9.setType("income");
-		transaction9.setName("monthly salary");
+		transaction9.setMemo("monthly salary");
 		Calendar transaction9Cal = Calendar.getInstance();
 		transaction9Cal.add(Calendar.MONTH, -7); //04.2016
 		Date transaction9Date = transaction9Cal.getTime();
@@ -249,7 +249,7 @@ public class DbService {
 		transaction10.setSubcategory(subcategorySample3);
 		transaction10.setAccount(account1);
 		transaction10.setType("expense");
-		transaction10.setName("shopping in supermarket");
+		transaction10.setMemo("shopping in supermarket");
 		Calendar transaction10Cal = Calendar.getInstance();
 		transaction10Cal.add(Calendar.MONTH, -7); //04.2016
 		Date transaction10Date = transaction10Cal.getTime();
@@ -261,7 +261,7 @@ public class DbService {
 		transaction11.setSubcategory(subcategorySample1);
 		transaction11.setAccount(account1);
 		transaction11.setType("income");
-		transaction11.setName("monthly salary");
+		transaction11.setMemo("monthly salary");
 		Calendar transaction11Cal = Calendar.getInstance();
 		transaction11Cal.add(Calendar.MONTH, -6); //05.2016
 		Date transaction11Date = transaction11Cal.getTime();
@@ -273,7 +273,7 @@ public class DbService {
 		transaction12.setSubcategory(subcategorySample3);
 		transaction12.setAccount(account1);
 		transaction12.setType("expense");
-		transaction12.setName("shopping in supermarket");
+		transaction12.setMemo("shopping in supermarket");
 		Calendar transaction12Cal = Calendar.getInstance();
 		transaction12Cal.add(Calendar.MONTH, -6); //05.2016
 		Date transaction12Date = transaction12Cal.getTime();
@@ -285,7 +285,7 @@ public class DbService {
 		transaction13.setSubcategory(subcategorySample1);
 		transaction13.setAccount(account1);
 		transaction13.setType("income");
-		transaction13.setName("monthly salary");
+		transaction13.setMemo("monthly salary");
 		Calendar transaction13Cal = Calendar.getInstance();
 		transaction13Cal.add(Calendar.MONTH, -5); //06.2016
 		Date transaction13Date = transaction13Cal.getTime();
@@ -297,7 +297,7 @@ public class DbService {
 		transaction14.setSubcategory(subcategorySample3);
 		transaction14.setAccount(account1);
 		transaction14.setType("expense");
-		transaction14.setName("shopping in supermarket");
+		transaction14.setMemo("shopping in supermarket");
 		Calendar transaction14Cal = Calendar.getInstance();
 		transaction14Cal.add(Calendar.MONTH, -5); //06.2016
 		Date transaction14Date = transaction14Cal.getTime();
@@ -309,7 +309,7 @@ public class DbService {
 		transaction15.setSubcategory(subcategorySample1);
 		transaction15.setAccount(account1);
 		transaction15.setType("income");
-		transaction15.setName("monthly salary");
+		transaction15.setMemo("monthly salary");
 		Calendar transaction15Cal = Calendar.getInstance();
 		transaction15Cal.add(Calendar.MONTH, -4); //07.2016
 		Date transaction15Date = transaction15Cal.getTime();
@@ -321,7 +321,7 @@ public class DbService {
 		transaction16.setSubcategory(subcategorySample3);
 		transaction16.setAccount(account1);
 		transaction16.setType("expense");
-		transaction16.setName("shopping in supermarket");
+		transaction16.setMemo("shopping in supermarket");
 		Calendar transaction16Cal = Calendar.getInstance();
 		transaction16Cal.add(Calendar.MONTH, -4); //07.2016
 		Date transaction16Date = transaction16Cal.getTime();
@@ -333,7 +333,7 @@ public class DbService {
 		transaction19.setSubcategory(subcategorySample1);
 		transaction19.setAccount(account1);
 		transaction19.setType("income");
-		transaction19.setName("monthly salary");
+		transaction19.setMemo("monthly salary");
 		Calendar transaction19Cal = Calendar.getInstance();
 		transaction19Cal.add(Calendar.MONTH, -3); //08.2016
 		Date transaction19Date = transaction19Cal.getTime();
@@ -345,7 +345,7 @@ public class DbService {
 		transaction20.setSubcategory(subcategorySample3);
 		transaction20.setAccount(account1);
 		transaction20.setType("expense");
-		transaction20.setName("shopping in supermarket");
+		transaction20.setMemo("shopping in supermarket");
 		Calendar transaction20Cal = Calendar.getInstance();
 		transaction20Cal.add(Calendar.MONTH, -3); //08.2016
 		Date transaction20Date = transaction20Cal.getTime();
@@ -357,7 +357,7 @@ public class DbService {
 		transaction21.setSubcategory(subcategorySample1);
 		transaction21.setAccount(account1);
 		transaction21.setType("income");
-		transaction21.setName("monthly salary");
+		transaction21.setMemo("monthly salary");
 		Calendar transaction21Cal = Calendar.getInstance();
 		transaction21Cal.add(Calendar.MONTH, -2); //09.2016
 		Date transaction21Date = transaction21Cal.getTime();
@@ -369,7 +369,7 @@ public class DbService {
 		transaction22.setSubcategory(subcategorySample1);
 		transaction22.setAccount(account1);
 		transaction22.setType("income");
-		transaction22.setName("monthly salary");
+		transaction22.setMemo("monthly salary");
 		Calendar transaction22Cal = Calendar.getInstance();
 		transaction22Cal.add(Calendar.MONTH, -2); //09.2016
 		Date transaction22Date = transaction22Cal.getTime();
@@ -381,7 +381,7 @@ public class DbService {
 		transaction23.setSubcategory(subcategorySample3);
 		transaction23.setAccount(account1);
 		transaction23.setType("expense");
-		transaction23.setName("shopping in supermarket");
+		transaction23.setMemo("shopping in supermarket");
 		Calendar transaction23Cal = Calendar.getInstance();
 		transaction23Cal.add(Calendar.MONTH, -2); //09.2016
 		Date transaction23Date = transaction23Cal.getTime();
@@ -393,7 +393,7 @@ public class DbService {
 		transaction25.setSubcategory(subcategorySample4);
 		transaction25.setAccount(account1);
 		transaction25.setType("expense");
-		transaction25.setName("dinner in restaurant");
+		transaction25.setMemo("dinner in restaurant");
 		Calendar transaction25Cal = Calendar.getInstance();
 		transaction25Cal.add(Calendar.MONTH, -2); //09.2016
 		Date transaction25Date = transaction25Cal.getTime();
@@ -405,7 +405,7 @@ public class DbService {
 		transaction34.setSubcategory(subcategorySample5);
 		transaction34.setAccount(account1);
 		transaction34.setType("expense");
-		transaction34.setName("haircut");
+		transaction34.setMemo("haircut");
 		Calendar transaction34Cal = Calendar.getInstance();
 		transaction34Cal.add(Calendar.MONTH, -2); //09.2016
 		Date transaction34Date = transaction34Cal.getTime();
@@ -417,7 +417,7 @@ public class DbService {
 		transaction24.setSubcategory(subcategorySample1);
 		transaction24.setAccount(account1);
 		transaction24.setType("income");
-		transaction24.setName("monthly salary");
+		transaction24.setMemo("monthly salary");
 		Calendar transaction24Cal = Calendar.getInstance();
 		transaction24Cal.add(Calendar.MONTH, -1); //10.2016
 		Date transaction24Date = transaction10Cal.getTime();
@@ -429,7 +429,7 @@ public class DbService {
 		transaction26.setSubcategory(subcategorySample4);
 		transaction26.setAccount(account1);
 		transaction26.setType("expense");
-		transaction26.setName("dinner in restaurant");
+		transaction26.setMemo("dinner in restaurant");
 		Calendar transaction26Cal = Calendar.getInstance();
 		transaction26Cal.add(Calendar.MONTH, -1); //10.2016
 		Date transaction26Date = transaction26Cal.getTime();
@@ -441,7 +441,7 @@ public class DbService {
 		transaction27.setSubcategory(subcategorySample4);
 		transaction27.setAccount(account1);
 		transaction27.setType("expense");
-		transaction27.setName("dinner in restaurant");
+		transaction27.setMemo("dinner in restaurant");
 		Calendar transaction27Cal = Calendar.getInstance();
 		transaction27Cal.add(Calendar.MONTH, -1); //10.2016
 		Date transaction27Date = transaction27Cal.getTime();
@@ -453,7 +453,7 @@ public class DbService {
 		transaction35.setSubcategory(subcategorySample5);
 		transaction35.setAccount(account1);
 		transaction35.setType("expense");
-		transaction35.setName("haircut");
+		transaction35.setMemo("haircut");
 		Calendar transaction35Cal = Calendar.getInstance();
 		transaction35Cal.add(Calendar.MONTH, -1); //10.2016
 		Date transaction35Date = transaction35Cal.getTime();
@@ -465,7 +465,7 @@ public class DbService {
 		transaction28.setSubcategory(subcategorySample1);
 		transaction28.setAccount(account1);
 		transaction28.setType("income");
-		transaction28.setName("monthly salary");
+		transaction28.setMemo("monthly salary");
 		transaction28.setDate(new Date());
 		transaction28.setAmount(3600.00);
 		transactionRepository.save(transaction28);
@@ -474,7 +474,7 @@ public class DbService {
 		transaction29.setSubcategory(subcategorySample3);
 		transaction29.setAccount(account2);
 		transaction29.setType("expense");
-		transaction29.setName("shopping in supermarket");
+		transaction29.setMemo("shopping in supermarket");
 		transaction29.setDate(new Date());
 		transaction29.setAmount(89.00);
 		transactionRepository.save(transaction29);
@@ -483,7 +483,7 @@ public class DbService {
 		transaction30.setSubcategory(subcategorySample4);
 		transaction30.setAccount(account1);
 		transaction30.setType("expense");
-		transaction30.setName("dinner in restaurant");
+		transaction30.setMemo("dinner in restaurant");
 		transaction30.setDate(new Date());
 		transaction30.setAmount(237.00);
 		transactionRepository.save(transaction30);
@@ -492,7 +492,7 @@ public class DbService {
 		transaction31.setSubcategory(subcategorySample5);
 		transaction31.setAccount(account1);
 		transaction31.setType("expense");
-		transaction31.setName("haircut");
+		transaction31.setMemo("haircut");
 		transaction31.setDate(new Date());
 		transaction31.setAmount(25.00);
 		transactionRepository.save(transaction31);
@@ -501,7 +501,7 @@ public class DbService {
 		transaction32.setSubcategory(subcategorySample6);
 		transaction32.setAccount(account1);
 		transaction32.setType("income");
-		transaction32.setName("bank deposit (6months)");
+		transaction32.setMemo("bank deposit (6months)");
 		transaction32.setDate(new Date());
 		transaction32.setAmount(77.00);
 		transactionRepository.save(transaction32);
@@ -510,7 +510,7 @@ public class DbService {
 		transaction33.setSubcategory(subcategorySample1);
 		transaction33.setAccount(account2);
 		transaction33.setType("income");
-		transaction33.setName("bonus");
+		transaction33.setMemo("bonus");
 		transaction33.setDate(new Date());
 		transaction33.setAmount(300.00);
 		transactionRepository.save(transaction33);
@@ -553,7 +553,7 @@ public class DbService {
 		transaction100.setSubcategory(subcategorySample10);
 		transaction100.setAccount(account3);
 		transaction100.setType("income");
-		transaction100.setName("tax refund");
+		transaction100.setMemo("tax refund");
 		transaction100.setDate(new Date());
 		transaction100.setAmount(999.00);		
 		transactionRepository.save(transaction100);

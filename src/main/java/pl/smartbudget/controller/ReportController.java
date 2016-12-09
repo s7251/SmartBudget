@@ -1,6 +1,9 @@
 package pl.smartbudget.controller;
 
+import java.io.IOException;
 import java.security.Principal;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import pl.smartbudget.forms.ReportForm;
+import pl.smartbudget.service.ReportService;
 import pl.smartbudget.service.TransactionService;
 import pl.smartbudget.service.UserService;
 
@@ -19,6 +23,9 @@ public class ReportController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private ReportService reportService;
 	
 	@Autowired
 	private TransactionService transactionService;
@@ -36,7 +43,8 @@ public class ReportController {
 		String name = principal.getName();
 		model.addAttribute("date", date);
 		model.addAttribute("user", userService.findOneWithCategoriesAndSubcategories(name));
-		model.addAttribute("summaryOfAllAccounts", transactionService.getMapOfSubcategoriesWithIncomesByDate(name, date));			
+		model.addAttribute("summaryOfAllAccounts", transactionService.getMapOfSubcategoriesWithIncomesByDate(name, date));		
+		model.addAttribute("summary", transactionService.getSummaryOfIncomesBySubcategoriesAndDate(name, date));	
 		return "report-incomes-by-categories";
 	}
 	
@@ -51,7 +59,8 @@ public class ReportController {
 		String name = principal.getName();
 		model.addAttribute("user", userService.findOneWithCategoriesAndSubcategories(name));
 		model.addAttribute("date", date);
-		model.addAttribute("summaryOfAllAccounts", transactionService.getMapOfSubcategoriesWithExpensesByDate(name, date));			
+		model.addAttribute("summaryOfAllAccounts", transactionService.getMapOfSubcategoriesWithExpensesByDate(name, date));	
+		model.addAttribute("summary", transactionService.getSummaryOfExpensesBySubcategoriesAndDate(name, date));		
 		return "report-expenses-by-categories";
 	}
 	
@@ -91,4 +100,31 @@ public class ReportController {
     	return "redirect:/report-expenses-in-time/"+date+".html";				
 	}
 	
+	@RequestMapping(value = "/csv-report-incomes-in-time/{date}")
+	public void downloadCsvReportIncomesInTime(HttpServletResponse response, Principal principal, @PathVariable String date)
+			throws IOException {
+		String name = principal.getName();
+		reportService.downloadCsvReportIncomesInTime(name, date, response);
+	}
+	
+	@RequestMapping(value = "/csv-report-expenses-in-time/{date}")
+	public void downloadCsvReportExpensesInTime(HttpServletResponse response, Principal principal, @PathVariable String date)
+			throws IOException {
+		String name = principal.getName();
+		reportService.downloadCsvReportExpensesInTime(name, date, response);
+	}
+	
+	@RequestMapping(value = "/csv-report-expenses-by-subcategories/{date}")
+	public void downloadCsvReportExpensesBySubcategories(HttpServletResponse response, Principal principal, @PathVariable String date)
+			throws IOException {
+		String name = principal.getName();
+		reportService.downloadCsvReportExpensesBySubcategories(name, date, response);
+	}
+	
+	@RequestMapping(value = "/csv-report-incomes-by-subcategories/{date}")
+	public void downloadCsvReportIncomesBySubcategories(HttpServletResponse response, Principal principal, @PathVariable String date)
+			throws IOException {
+		String name = principal.getName();
+		reportService.downloadCsvReportIncomesBySubcategories(name, date, response);
+	}
 }

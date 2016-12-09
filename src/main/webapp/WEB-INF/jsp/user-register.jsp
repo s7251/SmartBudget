@@ -65,15 +65,15 @@ $(document).ready(function() {
 				email: {
 					required : true,
 					email: true,
-					remote : {
-						url: "<spring:url value='/email-available.html' />",
-						type: "get",
-						data: {
-							name: function() {
-								return $("#email").val();
-							}
-						}
-					}
+// 					remote : {
+// 						url: "<spring:url value='/email-available.html' />",
+// 						type: "get",
+// 						data: {
+// 							name: function() {
+// 								return $("#email").val();
+// 							}
+// 						}
+// 					}
 				},
 				password: {
 					required : true,

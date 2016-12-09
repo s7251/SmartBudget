@@ -92,5 +92,11 @@ public class UserController {
 		Boolean emailAvailable = userService.findOneByEmail(email) == null;
 		return emailAvailable.toString();
 	}
+	
+	@RequestMapping(value = "/change-password", method = RequestMethod.POST)
+	public String changePassword(@ModelAttribute("user") User user) {
+		userService.update(user);
+		return "redirect:/user-profile.html";
+		}
 
 }
