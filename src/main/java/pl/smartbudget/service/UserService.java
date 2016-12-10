@@ -119,15 +119,28 @@ public class UserService {
 	}
 	
 	
-	public void update(User user) {
-		//user.setEnabled(true);
+	public void changePassword(User user) {		
 		BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
 		user.setPassword(bcrypt.encode(user.getPassword()));
 
 		List<Role> userRoles = new ArrayList<Role>();
-		userRoles.add(roleRepository.findByName("ROLE_USER"));
-		user.setRoles(userRoles);
-		
+		if(user.getName().equals("admin")){
+			userRoles.add(roleRepository.findByName("ROLE_ADMIN"));		
+		}	
+			userRoles.add(roleRepository.findByName("ROLE_USER"));
+			user.setRoles(userRoles);	
+				
+		userRepository.save(user);
+	}
+	
+	public void changeEmail(User user) {	
+		user.setEmail(user.getEmail());
+		List<Role> userRoles = new ArrayList<Role>();
+		if(user.getName().equals("admin")){
+			userRoles.add(roleRepository.findByName("ROLE_ADMIN"));				
+		}	
+			userRoles.add(roleRepository.findByName("ROLE_USER"));
+			user.setRoles(userRoles);			
 		userRepository.save(user);
 	}
 	

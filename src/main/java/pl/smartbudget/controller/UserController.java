@@ -95,8 +95,13 @@ public class UserController {
 	
 	@RequestMapping(value = "/change-password", method = RequestMethod.POST)
 	public String changePassword(@ModelAttribute("user") User user) {
-		userService.update(user);
+		userService.changePassword(user);
 		return "redirect:/user-profile.html";
 		}
 
+	@RequestMapping(value = "/change-email", method = RequestMethod.POST)
+	public String changeEmail(@ModelAttribute("user") User user) {
+		userService.changeEmail(user);
+		return "redirect:/user-profile.html";
+		}
 }

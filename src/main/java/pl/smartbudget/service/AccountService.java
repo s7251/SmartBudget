@@ -35,11 +35,7 @@ public class AccountService {
 
 	@PreAuthorize("#account.user.name == authentication.name")
 	public void delete(@P("account") Account account, String name) {
-		User user = userRepository.findByName(name);
-		List<Account> accounts = accountRepository.findByUser(user);
-		//if (accounts.size() > 1) {
-		accountRepository.delete(account);
-		//}
+		accountRepository.delete(account);		
 	}
 
 	public String findById(int id) {

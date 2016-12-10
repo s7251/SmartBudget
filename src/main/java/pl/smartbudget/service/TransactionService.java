@@ -1,6 +1,5 @@
 package pl.smartbudget.service;
 
-import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -285,7 +284,7 @@ public class TransactionService {
 	
 		
 	
-	public ArrayList<Double> accountSummaryForecasting(Map<String, Double> summaryOfAccounts){
+	public ArrayList<Double> accountBalanceForecasting(Map<String, Double> summaryOfAccounts){
 		System.out.print(summaryOfAccounts);
 		ArrayList<Double> listOfPredictedData = new ArrayList<Double>();
 		try {			 
@@ -441,7 +440,7 @@ if(transactions.isEmpty() == false){
 		Calendar lastDateforForecast = Calendar.getInstance();
 		lastDateforForecast = lastDate;
 		ArrayList<Double> listOfPredictedData = new ArrayList<Double>();
-		listOfPredictedData = accountSummaryForecasting(summaryOfAccounts);
+		listOfPredictedData = accountBalanceForecasting(summaryOfAccounts);
 		for (Double forecastEntry : listOfPredictedData) {
 			lastDateforForecast.add(Calendar.MONTH, 1);
 			String lastDateforForecastEntry = String.valueOf(lastDateforForecast.get(Calendar.YEAR)) + "-"

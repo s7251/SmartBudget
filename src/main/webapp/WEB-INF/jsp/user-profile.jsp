@@ -9,6 +9,7 @@
 	<div class="panel-body">			
 			<c:if test="${(user.name != 'admin' )}"><a href="<spring:url value="/user-profile/removeprofile/${user.id}.html" />" class="btn btn-danger" type="button">Remove account</a></c:if> 
 			<a href="<spring:url value="" />" class="btn btn-warning" type="button" data-toggle="modal" data-target="#changePasswordModal">Change password</a>		
+			<a href="<spring:url value="" />" class="btn btn-warning" type="button" data-toggle="modal" data-target="#changeEmailModal">Change e-mail</a>	
 	</div>
 	
 <table class="table">
@@ -30,7 +31,7 @@
 </div>
 
 
-<form:form mehod="post" modelAttribute="user" action="/change-password.html" cssClass="form-horizontal changePasswordForm">
+<form:form mehod="post" modelAttribute="user" action="/change-password.html" cssClass="form-horizontal form">
 <form:hidden path="id" value="${user.id}" />
 <form:hidden path="name" value="${user.name}" />
 <form:hidden path="email" value="${user.email}" />
@@ -73,12 +74,50 @@
 	</div>
 </form:form>
 
-<script type="text/javascript">
-$(document).ready(function() {
-	
-	$(".changePasswordForm").validate(
-		{
-			rules: {						
+<form:form mehod="post" modelAttribute="user" action="/change-email.html" cssClass="form-horizontal form">
+<form:hidden path="id" value="${user.id}" />
+<form:hidden path="name" value="${user.name}" />
+<form:hidden path="password" value="${user.password}" />
+<form:hidden path="enabled" value="1" />
+	<!-- Modal	 -->
+	<div class="modal fade" id="changeEmailModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Cancel">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Change your e-mail:</h4>
+				</div>
+				<div class="modal-body">
+									
+				<div class="form-group"
+						style="text-align: center; width: 600px; margin: 0 auto;">
+						<label for="email" class="col-sm-2 control-label">E-mail:</label>
+						<div class="col-sm-10">
+							<form:input path="email" cssClass="form-control" style="width: 350px" placeholder="Please type your new e-mail"	autofocus="autofocus" />
+						</div>
+					</div>
+										
+    		</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<input type="submit" class="btn btn-success" value="Change Password" />
+				</div>
+			</div>
+		</div>
+	</div>
+</form:form>
+ <script>
+$(document).ready(function() {   
+    $('form').each(function() {  
+        $(this).validate({       
+        	rules: {							
+				email: {
+					required : true,
+					email: true,
+				},
 				password: {
 					required : true,
 					minlength : 4,
@@ -88,15 +127,18 @@ $(document).ready(function() {
 					minlength : 4,
 					equalTo: "#password"
 				},
-			},
+			},				
 			highlight: function(element) {
 				$(element).closest('.form-group').removeClass('has-success').addClass('has-error');
 			},
 			unhighlight: function(element) {
 				$(element).closest('.form-group').removeClass('has-error').addClass('has-success');
-			},		
-		
-		}
-	);
+			}	
+			
+        });
+    });
+
 });
 </script>
+
+    
