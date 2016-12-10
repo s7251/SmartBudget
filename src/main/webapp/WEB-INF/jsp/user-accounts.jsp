@@ -37,7 +37,7 @@
 		<c:forEach items="${summaryOfAccounts}" var="summary">		
 			<tr>
 				<td style="text-align: center; vertical-align: middle;">${summary.value.name}</td>
-				<td style="text-align: center; vertical-align: middle;"><fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${summary.value.summaryOfAccount}" type="currency"/> </td>
+				<td style="text-align: center; vertical-align: middle;"><fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${summary.value.summaryOfAccount}" type="currency" currencySymbol="zł" pattern=" #,##0.00 ¤; -#,##0.00 ¤"/> </td>
 				<td style="text-align: center; vertical-align: middle;">		     
 			<a href='<spring:url value="/account-forecast/${summary.value.id}.html"/>'><span style="font-size:2em;" class="glyphicon glyphicon-stats"></span> </a>
 				</td>
@@ -155,8 +155,8 @@
 		</tr>
 			<tr>
 			<td style="text-align: center; vertical-align: middle;"><b></b></td>
- 			<td style="text-align: center; vertical-align: middle;"><b><fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${summaryOfAllAccounts}" type="currency"/> </b></td> 
-			<td style="text-align: center; vertical-align: middle;"><b></b></td>
+ 			<td style="text-align: center; vertical-align: middle;"><b><fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${summaryOfAllAccounts}" type="currency" currencySymbol="zł" pattern=" #,##0.00 ¤; -#,##0.00 ¤"/> </b></td> 
+			<td style="text-align: center; vertical-align: middle;">	<a href='<spring:url value="/account-forecast/0.html"/>'><span style="font-size:2em;" class="glyphicon glyphicon-stats"></span> </a></td>
 		    <td style="text-align: center; vertical-align: middle;"><b></b></td>
 			<td style="text-align: center; vertical-align: middle;"><b></b></td>
 			<td style="text-align: center; vertical-align: middle;"><b></b></td>
@@ -271,12 +271,12 @@
 <script>
 $(document).ready(function() {
 	jQuery.validator.addMethod(
-		    "money",
+			"money",
 		    function(value, element) {
-		        var isValidMoney = /^\d{0,4}(\.\d{0,2})?$/.test(value);
+		        var isValidMoney = /^\d{0,6}(\.\d{0,2})?$/.test(value);
 		        return this.optional(element) || isValidMoney;
 		    },
-		    "Please type amount in 0.00 format"
+		    "Please type amount in 0.00 format (max 999999.99)"
 		);
     $('.datePicker')
         .datepicker({

@@ -83,7 +83,7 @@ public class AccountController {
 	public String detail(Model model, Principal principal, @PathVariable int id) {
 		String name = principal.getName();
 		model.addAttribute("user", userService.findOneWithAccounts(name));
-		model.addAttribute("accountName", accountService.findById(id));
+		model.addAttribute("accountName", accountService.getForecastAccount(id));
 		model.addAttribute("forecastDataByAccount", transactionService.forecastByAccount(id, name));
 		return "account-forecast";
 	}

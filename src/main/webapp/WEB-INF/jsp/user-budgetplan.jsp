@@ -52,7 +52,7 @@
 				<td style="text-align: left; vertical-align: middle;">- ${subcategory.name}</td>							
 				<td style=" text-align: center; vertical-align: middle;">
 				<c:forEach items="${subcategory.subcategoryLimits}" var="subcategorylimits">
-				<fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${subcategorylimits.amount}	" type="currency"/> 
+				<fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${subcategorylimits.amount}" type="currency" currencySymbol="zł" pattern=" #,##0.00 ¤; -#,##0.00 ¤"/> 
 								
 				<form:form mehod="post" modelAttribute="subcategorylimit" action="/changeSubcategoryLimit.html" cssClass="form-horizontal" id="form">		
 		<form:hidden path="subcategoryId" value="${subcategory.id}" />
@@ -94,7 +94,7 @@
 				</td>					
 				<td style="text-align: center; vertical-align: middle;">
 				<c:forEach items="${subcategory.subcategoryLimits}" var="subcategorylimits">
-				<fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${subcategorylimits.summaryOfSpentMoney}" type="currency"/> 
+				<fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${subcategorylimits.summaryOfSpentMoney}" type="currency" currencySymbol="zł" pattern=" #,##0.00 ¤; -#,##0.00 ¤"/> 
 				
 			
 				
@@ -157,12 +157,12 @@
 		<script type="text/javascript">
 $(document).ready(function() {
 	jQuery.validator.addMethod(
-		    "money",
+			"money",
 		    function(value, element) {
-		        var isValidMoney = /^\d{0,4}(\.\d{0,2})?$/.test(value);
+		        var isValidMoney = /^\d{0,6}(\.\d{0,2})?$/.test(value);
 		        return this.optional(element) || isValidMoney;
 		    },
-		    "Please type amount in 0.00 format"
+		    "Please type amount in 0.00 format (max 999999.99)"
 		);
     $('form').each(function() {  
         $(this).validate({       

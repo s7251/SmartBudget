@@ -36,7 +36,7 @@
 
 
 	
-<b>${entry.key}</b> = <fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${entry.value}" type="currency"/>  </span> 
+<b>${entry.key}</b> = <fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${entry.value}" type="currency" currencySymbol="zł" pattern=" #,##0.00 ¤; -#,##0.00 ¤"/>  </span> 
 	</td>
 	</tr>
 	</c:forEach>	
@@ -58,31 +58,42 @@
     <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawChart);
-
+      
       function drawChart() {
-        var data = google.visualization.arrayToDataTable([
+        var data = google.visualization.arrayToDataTable([       
           ['Date', 'Month Summary'],
           <c:forEach items="${transactionsInTime}" var="entry">
           ['${entry.key}',   ${entry.value}],
            </c:forEach>    
-          
-        ]);
-
+          ]);
+   
         var options = {
-          colors: ['blue'],
+          colors: ['green'],
           title: 'Income transactions summary in time',
           hAxis: {title: 'Months in ${date}' ,  titleTextStyle: {color: '#333'}},
-          vAxis: {minValue: 0},
+          vAxis: {minValue: 0, format:'###,###,### zł'},
           legend: 'none',
-         
+          allowHtml:true,
         };
-        
+        var formatter = new google.visualization.NumberFormat({decimalSymbol: ',',groupingSymbol: '.', negativeColor: 'red', negativeParens: true, suffix: ' zł '});
+        formatter.format(data, 1);
         var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+        
+        
+        function selectHandler() {
+            var selectedItem = chart.getSelection()[0];
+            if (selectedItem) {
+              var topping = data.getValue(selectedItem.row, 0);
+               window.location.href= 'http://localhost:8080/user-transactions/' +topping+'.html';
+            }
+          }
+
+          google.visualization.events.addListener(chart, 'select', selectHandler);  
         chart.draw(data, options);
       }
     </script>
   </head>
-  
+   
   
   
   

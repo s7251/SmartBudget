@@ -32,7 +32,7 @@
 <c:if test="${not empty subcategoriesForecast}">
 <div class="alert alert-info alert-dismissible" role="alert">
   <button type="button" class="close" data-dismiss="alert" aria-label="Cancel"><span aria-hidden="true">&times;</span></button>
-  <strong>Forecast for actual month (expenses by subcategory): </strong> <br><c:forEach items="${subcategoriesForecast}" var="subforecast">${subforecast.key}: <strong><fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${subforecast.value}" type="currency"/> </strong><br></c:forEach>
+  <strong>Forecast for actual month (expenses by subcategory): </strong> <br><c:forEach items="${subcategoriesForecast}" var="subforecast">${subforecast.key}: <strong><fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${subforecast.value}" type="currency" currencySymbol="zł" pattern=" #,##0.00 ¤; -#,##0.00 ¤"/> </strong><br></c:forEach>
 </div></c:if>
 <!-- <div class="alert alert-warning alert-dismissible" role="alert">
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -89,7 +89,7 @@
 </c:choose>			
 				<td style="vertical-align: middle;">${userTransactions.type}</td>
 				<td style="vertical-align: middle;">${userTransactions.memo}</td>
-				<td style="vertical-align: middle;"><fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${userTransactions.amount}" type="currency"/></td>
+				<td style="vertical-align: middle;"><fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${userTransactions.amount}" type="currency" currencySymbol="zł" pattern=" #,##0.00 ¤; -#,##0.00 ¤"/></td>
 				<td style="vertical-align: middle;">${userTransactions.date}</td>
 				<td style="vertical-align: middle;">${userTransactions.subcategory.name}</td>
 				<td style="vertical-align: middle;">${userTransactions.account.name}</td>
@@ -196,7 +196,7 @@
 		<tr>
 		<td></td>
 		<td style="text-align: right;"><b>month summary:</b></td>
-		<td><b><fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${monthSummary}" type="currency"/> </b></td>
+		<td><b><fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${monthSummary}" type="currency" currencySymbol="zł" pattern=" #,##0.00 ¤; -#,##0.00 ¤"/> </b></td>
 		<td></td>
 		<td></td>
 		<td></td>
@@ -352,10 +352,10 @@ $(document).ready(function() {
 	jQuery.validator.addMethod(
 		    "money",
 		    function(value, element) {
-		        var isValidMoney = /^\d{0,4}(\.\d{0,2})?$/.test(value);
+		        var isValidMoney = /^\d{0,6}(\.\d{0,2})?$/.test(value);
 		        return this.optional(element) || isValidMoney;
 		    },
-		    "Please type amount in 0.00 format"
+		    "Please type amount in 0.00 format (max 999999.99)"
 		);
 	var startDate = new Date(${year},  ${month}-1, 1); 
 	var lastDate = new Date(${year}, ${month}, 0); 

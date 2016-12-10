@@ -512,7 +512,7 @@ public class DbService {
 		transaction33.setType("income");
 		transaction33.setMemo("bonus");
 		transaction33.setDate(new Date());
-		transaction33.setAmount(300.00);
+		transaction33.setAmount(150.00);
 		transactionRepository.save(transaction33);
 
 

@@ -230,13 +230,21 @@ public class TransactionService {
 		User user = userRepository.findByName(name);
 		
 		for(int month=1; month<13; month++){
+	    String textMonth;
 		Double sumOfMonth = transactionRepository.getSummaryOfIncomeTransaction(user.getId(), month, Integer.parseInt(year));
 		if(sumOfMonth==null){
 			sumOfMonth=(double) 0;			
 		}
-		incomeTransactionsInTime.put(month+"."+year, sumOfMonth);
+		if (month!=10 && month!=11 && month!=12){
+			textMonth = "0" + String.valueOf(month);
+		}
+		else{
+			textMonth = String.valueOf(month);
+		}
+		incomeTransactionsInTime.put(textMonth+"-"+year, sumOfMonth);
 		}
 		
+			
 		return incomeTransactionsInTime;
 	}
 	
@@ -278,7 +286,7 @@ public class TransactionService {
 		
 	
 	public ArrayList<Double> accountSummaryForecasting(Map<String, Double> summaryOfAccounts){
-		
+		System.out.print(summaryOfAccounts);
 		ArrayList<Double> listOfPredictedData = new ArrayList<Double>();
 		try {			 
 			
@@ -374,9 +382,13 @@ public class TransactionService {
 	
 	public Map<String, Double> forecastByAccount(int id, String name) {
 		Map<String, Double> summaryOfAccounts = new LinkedHashMap<String, Double>();
-
+		List<Transaction> transactions = null;
+if(id>0){
 		Account account = accountRepository.findById(id);
-		List<Transaction> transactions = transactionRepository.findByAccount(account);
+		 transactions = transactionRepository.findByAccount(account);}
+else{
+	transactions = transactionRepository.getTransactionsByUser(userRepository.findByName(name).getId());
+}
 		Collections.sort(transactions, new Comparator<Transaction>() {
 			public int compare(Transaction o1, Transaction o2) {
 				return o1.getDate().compareTo(o2.getDate());
@@ -428,7 +440,9 @@ if(transactions.isEmpty() == false){
 	
 		Calendar lastDateforForecast = Calendar.getInstance();
 		lastDateforForecast = lastDate;
-		for (Double forecastEntry : accountSummaryForecasting(summaryOfAccounts)) {
+		ArrayList<Double> listOfPredictedData = new ArrayList<Double>();
+		listOfPredictedData = accountSummaryForecasting(summaryOfAccounts);
+		for (Double forecastEntry : listOfPredictedData) {
 			lastDateforForecast.add(Calendar.MONTH, 1);
 			String lastDateforForecastEntry = String.valueOf(lastDateforForecast.get(Calendar.YEAR)) + "-"
 					+ String.valueOf(lastDateforForecast.get(Calendar.MONTH) + 1) + "-1";
@@ -762,11 +776,18 @@ if(transactions.isEmpty() == false){
 		User user = userRepository.findByName(name);
 		
 		for(int month=1; month<13; month++){
+	    String textMonth;
 		Double sumOfMonth = transactionRepository.getSummaryOfExpenseTransaction(user.getId(), month, Integer.parseInt(year));
 		if(sumOfMonth==null){
 			sumOfMonth=(double) 0;			
-		}		
-		expenseTransactionsInTime.put(month+"."+year, sumOfMonth);
+		}	
+		if (month!=10 && month!=11 && month!=12){
+			textMonth = "0" + String.valueOf(month);
+		}
+		else{
+			textMonth = String.valueOf(month);
+		}
+		expenseTransactionsInTime.put(textMonth+"-"+year, sumOfMonth);
 		}
 		
 		return expenseTransactionsInTime;

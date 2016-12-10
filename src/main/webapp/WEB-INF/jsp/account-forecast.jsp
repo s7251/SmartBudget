@@ -26,7 +26,7 @@
 	<tr>
 	<td>
 	<span class="pull-right">
-	<b>${summary.key}</b> = <fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${summary.value}" type="currency"/>
+	<b>${summary.key}</b> = <fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${summary.value}" type="currency" currencySymbol="zł" pattern=" #,##0.00 ¤; -#,##0.00 ¤"/>
 	</span> 
 	</td>
 	</tr>

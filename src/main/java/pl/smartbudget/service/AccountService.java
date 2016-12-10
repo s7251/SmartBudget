@@ -46,6 +46,17 @@ public class AccountService {
 		Account account = accountRepository.findById(id);
 		return account.getName();
 	}
+	
+	public String getForecastAccount(int id) {
+		String typeOfAccount;
+		if(id!=0){
+		Account account = accountRepository.findById(id);
+		typeOfAccount = account.getName();}
+		else{
+			typeOfAccount="Total Balance";
+		}
+		return typeOfAccount;
+	}
 
 	public Account findOne(int id) {		
 		return accountRepository.findOne(id);
