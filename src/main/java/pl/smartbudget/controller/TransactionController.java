@@ -35,7 +35,7 @@ public class TransactionController {
 		model.addAttribute("monthSummary", transactionService.getSummaryOfActualMonth(name));
 		model.addAttribute("subcategoriesMap", userService.getSubcategoriesMapOfUser(name));
 		model.addAttribute("accountsMap", userService.getAccountsMapOfUser(name));
-		model.addAttribute("actualMonth", transactionService.getActualDateByViewedTransactions(transactionService.findAllTransactionOfUserByActualMonth(name)));
+		model.addAttribute("date", transactionService.getActualDateByViewedTransactions(transactionService.findAllTransactionOfUserByActualMonth(name)));
 		model.addAttribute("nextMonthNav", transactionService.getNextMonthForNavigationByViewedTransactions(transactionService.findAllTransactionOfUserByActualMonth(name)));	
 		model.addAttribute("prevMonthNav", transactionService.getPrevMonthForNavigationByViewedTransactions(transactionService.findAllTransactionOfUserByActualMonth(name)));		
 		model.addAttribute("subcategoriesForecast", transactionService.getSubcategoriesForecastForActualMonth(name));
@@ -90,7 +90,7 @@ public class TransactionController {
 	public String editTransaction(@ModelAttribute("TransactionForm") TransactionForm transaction, Principal principal, @PathVariable String date)	throws ParseException {
 		String name = principal.getName();
 		transactionService.edit(transaction, name);
-		return "redirect:/user-transactions.html";
+		return "redirect:/user-transactions/{date}.html";
 	}
 	
 	@RequestMapping(value = "/internalTransferFormTransactions", method = RequestMethod.POST)

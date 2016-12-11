@@ -49,9 +49,14 @@
 		<a href="<spring:url value="" />" class="btn btn-primary" type="button" data-toggle="modal" data-target="#internalTransferModal">Internal Transfer</a>
 	</div>
 	
-
+	<ul class="nav nav-tabs">
+  <li role="presentation" class="active"><a href="#">Home</a></li>
+  <li role="presentation"><a href="#">Profile</a></li>
+  <li role="presentation"><a href="#">Messages</a></li>
+</ul>
 	<!-- Table -->
 	<table class="table">
+
 		<tr>
 			<td><b>Type</b></td>
 			<td><b>Memo</b></td>
@@ -208,7 +213,7 @@
 </div>
 
 
-<form:form modelAttribute="TransactionForm" action="/user-transactions.html" cssClass="form-horizontal" id="form">
+<form:form modelAttribute="TransactionForm" action="/user-transactions/${date}.html" cssClass="form-horizontal" id="form">
 	<!-- Modal -->
 	<div class="modal fade" id="addTransactionModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
