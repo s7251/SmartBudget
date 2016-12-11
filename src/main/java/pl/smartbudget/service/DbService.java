@@ -62,7 +62,7 @@ public class DbService {
 		userAdmin.setName("admin");
 		BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
 		userAdmin.setPassword(bcrypt.encode("admin"));
-		userAdmin.setEmail("admin@admin.pl");
+		userAdmin.setEmail("kulkry@gmail.com");
 		userAdmin.setEnabled(true);
 		List<Role> adminRoles = new ArrayList<Role>();
 		adminRoles.add(roleAdmin);

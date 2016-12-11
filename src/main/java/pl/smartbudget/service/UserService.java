@@ -1,11 +1,21 @@
 package pl.smartbudget.service;
 
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -270,5 +280,60 @@ public class UserService {
 	public User findOneByEmail(String email) {		
 		return userRepository.findByEmail(email);
 	}
+	
+	public void ResetPassword(String name, String email){		
+		User user = userRepository.findByName(name);
+	    SecureRandom random = new SecureRandom();
+	    String newPassword = new BigInteger(100, random).toString(32);
+	    BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+		
+			  
+		if(user.getEmail().equals(email)){
+		user.setPassword(bcrypt.encode(newPassword));
+		List<Role> userRoles = new ArrayList<Role>();
+		if(user.getName().equals("admin")){
+			userRoles.add(roleRepository.findByName("ROLE_ADMIN"));		
+		}	
+			userRoles.add(roleRepository.findByName("ROLE_USER"));
+			user.setRoles(userRoles);	
+			user.setEnabled(true);
+			user.setName(name);
+			user.setEmail(email);
+		
+		
+		final String username = "smartbudget.no.reply@gmail.com";
+		final String password = "PoliBuda2016#@123%";
 
+		Properties props = new Properties();
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port", "587");
+
+		Session session = Session.getInstance(props,
+		  new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(username, password);
+			}
+		  });
+
+		try {
+
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress("smartbudget.no.reply@gmail.com"));
+			message.setRecipients(Message.RecipientType.TO,
+				InternetAddress.parse(email));
+			message.setSubject("SmartBudget password reset notification");
+			message.setText("Hello "+name+","
+				+ "\n\nWe received a request to reset the password for your SmartBudget account. your new password is: " + newPassword +"\n\nPlease change your password after next login.");
+
+			Transport.send(message);
+
+			System.out.println("Done");
+
+		} catch (MessagingException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	}
 	}
