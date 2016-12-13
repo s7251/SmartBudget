@@ -49,16 +49,25 @@
 		<a href="<spring:url value="" />" class="btn btn-primary" type="button" data-toggle="modal" data-target="#internalTransferModal">Internal Transfer</a>
 	</div>
 	
-	<ul class="nav nav-tabs">
-  <li role="presentation" class="active"><a href="#">Home</a></li>
-  <li role="presentation"><a href="#">Profile</a></li>
-  <li role="presentation"><a href="#">Messages</a></li>
+		<ul class="nav nav-tabs">
+	<c:if test="${firstView!=true}">  
+  <li role="presentation"><a href="/user-transactions/${date}.html">All accounts</a></li>
+  </c:if>
+  <c:if test="${firstView==true}">  
+  <li role="presentation"><a href="/user-transactions.html">All accounts</a></li>
+  </c:if>
+  <c:forEach items="${accountsMap}" var="accountsMap"> 
+  <li role="presentation" ><a href="/user-transactions/${date}/${accountsMap.key}.html" > ${accountsMap.value} </a></li>
+
+   </c:forEach>
+
+
 </ul>
 	<!-- Table -->
 	<table class="table">
 
 		<tr>
-			<td><b>Type</b></td>
+			<td><b>Type </b></td>
 			<td><b>Memo</b></td>
 			<td><b>Amount</b></td>
 			<td><b>Date</b></td>
@@ -200,8 +209,18 @@
 		</c:forEach>
 		<tr>
 		<td></td>
-		<td style="text-align: right;"><b>month summary:</b></td>
-		<td><b><fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${monthSummary}" type="currency" currencySymbol="zł" pattern=" #,##0.00 ¤; -#,##0.00 ¤"/> </b></td>
+		<td style="text-align: right;"><b>month summary:</b>
+		<br>
+		<b> balance at the beginning of the month:</b>
+		<br>
+		<b>balance at the end of the month:</b>
+		</td>
+		<td><b><fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${monthSummary}" type="currency" currencySymbol="zł" pattern=" #,##0.00 ¤; -#,##0.00 ¤"/> </b>
+		<br>
+		<b> <fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${balanceAtBeggining}" type="currency" currencySymbol="zł" pattern=" #,##0.00 ¤; -#,##0.00 ¤"/></b>
+		<br>
+		<b> <fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${balanceAtEnd}" type="currency" currencySymbol="zł" pattern=" #,##0.00 ¤; -#,##0.00 ¤"/></b>
+		</td>
 		<td></td>
 		<td></td>
 		<td></td>
@@ -213,7 +232,7 @@
 </div>
 
 
-<form:form modelAttribute="TransactionForm" action="/user-transactions/${date}.html" cssClass="form-horizontal" id="form">
+<form:form modelAttribute="TransactionForm" action="/user-transactions/${date}/${accountId}.html" cssClass="form-horizontal" id="form">
 	<!-- Modal -->
 	<div class="modal fade" id="addTransactionModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
@@ -223,7 +242,7 @@
 					<button type="button" class="close" data-dismiss="modal" aria-label="Cancel">
 						<span aria-hidden="true">&times;</span>
 					</button>
-					<h4 class="modal-title" id="myModalLabel">Add transaction</h4>
+					<h4 class="modal-title" id="myModalLabel">Add transaction <c:if test="${not empty accountId}"> (${accountName})</c:if></h4>
 				</div>
 				<div class="modal-body">
 					<div class="form-group" style="text-align: left; width: 600px;">
@@ -266,15 +285,22 @@
 							</form:select>					
 						</div>
 					</div>
+				
+				<c:if test="${empty accountId}">
+ 
 					<div class="form-group"	style="text-align: center; width:600px; margin: 0 auto;">
-						<label for="account" class="col-sm-2 control-label">Account:</label>
+						<label for="account" class="col-sm-2 control-label"> Account:</label>
 						<div class="col-sm-10">
 							<form:select class="form-control" path="accountId"  style="text-align: left; width: 350px;">																
-										<form:options items="${accountsMap}" />								
+										<form:options items="${accountsMap}"/>											
 							</form:select>
 						</div>
 					</div>
-
+   				</c:if>
+   			<c:if test="${not empty accountId}">
+  				 <form:hidden path="accountId" value="${accountId}" />
+  				 
+   				</c:if>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -283,6 +309,7 @@
 			</div>
 		</div>
 	</div>
+	
 </form:form>
 
 <form:form mehod="post" modelAttribute="InternalTransferForm" action="/internalTransferFormTransactions.html" cssClass="form-horizontal" id="form">
@@ -336,7 +363,7 @@
 					<div class="form-group"	style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="toAccount" class="col-sm-2 control-label">To:</label>
 						<div class="col-sm-10">
-							<form:select class="form-control" path="toAccountId"  style="text-align: left; width: 350px;">																
+							<form:select class="form-control" path="toAccountId"  style="text-align: left; width: 350px;">																		
 										<form:options items="${accountsMap}" />								
 							</form:select>
 						</div>
@@ -353,7 +380,9 @@
 </form:form>
 	
 <script>
-$(document).ready(function() {	
+$(document).ready(function() {
+	
+	$('a[href="' + this.location.pathname + '"]').parents('li,ul').addClass('active');
 	jQuery.validator.addMethod(
 		    "money",
 		    function(value, element) {
@@ -388,7 +417,19 @@ $(document).ready(function() {
 				},
 				date: {
 					required : true,					
-				},				 
+				},
+				fromAccountId: {
+					required : true,					
+				},
+				toAccountId: {
+					required : true,					
+				},
+				accountId: {
+					required : true,					
+				},
+				subcategoryId: {
+					required : true,					
+				},			
 			},					
 			highlight: function(element) {
 				$(element).closest('.form-group').removeClass('has-success').addClass('has-error');
@@ -412,5 +453,7 @@ $(document).ready(function() {
 
 });
 </script>
+
+
 
 		

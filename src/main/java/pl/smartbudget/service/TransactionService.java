@@ -552,6 +552,110 @@ if(transactions.isEmpty() == false){
 		return allTransactionsByUser;
 	}
 	
+	public List<Transaction> findAllTransactionOfUserBeforeActualMonthAtBeginning(String name) {
+		User user = userRepository.findByName(name);
+		List<Transaction> allTransactionsByUser = new ArrayList<Transaction>();
+
+		List<Account> accounts = accountRepository.findByUser(user);
+
+		for (Account account : accounts) {
+			List<Transaction> transactions = transactionRepository.findByAccount(account);
+			for (Transaction transaction : transactions) {
+				
+				Date actualDate = new Date();
+								
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(actualDate);
+				int actualMonth = cal.get(Calendar.MONTH);
+				int actualYear = cal.get(Calendar.YEAR);			
+				
+				Calendar cal2 = Calendar.getInstance();
+				cal2.setTime(transaction.getDate());
+				int transactionMonth = cal2.get(Calendar.MONTH);
+				int transactionYear = cal2.get(Calendar.YEAR);									
+					
+				if(actualYear>transactionYear){
+				allTransactionsByUser.add(transaction);}
+				else if(actualYear==transactionYear && actualMonth>transactionMonth){
+					allTransactionsByUser.add(transaction);
+				}
+			}
+		}		
+	
+				
+		Collections.sort(allTransactionsByUser, new Comparator<Transaction>() {
+			public int compare(Transaction t1, Transaction t2) {
+				return t1.getDate().compareTo(t2.getDate());
+			}
+		});
+
+		return allTransactionsByUser;
+	}
+	
+	public List<Transaction> findAllTransactionOfUserBeforeActualMonthAtEnd(String name) {
+		User user = userRepository.findByName(name);
+		List<Transaction> allTransactionsByUser = new ArrayList<Transaction>();
+
+		List<Account> accounts = accountRepository.findByUser(user);
+
+		for (Account account : accounts) {
+			List<Transaction> transactions = transactionRepository.findByAccount(account);
+			for (Transaction transaction : transactions) {
+				
+				Date actualDate = new Date();
+								
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(actualDate);
+				int actualMonth = cal.get(Calendar.MONTH);
+				int actualYear = cal.get(Calendar.YEAR);			
+				
+				Calendar cal2 = Calendar.getInstance();
+				cal2.setTime(transaction.getDate());
+				int transactionMonth = cal2.get(Calendar.MONTH);
+				int transactionYear = cal2.get(Calendar.YEAR);									
+					
+				if(actualYear>transactionYear){
+				allTransactionsByUser.add(transaction);}
+				else if(actualYear==transactionYear && actualMonth>=transactionMonth){
+					allTransactionsByUser.add(transaction);
+				}
+			}
+		}		
+	
+				
+		Collections.sort(allTransactionsByUser, new Comparator<Transaction>() {
+			public int compare(Transaction t1, Transaction t2) {
+				return t1.getDate().compareTo(t2.getDate());
+			}
+		});
+
+		return allTransactionsByUser;
+	}
+	
+	public Double getBalanceByActualMonthAtBeggining(String name) {
+		Double transactionsSum = new Double(0);		
+		
+		List<Transaction> transactionOfActualMonth = new ArrayList<Transaction>();
+		transactionOfActualMonth.addAll(findAllTransactionOfUserBeforeActualMonthAtBeginning(name));
+
+		for (Transaction transaction : transactionOfActualMonth) {
+			transactionsSum = transactionsCalculate(transactionsSum, transaction);
+		}
+		return transactionsSum;
+	}
+	
+	public Double getBalanceByActualMonthAtEnd(String name) {
+		Double transactionsSum = new Double(0);		
+		
+		List<Transaction> transactionOfActualMonth = new ArrayList<Transaction>();
+		transactionOfActualMonth.addAll(findAllTransactionOfUserBeforeActualMonthAtEnd(name));
+
+		for (Transaction transaction : transactionOfActualMonth) {
+			transactionsSum = transactionsCalculate(transactionsSum, transaction);
+		}
+		return transactionsSum;
+	}
+	
 	public Double getSummaryOfActualMonth(String name) {
 		Double transactionsSum = new Double(0);		
 		
@@ -572,6 +676,141 @@ if(transactions.isEmpty() == false){
 
 		for (Transaction transaction : transactionOfMonthByDate) {
 			transactionsSum = transactionsCalculate(transactionsSum, transaction);
+		}
+		return transactionsSum;
+	}
+	
+	public List<Transaction> findAllTransactionOfUserBeforeActualMonthAtBeginning(String name, String date) {
+		User user = userRepository.findByName(name);
+		List<Transaction> allTransactionsByUser = new ArrayList<Transaction>();
+
+		List<Account> accounts = accountRepository.findByUser(user);
+
+		for (Account account : accounts) {
+			List<Transaction> transactions = transactionRepository.findByAccount(account);
+			for (Transaction transaction : transactions) {
+				
+			
+				int dateMonth = Integer.parseInt(date.substring(0, 2));
+				int dateYear = Integer.parseInt(date.substring(3, 7));
+								
+							
+				int transactionMonth = Integer.parseInt(transaction.getDate().toString().substring(5, 7));
+				int transactionYear = Integer.parseInt(transaction.getDate().toString().substring(0, 4));			    
+								
+				if(dateYear>transactionYear){
+					allTransactionsByUser.add(transaction);}
+					else if(dateYear==transactionYear && dateMonth>transactionMonth){
+						allTransactionsByUser.add(transaction);
+					}
+			}
+		}				
+				
+		Collections.sort(allTransactionsByUser, new Comparator<Transaction>() {
+			public int compare(Transaction t1, Transaction t2) {
+				return t1.getDate().compareTo(t2.getDate());
+			}
+		});
+
+		return allTransactionsByUser;
+	}
+	
+	public Double getBalanceByDateAtBeggining(String name, String date) {
+		Double transactionsSum = new Double(0);		
+		
+		List<Transaction> transactionOfMonthByDate = new ArrayList<Transaction>();
+		transactionOfMonthByDate.addAll(findAllTransactionOfUserBeforeActualMonthAtBeginning(name, date));
+
+		for (Transaction transaction : transactionOfMonthByDate) {
+			transactionsSum = transactionsCalculate(transactionsSum, transaction);
+		}
+		return transactionsSum;
+	}
+	
+	
+	public Double getBalanceByDateAndAccountIdAtBeggining(String name, String date, int accountId) {
+		Double transactionsSum = new Double(0);		
+		
+		List<Transaction> transactionOfMonthByDate = new ArrayList<Transaction>();
+		transactionOfMonthByDate.addAll(findAllTransactionOfUserBeforeActualMonthAtBeginning(name, date));
+
+		for (Transaction transaction : transactionOfMonthByDate) {
+			if(transaction.getAccount().getId()==accountId){
+			transactionsSum = transactionsCalculate(transactionsSum, transaction);}
+		}
+		return transactionsSum;
+	}
+	
+	public List<Transaction> findAllTransactionOfUserBeforeActualMonthAtEnd(String name, String date) {
+		User user = userRepository.findByName(name);
+		List<Transaction> allTransactionsByUser = new ArrayList<Transaction>();
+
+		List<Account> accounts = accountRepository.findByUser(user);
+
+		for (Account account : accounts) {
+			List<Transaction> transactions = transactionRepository.findByAccount(account);
+			for (Transaction transaction : transactions) {
+				
+			
+				int dateMonth = Integer.parseInt(date.substring(0, 2));
+				int dateYear = Integer.parseInt(date.substring(3, 7));
+								
+							
+				int transactionMonth = Integer.parseInt(transaction.getDate().toString().substring(5, 7));
+				int transactionYear = Integer.parseInt(transaction.getDate().toString().substring(0, 4));			    
+								
+				if(dateYear>transactionYear){
+					allTransactionsByUser.add(transaction);}
+					else if(dateYear==transactionYear && dateMonth>=transactionMonth){
+						allTransactionsByUser.add(transaction);
+					}
+			}
+		}				
+				
+		Collections.sort(allTransactionsByUser, new Comparator<Transaction>() {
+			public int compare(Transaction t1, Transaction t2) {
+				return t1.getDate().compareTo(t2.getDate());
+			}
+		});
+
+		return allTransactionsByUser;
+	}
+	
+	public Double getBalanceByDateAtEnd(String name, String date) {
+		Double transactionsSum = new Double(0);		
+		
+		List<Transaction> transactionOfMonthByDate = new ArrayList<Transaction>();
+		transactionOfMonthByDate.addAll(findAllTransactionOfUserBeforeActualMonthAtEnd(name, date));
+
+		for (Transaction transaction : transactionOfMonthByDate) {
+			transactionsSum = transactionsCalculate(transactionsSum, transaction);
+		}
+		return transactionsSum;
+	}
+	
+	public Double getBalanceByDateAndAccountIdAtEnd(String name, String date, int accountId) {
+		Double transactionsSum = new Double(0);		
+		
+		List<Transaction> transactionOfMonthByDate = new ArrayList<Transaction>();
+		transactionOfMonthByDate.addAll(findAllTransactionOfUserBeforeActualMonthAtEnd(name, date));
+
+		for (Transaction transaction : transactionOfMonthByDate) {
+			if(transaction.getAccount().getId()==accountId){
+			transactionsSum = transactionsCalculate(transactionsSum, transaction);}
+		}
+		return transactionsSum;
+	}
+	
+	public Double getSummaryOfMonthByDateAndAccountId(String name, String date, int accountId) {
+		Double transactionsSum = new Double(0);		
+		
+		List<Transaction> transactionOfMonthByDate = new ArrayList<Transaction>();
+		transactionOfMonthByDate.addAll(findAllTransactionOfUserByDate(name, date));
+		
+		
+		for (Transaction transaction : transactionOfMonthByDate) {
+			if(transaction.getAccount().getId()==accountId){
+			transactionsSum = transactionsCalculate(transactionsSum, transaction);}
 		}
 		return transactionsSum;
 	}
@@ -610,6 +849,47 @@ if(transactions.isEmpty() == false){
 				allTransactionsByUser.add(transaction);}
 			}
 		}				
+				
+		Collections.sort(allTransactionsByUser, new Comparator<Transaction>() {
+			public int compare(Transaction t1, Transaction t2) {
+				return t1.getDate().compareTo(t2.getDate());
+			}
+		});
+
+		return allTransactionsByUser;
+	}
+	
+	public List<Transaction> findAllTransactionOfUserByDateAndAccountId(String date, int accountId) {
+		List<Transaction> allTransactionsByUser = new ArrayList<Transaction>();
+		Account account = accountRepository.findById(accountId);
+
+			List<Transaction> transactions = transactionRepository.findByAccount(account);
+			for (Transaction transaction : transactions) {
+				
+				//Date actualDate = new Date();
+				//SimpleDateFormat mdyFormat = new SimpleDateFormat("yyyy-MM-dd");
+				//String actualDateFormat = mdyFormat.format(actualDate);
+				
+				//Calendar cal = Calendar.getInstance();
+				//cal.setTime(actualDate);
+				//int actualMonth = cal.get(Calendar.MONTH);
+				//int actualYear = cal.get(Calendar.YEAR);
+			
+				int dateMonth = Integer.parseInt(date.substring(0, 2));
+				int dateYear = Integer.parseInt(date.substring(3, 7));
+								
+				//Calendar cal2 = Calendar.getInstance();
+				//cal2.setTime(transaction.getDate());
+				//int transactionMonth = cal2.get(Calendar.MONTH);
+				//int transactionYear = cal2.get(Calendar.YEAR);
+									
+				int transactionMonth = Integer.parseInt(transaction.getDate().toString().substring(5, 7));
+				int transactionYear = Integer.parseInt(transaction.getDate().toString().substring(0, 4));			    
+								
+				if(dateMonth==transactionMonth && dateYear==transactionYear){
+				allTransactionsByUser.add(transaction);}
+			}
+						
 				
 		Collections.sort(allTransactionsByUser, new Comparator<Transaction>() {
 			public int compare(Transaction t1, Transaction t2) {

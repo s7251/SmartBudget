@@ -292,6 +292,10 @@ $(document).ready(function() {
 					required : true,
 					minlength : 4,				
 				},
+				memo: {
+					required : true,
+					minlength : 4,				
+				},
 				amount: {
 					required : true,
 					number: true,
@@ -300,7 +304,13 @@ $(document).ready(function() {
 				},
 				date: {
 					required : true,					
-				},				 
+				},
+				fromAccountId: {
+					required : true,					
+				},
+				toAccountId: {
+					required : true,					
+				},
 			},					
 			highlight: function(element) {
 				$(element).closest('.form-group').removeClass('has-success').addClass('has-error');
