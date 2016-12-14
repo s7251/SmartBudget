@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 @Entity
 public class User {
@@ -20,6 +21,9 @@ public class User {
 	private String name;
 	private String email;
 	private boolean enabled;
+	
+	@Transient
+	private String permissions;
 
 	@ManyToMany
 	@JoinTable
@@ -93,5 +97,13 @@ public class User {
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+	
+	public String getPermissions() {
+		return permissions;
+	}
+
+	public void setPermissions(String permissions) {
+		this.permissions = permissions;
 	}
 }

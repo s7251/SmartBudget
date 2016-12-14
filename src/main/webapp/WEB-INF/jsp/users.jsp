@@ -6,13 +6,80 @@
 <div class="panel panel-default">
 	<!-- Default panel contents -->
 		<div class="panel-heading"><h1 class="panel-title">List of users </h1></div>
-	<div class="panel-body">
-		<p>Below you can see list of users.</p>
+	<div class="panel-body">			
+		<a href="<spring:url value="" />" class="btn btn-primary" type="button" data-toggle="modal" data-target="#addUser">Add user</a>	
+		
+			 <form:form mehod="post" modelAttribute="user" action="/add-user-by-admin.html" cssClass="form-horizontal form">
+<form:hidden path="enabled" value="1" />
+	<!-- Modal	 -->
+	<div class="modal fade" id="addUser" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Cancel">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel" style="text-align: left">Please type data for new user: </h4>
+				</div>
+				<div class="modal-body">
+				<div class="form-group"	style="text-align: center; width: 600px; margin: 0 auto;">
+						<label for="permissions" class="col-sm-2 control-label">Permissions:</label>
+						<div class="col-sm-10">
+							<form:select class="form-control" path="permissions"  style="text-align: left; width: 350px;">		
+							<form:option value="administrator">Administrator</form:option>		
+							<form:option value="user">User</form:option>															
+							</form:select>
+						</div>
+					</div>
+				<div class="form-group"
+						style="text-align: center; width: 600px; margin: 0 auto;">
+						<label for="name" class="col-sm-2 control-label">Name:</label>
+						<div class="col-sm-10">
+							<form:input path="name" cssClass="form-control" style="width: 350px" placeholder="Please type accout name"	autofocus="autofocus" />
+						</div>
+					</div>
+					
+					<div class="form-group"
+						style="text-align: center; width: 600px; margin: 0 auto;">
+						<label for="email" class="col-sm-2 control-label">E-mail:</label>
+						<div class="col-sm-10">
+							<form:input path="email" cssClass="form-control" style="width: 350px" placeholder="Please type accout e-mail"	autofocus="autofocus" />
+						</div>
+					</div>
+									
+				<div class="form-group"
+						style="text-align: center; width: 600px; margin: 0 auto;">
+						<label for="password" class="col-sm-2 control-label">Password:</label>
+						<div class="col-sm-10">
+							<form:password path="password" cssClass="form-control" style="width: 350px" placeholder="Please type password"	autofocus="autofocus" />
+						</div>
+					</div>
+					
+					<div class="form-group"
+						style="text-align: center; width: 600px; margin: 0 auto;">
+						<label for="password" class="col-sm-2 control-label">Re-type:</label>
+						<div class="col-sm-10">
+							<input type="password" name="password_again" id="password_again" class="form-control" style="width: 350px" placeholder="Please re-type password"	autofocus="autofocus" />
+						</div>
+					</div>
+    		</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<input type="submit" class="btn btn-success" value="Add user" />
+				</div>
+			</div>
+		</div>
+	</div>
+</form:form>
 	</div>	
+	
+
 	<!-- Table -->
 	<table class="table table-striped">
 		<tr>
 			<td style="text-align: center;"><b>Name</b></td>
+			<td style="text-align: center;"><b>Permissions</b></td>
 			<td style="text-align: center;"><b>E-mail</b></td>			
 			<td style="text-align: center;"><b>Rename</b></td>
 			<td style="text-align: center;"><b>Change Password</b></td>
@@ -21,6 +88,7 @@
 		<c:forEach items="${users}" var="users">
 			<tr>
 				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="/users/${users.id}.html" />"><c:out value="${users.name}" /></a></td>
+				<td style="text-align: center; vertical-align: middle;">${users.permissions}</td>
 				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="" />" class="btn btn-warning" type="button" data-toggle="modal" data-target="#changeEmailModal${users.id}">Change e-mail</a>
 				
 				<form:form mehod="post" modelAttribute="user" action="/change-email.html" cssClass="form-horizontal form">
@@ -161,10 +229,19 @@ $(document).ready(function() {
     $('form').each(function() {  
         $(this).validate({       
         	rules: {	
-				name: {
+        		name: {
 					required : true,
-					minlength : 4,				
-				},			
+					minlength : 4,	
+					remote : {
+						url: "<spring:url value='/user-available.html' />",
+						type: "get",
+						data: {
+							name: function() {
+								return $("#name").val();
+							}
+						}
+					}
+				},		
 				email: {
 					required : true,
 					email: true,
@@ -184,7 +261,15 @@ $(document).ready(function() {
 			},
 			unhighlight: function(element) {
 				$(element).closest('.form-group').removeClass('has-error').addClass('has-success');
-			}	
+			},	
+			messages: {
+				name: {
+					remote: "This user exist in system!"
+				},
+				email: {
+					remote: "This e-mail address exist in system!"
+			}
+			}
 			
         });
     });
@@ -192,4 +277,4 @@ $(document).ready(function() {
 });
 </script>
 
-    
+   

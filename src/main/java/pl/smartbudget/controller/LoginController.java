@@ -3,6 +3,8 @@ package pl.smartbudget.controller;
 import java.security.Principal;
 import java.text.ParseException;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +20,13 @@ public class LoginController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@RequestMapping("/")
+	public String firstPage(HttpServletRequest request, Model model, Principal principal) {
+		String name = principal.getName();
+		model.addAttribute("loginName", name);	
+		return "index";
+	}
 	
 	@RequestMapping("/user-login")
 	public String login(Model model) {		

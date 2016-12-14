@@ -25,13 +25,16 @@
 		<tr>
 			<td><b>email:</b> ${user.email}</td>
 		</tr>
+		<tr>
+			<td><b>permissions: </b> ${user.permissions}</td>
+		</tr>
 	</tbody>
 </table>
 
 </div>
 
 
-<form:form mehod="post" modelAttribute="user" action="/change-password.html" cssClass="form-horizontal form">
+<form:form mehod="post" modelAttribute="user" action="/change-password-from-profile.html" cssClass="form-horizontal form">
 <form:hidden path="id" value="${user.id}" />
 <form:hidden path="name" value="${user.name}" />
 <form:hidden path="email" value="${user.email}" />
@@ -74,7 +77,7 @@
 	</div>
 </form:form>
 
-<form:form mehod="post" modelAttribute="user" action="/change-email.html" cssClass="form-horizontal form">
+<form:form mehod="post" modelAttribute="user" action="/change-email-from-profile.html" cssClass="form-horizontal form">
 <form:hidden path="id" value="${user.id}" />
 <form:hidden path="name" value="${user.name}" />
 <form:hidden path="password" value="${user.password}" />

@@ -64,7 +64,7 @@
               
 
            <security:authorize access="isAuthenticated()">
-            <li class="${current == 'user-profile' ? 'active' : ''}"><a href="/user-profile.html"><span class="glyphicon glyphicon-user"></span> Hi <b>${user.name}!</b></a></li>   
+            <li class="${current == 'user-profile' ? 'active' : ''}"><a href="/user-profile.html"><span class="glyphicon glyphicon-user"></span> Hi <b>${user.name}${loginName}!</b></a></li>   
                <security:authorize access="hasRole('ROLE_ADMIN')">              
               <li class="${current == 'users' ? 'active' : ''}"><a href='<spring:url value="/users.html"/>'><span class="glyphicon glyphicon-cog"></span> Manage Users</a></li>     
        	      </security:authorize>   

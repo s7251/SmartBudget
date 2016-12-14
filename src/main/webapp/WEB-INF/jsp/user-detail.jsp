@@ -17,14 +17,18 @@
 		</tr>
 	</thead>
 	<tbody>		
-		<tr>
-			<td><b>username:</b> ${user.name}</td>
+	<tr>
+			<td><b>id:</b> ${userDetail.id}</td>
 		</tr>
 		<tr>
-			<td><b>id:</b> ${user.id}</td>
+			<td><b>username:</b> ${userDetail.name}</td>
+		</tr>
+		
+		<tr>
+			<td><b>email:</b> ${userDetail.email}</td>
 		</tr>
 		<tr>
-			<td><b>email:</b> ${user.email}</td>
+			<td><b>roles:</b><br> <c:forEach items="${userDetail.roles}" var="roles">${roles.name}<br></c:forEach></td>
 		</tr>
 	</tbody>
 </table>

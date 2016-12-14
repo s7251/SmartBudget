@@ -1,5 +1,7 @@
 package pl.smartbudget.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -22,7 +24,12 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
 	@Query(value = "SELECT NAME FROM USER U JOIN CATEGORY C ON (C.USER_ID = U.ID) JOIN SUBCATEGORY S ON (S.CATEGORY_ID = C.ID) WHERE S.ID=?1", nativeQuery = true)	
 	String findUserNameBySubcategoryId(Subcategory subcategory);
-
+	
+	@Query(value = "SELECT * FROM USER U JOIN USER_ROLE UR ON (U.ID = UR.USERS_ID) JOIN ROLE R ON (R.ID = UR.ROLES_ID)", nativeQuery = true)	
+	List<User> getUsersWithRoles();
+	
 	User findByEmail(String email);
+
+	
 	
 }

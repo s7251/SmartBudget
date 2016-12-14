@@ -128,6 +128,51 @@ public class UserService {
 		userRepository.save(user);
 	}
 	
+	public void saveUserByAdmin(User user) {		
+		BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+		user.setPassword(bcrypt.encode(user.getPassword()));
+				
+		Account account = new Account();
+		account.setUser(user);
+		account.setName("SampleAccount1");
+		accountRepository.save(account);
+		
+		Category categorySample = new Category();
+		categorySample.setUser(user);
+		categorySample.setName("SampleCategory1");
+		categoryRepository.save(categorySample);
+		
+		Subcategory subcategorySample = new Subcategory();
+		subcategorySample.setCategory(categorySample);
+		subcategorySample.setName("SampleSubcategory1");
+		subcategoryRepository.save(subcategorySample);
+		
+		SubcategoryLimit subcategoryLimitSample = new SubcategoryLimit();
+		subcategoryLimitSample.setSubcategory(subcategorySample);
+		subcategoryLimitSample.setAmount(200.00);
+		subcategoryLimitSample.setDate(new Date());		
+		subcategoryLimitRepository.save(subcategoryLimitSample);
+		
+		Transaction transaction = new Transaction();
+		transaction.setSubcategory(subcategorySample);
+		transaction.setAccount(account);
+		transaction.setType("income");
+		transaction.setMemo("your first income!");
+		transaction.setDate(new Date());
+		transaction.setAmount(999.00);
+		transactionRepository.save(transaction);
+		
+		Transaction transaction2 = new Transaction();
+		transaction2.setSubcategory(subcategorySample);
+		transaction2.setAccount(account);
+		transaction2.setType("expense");
+		transaction2.setMemo("your first expense!");
+		transaction2.setDate(new Date());
+		transaction2.setAmount(499.00);
+		transactionRepository.save(transaction2);
+		
+		userRepository.save(user);
+	}
 	
 	public void changePassword(User user) {		
 		BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
@@ -164,6 +209,14 @@ public class UserService {
 		User user = findOne(id);
 		List<Account> accounts = accountRepository.findByUser(user);
 		user.setAccounts(accounts);
+		return user;
+	}
+	
+	@Transactional
+	public User findOneWithRoles(String name) {
+		User user = userRepository.findByName(name);
+		//List<Role> roles = roleRepository.findByName(name);
+		//user.setRoles(roles);
 		return user;
 	}
 	
@@ -335,5 +388,46 @@ public class UserService {
 			throw new RuntimeException(e);
 		}
 	}
+	}
+
+	public List<User> getUsersWithRoles() {		
+		List<User> users = findAll();
+		for(User user: users){
+			user.setPermissions("User");	
+			user.setRoles(roleRepository.getRolesByUser(user.getName()));	
+			for(Role role : roleRepository.getRolesByUser(user.getName())){
+				if(role.getName().equals("ROLE_ADMIN")){					
+					user.setPermissions("Administrator");
+				}				
+			}
+		}		
+		return users;
+	}
+	
+	public User getUserByNameWithRoles(String name) {		
+		User user = userRepository.findByName(name);
+		user.setPermissions("User");		
+			user.setRoles(roleRepository.getRolesByUser(user.getName()));
+			user.setPermissions("Administrator");
+			for(Role role : roleRepository.getRolesByUser(user.getName())){
+				if(role.getName().equals("ROLE_ADMIN")){					
+					user.setPermissions("Administrator");
+				}				
+			}
+		return user;
+	}
+
+	public void userSetRoles(User user) {
+		List<Role> userRoles = new ArrayList<Role>();
+		if(user.getPermissions().equals("administrator")){			
+			userRoles.add(roleRepository.findByName("ROLE_USER"));
+			userRoles.add(roleRepository.findByName("ROLE_ADMIN"));
+			user.setRoles(userRoles);
+		}
+		else if(user.getPermissions().equals("user")){
+			userRoles.add(roleRepository.findByName("ROLE_USER"));
+			user.setRoles(userRoles);
+		}
+		
 	}
 	}
