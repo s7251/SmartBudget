@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import pl.smartbudget.entity.Subcategory;
+import pl.smartbudget.forms.RemoveSubcategoryForm;
 import pl.smartbudget.forms.SubcategoryForm;
 import pl.smartbudget.service.SubcategoryService;
 import pl.smartbudget.service.UserService;
@@ -43,7 +44,13 @@ public class SubcategoryController {
 		return "redirect:/user-categories.html";
 	}
 	
-
+	@RequestMapping("/user-categories/removesubcategory")
+	public String removeSubcategory(@ModelAttribute("RemoveSubcategoryForm") RemoveSubcategoryForm removeSubcategory, Principal principal){
+		Subcategory subcategory = subcategoryService.findOne(removeSubcategory.getSubcategoryId());		
+		String userNameBySubcategoryId = userService.findUserNameBySubcategoryId(subcategory);	
+		subcategoryService.delete(removeSubcategory.getSubcategoryId(), removeSubcategory.getNewSubcategoryId(), userNameBySubcategoryId);
+		return "redirect:/user-categories.html";
+	}
 
 
 

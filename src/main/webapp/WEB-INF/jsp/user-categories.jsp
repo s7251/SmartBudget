@@ -31,7 +31,7 @@
 				<td style="text-align: left; vertical-align: middle;">${category.name}</td>
 				<td style="text-align: center; vertical-align: middle;">	<a href="<spring:url value="" />" class="btn btn-primary" type="button" data-toggle="modal" data-target="#addSubcategoryModal${category.id}">Add subcategory</a>	</td>
 				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="" />" class="btn btn-warning" type="button" data-toggle="modal" data-target="#renameCategoryModal${category.id}">Rename</a>	</td>
-				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="/user-categories/removecategory/${category.id}.html" />" class="btn btn-danger" type="button">Remove</a>	</td>			
+				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="" />" class="btn btn-danger" type="button" data-toggle="modal" data-target="#removeCategoryModal${category.id}">Remove</a>	</td>			
 		<td>
 		
 			<form:form mehod="post" modelAttribute="subcategory" action="/addSubcategory.html" cssClass="form-horizontal" id="form">	
@@ -104,6 +104,42 @@
 		</div>
 	</div>
 </form:form>
+
+						<form:form mehod="post" modelAttribute="RemoveCategoryForm" action="/user-categories/removecategory.html" cssClass="form-horizontal" id="form">	
+<form:hidden path="categoryId" value="${category.id}" />
+		<!-- Modal -->
+	<div class="modal fade" id="removeCategoryModal${category.id}" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Cancel">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">New subcategory for transactions from category ${category.name}:</h4>
+				</div>
+				<div class="modal-body">
+				
+						<div class="form-group"	style="text-align: center; width: 600px; margin: 0 auto;">
+						<label for="category" class="col-sm-2 control-label">Subcategory:</label>
+						<div class="col-sm-10">
+						<form:select class="form-control" path="newSubcategoryId"  style="text-align: left; width: 350px;">									
+									<form:options items="${subcategoriesMap}" />							
+							</form:select>						
+						</div>
+					</div>
+					
+				</div>
+				
+				<div class="modal-footer">
+				
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<input type="submit" class="btn btn-danger" value="Remove" />
+				</div>
+			</div>
+		</div>
+	</div>
+</form:form>	
 	</td>
 		</tr>
 
@@ -112,8 +148,44 @@
 				<td style="text-align: left; vertical-align: middle;">- ${subcategory.name}</td>				
 				<td></td>			
 				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="" />" class="btn btn-warning" type="button" data-toggle="modal" data-target="#renameSubcategoryModal${subcategory.id}">Rename</a></td>	
-				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="/user-categories/removesubcategory/${subcategory.id}.html" />" class="btn btn-danger" type="button">Remove</a>	</td>
+				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="" />" class="btn btn-danger" type="button" data-toggle="modal" data-target="#removeSubcategoryModal${subcategory.id}">Remove</a>	</td>
 			<td>		
+						<form:form mehod="post" modelAttribute="RemoveSubcategoryForm" action="/user-categories/removesubcategory.html" cssClass="form-horizontal" id="form">	
+<form:hidden path="subcategoryId" value="${subcategory.id}" />
+<form:hidden path="categoryId" value="${category.id}" />
+		<!-- Modal -->
+	<div class="modal fade" id="removeSubcategoryModal${subcategory.id}" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Cancel">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">New subcategory for transactions from subcategory ${subcategory.name}:</h4>
+				</div>
+				<div class="modal-body">
+				
+						<div class="form-group"	style="text-align: center; width: 600px; margin: 0 auto;">
+						<label for="category" class="col-sm-2 control-label">Subcategory:</label>
+						<div class="col-sm-10">
+						<form:select class="form-control" path="newSubcategoryId"  style="text-align: left; width: 350px;">
+									<form:options items="${subcategoriesMap}" />							
+							</form:select>						
+						</div>
+					</div>
+					
+				</div>
+				
+				<div class="modal-footer">
+				
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<input type="submit" class="btn btn-danger" value="Remove" />
+				</div>
+			</div>
+		</div>
+	</div>
+</form:form>	
 			
 						<form:form mehod="post" modelAttribute="subcategory" action="/renameSubcategory.html" cssClass="form-horizontal" id="form">	
 <form:hidden path="id" value="${subcategory.id}" />
@@ -202,7 +274,10 @@ $(document).ready(function() {
 				name: {
 					required : true,
 					minlength : 4,				
-				},								 
+				},		
+				newSubcategoryId: {
+					required : true,								
+				},
 			},		
 			
 			highlight: function(element) {

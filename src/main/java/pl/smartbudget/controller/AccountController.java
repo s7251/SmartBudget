@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import pl.smartbudget.entity.Account;
 import pl.smartbudget.forms.AlignBalanceForm;
 import pl.smartbudget.forms.InternalTransferForm;
+import pl.smartbudget.forms.RemoveSubcategoryForm;
 import pl.smartbudget.service.AccountService;
 import pl.smartbudget.service.TransactionService;
 import pl.smartbudget.service.UserService;
@@ -35,7 +36,7 @@ public class AccountController {
 		String name = principal.getName();
 		model.addAttribute("account", new Account());
 		model.addAttribute("AlignBalanceForm", new AlignBalanceForm());
-		model.addAttribute("InternalTransferForm", new InternalTransferForm());
+		model.addAttribute("InternalTransferForm", new InternalTransferForm());		
 		model.addAttribute("accountsMap", userService.getAccountsMapOfUser(name));		
 		model.addAttribute("user", userService.findOneWithAccounts(name));
 		model.addAttribute("summaryOfAccounts", transactionService.summaryTransactionsOfAccounts(name));

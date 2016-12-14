@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import pl.smartbudget.entity.Category;
+import pl.smartbudget.forms.RemoveCategoryForm;
+import pl.smartbudget.forms.RemoveSubcategoryForm;
 import pl.smartbudget.forms.SubcategoryForm;
 import pl.smartbudget.service.CategoryService;
 import pl.smartbudget.service.UserService;
@@ -30,7 +32,10 @@ public class CategoryController {
 		model.addAttribute("subcategory", new SubcategoryForm());
 		model.addAttribute("category", new Category());
 		String name = principal.getName();
-		model.addAttribute("user", userService.findOneWithCategoriesAndSubcategories(name));		
+		model.addAttribute("user", userService.findOneWithCategoriesAndSubcategories(name));
+		model.addAttribute("RemoveSubcategoryForm", new RemoveSubcategoryForm());
+		model.addAttribute("RemoveCategoryForm", new RemoveSubcategoryForm());
+		model.addAttribute("subcategoriesMap", userService.getSubcategoriesMapOfUser(name));
 		return "user-categories";
 	}
 	
@@ -54,6 +59,15 @@ public class CategoryController {
 		String name = principal.getName();		
 		String userNameByCategoryId = userService.findUserNameByCategoryId(category);	
 		categoryService.delete(category, name, userNameByCategoryId);
+		return "redirect:/user-categories.html";
+	}
+	
+	@RequestMapping("/user-categories/removecategory")
+	public String removeCategory(@ModelAttribute("RemoveCategoryForm") RemoveCategoryForm removeCategory, Principal principal){
+		Category category = categoryService.findOne(removeCategory.getCategoryId());
+		String name = principal.getName();		
+		String userNameByCategoryId = userService.findUserNameByCategoryId(category);	
+		categoryService.delete(category, removeCategory.getNewSubcategoryId(), name, userNameByCategoryId);
 		return "redirect:/user-categories.html";
 	}
 	
