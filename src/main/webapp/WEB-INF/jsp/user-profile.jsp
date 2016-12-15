@@ -7,7 +7,7 @@
 	<!-- Default panel contents -->
 		<div class="panel-heading"><h1 class="panel-title">User Profile </h1></div>
 	<div class="panel-body">			
-			<c:if test="${(user.name != 'admin' )}"><a href="<spring:url value="/user-profile/removeprofile/${user.id}.html" />" class="btn btn-danger" type="button">Remove account</a></c:if> 
+			<c:if test="${(user.name != 'admin' )}"><a href="<spring:url value="/user-profile/removeprofile/${user.id}.html" />" class="btn btn-danger triggerRemove" type="button">Remove account</a></c:if> 
 			<a href="<spring:url value="" />" class="btn btn-warning" type="button" data-toggle="modal" data-target="#changePasswordModal">Change password</a>		
 			<a href="<spring:url value="" />" class="btn btn-warning" type="button" data-toggle="modal" data-target="#changeEmailModal">Change e-mail</a>	
 	</div>
@@ -112,8 +112,33 @@
 		</div>
 	</div>
 </form:form>
+
+		<!-- Modal -->
+<div class="modal fade" id="modalRemove" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Remove account</h4>
+      </div>
+      <div class="modal-body">
+        Are you sure?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <a href="" class="btn btn-danger removeBtn">Remove</a>
+      </div>
+    </div>
+  </div>
+</div>
+
  <script>
 $(document).ready(function() {   
+	$(".triggerRemove").click(function(e) {
+		e.preventDefault();
+		$("#modalRemove .removeBtn").attr("href", $(this).attr("href"));
+		$("#modalRemove").modal();
+	});
     $('form').each(function() {  
         $(this).validate({       
         	rules: {							

@@ -80,7 +80,8 @@
 		<tr>
 			<td style="text-align: center;"><b>Name</b></td>
 			<td style="text-align: center;"><b>Permissions</b></td>
-			<td style="text-align: center;"><b>E-mail</b></td>			
+			<td style="text-align: center;"><b>Change Permissions</b></td>	
+			<td style="text-align: center;"><b>Change E-mail</b></td>			
 			<td style="text-align: center;"><b>Rename</b></td>
 			<td style="text-align: center;"><b>Change Password</b></td>
 			<td style="text-align: center;"><b>Remove</b></td>									
@@ -89,6 +90,46 @@
 			<tr>
 				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="/users/${users.id}.html" />"><c:out value="${users.name}" /></a></td>
 				<td style="text-align: center; vertical-align: middle;">${users.permissions}</td>
+				<td style="text-align: center; vertical-align: middle;">
+				<c:if test="${(users.name != 'admin' )}">  
+				<a href="<spring:url value="" />" class="btn btn-warning" type="button" data-toggle="modal" data-target="#changePermissionsModal${users.id}">Change permissions</a></c:if>
+				
+				<form:form mehod="post" modelAttribute="ChangeRolesForm" action="/change-roles.html" cssClass="form-horizontal form">
+<form:hidden path="id" value="${users.id}" />
+	<!-- Modal	 -->
+	<div class="modal fade" id="changePermissionsModal${users.id}" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Cancel">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel" style="text-align: left">Change ${users.name} permissions: </h4>
+				</div>
+				<div class="modal-body">
+									
+		<div class="form-group"	style="text-align: center; width: 600px; margin: 0 auto;">
+						<label for="permissions" class="col-sm-2 control-label">Permissions:</label>
+						<div class="col-sm-10">
+							<form:select class="form-control" path="permissions" style="text-align: left; width: 350px;">		
+							<form:option value="admin">Administrator</form:option>		
+							<form:option value="user">User</form:option>																				
+							</form:select>
+						</div>
+					</div>
+										
+    		</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<input type="submit" class="btn btn-success" value="Change Permissions" />
+				</div>
+			</div>
+		</div>
+	</div>
+</form:form>
+				
+				</td>
 				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="" />" class="btn btn-warning" type="button" data-toggle="modal" data-target="#changeEmailModal${users.id}">Change e-mail</a>
 				
 				<form:form mehod="post" modelAttribute="user" action="/change-email.html" cssClass="form-horizontal form">
@@ -178,7 +219,7 @@
 				
 				</td>
 				<td style="text-align: center; vertical-align: middle;">
-				<c:if test="${(users.name != 'admin' )}"> <a href="<spring:url value="/users/removeuser/${users.id}.html" />" class="btn btn-danger" type="button">Remove</a></c:if>  
+				<c:if test="${(users.name != 'admin' )}"> <a href="<spring:url value="/users/removeuser/${users.id}.html" />" class="btn btn-danger triggerRemove" type="button">Remove</a></c:if>  
 		
 		<form:form mehod="post" modelAttribute="user" action="/renameUser.html" cssClass="form-horizontal form">
 			<form:hidden path="id" value="${users.id}" />
@@ -223,8 +264,32 @@
 	</div>
 	
 
+		<!-- Modal -->
+<div class="modal fade" id="modalRemove" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Remove account</h4>
+      </div>
+      <div class="modal-body">
+        Are you sure?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <a href="" class="btn btn-danger removeBtn">Remove</a>
+      </div>
+    </div>
+  </div>
+</div>
+
     <script>    
 $(document).ready(function() {   
+	$(".triggerRemove").click(function(e) {
+		e.preventDefault();
+		$("#modalRemove .removeBtn").attr("href", $(this).attr("href"));
+		$("#modalRemove").modal();
+	});
     $('form').each(function() {  
         $(this).validate({       
         	rules: {	

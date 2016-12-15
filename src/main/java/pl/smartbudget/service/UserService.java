@@ -32,6 +32,7 @@ import pl.smartbudget.entity.SubcategoryLimit;
 import pl.smartbudget.entity.Transaction;
 import pl.smartbudget.entity.User;
 import pl.smartbudget.forms.AddUserByAdminForm;
+import pl.smartbudget.forms.ChangeRolesForm;
 import pl.smartbudget.repository.AccountRepository;
 import pl.smartbudget.repository.CategoryRepository;
 import pl.smartbudget.repository.RoleRepository;
@@ -432,6 +433,23 @@ public class UserService {
 			userRoles.add(roleRepository.findByName("ROLE_USER"));
 			user.setRoles(userRoles);
 		}
+		
+	}
+
+	public void changeRoles(ChangeRolesForm form) {
+		List<Role> userRoles = new ArrayList<Role>();
+		User user = userRepository.findById(form.getId());
+		user.setRoles(userRoles);
+		if(form.getPermissions().equals("admin")){
+			userRoles.add(roleRepository.findByName("ROLE_ADMIN"));		
+			userRoles.add(roleRepository.findByName("ROLE_USER"));
+		}	
+		else{
+			userRoles.add(roleRepository.findByName("ROLE_USER"));
+		}
+			user.setRoles(userRoles);	
+				
+		userRepository.save(user);
 		
 	}
 	}

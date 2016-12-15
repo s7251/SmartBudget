@@ -43,7 +43,8 @@
 				</td>
 				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="" />" class="btn btn-primary" type="button" data-toggle="modal" data-target="#alignBalance${summary.value.id}">Align Balance</a></td>
 				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="" />" class="btn btn-warning" type="button" data-toggle="modal" data-target="#editAccountModal${summary.value.id}">Rename</a></td>					
-				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="/user-accounts/removeaccount/${summary.key}.html" />" class="btn btn-danger" type="button">Remove</a></td>		
+				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="/user-accounts/removeaccount/${summary.key}.html" />" class="btn btn-danger triggerRemove" type="button">Remove</a></td>		
+
 			<td>			
 			<form:form mehod="post" modelAttribute="AlignBalanceForm" action="/alignBalance.html" cssClass="form-horizontal" id="form">
 			<form:hidden path="accountId" value="${summary.value.id}" />
@@ -267,9 +268,32 @@
 	</div>
 </form:form>
 		
-		
+		<!-- Modal -->
+<div class="modal fade" id="modalRemove" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Remove account</h4>
+      </div>
+      <div class="modal-body">
+        Are you sure?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <a href="" class="btn btn-danger removeBtn">Remove</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
 $(document).ready(function() {
+	$(".triggerRemove").click(function(e) {
+		e.preventDefault();
+		$("#modalRemove .removeBtn").attr("href", $(this).attr("href"));
+		$("#modalRemove").modal();
+	});
 	jQuery.validator.addMethod(
 			"money",
 		    function(value, element) {
