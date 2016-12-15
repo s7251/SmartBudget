@@ -273,7 +273,7 @@
         <h4 class="modal-title" id="myModalLabel">Remove user</h4>
       </div>
       <div class="modal-body">
-        Are you sure?
+        Are you sure? All user data will be removed!
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
