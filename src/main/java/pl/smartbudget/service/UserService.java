@@ -31,6 +31,7 @@ import pl.smartbudget.entity.Subcategory;
 import pl.smartbudget.entity.SubcategoryLimit;
 import pl.smartbudget.entity.Transaction;
 import pl.smartbudget.entity.User;
+import pl.smartbudget.forms.AddUserByAdminForm;
 import pl.smartbudget.repository.AccountRepository;
 import pl.smartbudget.repository.CategoryRepository;
 import pl.smartbudget.repository.RoleRepository;
@@ -128,10 +129,13 @@ public class UserService {
 		userRepository.save(user);
 	}
 	
-	public void saveUserByAdmin(User user) {		
+	public void saveUserByAdmin(User user, AddUserByAdminForm form) {		
 		BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
-		user.setPassword(bcrypt.encode(user.getPassword()));
-				
+		user.setPassword(bcrypt.encode(form.getPass()));
+		user.setName(form.getName());
+		user.setEmail(form.getEmail());
+		user.setEnabled(form.isEnabled());
+		
 		Account account = new Account();
 		account.setUser(user);
 		account.setName("SampleAccount1");
@@ -417,14 +421,14 @@ public class UserService {
 		return user;
 	}
 
-	public void userSetRoles(User user) {
+	public void userSetRoles(User user, AddUserByAdminForm form) {
 		List<Role> userRoles = new ArrayList<Role>();
-		if(user.getPermissions().equals("administrator")){			
+		if(form.getPermissions().equals("administrator")){			
 			userRoles.add(roleRepository.findByName("ROLE_USER"));
 			userRoles.add(roleRepository.findByName("ROLE_ADMIN"));
 			user.setRoles(userRoles);
 		}
-		else if(user.getPermissions().equals("user")){
+		else if(form.getPermissions().equals("user")){
 			userRoles.add(roleRepository.findByName("ROLE_USER"));
 			user.setRoles(userRoles);
 		}

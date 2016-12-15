@@ -9,7 +9,7 @@
 	<div class="panel-body">			
 		<a href="<spring:url value="" />" class="btn btn-primary" type="button" data-toggle="modal" data-target="#addUser">Add user</a>	
 		
-			 <form:form mehod="post" modelAttribute="user" action="/add-user-by-admin.html" cssClass="form-horizontal form">
+			 <form:form mehod="post" modelAttribute="AddUserByAdminForm" action="/add-user-by-admin.html" cssClass="form-horizontal form">
 <form:hidden path="enabled" value="1" />
 	<!-- Modal	 -->
 	<div class="modal fade" id="addUser" tabindex="-1" role="dialog"
@@ -50,17 +50,17 @@
 									
 				<div class="form-group"
 						style="text-align: center; width: 600px; margin: 0 auto;">
-						<label for="password" class="col-sm-2 control-label">Password:</label>
+						<label for="pass" class="col-sm-2 control-label">Password:</label>
 						<div class="col-sm-10">
-							<form:password path="password" cssClass="form-control" style="width: 350px" placeholder="Please type password"	autofocus="autofocus" />
+							<form:password path="pass" id="pass"  cssClass="form-control" style="width: 350px" placeholder="Please type password"	autofocus="autofocus" />
 						</div>
 					</div>
 					
 					<div class="form-group"
 						style="text-align: center; width: 600px; margin: 0 auto;">
-						<label for="password" class="col-sm-2 control-label">Re-type:</label>
+						<label for="pass" class="col-sm-2 control-label">Re-type:</label>
 						<div class="col-sm-10">
-							<input type="password" name="password_again" id="password_again" class="form-control" style="width: 350px" placeholder="Please re-type password"	autofocus="autofocus" />
+							<input type="password" name="pass_again" id="pass_again" class="form-control" style="width: 350px" placeholder="Please re-type password"	autofocus="autofocus" />
 						</div>
 					</div>
     		</div>
@@ -155,7 +155,7 @@
 						style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="password" class="col-sm-2 control-label">Password:</label>
 						<div class="col-sm-10">
-							<form:password path="password" cssClass="form-control" style="width: 350px" placeholder="Please type your new password"	autofocus="autofocus" />
+							<form:input path="password" id="password2"  cssClass="form-control" style="width: 350px" placeholder="Please type password"	autofocus="autofocus" />
 						</div>
 					</div>
 					
@@ -163,7 +163,7 @@
 						style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="password" class="col-sm-2 control-label">Re-type:</label>
 						<div class="col-sm-10">
-							<input type="password" name="password_again" id="password_again" class="form-control" style="width: 350px" placeholder="Please re-type your new password"	autofocus="autofocus" />
+							<input type="text" name="password2_again" id="password2_again" class="form-control" style="width: 350px" placeholder="Please re-type password"	autofocus="autofocus" />
 						</div>
 					</div>
     		</div>
@@ -223,8 +223,7 @@
 	</div>
 	
 
-
-    <script>
+    <script>    
 $(document).ready(function() {   
     $('form').each(function() {  
         $(this).validate({       
@@ -245,15 +244,24 @@ $(document).ready(function() {
 				email: {
 					required : true,
 					email: true,
-				},
-				password: {
+				},				
+				password2: {
 					required : true,
 					minlength : 4,
 				},
-				password_again: {
+				password2_again: {
 					required : true,
 					minlength : 4,
-					equalTo: "#password"
+					equalTo: "#password2"
+				},
+				pass: {
+					required : true,
+					minlength : 4,
+				},
+				pass_again: {
+					required : true,
+					minlength : 4,
+					equalTo: "#pass"
 				},
 			},				
 			highlight: function(element) {
@@ -268,7 +276,9 @@ $(document).ready(function() {
 				},
 				email: {
 					remote: "This e-mail address exist in system!"
-			}
+			},			 
+		
+				
 			}
 			
         });

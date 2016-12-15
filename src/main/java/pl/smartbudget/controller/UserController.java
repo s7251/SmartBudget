@@ -2,8 +2,6 @@ package pl.smartbudget.controller;
 
 import java.security.Principal;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,8 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import pl.smartbudget.entity.Role;
 import pl.smartbudget.entity.User;
+import pl.smartbudget.forms.AddUserByAdminForm;
+import pl.smartbudget.forms.TransactionForm;
 import pl.smartbudget.service.UserService;
 
 @Controller
@@ -33,6 +32,7 @@ public class UserController {
 	@RequestMapping("/users")
 	public String users(Model model, Principal principal) {		
 		String name = principal.getName();
+		model.addAttribute("AddUserByAdminForm", new AddUserByAdminForm());
 		model.addAttribute("users", userService.getUsersWithRoles());
 		model.addAttribute("user", new User());
 		model.addAttribute("loginName", name);	
@@ -87,9 +87,10 @@ public class UserController {
 		}
 	
 	@RequestMapping(value = "/add-user-by-admin", method = RequestMethod.POST)
-	public String addUserByAdmin(@ModelAttribute("user") User user) {		
-		userService.userSetRoles(user);		
-		userService.saveUserByAdmin(user);
+	public String addUserByAdmin(@ModelAttribute("AddUserByAdminForm") AddUserByAdminForm form) {
+		User user = new User();		
+		userService.userSetRoles(user, form);		
+		userService.saveUserByAdmin(user, form);
 		return "redirect:/users.html";
 		}
 	
