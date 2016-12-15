@@ -7,7 +7,7 @@
 	<!-- Default panel contents -->
 		<div class="panel-heading"><h1 class="panel-title">User Profile </h1></div>
 	<div class="panel-body">			
-			<c:if test="${(user.name != 'admin' )}"><a href="<spring:url value="/user-profile/removeprofile/${user.id}.html" />" class="btn btn-danger triggerRemove" type="button">Remove account</a></c:if> 
+			<c:if test="${(user.name != 'admin' )}"><a href="<spring:url value="/user-profile/removeprofile/${user.id}.html" />" class="btn btn-danger triggerRemove" type="button">Remove profile</a></c:if> 
 			<a href="<spring:url value="" />" class="btn btn-warning" type="button" data-toggle="modal" data-target="#changePasswordModal">Change password</a>		
 			<a href="<spring:url value="" />" class="btn btn-warning" type="button" data-toggle="modal" data-target="#changeEmailModal">Change e-mail</a>	
 	</div>
