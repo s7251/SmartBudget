@@ -25,8 +25,8 @@
 
 <nav>
   <ul class="pager">
-    <li class="previous"><a href="<spring:url value="/user-transactions/${prevMonthNav}.html" />"><span aria-hidden="true">&larr;</span> Previous Month</a></li>     
-    <li class="next"><a href="<spring:url value="/user-transactions/${nextMonthNav}.html"/>">Next Month <span aria-hidden="true">&rarr;</span></a></li>
+    <li class="previous"><a href="<spring:url value="/user-transactions/${prevMonthNav}" />"><span aria-hidden="true">&larr;</span> Previous Month</a></li>     
+    <li class="next"><a href="<spring:url value="/user-transactions/${nextMonthNav}"/>">Next Month <span aria-hidden="true">&rarr;</span></a></li>
   </ul>
 </nav>
 <c:if test="${not empty subcategoriesForecast}">
@@ -51,13 +51,13 @@
 	
 		<ul class="nav nav-tabs">
 	<c:if test="${firstView!=true}">  
-  <li role="presentation"><a href="/user-transactions/${date}.html">All accounts</a></li>
+  <li role="presentation"><a href="/user-transactions/${date}">All accounts</a></li>
   </c:if>
   <c:if test="${firstView==true}">  
-  <li role="presentation"><a href="/user-transactions.html">All accounts</a></li>
+  <li role="presentation"><a href="/user-transactions">All accounts</a></li>
   </c:if>
   <c:forEach items="${accountsMap}" var="accountsMap"> 
-  <li role="presentation" ><a href="/user-transactions/${date}/${accountsMap.key}.html" > ${accountsMap.value} </a></li>
+  <li role="presentation" ><a href="/user-transactions/${date}/${accountsMap.key}" > ${accountsMap.value} </a></li>
 
    </c:forEach>
 
@@ -116,10 +116,11 @@
 
    <c:if test="${(userTransactions.type == 'expense' || userTransactions.type == 'income')}">  
      <li><a href="<spring:url value="" />" data-toggle="modal" data-target="#editTransaction${userTransactions.id}">Edit</a></li> 
+     <li><a href="<spring:url value="" />" data-toggle="modal" data-target="#splitTransaction${userTransactions.id}">Split</a></li> 
        </c:if>      
  
     <li role="separator" class="divider"></li>
-    <li><a href="<spring:url value="/user-transactions/removetransaction/${userTransactions.id}/${date}${actualMonth}.html" />" >Remove</a></li>    
+    <li><a href="<spring:url value="/user-transactions/removetransaction/${userTransactions.id}/${date}${actualMonth}" />" >Remove</a></li>    
  
   </ul>
 </div>
@@ -127,7 +128,39 @@
 			
 			<td width="0%">
 			
-			<form:form mehod="post" modelAttribute="TransactionForm" action="/editTransaction/${date}.html" cssClass="form-horizontal">
+<div class="modal fade" id="splitTransaction${userTransactions.id}" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Split transaction:</h4>
+      </div>
+      <div class="modal-body">
+
+
+<form>
+	<div class="form-group"	style="text-align: center; width: 600px; margin: 0 auto;">
+					
+						<div class="col-sm-10">
+							<label for="memo"  class="col-sm-2 control-label ">Memo:</label>
+							<input type="text" class="form-control" style="width: 350px" id="memo" autofocus="autofocus" />
+						</div>
+					</div></form>
+					
+					<br><br>
+							
+
+      </div>
+    <div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<input type="submit" id="add" class="btn btn-success" value="Post" />
+					<input type="submit" id="get" class="btn btn-success" value="Get" />
+				</div>
+    </div>
+  </div>
+</div>
+			
+			<form:form mehod="post" modelAttribute="TransactionForm" action="/editTransaction/${date}" cssClass="form-horizontal">
 			<form:hidden path="id" value="${userTransactions.id}" />
 	<!-- Modal -->
 	<div class="modal fade" id="editTransaction${userTransactions.id}" tabindex="-1" role="dialog"
@@ -232,7 +265,7 @@
 </div>
 
 
-<form:form modelAttribute="TransactionForm" action="/user-transactions/${date}/${accountId}.html" cssClass="form-horizontal" id="form">
+<form:form modelAttribute="TransactionForm" action="/user-transactions/${date}/${accountId}" cssClass="form-horizontal" id="form">
 	<!-- Modal -->
 	<div class="modal fade" id="addTransactionModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
@@ -312,7 +345,7 @@
 	
 </form:form>
 
-<form:form mehod="post" modelAttribute="InternalTransferForm" action="/internalTransferFormTransactions.html" cssClass="form-horizontal" id="form">
+<form:form mehod="post" modelAttribute="InternalTransferForm" action="/internalTransferFormTransactions" cssClass="form-horizontal" id="form">
 	<!-- Modal -->
 	<div class="modal fade" id="internalTransferModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
@@ -451,6 +484,44 @@ $(document).ready(function() {
         });
     });
 
+    
+    $( "#add" ).click(function() {
+    	var memo = $("#memo").val();
+    	var data = {memo : memo, amount : 100};
+    	
+    	//Ajax sample
+        $.ajax({
+            headers: { 
+                'Accept': 'application/json',
+                'Content-Type': 'application/json' 
+            },
+            'type': 'POST',
+            'url': '/user-subtransaction/add.html',
+            'data': JSON.stringify(data),
+            'dataType': 'json',
+            'success' : function() {
+        	    alert( "Data Saved");
+        	} 
+        });
+    });
+    
+    $( "#get" ).click(function() {
+    	
+    	//Ajax sample
+        $.ajax({
+            headers: { 
+                'Accept': 'application/json',
+                'Content-Type': 'application/json' 
+            },
+            'type': 'GET',
+            'url': '/user-subtransaction/getData',       
+            'dataType': 'json',
+            'success' : function() {
+        	    alert( "Recieved data");
+        	} 
+        });
+    });
+   
 });
 </script>
 

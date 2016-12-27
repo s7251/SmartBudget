@@ -412,8 +412,7 @@ public class UserService {
 	public User getUserByNameWithRoles(String name) {		
 		User user = userRepository.findByName(name);
 		user.setPermissions("User");		
-			user.setRoles(roleRepository.getRolesByUser(user.getName()));
-			user.setPermissions("Administrator");
+			user.setRoles(roleRepository.getRolesByUser(user.getName()));			
 			for(Role role : roleRepository.getRolesByUser(user.getName())){
 				if(role.getName().equals("ROLE_ADMIN")){					
 					user.setPermissions("Administrator");

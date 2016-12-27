@@ -6,6 +6,7 @@
 		<class>pl.smartbudget.entity.Category</class>
 		<class>pl.smartbudget.entity.Subcategory</class>
 		<class>pl.smartbudget.entity.Transaction</class>
+		<class>pl.smartbudget.entity.Subtransaction</class>
 		<class>pl.smartbudget.entity.Account</class>
 		<class>pl.smartbudget.entity.SubcategoryLimit</class>
 	</persistence-unit>

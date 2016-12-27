@@ -51,7 +51,7 @@ public class ReportController {
 	@RequestMapping(value = "/report-incomes-by-categories", method = RequestMethod.POST)
 	public String incomeReport(@ModelAttribute("ReportForm") ReportForm report)	 {
 		String date = report.getDate();
-    	return "redirect:/report-incomes-by-categories/"+date+".html";				
+    	return "redirect:/report-incomes-by-categories/"+date;				
 	}
 	
 	@RequestMapping("/report-expenses-by-categories/{date}")
@@ -67,7 +67,7 @@ public class ReportController {
 	@RequestMapping(value = "/report-expenses-by-categories", method = RequestMethod.POST)
 	public String expenseReport(@ModelAttribute("ReportForm") ReportForm report)	 {
 		String date = report.getDate();
-    	return "redirect:/report-expenses-by-categories/"+date+".html";				
+    	return "redirect:/report-expenses-by-categories/"+date;				
 	}
 	
 	@RequestMapping("/report-incomes-in-time/{date}")
@@ -82,7 +82,7 @@ public class ReportController {
 	@RequestMapping(value = "/report-incomes-in-time", method = RequestMethod.POST)
 	public String incomeInTime(@ModelAttribute("ReportForm") ReportForm report)	 {
 		String date = report.getDate();
-    	return "redirect:/report-incomes-in-time/"+date+".html";				
+    	return "redirect:/report-incomes-in-time/"+date;				
 	}
 	
 	@RequestMapping("/report-expenses-in-time/{date}")
@@ -97,7 +97,7 @@ public class ReportController {
 	@RequestMapping(value = "/report-expenses-in-time", method = RequestMethod.POST)
 	public String expenseInTime(@ModelAttribute("ReportForm") ReportForm report)	 {
 		String date = report.getDate();
-    	return "redirect:/report-expenses-in-time/"+date+".html";				
+    	return "redirect:/report-expenses-in-time/"+date;				
 	}
 	
 	@RequestMapping(value = "/csv-report-incomes-in-time/{date}")

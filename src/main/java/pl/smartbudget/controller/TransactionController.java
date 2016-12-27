@@ -101,42 +101,42 @@ public class TransactionController {
 		Transaction transaction = transactionService.findOne(id);
 		String userNameByTransactionId = userService.findUserNameByTransactionId(transaction);		
 		transactionService.delete(transaction, name, date, userNameByTransactionId);
-		return "redirect:/user-transactions.html";
+		return "redirect:/user-transactions";
 	}
 
 	@RequestMapping(value = "/user-transactions", method = RequestMethod.POST)
 	public String addTransaction(@ModelAttribute("TransactionForm") TransactionForm transaction, Principal principal)	throws ParseException {
 		String name = principal.getName();
 		transactionService.save(transaction, name);
-		return "redirect:/user-transactions.html";
+		return "redirect:/user-transactions";
 	}
 	
 	@RequestMapping(value = "/user-transactions/{date}", method = RequestMethod.POST)
 	public String addTransaction(@ModelAttribute("TransactionForm") TransactionForm transaction, Principal principal, @PathVariable String date)	throws ParseException {
 		String name = principal.getName();
 		transactionService.save(transaction, name);
-		return "redirect:/user-transactions/{date}.html";				
+		return "redirect:/user-transactions/{date}";				
 	}
 	
 	@RequestMapping(value = "/user-transactions/{date}/{accountId}", method = RequestMethod.POST)
 	public String addTransaction(@ModelAttribute("TransactionForm") TransactionForm transaction, Principal principal, @PathVariable String date, @PathVariable int accountId)	throws ParseException {
 		String name = principal.getName();
 		transactionService.save(transaction, name);
-		return "redirect:/user-transactions/{date}/{accountId}.html";				
+		return "redirect:/user-transactions/{date}/{accountId}";				
 	}
 	
 	@RequestMapping(value = "/editTransaction/{date}", method = RequestMethod.POST)
 	public String editTransaction(@ModelAttribute("TransactionForm") TransactionForm transaction, Principal principal, @PathVariable String date)	throws ParseException {
 		String name = principal.getName();
 		transactionService.edit(transaction, name);
-		return "redirect:/user-transactions/{date}.html";
+		return "redirect:/user-transactions/{date}";
 	}
 	
 	@RequestMapping(value = "/internalTransferFormTransactions", method = RequestMethod.POST)
 	public String internalTransfer(@ModelAttribute("InternalTransferForm") InternalTransferForm internalTransferForm, Principal principal)	throws ParseException {
 		String name = principal.getName();
 		transactionService.saveInternalTransfer(internalTransferForm, name);
-		return "redirect:/user-transactions.html";
+		return "redirect:/user-transactions";
 	}	
 		
 	}

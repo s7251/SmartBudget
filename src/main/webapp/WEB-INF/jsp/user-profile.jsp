@@ -7,7 +7,7 @@
 	<!-- Default panel contents -->
 		<div class="panel-heading"><h1 class="panel-title">User Profile </h1></div>
 	<div class="panel-body">			
-			<c:if test="${(user.name != 'admin' )}"><a href="<spring:url value="/user-profile/removeprofile/${user.id}.html" />" class="btn btn-danger triggerRemove" type="button">Remove profile</a></c:if> 
+			<c:if test="${(user.name != 'admin' )}"><a href="<spring:url value="/user-profile/removeprofile/${user.id}" />" class="btn btn-danger triggerRemove" type="button">Remove profile</a></c:if> 
 			<a href="<spring:url value="" />" class="btn btn-warning" type="button" data-toggle="modal" data-target="#changePasswordModal">Change password</a>		
 			<a href="<spring:url value="" />" class="btn btn-warning" type="button" data-toggle="modal" data-target="#changeEmailModal">Change e-mail</a>	
 	</div>
@@ -34,7 +34,7 @@
 </div>
 
 
-<form:form mehod="post" modelAttribute="user" action="/change-password-from-profile.html" cssClass="form-horizontal form">
+<form:form mehod="post" modelAttribute="user" action="/change-password-from-profile" cssClass="form-horizontal form">
 <form:hidden path="id" value="${user.id}" />
 <form:hidden path="name" value="${user.name}" />
 <form:hidden path="email" value="${user.email}" />
@@ -77,7 +77,7 @@
 	</div>
 </form:form>
 
-<form:form mehod="post" modelAttribute="user" action="/change-email-from-profile.html" cssClass="form-horizontal form">
+<form:form mehod="post" modelAttribute="user" action="/change-email-from-profile" cssClass="form-horizontal form">
 <form:hidden path="id" value="${user.id}" />
 <form:hidden path="name" value="${user.name}" />
 <form:hidden path="password" value="${user.password}" />

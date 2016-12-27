@@ -9,7 +9,7 @@
 
         
         <br><br>
-       <a href='<spring:url value="/user-login.html"/>'><span style="font-size:10.5em;" class="glyphicon glyphicon-piggy-bank"></span> </a>
-         <p><b><a href='<spring:url value="/user-register.html"/>'>Create an account</a></b> or <b> <a href='<spring:url value="/user-login.html"/>'>sign in</a></b></p>
+       <a href='<spring:url value="/user-login"/>'><span style="font-size:10.5em;" class="glyphicon glyphicon-piggy-bank"></span> </a>
+         <p><b><a href='<spring:url value="/user-register"/>'>Create an account</a></b> or <b> <a href='<spring:url value="/user-login"/>'>sign in</a></b></p>
       </div>
     </div>

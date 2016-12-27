@@ -27,13 +27,13 @@ public class SubcategoryController {
 	@RequestMapping(value = "/addSubcategory", method = RequestMethod.POST)
 	public String addSubcategory(@ModelAttribute("subcategory") SubcategoryForm subcategory) {		
 		subcategoryService.save(subcategory);
-		return "redirect:/user-categories.html";
+		return "redirect:/user-categories";
 	}
 	
 	@RequestMapping(value = "/renameSubcategory", method = RequestMethod.POST)
 	public String renameSubcategory(@ModelAttribute("subcategory") SubcategoryForm subcategory) {		
 		subcategoryService.rename(subcategory);
-		return "redirect:/user-categories.html";
+		return "redirect:/user-categories";
 	}
 	
 	@RequestMapping("/user-categories/removesubcategory/{id}")
@@ -41,7 +41,7 @@ public class SubcategoryController {
 		Subcategory subcategory = subcategoryService.findOne(id);		
 		String userNameBySubcategoryId = userService.findUserNameBySubcategoryId(subcategory);	
 		subcategoryService.delete(id, userNameBySubcategoryId);
-		return "redirect:/user-categories.html";
+		return "redirect:/user-categories";
 	}
 	
 	@RequestMapping("/user-categories/removesubcategory")
@@ -49,7 +49,7 @@ public class SubcategoryController {
 		Subcategory subcategory = subcategoryService.findOne(removeSubcategory.getSubcategoryId());		
 		String userNameBySubcategoryId = userService.findUserNameBySubcategoryId(subcategory);	
 		subcategoryService.delete(removeSubcategory.getSubcategoryId(), removeSubcategory.getNewSubcategoryId(), userNameBySubcategoryId);
-		return "redirect:/user-categories.html";
+		return "redirect:/user-categories";
 	}
 
 

@@ -37,6 +37,6 @@ public class LoginController {
 	@RequestMapping(value = "/reset-password", method = RequestMethod.POST)
 	public String resetPassword(@ModelAttribute("ResetPasswordForm") ResetPasswordForm resetPasswordForm)	throws ParseException {		
 		userService.ResetPassword(resetPasswordForm.getName(), resetPasswordForm.getEmail());
-		return "redirect:/user-login.html";
+		return "redirect:/user-login";
 	}	
 }

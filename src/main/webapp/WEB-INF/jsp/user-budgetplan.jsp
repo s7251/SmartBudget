@@ -13,8 +13,8 @@
  </head>
 <nav>
   <ul class="pager">
-    <li class="previous"><a href="<spring:url value="/user-budgetplan/${prevMonthNav}.html" />"><span aria-hidden="true">&larr;</span> Previous Month</a></li>     
-    <li class="next"><a href="<spring:url value="/user-budgetplan/${nextMonthNav}.html"/>">Next Month <span aria-hidden="true">&rarr;</span></a></li>
+    <li class="previous"><a href="<spring:url value="/user-budgetplan/${prevMonthNav}" />"><span aria-hidden="true">&larr;</span> Previous Month</a></li>     
+    <li class="next"><a href="<spring:url value="/user-budgetplan/${nextMonthNav}"/>">Next Month <span aria-hidden="true">&rarr;</span></a></li>
   </ul>
 </nav>
 <div class="panel panel-default">
@@ -54,7 +54,7 @@
 				<c:forEach items="${subcategory.subcategoryLimits}" var="subcategorylimits">
 				<fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${subcategorylimits.amount}" type="currency" currencySymbol="zł" pattern=" #,##0.00 ¤; -#,##0.00 ¤"/> 
 								
-				<form:form mehod="post" modelAttribute="subcategorylimit" action="/changeSubcategoryLimit.html" cssClass="form-horizontal" id="form">		
+				<form:form mehod="post" modelAttribute="subcategorylimit" action="/changeSubcategoryLimit" cssClass="form-horizontal" id="form">		
 		<form:hidden path="subcategoryId" value="${subcategory.id}" />
 		<form:hidden path="id" value="${subcategorylimits.id}" />
 		<c:if test="${not empty date}"><form:hidden path="date" value="${date}" /></c:if>
@@ -103,15 +103,15 @@
 <td style="text-align: center; vertical-align: middle;">
 
 <c:if test="${fn:length(subcategory.subcategoryLimits) == 0 }">
-<a href="<spring:url value="/user-budgetplan/addsubcategorylimit/${subcategory.id}.html" />" class="btn btn-primary" type="button"  data-toggle="modal" data-target="#addSubcategoryLimitModal${subcategory.id}">Set Budget</a>	
+<a href="<spring:url value="/user-budgetplan/addsubcategorylimit/${subcategory.id}" />" class="btn btn-primary" type="button"  data-toggle="modal" data-target="#addSubcategoryLimitModal${subcategory.id}">Set Budget</a>	
 	</c:if>		</td>	
 
 				<td style="text-align: center; vertical-align: middle;">
 					<c:if test="${fn:length(subcategory.subcategoryLimits) > 0 }">
-				<a href="<spring:url value="/user-budgetplan/changesubcategorylimit/${subcategory.id}.html" />" class="btn btn-primary" type="button"  data-toggle="modal" data-target="#changeSubcategoryLimitModal${subcategory.id}">Change Budget</a>	
+				<a href="<spring:url value="/user-budgetplan/changesubcategorylimit/${subcategory.id}" />" class="btn btn-primary" type="button"  data-toggle="modal" data-target="#changeSubcategoryLimitModal${subcategory.id}">Change Budget</a>	
 				</c:if>						
 				
-		<form:form mehod="post" modelAttribute="subcategorylimit" action="/addSubcategoryLimit.html" cssClass="form-horizontal" id="form">		
+		<form:form mehod="post" modelAttribute="subcategorylimit" action="/addSubcategoryLimit" cssClass="form-horizontal" id="form">		
 		<form:hidden path="subcategoryId" value="${subcategory.id}" />		
 		<c:if test="${not empty date}"><form:hidden path="date" value="${date}" /></c:if>
  		<c:if test="${empty date}"><form:hidden path="date" value="${actualMonth}" /></c:if>

@@ -43,11 +43,11 @@
 	<input type="text" name="j_username" class="form-control" placeholder="Please enter name" required autofocus> 
 	<input type="password" name="j_password" class="form-control" placeholder="Please enter password" required> 
 	<button class="btn btn-primary btn-block" type="submit">Sign in</button>
-	<a href="<spring:url value="xxx.html" />" data-toggle="modal" data-target="#resetPasswordModal"><br>Forgot password?</a>
+	<a href="<spring:url value="xxx" />" data-toggle="modal" data-target="#resetPasswordModal"><br>Forgot password?</a>
 </form>
 
 
-<form:form mehod="post" modelAttribute="ResetPasswordForm" action="/reset-password.html" cssClass="form-horizontal form">
+<form:form mehod="post" modelAttribute="ResetPasswordForm" action="/reset-password" cssClass="form-horizontal form">
 
 
 	<!-- Modal	 -->

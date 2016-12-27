@@ -1,12 +1,15 @@
 package pl.smartbudget.entity;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -33,20 +36,15 @@ public class Transaction {
 	@ManyToOne
 	@JoinColumn(name = "subcategory_id")
 	private Subcategory subcategory;
+	
+	@OneToMany(mappedBy = "transaction", cascade = CascadeType.REMOVE)
+	private List<Subtransaction> subtransactions;
 
 	public Transaction() {
 	}
 
 	public Transaction(double amount, String type) {
 		this.amount = amount;
-		this.type = type;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
 		this.type = type;
 	}
 
@@ -64,6 +62,14 @@ public class Transaction {
 
 	public void setMemo(String memo) {
 		this.memo = memo;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public double getAmount() {
@@ -97,5 +103,15 @@ public class Transaction {
 	public void setSubcategory(Subcategory subcategory) {
 		this.subcategory = subcategory;
 	}
+
+	public List<Subtransaction> getSubtransactions() {
+		return subtransactions;
+	}
+
+	public void setSubtransactions(List<Subtransaction> subtransactions) {
+		this.subtransactions = subtransactions;
+	}
+
+	
 
 }

@@ -7,8 +7,8 @@
 	<!-- Default panel contents -->
 		<div class="panel-heading"><h1 class="panel-title">Incomes by subcategories  </h1></div>
 		<div class="panel-body" >
-<a href="<spring:url value="/user-reports.html" />" class="btn btn-primary" type="button" >Back</a>
-<a href="<spring:url value="/csv-report-incomes-in-time/${date}.html" />" class="btn btn-primary" type="button" >Download CSV</a>
+<a href="<spring:url value="/user-reports" />" class="btn btn-primary" type="button" >Back</a>
+<a href="<spring:url value="/csv-report-incomes-in-time/${date}" />" class="btn btn-primary" type="button" >Download CSV</a>
 
 	
 	</div>
@@ -84,7 +84,7 @@
             var selectedItem = chart.getSelection()[0];
             if (selectedItem) {
               var topping = data.getValue(selectedItem.row, 0);
-               window.location.href= 'http://localhost:8080/user-transactions/' +topping+'.html';
+               window.location.href= 'http://localhost:8080/user-transactions/' +topping+'';
             }
           }
 

@@ -44,18 +44,18 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>            
-            <a class="navbar-brand" href=""><span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></span>  Smart Budget     
+            <a class="navbar-brand" href="/user-transactions"><span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></span>  Smart Budget     
             
             </a>
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                <security:authorize access="hasRole('ROLE_USER')">    
-              <li class="${current == 'user-transactions' ? 'active' : ''}"><a href='<spring:url value="/user-transactions.html"/>'>Transactions</a></li>
-              <li class="${current == 'user-accounts' ? 'active' : ''}"><a href='<spring:url value="/user-accounts.html"/>'>Accounts</a></li>
-              <li class="${current == 'user-categories' ? 'active' : ''}"><a href='<spring:url value="/user-categories.html"/>'>Categories</a></li>              
-              <li class="${current == 'user-budgetplan' ? 'active' : ''}"><a href='<spring:url value="/user-budgetplan.html"/>'>Budget Plan</a></li>                
-               <li class="${current == 'user-reports' ? 'active' : ''}"><a href='<spring:url value="/user-reports.html"/>'>Reports</a></li>                 
+              <li class="${current == 'user-transactions' ? 'active' : ''}"><a href='<spring:url value="/user-transactions"/>'>Transactions</a></li>
+              <li class="${current == 'user-accounts' ? 'active' : ''}"><a href='<spring:url value="/user-accounts"/>'>Accounts</a></li>
+              <li class="${current == 'user-categories' ? 'active' : ''}"><a href='<spring:url value="/user-categories"/>'>Categories</a></li>              
+              <li class="${current == 'user-budgetplan' ? 'active' : ''}"><a href='<spring:url value="/user-budgetplan"/>'>Budget Plan</a></li>                
+               <li class="${current == 'user-reports' ? 'active' : ''}"><a href='<spring:url value="/user-reports"/>'>Reports</a></li>                 
                </security:authorize> 
             
             </ul>
@@ -64,16 +64,16 @@
               
 
            <security:authorize access="isAuthenticated()">
-            <li class="${current == 'user-profile' ? 'active' : ''}"><a href="/user-profile.html"><span class="glyphicon glyphicon-user"></span> Hi <b>${user.name}${loginName}!</b></a></li>   
+            <li class="${current == 'user-profile' ? 'active' : ''}"><a href="/user-profile"><span class="glyphicon glyphicon-user"></span> Hi <b>${user.name}${loginName}!</b></a></li>   
                <security:authorize access="hasRole('ROLE_ADMIN')">              
-              <li class="${current == 'users' ? 'active' : ''}"><a href='<spring:url value="/users.html"/>'><span class="glyphicon glyphicon-cog"></span> Manage Users</a></li>     
+              <li class="${current == 'users' ? 'active' : ''}"><a href='<spring:url value="/users"/>'><span class="glyphicon glyphicon-cog"></span> Manage Users</a></li>     
        	      </security:authorize>   
            <li><a href="<spring:url value="/logout"/>"><span class="glyphicon glyphicon-log-out"></span> Sign Out </a></li>
             </security:authorize>           
            
            <security:authorize access="! isAuthenticated()">
-                       <li class="${current == 'user-register' ? 'active' : ''}"><a href='<spring:url value="/user-register.html"/>'><span class="glyphicon glyphicon-user"></span> Create account</a></li>
-                  <li class="${current == 'user-login' ? 'active' : ''}"><a href='<spring:url value="/user-login.html"/>'><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
+                       <li class="${current == 'user-register' ? 'active' : ''}"><a href='<spring:url value="/user-register"/>'><span class="glyphicon glyphicon-user"></span> Create account</a></li>
+                  <li class="${current == 'user-login' ? 'active' : ''}"><a href='<spring:url value="/user-login"/>'><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
            </security:authorize>
             </ul>
           </div><!--/.nav-collapse -->

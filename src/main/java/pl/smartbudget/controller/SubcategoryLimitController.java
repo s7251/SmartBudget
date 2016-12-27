@@ -56,13 +56,13 @@ public class SubcategoryLimitController {
 	@RequestMapping(value = "/changeSubcategoryLimit", method = RequestMethod.POST)
 	public String changeSubcategoryLimit(@ModelAttribute("subcategorylimit") SubcategoryLimitForm subcategoryLimitForm)	throws ParseException {
 		subcategoryLimitService.change(subcategoryLimitForm);
-		return "redirect:/user-budgetplan.html";
+		return "redirect:/user-budgetplan";
 	}	
 	
 	@RequestMapping(value = "/addSubcategoryLimit", method = RequestMethod.POST)
 	public String addSubcategoryLimit(@ModelAttribute("subcategorylimit") SubcategoryLimitForm subcategoryLimitForm)	throws ParseException {
 		subcategoryLimitService.add(subcategoryLimitForm);
-		return "redirect:/user-budgetplan.html";
+		return "redirect:/user-budgetplan";
 	}	
 
 }

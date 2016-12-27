@@ -53,7 +53,7 @@ $(document).ready(function() {
 					required : true,
 					minlength : 4,	
 					remote : {
-						url: "<spring:url value='/user-available.html' />",
+						url: "<spring:url value='/user-available' />",
 						type: "get",
 						data: {
 							name: function() {
@@ -66,7 +66,7 @@ $(document).ready(function() {
 					required : true,
 					email: true,
 // 					remote : {
-// 						url: "<spring:url value='/email-available.html' />",
+// 						url: "<spring:url value='/email-available' />",
 // 						type: "get",
 // 						data: {
 // 							name: function() {

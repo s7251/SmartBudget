@@ -7,7 +7,7 @@
 	<!-- Default panel contents -->
 		<div class="panel-heading"><h1 class="panel-title">Account forecast for future months </h1></div>
 		<div class="panel-body" >
-<a href="<spring:url value="/user-accounts.html" />" class="btn btn-primary" type="button" >Back</a>
+<a href="<spring:url value="/user-accounts" />" class="btn btn-primary" type="button" >Back</a>
 
 	</div>
 <table class="table">

@@ -36,7 +36,7 @@
   
 
 
-<form:form mehod="post" modelAttribute="ReportForm" action="/report-incomes-by-categories.html" cssClass="form-horizontal">
+<form:form mehod="post" modelAttribute="ReportForm" action="/report-incomes-by-categories" cssClass="form-horizontal">
 	<!-- Modal -->	
 	<div class="modal fade" id="incomeReport" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
@@ -55,7 +55,7 @@
 						<label for="name" class="col-sm-2 control-label">Date:</label>
 						<div class="col-sm-8">
 						 <div class="input-group input-append date" >
-                <form:input type="text" class="form-control datePicker2" placeholder="MM.RRRR" path="date" />
+                <form:input type="text" class="form-control datePicker2" placeholder="MM-RRRR" path="date" />
                 <span class="input-group-addon add-on" ><span class="glyphicon glyphicon-calendar"></span></span>
             </div>
 						</div>
@@ -72,7 +72,7 @@
 	</div>
 </form:form>
 
-<form:form mehod="post" modelAttribute="ReportForm" action="/report-expenses-by-categories.html" cssClass="form-horizontal">
+<form:form mehod="post" modelAttribute="ReportForm" action="/report-expenses-by-categories" cssClass="form-horizontal">
 	<!-- Modal -->	
 	<div class="modal fade" id="expenseReport" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
@@ -91,7 +91,7 @@
 						<label for="name" class="col-sm-2 control-label">Date:</label>
 						<div class="col-sm-8">
 							   <div class="input-group input-append date">
-                <form:input type="text" class="form-control datePicker2" placeholder="MM.RRRR" path="date" />
+                <form:input type="text" class="form-control datePicker2" placeholder="MM-RRRR" path="date" />
                 <span class="input-group-addon add-on" ><span class="glyphicon glyphicon-calendar"></span></span>
             </div>
 						</div>
@@ -109,7 +109,7 @@
 </form:form>
 
 
-<form:form mehod="post" modelAttribute="ReportForm" action="/report-incomes-in-time.html" cssClass="form-horizontal">
+<form:form mehod="post" modelAttribute="ReportForm" action="/report-incomes-in-time" cssClass="form-horizontal">
 	<!-- Modal -->	
 	<div class="modal fade" id="incomeInTimeReport" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
@@ -145,7 +145,7 @@
 	</div>
 </form:form>
 
-<form:form mehod="post" modelAttribute="ReportForm" action="/report-expenses-in-time.html" cssClass="form-horizontal">
+<form:form mehod="post" modelAttribute="ReportForm" action="/report-expenses-in-time" cssClass="form-horizontal">
 	<!-- Modal	 -->
 	<div class="modal fade" id="expenseInTimeReport" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
@@ -188,7 +188,7 @@ $(document).ready(function() {
         })      
         $('.datePicker2')
         .datepicker({
-            format: 'mm.yyyy',
+            format: 'mm-yyyy',
             minViewMode: 1,
         })      
     $('form').each(function() {  

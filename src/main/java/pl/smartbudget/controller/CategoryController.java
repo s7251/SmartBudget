@@ -43,14 +43,14 @@ public class CategoryController {
 	public String addCategory(@ModelAttribute("category") Category category, Principal principal)	throws ParseException {
 		String name = principal.getName();
 		categoryService.save(category, name);
-		return "redirect:/user-categories.html";
+		return "redirect:/user-categories";
 	}
 
 	@RequestMapping(value = "/renameCategory", method = RequestMethod.POST)
 	public String renameCategory(@ModelAttribute("category") Category category, Principal principal)	throws ParseException {
 		String name = principal.getName();
 		categoryService.save(category, name);
-		return "redirect:/user-categories.html";
+		return "redirect:/user-categories";
 	}
 	
 	@RequestMapping("/user-categories/removecategory/{id}")
@@ -59,7 +59,7 @@ public class CategoryController {
 		String name = principal.getName();		
 		String userNameByCategoryId = userService.findUserNameByCategoryId(category);	
 		categoryService.delete(category, name, userNameByCategoryId);
-		return "redirect:/user-categories.html";
+		return "redirect:/user-categories";
 	}
 	
 	@RequestMapping("/user-categories/removecategory")
@@ -68,7 +68,7 @@ public class CategoryController {
 		String name = principal.getName();		
 		String userNameByCategoryId = userService.findUserNameByCategoryId(category);	
 		categoryService.delete(category, removeCategory.getNewSubcategoryId(), name, userNameByCategoryId);
-		return "redirect:/user-categories.html";
+		return "redirect:/user-categories";
 	}
 	
 }

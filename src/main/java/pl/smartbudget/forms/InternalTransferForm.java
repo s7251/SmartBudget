@@ -22,7 +22,7 @@ public class InternalTransferForm {
 		return memo;
 	}
 
-	public void setName(String memo) {
+	public void setMemo(String memo) {
 		this.memo = memo;
 	}
 

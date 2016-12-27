@@ -48,14 +48,14 @@ public class AccountController {
 	public String addAccount(@ModelAttribute("account") Account account, Principal principal)	throws ParseException {
 		String name = principal.getName();
 		accountService.save(account, name);
-		return "redirect:/user-accounts.html";
+		return "redirect:/user-accounts";
 	}
 	
 	@RequestMapping(value = "/renameAccount", method = RequestMethod.POST)
 	public String renameAccount(@ModelAttribute("account") Account account, Principal principal)	throws ParseException {
 		String name = principal.getName();
 		accountService.save(account, name);
-		return "redirect:/user-accounts.html";
+		return "redirect:/user-accounts";
 	}
 	
 	@RequestMapping("/user-accounts/removeaccount/{id}")
@@ -63,21 +63,21 @@ public class AccountController {
 		Account account = accountService.findOne(id);
 		String name = principal.getName();
 		accountService.delete(account, name);
-		return "redirect:/user-accounts.html";
+		return "redirect:/user-accounts";
 	}
 		
 	@RequestMapping(value = "/alignBalance", method = RequestMethod.POST)
 	public String alignBalance(@ModelAttribute("AlignBalanceForm") AlignBalanceForm alignBalanceForm, Principal principal)	throws ParseException {
 		String name = principal.getName();
 		transactionService.saveAlignBalance(alignBalanceForm, name);
-		return "redirect:/user-transactions.html";
+		return "redirect:/user-transactions";
 	}	
 	
 	@RequestMapping(value = "/internalTransfer", method = RequestMethod.POST)
 	public String internalTransfer(@ModelAttribute("InternalTransferForm") InternalTransferForm internalTransferForm, Principal principal)	throws ParseException {
 		String name = principal.getName();
 		transactionService.saveInternalTransfer(internalTransferForm, name);
-		return "redirect:/user-transactions.html";
+		return "redirect:/user-transactions";
 	}	
 	
 	@RequestMapping("/account-forecast/{id}")

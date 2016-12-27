@@ -39,14 +39,14 @@
 				<td style="text-align: center; vertical-align: middle;">${summary.value.name}</td>
 				<td style="text-align: center; vertical-align: middle;"><fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${summary.value.summaryOfAccount}" type="currency" currencySymbol="zł" pattern=" #,##0.00 ¤; -#,##0.00 ¤"/> </td>
 				<td style="text-align: center; vertical-align: middle;">		     
-			<a href='<spring:url value="/account-forecast/${summary.value.id}.html"/>'><span style="font-size:2em;" class="glyphicon glyphicon-stats"></span> </a>
+			<a href='<spring:url value="/account-forecast/${summary.value.id}"/>'><span style="font-size:2em;" class="glyphicon glyphicon-stats"></span> </a>
 				</td>
 				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="" />" class="btn btn-primary" type="button" data-toggle="modal" data-target="#alignBalance${summary.value.id}">Align Balance</a></td>
 				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="" />" class="btn btn-warning" type="button" data-toggle="modal" data-target="#editAccountModal${summary.value.id}">Rename</a></td>					
-				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="/user-accounts/removeaccount/${summary.key}.html" />" class="btn btn-danger triggerRemove" type="button">Remove</a></td>		
+				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="/user-accounts/removeaccount/${summary.key}" />" class="btn btn-danger triggerRemove" type="button">Remove</a></td>		
 
 			<td>			
-			<form:form mehod="post" modelAttribute="AlignBalanceForm" action="/alignBalance.html" cssClass="form-horizontal" id="form">
+			<form:form mehod="post" modelAttribute="AlignBalanceForm" action="/alignBalance" cssClass="form-horizontal" id="form">
 			<form:hidden path="accountId" value="${summary.value.id}" />
 	<!-- Modal -->
 	<div class="modal fade" id="alignBalance${summary.value.id}" tabindex="-1" role="dialog"
@@ -104,7 +104,7 @@
 	</div>
 </form:form>
 
-		<form:form mehod="post" modelAttribute="account" action="/renameAccount.html" cssClass="form-horizontal" id="form">
+		<form:form mehod="post" modelAttribute="account" action="/renameAccount" cssClass="form-horizontal" id="form">
 			<form:hidden path="id" value="${summary.value.id}" />
 	<!-- Modal -->
 	<div class="modal fade" id="editAccountModal${summary.value.id}" tabindex="-1" role="dialog"
@@ -157,7 +157,7 @@
 			<tr>
 			<td style="text-align: center; vertical-align: middle;"><b></b></td>
  			<td style="text-align: center; vertical-align: middle;"><b><fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${summaryOfAllAccounts}" type="currency" currencySymbol="zł" pattern=" #,##0.00 ¤; -#,##0.00 ¤"/> </b></td> 
-			<td style="text-align: center; vertical-align: middle;">	<a href='<spring:url value="/account-forecast/0.html"/>'><span style="font-size:2em;" class="glyphicon glyphicon-stats"></span> </a></td>
+			<td style="text-align: center; vertical-align: middle;">	<a href='<spring:url value="/account-forecast/0"/>'><span style="font-size:2em;" class="glyphicon glyphicon-stats"></span> </a></td>
 		    <td style="text-align: center; vertical-align: middle;"><b></b></td>
 			<td style="text-align: center; vertical-align: middle;"><b></b></td>
 			<td style="text-align: center; vertical-align: middle;"><b></b></td>
@@ -167,7 +167,7 @@
 </div>
 
 
-<form:form mehod="post" modelAttribute="account" action="/addAccount.html" cssClass="form-horizontal" id="form">
+<form:form mehod="post" modelAttribute="account" action="/addAccount" cssClass="form-horizontal" id="form">
 	<!-- Modal -->
 	<div class="modal fade" id="addAccountModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
@@ -201,7 +201,7 @@
 
 
 
-<form:form mehod="post" modelAttribute="InternalTransferForm" action="/internalTransfer.html"cssClass="form-horizontal" id="form">
+<form:form mehod="post" modelAttribute="InternalTransferForm" action="/internalTransfer"cssClass="form-horizontal" id="form">
 	<!-- Modal -->
 	<div class="modal fade" id="internalTransferModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
