@@ -101,7 +101,16 @@ public class TransactionController {
 		Transaction transaction = transactionService.findOne(id);
 		String userNameByTransactionId = userService.findUserNameByTransactionId(transaction);		
 		transactionService.delete(transaction, name, date, userNameByTransactionId);
-		return "redirect:/user-transactions";
+		return "redirect:/user-transactions/{date}";
+	}
+	
+	@RequestMapping("/user-transactions/removetransaction/{id}/{date}/{accountId}")
+	public String removeTransaction(@PathVariable int id, @PathVariable String date, Principal principal, @PathVariable int accountId){
+		String name = principal.getName();
+		Transaction transaction = transactionService.findOne(id);
+		String userNameByTransactionId = userService.findUserNameByTransactionId(transaction);		
+		transactionService.delete(transaction, name, date, userNameByTransactionId);
+		return "redirect:/user-transactions/{date}/{accountId}";
 	}
 
 	@RequestMapping(value = "/user-transactions", method = RequestMethod.POST)
@@ -127,6 +136,13 @@ public class TransactionController {
 	
 	@RequestMapping(value = "/editTransaction/{date}", method = RequestMethod.POST)
 	public String editTransaction(@ModelAttribute("TransactionForm") TransactionForm transaction, Principal principal, @PathVariable String date)	throws ParseException {
+		String name = principal.getName();
+		transactionService.edit(transaction, name);
+		return "redirect:/user-transactions/{date}";
+	}
+	
+	@RequestMapping(value = "/editTransaction/{date}/{accountId}", method = RequestMethod.POST)
+	public String editTransaction(@ModelAttribute("TransactionForm") TransactionForm transaction, Principal principal, @PathVariable String date, @PathVariable int accountId)	throws ParseException {
 		String name = principal.getName();
 		transactionService.edit(transaction, name);
 		return "redirect:/user-transactions/{date}";

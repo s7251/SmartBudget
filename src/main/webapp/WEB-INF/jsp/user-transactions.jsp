@@ -120,7 +120,7 @@
        </c:if>      
  
     <li role="separator" class="divider"></li>
-    <li><a href="<spring:url value="/user-transactions/removetransaction/${userTransactions.id}/${date}${actualMonth}" />" >Remove</a></li>    
+    <li><a href="<spring:url value="/user-transactions/removetransaction/${userTransactions.id}/${date}${actualMonth}/${accountId}" />" >Remove</a></li>    
  
   </ul>
 </div>
@@ -160,7 +160,7 @@
   </div>
 </div>
 			
-			<form:form mehod="post" modelAttribute="TransactionForm" action="/editTransaction/${date}" cssClass="form-horizontal">
+			<form:form mehod="post" modelAttribute="TransactionForm" action="/editTransaction/${date}/${accountId}" cssClass="form-horizontal">
 			<form:hidden path="id" value="${userTransactions.id}" />
 	<!-- Modal -->
 	<div class="modal fade" id="editTransaction${userTransactions.id}" tabindex="-1" role="dialog"
