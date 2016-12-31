@@ -1268,7 +1268,18 @@ public Double subcategoriesForecasting(Map<String, Double> summaryOfAccounts){
 							diffMonth--;						
 							prevDate.add(Calendar.MONTH, -1);
 						}
-						String transactionDate = String.valueOf(prevDate.get(Calendar.YEAR)) + "-"	+ String.valueOf(prevDate.get(Calendar.MONTH)+1)  + "-1";
+						
+						String transactionDate = null;
+						
+						if(prevDate.get(Calendar.MONTH)==0){
+							transactionDate = String.valueOf(prevDate.get(Calendar.YEAR)-1) + "-"
+									+ "12" + "-1";
+							}
+							else{
+								transactionDate = String.valueOf(prevDate.get(Calendar.YEAR)) + "-"	+ String.valueOf(prevDate.get(Calendar.MONTH))  + "-1";
+							}
+						
+										
 												
 						if (initDateMonth == nextDateMonth) {
 							transactionsSum = transactionsCalculate(transactionsSum, transaction);

@@ -27,7 +27,8 @@
 	<tr>
 	<td>
 	<span class="text-primary pull-right" >
-	<b>${summary.key}</b> = <fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${summary.value}" type="currency" currencySymbol="zł" pattern=" #,##0.00 ¤; -#,##0.00 ¤"/>
+	<c:set var="key" value="${summary.key}"/>
+	<b>${fn:substring(key, 0, key.length()-2)}</b> = <fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${summary.value}" type="currency" currencySymbol="zł" pattern=" #,##0.00 ¤; -#,##0.00 ¤"/>
 	</span> 
 	</td>
 	</tr>
@@ -36,7 +37,8 @@
 	<tr>
 	<td>
 	<span class="text-danger pull-right">
-	<b>${summary.key}</b> = <fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${summary.value}" type="currency" currencySymbol="zł" pattern=" #,##0.00 ¤; -#,##0.00 ¤"/>
+	<c:set var="key" value="${summary.key}"/>
+	<b>${fn:substring(key, 0, key.length()-2)} </b> = <fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${summary.value}" type="currency" currencySymbol="zł" pattern=" #,##0.00 ¤; -#,##0.00 ¤"/>
 	</span> 
 	</td>
 	</tr>
@@ -54,10 +56,12 @@
         var data = google.visualization.arrayToDataTable([                                                        
           ['Month', 'Month Summary', 'Forecast'],
           <c:forEach items="${dataForForecast}" var="entry">
-          ['${entry.key}',  ${entry.value}, null],  
+          
+          ['${entry.key}'.slice(0, -2),  ${entry.value}, null],  
           </c:forEach> 
           <c:forEach items="${forecastDataByAccount}" var="entry">
-          ['${entry.key}', null , ${entry.value}],  
+        
+          ['${entry.key}'.slice(0, -2), null , ${entry.value}],  
           </c:forEach> 
        
         
