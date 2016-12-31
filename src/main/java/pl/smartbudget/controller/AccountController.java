@@ -85,7 +85,8 @@ public class AccountController {
 		String name = principal.getName();
 		model.addAttribute("user", userService.findOneWithAccounts(name));
 		model.addAttribute("accountName", accountService.getForecastAccount(id));
-		model.addAttribute("forecastDataByAccount", transactionService.forecastByAccount(id, name));
+		model.addAttribute("dataForForecast", transactionService.forecastByAccount(id, name).get(0));
+		model.addAttribute("forecastDataByAccount", transactionService.forecastByAccount(id, name).get(1));
 		return "account-forecast";
 	}
 

@@ -285,7 +285,8 @@ public class TransactionService {
 		
 	
 	public ArrayList<Double> accountBalanceForecasting(Map<String, Double> summaryOfAccounts){
-		System.out.print(summaryOfAccounts);
+		System.out.println("Data for prediction:");
+		System.out.println(summaryOfAccounts);
 		ArrayList<Double> listOfPredictedData = new ArrayList<Double>();
 		try {			 
 			
@@ -379,8 +380,9 @@ public class TransactionService {
 	}
 	
 	
-	public Map<String, Double> forecastByAccount(int id, String name) {
-		Map<String, Double> summaryOfAccounts = new LinkedHashMap<String, Double>();
+	public List<Map<String, Double>> forecastByAccount(int id, String name) {
+		Map<String, Double> summaryOfAccounts = new LinkedHashMap<String, Double>();	
+		Map<String, Double> summaryOfForecast = new LinkedHashMap<String, Double>();			
 		List<Transaction> transactions = null;
 if(id>0){
 		Account account = accountRepository.findById(id);
@@ -404,10 +406,15 @@ if(transactions.isEmpty() == false){
 		for (Transaction transaction : transactions) {
 			Calendar nextDate = Calendar.getInstance();
 			nextDate.setTime(transaction.getDate());
-			
-			String lastTransactionDate = String.valueOf(lastDate.get(Calendar.YEAR)) + "-"
-					+ String.valueOf(lastDate.get(Calendar.MONTH) + 1) + "-1";
-
+			String lastTransactionDate=null;
+			if(lastDate.get(Calendar.MONTH)==0){
+			lastTransactionDate = String.valueOf(lastDate.get(Calendar.YEAR)-1) + "-"
+					+ "12" + "-1";
+			}
+			else{
+				lastTransactionDate = String.valueOf(lastDate.get(Calendar.YEAR)) + "-"
+						+ String.valueOf(lastDate.get(Calendar.MONTH)) + "-1";
+			}
 			double initDateMonth = initDate.get(Calendar.MONTH) + 1;	
 			double nextDateMonth = nextDate.get(Calendar.MONTH) + 1;
 			int diffYear = nextDate.get(Calendar.YEAR) - initDate.get(Calendar.YEAR);
@@ -420,10 +427,15 @@ if(transactions.isEmpty() == false){
 				diffMonth--;		
 				prevDate.add(Calendar.MONTH, -1);
 			}
-			
-			String transactionDate = String.valueOf(prevDate.get(Calendar.YEAR)) + "-"
-					+ String.valueOf(prevDate.get(Calendar.MONTH) + 1) + "-1";
-
+			String transactionDate=null;
+			if(prevDate.get(Calendar.MONTH)==0){
+			transactionDate = String.valueOf(prevDate.get(Calendar.YEAR)-1) + "-"
+					+ "12" + "-1";
+			}
+			else{
+				transactionDate = String.valueOf(prevDate.get(Calendar.YEAR)) + "-"
+						+ String.valueOf(prevDate.get(Calendar.MONTH)) + "-1";
+			}
 			if (initDateMonth == nextDateMonth) {
 				transactionsSum = transactionsCalculate(transactionsSum, transaction);
 			} else {
@@ -441,18 +453,43 @@ if(transactions.isEmpty() == false){
 		lastDateforForecast = lastDate;
 		ArrayList<Double> listOfPredictedData = new ArrayList<Double>();
 		listOfPredictedData = accountBalanceForecasting(summaryOfAccounts);
+		String lastDateforForecastEntry=null;
 		for (Double forecastEntry : listOfPredictedData) {
 			lastDateforForecast.add(Calendar.MONTH, 1);
-			String lastDateforForecastEntry = String.valueOf(lastDateforForecast.get(Calendar.YEAR)) + "-"
-					+ String.valueOf(lastDateforForecast.get(Calendar.MONTH) + 1) + "-1";
-			summaryOfAccounts.put(lastDateforForecastEntry, (double) Math.round(forecastEntry));
+			
+			if(lastDateforForecast.get(Calendar.MONTH)==0){
+				lastDateforForecastEntry = String.valueOf(lastDateforForecast.get(Calendar.YEAR)-1) + "-"
+						+ "12" + "-1";
+			}
+			else{				
+				lastDateforForecastEntry = String.valueOf(lastDateforForecast.get(Calendar.YEAR)) + "-"
+						+ String.valueOf(lastDateforForecast.get(Calendar.MONTH) ) + "-1";}
+			
+			summaryOfForecast.put(lastDateforForecastEntry, (double) Math.round(forecastEntry));
 		}
 }
+			List<Map<String, Double>> forecastResult = new ArrayList<Map<String, Double>>();
+			if(summaryOfAccounts.size()>1){
+			forecastResult.add(summaryOfAccounts);
+			forecastResult.add(summaryOfForecast);}
+			if(summaryOfAccounts.size()==1){				
+				Map<String, Double> emptyForecast = new LinkedHashMap<String, Double>();
+				emptyForecast.put("add more data for forecast (more than 1 month)", 0.0);					
+				forecastResult.add(summaryOfAccounts);			
+				forecastResult.add(emptyForecast);}
 		if(summaryOfAccounts.isEmpty()){
+			Map<String, Double> emptyData = new LinkedHashMap<String, Double>();
+			emptyData.put("dataset is empty", 0.0);
+			Map<String, Double> emptyForecast = new LinkedHashMap<String, Double>();
+			emptyForecast.put("add more data for forecast", 0.0);
+			
 			Calendar actualDate = Calendar.getInstance();
-			summaryOfAccounts.put(actualDate.get(Calendar.YEAR) + "-" + String.valueOf(actualDate.get(Calendar.MONTH) + 2) + "-1", 0.0);
-		}
-		return summaryOfAccounts;
+			summaryOfAccounts.put(actualDate.get(Calendar.YEAR) + "-" + String.valueOf(actualDate.get(Calendar.MONTH) ) + "-1", 0.0);
+			forecastResult.add(emptyData);			
+			forecastResult.add(emptyForecast);
+		}		
+		
+		return forecastResult;
 	}
 	
 	
@@ -1074,6 +1111,8 @@ if(transactions.isEmpty() == false){
 	
 	
 public Double subcategoriesForecasting(Map<String, Double> summaryOfAccounts){
+	System.out.println("Data for prediction:");
+		System.out.println(summaryOfAccounts);
 		
 		ArrayList<Double> listOfPredictedData = new ArrayList<Double>();
 		try {			 
@@ -1151,7 +1190,7 @@ public Double subcategoriesForecasting(Map<String, Double> summaryOfAccounts){
 				}
 				System.out.println();
 			}
-
+			System.out.println("");
 			// we can continue to use the trained forecaster for further
 			// forecasting
 			// by priming with the most recent historical data (as it becomes
