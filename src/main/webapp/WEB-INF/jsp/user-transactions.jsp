@@ -116,7 +116,7 @@
 
    <c:if test="${(userTransactions.type == 'expense' || userTransactions.type == 'income')}">  
      <li><a href="<spring:url value="" />" data-toggle="modal" data-target="#editTransaction${userTransactions.id}">Edit</a></li> 
-     <li><a href="<spring:url value="" />" data-toggle="modal" data-target="#splitTransaction${userTransactions.id}">Split</a></li> 
+<%--      <li><a href="<spring:url value="" />" data-toggle="modal" data-target="#splitTransaction${userTransactions.id}">Split</a></li>  --%>
        </c:if>      
  
     <li role="separator" class="divider"></li>
