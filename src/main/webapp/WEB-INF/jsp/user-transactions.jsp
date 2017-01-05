@@ -116,7 +116,7 @@
 
    <c:if test="${(userTransactions.type == 'expense' || userTransactions.type == 'income')}">  
      <li><a href="<spring:url value="" />" data-toggle="modal" data-target="#editTransaction${userTransactions.id}">Edit</a></li> 
-<%--      <li><a href="<spring:url value="" />" data-toggle="modal" data-target="#splitTransaction${userTransactions.id}">Split</a></li>  --%>
+     <li><a href="<spring:url value="" />" data-toggle="modal" data-target="#splitTransaction${userTransactions.id}">Split</a></li>  
        </c:if>      
  
     <li role="separator" class="divider"></li>
@@ -128,37 +128,138 @@
 			
 			<td width="0%">
 			
-<div class="modal fade" id="splitTransaction${userTransactions.id}" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Split transaction:</h4>
-      </div>
-      <div class="modal-body">
-
-
-<form>
-	<div class="form-group"	style="text-align: center; width: 600px; margin: 0 auto;">
-					
-						<div class="col-sm-10">
-							<label for="memo"  class="col-sm-2 control-label ">Memo:</label>
-							<input type="text" class="form-control" style="width: 350px" id="memo" autofocus="autofocus" />
-						</div>
-					</div></form>
-					
-					<br><br>
-							
-
-      </div>
-    <div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-					<input type="submit" id="add" class="btn btn-success" value="Post" />
-					<input type="submit" id="get" class="btn btn-success" value="Get" />
+			<form:form mehod="post" modelAttribute="TransactionForm" action="/splitTransaction/${date}/${accountId}" cssClass="form-horizontal">
+			<form:hidden path="id" value="${userTransactions.id}" />
+			<form:hidden path="type" value="${userTransactions.type}" />
+			<form:hidden path="date" value="${userTransactions.date}" />
+			<form:hidden path="accountId" value="${userTransactions.account.id}" />
+			
+			
+	<!-- Modal -->
+	<div class="modal fade" id="splitTransaction${userTransactions.id}" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Cancel">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Split transaction:</h4>
 				</div>
-    </div>
-  </div>
-</div>
+				<div class="modal-body">
+<span class="label label-warning"><b>Warning!</b> All data of this transaction will be lost!</span>
+					<div class="alert alert-warning" role="alert">					
+					<b>Type:</b> ${userTransactions.type}<br>
+					<b>Memo:</b> ${userTransactions.memo}<br>
+					<b>Amount:</b> <div id="amountToSplit">${userTransactions.amount}</div><br>
+					<b>Date:</b> ${userTransactions.date}<br>
+					<b>Subcategory:</b>${userTransactions.subcategory}<br>
+					<b>Account:</b> ${userTransactions.account}<br>
+					<b>Summary:</b> <div id="tempSummary">0.0</div><br>
+					</div>
+							<div class="form-group"
+						style="text-align: center; width: 600px; margin: 0 auto;">				
+						<div class="col-sm-10">
+							<p class="navbar-text"><b>First split:</b></p>
+						</div>
+					</div>
+							
+					<div class="form-group"
+						style="text-align: center; width: 600px; margin: 0 auto;">
+						<label for="firstSplitMemo" class="col-sm-2 control-label">Memo:</label>
+						<div class="col-sm-10">
+							<form:input path="firstSplitMemo" cssClass="form-control" style="width: 350px" placeholder="Please type memo of first split" autofocus="autofocus" />
+						</div>
+					</div>
+					
+					<div class="form-group"
+						style="text-align: center; width: 600px; margin: 0 auto;">
+						<label for="firstSplitAmount" class="col-sm-2 control-label">Amount:</label>
+						<div class="col-sm-10">						
+							<form:input id="firstSplitAmount${userTransactions.id}" path="firstSplitAmount" value="${userTransactions.amount}" cssClass="form-control" style="width: 350px" placeholder="${userTransactions.amount}" autofocus="autofocus" />
+						</div>
+					</div>
+					
+								<div class="form-group"	style="text-align: center; width: 600px; margin: 0 auto;">
+						<label for="category" class="col-sm-2 control-label">Subcategory:</label>
+						<div class="col-sm-10">
+						<form:select class="form-control" path="firstSplitSubcategoryId"  style="text-align: left; width: 350px;">								
+									<form:options items="${subcategoriesMap}" />							
+							</form:select>						
+						</div>
+					</div>
+					
+					<div class="form-group"
+						style="text-align: center; width: 600px; margin: 0 auto;">					
+						<div class="col-sm-10">
+							<p class="navbar-text"><b>Secondary split:</b></p>
+						</div>
+					</div>
+					
+						<div class="form-group"
+						style="text-align: center; width: 600px; margin: 0 auto;">
+						<label for="secondarySplitMemo" class="col-sm-2 control-label">Memo:</label>
+						<div class="col-sm-10">
+							<form:input path="secondarySplitMemo" cssClass="form-control" style="width: 350px" placeholder="Please type memo of first split" autofocus="autofocus" />
+						</div>
+					</div>
+					
+					
+										<div class="form-group"
+						style="text-align: center; width: 600px; margin: 0 auto;">
+						<label for="secondarySplitAmount" class="col-sm-2 control-label">Amount:</label>
+						<div class="col-sm-10">
+						
+							<form:input id="secondarySplitAmount${userTransactions.id}" path="secondarySplitAmount" value="${userTransactions.amount}" cssClass="form-control" style="width: 350px" placeholder="${userTransactions.amount}" autofocus="autofocus" />
+						</div>
+					</div>
+																
+						<div class="form-group"	style="text-align: center; width: 600px; margin: 0 auto;">
+						<label for="category" class="col-sm-2 control-label">Subcategory:</label>
+						<div class="col-sm-10">
+						<form:select class="form-control" path="secondarySplitSubcategoryId"  style="text-align: left; width: 350px;">									
+									<form:options items="${subcategoriesMap}" />							
+							</form:select>						
+						</div>
+					</div>
+
+			
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<input id="split${userTransactions.id}" type="submit" class="split btn btn-success" value="Split" />
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+		$(document).ready(function() {
+		  $( "#split${userTransactions.id}" ).click(function() { 
+		    	var splitedAmounts = parseFloat($('#splitTransaction${userTransactions.id} #firstSplitAmount${userTransactions.id}').val()) + parseFloat($('#splitTransaction${userTransactions.id} #secondarySplitAmount${userTransactions.id}').val());
+		        var amountToSplit = parseFloat($('#splitTransaction${userTransactions.id} #amountToSplit').text());
+		        var result1 = !(splitedAmounts <= amountToSplit);
+		        
+		        if(result1) {
+		        	var sum = splitedAmounts - amountToSplit;
+		        	alert("Kwota jest za duża o " + sum + " zł!");
+		        }
+		        
+				var result2 = splitedAmounts < amountToSplit;
+		        
+		        if(result2) {
+		        	var sum = (amountToSplit - splitedAmounts);
+		        	alert("Kwota jest za mała o " + sum + " zł!");
+		        }
+		    });
+		  
+		  $('#firstSplitAmount${userTransactions.id}, #secondarySplitAmount${userTransactions.id}').change(function(){	  
+			  var splitedAmounts = parseFloat($('#splitTransaction${userTransactions.id} #firstSplitAmount${userTransactions.id}').val()) + parseFloat($('#splitTransaction${userTransactions.id} #secondarySplitAmount${userTransactions.id}').val());
+			  $('#splitTransaction${userTransactions.id} #tempSummary').text(splitedAmounts);
+			  
+		  });
+		});
+		</script>
+	</div>
+</form:form>
 			
 			<form:form mehod="post" modelAttribute="TransactionForm" action="/editTransaction/${date}/${accountId}" cssClass="form-horizontal">
 			<form:hidden path="id" value="${userTransactions.id}" />
@@ -171,7 +272,7 @@
 					<button type="button" class="close" data-dismiss="modal" aria-label="Cancel">
 						<span aria-hidden="true">&times;</span>
 					</button>
-					<h4 class="modal-title" id="myModalLabel">Edit transaction</h4>
+					<h4 class="modal-title" id="myModalLabel">Edit transaction: </h4>
 				</div>
 				<div class="modal-body">
 					<div class="form-group" style="text-align: left; width: 600px;">
@@ -210,8 +311,7 @@
 							<div class="form-group"	style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="category" class="col-sm-2 control-label">Subcategory:</label>
 						<div class="col-sm-10">
-						<form:select class="form-control" path="subcategoryId"  style="text-align: left; width: 350px;">
-									<form:option value="${userTransactions.subcategory.id}">${userTransactions.subcategory.name}</form:option>
+						<form:select class="form-control" path="subcategoryId"  style="text-align: left; width: 350px;">									
 									<form:options items="${subcategoriesMap}" />							
 							</form:select>						
 						</div>
@@ -220,8 +320,7 @@
 					<div class="form-group"	style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="account" class="col-sm-2 control-label">Account:</label>
 						<div class="col-sm-10">
-							<form:select class="form-control" path="accountId"  style="text-align: left; width: 350px;">		
-							<form:option value="${userTransactions.account.id}">${userTransactions.account.name}</form:option>														
+							<form:select class="form-control" path="accountId"  style="text-align: left; width: 350px;">																		
 										<form:options items="${accountsMap}" />								
 							</form:select>
 						</div>
@@ -424,8 +523,11 @@ $(document).ready(function() {
 		    },
 		    "Please type amount in 0.00 format (max 999999.99)"
 		);
+	
+		
 	var startDate = new Date(${year},  ${month}-1, 1); 
 	var lastDate = new Date(${year}, ${month}, 0); 
+	  
     $('.datePicker')
         .datepicker({
             format: 'dd.mm.yyyy',            
@@ -433,7 +535,7 @@ $(document).ready(function() {
             endDate: lastDate
         })          
     $('form').each(function() {  
-        $(this).validate({       
+        $(this).validate({   
         	rules: {
         		type: {
 					required : true,								
@@ -442,11 +544,31 @@ $(document).ready(function() {
 					required : true,
 					minlength : 4,				
 				},
+				firstSplitMemo: {
+					required : true,
+					minlength : 4,				
+				},
+				secondarySplitMemo: {
+					required : true,
+					minlength : 4,				
+				},
 				amount: {
 					required : true,
  					number: true,
 					min: 0.01,					
 					money: true
+				},
+				firstSplitAmount: {
+					required : true,
+ 					number: true,
+					min: 0.01,					
+					money: true,
+				},
+				secondarySplitAmount: {
+					required : true,
+ 					number: true,
+					min: 0.01,					
+					money: true,					
 				},
 				date: {
 					required : true,					
@@ -462,7 +584,13 @@ $(document).ready(function() {
 				},
 				subcategoryId: {
 					required : true,					
-				},			
+				},	
+				firstSplitSubcategoryId: {
+					required : true,					
+				},
+				secondarySplitSubcategoryId: {
+					required : true,					
+				},
 			},					
 			highlight: function(element) {
 				$(element).closest('.form-group').removeClass('has-success').addClass('has-error');
@@ -472,7 +600,7 @@ $(document).ready(function() {
 			},		
 			messages: {		
 				amount: {
-					number: "Please type amount in 0.00 format"				     
+					number: "Please type amount in 0.00 format "				     
 				 },			
 				type: {
 					 required: ""				     
@@ -483,7 +611,6 @@ $(document).ready(function() {
 			    }
         });
     });
-
     
     $( "#add" ).click(function() {
     	var memo = $("#memo").val();

@@ -154,5 +154,19 @@ public class TransactionController {
 		transactionService.saveInternalTransfer(internalTransferForm, name);
 		return "redirect:/user-transactions";
 	}	
+	
+	@RequestMapping(value = "/splitTransaction/{date}", method = RequestMethod.POST)
+	public String splitTransaction(@ModelAttribute("TransactionForm") TransactionForm transaction, Principal principal, @PathVariable String date)	throws ParseException {
+		String name = principal.getName();
+		transactionService.split(transaction, name);
+		return "redirect:/user-transactions/{date}";
+	}
+	
+	@RequestMapping(value = "/splitTransaction/{date}/{accountId}", method = RequestMethod.POST)
+	public String splitTransaction(@ModelAttribute("TransactionForm") TransactionForm transaction, Principal principal, @PathVariable String date, @PathVariable int accountId)	throws ParseException {
+		String name = principal.getName();
+		transactionService.split(transaction, name);
+		return "redirect:/user-transactions/{date}";
+	}
 		
 	}

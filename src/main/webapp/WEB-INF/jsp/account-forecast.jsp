@@ -84,6 +84,7 @@
         
         var formatter = new google.visualization.NumberFormat({decimalSymbol: ',',groupingSymbol: '.', negativeColor: 'red', negativeParens: true, suffix: ' zł '});
         formatter.format(data, 1);
+        formatter.format(data, 2);
         var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));       
         chart.draw(data, options);        
         /* chart.setSelection([

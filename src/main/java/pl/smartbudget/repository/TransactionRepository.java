@@ -12,6 +12,8 @@ import pl.smartbudget.entity.Transaction;
 public interface TransactionRepository extends JpaRepository<Transaction, Integer> {
 
 	List<Transaction> findByAccount(Account account);
+	
+	Transaction findById(Integer id);
 
 	List<Transaction> findByType(String type);
 	

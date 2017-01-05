@@ -90,6 +90,38 @@ public class TransactionService {
 		transactionRepository.save(transaction);
 	}
 	
+	public void split(TransactionForm transactionForm, String name) throws ParseException {
+		User user = userRepository.findByName(name);
+		Transaction transaction = new Transaction();
+		transaction = transactionRepository.findById(transactionForm.getId());
+		Transaction firstSplitTransaction = new Transaction();
+		Transaction secondarySplitTransaction = new Transaction();
+		Subcategory firstSplitSubcategoryOfAccount = subcategoryRepository.getOne(transactionForm.getFirstSplitSubcategoryId());
+		Subcategory secondarySplitSubcategoryOfAccount = subcategoryRepository.getOne(transactionForm.getSecondarySplitSubcategoryId());
+		Account accountOfTransaction = accountRepository.findOne(transactionForm.getAccountId());	
+		firstSplitTransaction.setType(transactionForm.getType());
+		firstSplitTransaction.setAmount(transactionForm.getFirstSplitAmount());
+		firstSplitTransaction.setMemo(transactionForm.getFirstSplitMemo());
+		String day = transactionForm.getDate().substring(8, 10);
+		String month = transactionForm.getDate().substring(5, 7);
+		String year = transactionForm.getDate().substring(0, 4);		
+		firstSplitTransaction.setDate(new SimpleDateFormat("dd.MM.yyyy").parse(day+"."+month+"."+year));
+		firstSplitTransaction.setSubcategory(firstSplitSubcategoryOfAccount);
+		firstSplitTransaction.setAccount(accountOfTransaction);
+		
+		
+		secondarySplitTransaction.setType(transactionForm.getType());
+		secondarySplitTransaction.setAmount(transactionForm.getSecondarySplitAmount());
+		secondarySplitTransaction.setMemo(transactionForm.getSecondarySplitMemo());
+		secondarySplitTransaction.setDate(new SimpleDateFormat("dd.MM.yyyy").parse(day+"."+month+"."+year));
+		secondarySplitTransaction.setSubcategory(secondarySplitSubcategoryOfAccount);
+		secondarySplitTransaction.setAccount(accountOfTransaction);
+		accountOfTransaction.setUser(user);
+
+		transactionRepository.save(firstSplitTransaction);
+		transactionRepository.save(secondarySplitTransaction);
+		transactionRepository.delete(transaction);
+	}
 	
 	public void saveAlignBalance(AlignBalanceForm alignBalanceForm, String name) throws ParseException {
 		User user = userRepository.findByName(name);
