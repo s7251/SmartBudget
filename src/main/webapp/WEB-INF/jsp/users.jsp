@@ -196,17 +196,10 @@
 						style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="password" class="col-sm-2 control-label">Password:</label>
 						<div class="col-sm-10">
-							<form:input path="password" id="password2"  cssClass="form-control" style="width: 350px" placeholder="Please type password"	autofocus="autofocus" />
+							<form:password path="password" id="password2"  cssClass="form-control" style="width: 350px" placeholder="Please type password"	autofocus="autofocus" />
 						</div>
-					</div>
+					</div>					
 					
-					<div class="form-group"
-						style="text-align: center; width: 600px; margin: 0 auto;">
-						<label for="password" class="col-sm-2 control-label">Re-type:</label>
-						<div class="col-sm-10">
-							<input type="text" name="password2_again" id="password2_again" class="form-control" style="width: 350px" placeholder="Please re-type password"	autofocus="autofocus" />
-						</div>
-					</div>
     		</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -313,12 +306,7 @@ $(document).ready(function() {
 				password2: {
 					required : true,
 					minlength : 4,
-				},
-				password2_again: {
-					required : true,
-					minlength : 4,
-					equalTo: "#password2"
-				},
+				},				
 				pass: {
 					required : true,
 					minlength : 4,

@@ -9,7 +9,13 @@
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
 
  <head>
-   <style type="text/css">         
+   <style type="text/css">       
+   #tempSummary { 
+     display: inline-block;
+   }
+     #amountToSplit { 
+     display: inline-block;
+   }   
    tr.expensecolor { background: #ffe6e6; }
    tr.incomecolor { background: #b3ffb3; }
    tr.alignpluscolor { background: white; }
@@ -150,13 +156,16 @@
 <span class="label label-warning"><b>Warning!</b> All data of this transaction will be lost!</span>
 					<div class="alert alert-warning" role="alert">					
 					<b>Type:</b> ${userTransactions.type}<br>
-					<b>Memo:</b> ${userTransactions.memo}<br>
-					<b>Amount:</b> <div id="amountToSplit">${userTransactions.amount}</div><br>
+					<b>Memo:</b> ${userTransactions.memo}<br>					
 					<b>Date:</b> ${userTransactions.date}<br>
 					<b>Subcategory:</b>${userTransactions.subcategory}<br>
-					<b>Account:</b> ${userTransactions.account}<br>
-					<b>Summary:</b> <div id="tempSummary">0.0</div><br>
+					<b>Account:</b> ${userTransactions.account}	<br>
+				    <b>Amount:</b> <fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${userTransactions.amount}" type="currency" currencySymbol="zł" pattern=" #,##0.00 ¤; -#,##0.00 ¤"/> 	
+					<div id="amountToSplit" style="display: none;">${userTransactions.amount}</div>
 					</div>
+					
+					<div class="alert alert-info" role="alert">	<b>Split summary:</b> <div id="tempSummary"> Please type amounts of splits</div> </div>
+
 							<div class="form-group"
 						style="text-align: center; width: 600px; margin: 0 auto;">				
 						<div class="col-sm-10">
@@ -200,7 +209,7 @@
 						style="text-align: center; width: 600px; margin: 0 auto;">
 						<label for="secondarySplitMemo" class="col-sm-2 control-label">Memo:</label>
 						<div class="col-sm-10">
-							<form:input path="secondarySplitMemo" cssClass="form-control" style="width: 350px" placeholder="Please type memo of first split" autofocus="autofocus" />
+							<form:input path="secondarySplitMemo" cssClass="form-control" style="width: 350px" placeholder="Please type memo of second split" autofocus="autofocus" />
 						</div>
 					</div>
 					
@@ -231,31 +240,66 @@
 				</div>
 			</div>
 		</div>
+		<!-- Modal -->
+<div id="alert${userTransactions.id}" class="modal fade bs-example-modal-sm" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-number="1">&times;</button>
+        <h4 class="modal-title">Wrong sum of splitted transactions!</h4>
+      </div>
+      <div class="modal-body">
+        <p>Sum of splitted transactions must be equal: <b><fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${userTransactions.amount}" type="currency" currencySymbol="zł" pattern=" #,##0.00 ¤; -#,##0.00 ¤"/>.</b></p>
+      </div>
+      <div class="modal-footer">
+       
+      </div>
+    </div>
+
+  </div>
+</div>
+
 		<script type="text/javascript">
 		$(document).ready(function() {
-		  $( "#split${userTransactions.id}" ).click(function() { 
+		  $( "#split${userTransactions.id}" ).click(function(e) { 
+			  		
+			  $(this).addClass('prevented');
 		    	var splitedAmounts = parseFloat($('#splitTransaction${userTransactions.id} #firstSplitAmount${userTransactions.id}').val()) + parseFloat($('#splitTransaction${userTransactions.id} #secondarySplitAmount${userTransactions.id}').val());
 		        var amountToSplit = parseFloat($('#splitTransaction${userTransactions.id} #amountToSplit').text());
 		        var result1 = !(splitedAmounts <= amountToSplit);
 		        
 		        if(result1) {
 		        	var sum = splitedAmounts - amountToSplit;
-		        	alert("Kwota jest za duża o " + sum + " zł!");
+// 		        	 alert("Kwota jest za duża o " + sum + " zł!"); 		
+		        	$("#alert${userTransactions.id}").modal('show');
+		        	e.preventDefault();	
+		        	
 		        }
 		        
 				var result2 = splitedAmounts < amountToSplit;
 		        
 		        if(result2) {
 		        	var sum = (amountToSplit - splitedAmounts);
-		        	alert("Kwota jest za mała o " + sum + " zł!");
+// 		        	alert("Kwota jest za mała o " + sum + " zł!");
+		        	$("#alert${userTransactions.id}").modal('show');
+		        	e.preventDefault();	
 		        }
+		        
 		    });
 		  
 		  $('#firstSplitAmount${userTransactions.id}, #secondarySplitAmount${userTransactions.id}').change(function(){	  
-			  var splitedAmounts = parseFloat($('#splitTransaction${userTransactions.id} #firstSplitAmount${userTransactions.id}').val()) + parseFloat($('#splitTransaction${userTransactions.id} #secondarySplitAmount${userTransactions.id}').val());
-			  $('#splitTransaction${userTransactions.id} #tempSummary').text(splitedAmounts);
 			  
-		  });
+			  var splitedAmounts = parseFloat($('#splitTransaction${userTransactions.id} #firstSplitAmount${userTransactions.id}').val()) + parseFloat($('#splitTransaction${userTransactions.id} #secondarySplitAmount${userTransactions.id}').val());
+			  $('#splitTransaction${userTransactions.id} #tempSummary').text(splitedAmounts.toFixed(2));
+			  splitedAmounts = Math.round(number).toFixed(2);
+			  
+		  });	
+		  $("button[data-number=1]").click(function(){
+			    $('#alert${userTransactions.id}').modal('hide');
+			    
+			});
 		});
 		</script>
 	</div>
