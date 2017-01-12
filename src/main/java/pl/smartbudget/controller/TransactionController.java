@@ -45,6 +45,7 @@ public class TransactionController {
 		model.addAttribute("nextMonthNav", transactionService.getNextMonthForNavigationByViewedTransactions(transactionService.findAllTransactionOfUserByActualMonth(name)));	
 		model.addAttribute("prevMonthNav", transactionService.getPrevMonthForNavigationByViewedTransactions(transactionService.findAllTransactionOfUserByActualMonth(name)));		
 		model.addAttribute("subcategoriesForecast", transactionService.getSubcategoriesForecastForActualMonth(name));
+		model.addAttribute("nextMonthsSubcategoriesForecast", transactionService.getSubcategoriesForecastForNextMonths(name));
 		model.addAttribute("month", transactionService.getMonthByViewedTransactionsByActualMonth(transactionService.findAllTransactionOfUserByActualMonth(name)));
 		model.addAttribute("year", transactionService.geYearByViewedTransactionsByActualMonth(transactionService.findAllTransactionOfUserByActualMonth(name)));
 		model.addAttribute("firstView", true);

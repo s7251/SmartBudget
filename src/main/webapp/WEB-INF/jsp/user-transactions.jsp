@@ -9,7 +9,10 @@
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
 
  <head>
-   <style type="text/css">       
+   <style type="text/css">  
+   body .modal-expenses {
+ width: 80%;   
+}     
    #tempSummary { 
      display: inline-block;
    }
@@ -39,6 +42,12 @@
 <div class="alert alert-info alert-dismissible" role="alert">
   <button type="button" class="close" data-dismiss="alert" aria-label="Cancel"><span aria-hidden="true">&times;</span></button>
   <strong>Forecast for actual month (expenses by subcategory): </strong> <br><c:forEach items="${subcategoriesForecast}" var="subforecast">${subforecast.key}: <strong><fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${subforecast.value}" type="currency" currencySymbol="zł" pattern=" #,##0.00 ¤; -#,##0.00 ¤"/> </strong><br></c:forEach>
+<br>
+
+   <button type="button" class="btn btn-standard btn-xs" data-toggle="modal" data-target="#expenses">
+  More months..
+</button>
+
 </div></c:if>
 <!-- <div class="alert alert-warning alert-dismissible" role="alert">
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -201,7 +210,7 @@
 					<div class="form-group"
 						style="text-align: center; width: 600px; margin: 0 auto;">					
 						<div class="col-sm-10">
-							<p class="navbar-text"><b>Secondary split:</b></p>
+							<p class="navbar-text"><b>Second split:</b></p>
 						</div>
 					</div>
 					
@@ -554,6 +563,35 @@
 		</div>
 	</div>
 </form:form>
+
+<div id="expenses" class="modal fade bs-example-modal-lg" role="dialog">
+  <div class="modal-dialog modal-expenses">
+
+    <!-- Modal content-->
+    <div class="modal-content ">
+      <div class="modal-header">
+        <button type="button" class="close" data-number="1">&times;</button>
+        <h4 class="modal-title">Expenses Forecast</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-condensed ">
+        <c:forEach items="${nextMonthsSubcategoriesForecast}" var="subforecast">
+        <td>  <strong>${subforecast.key}: </strong><br> <c:forEach items="${subforecast.value}" var="subforecast2">
+        <table>
+      <tr> <td><strong> ${subforecast2.value} </strong> (${subforecast2.key}) </td></tr>
+        </table>
+        </c:forEach></td>
+  </c:forEach>
+  </table >
+       
+      </div>
+      <div class="modal-footer">
+       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 	
 <script>
 $(document).ready(function() {
@@ -695,7 +733,3 @@ $(document).ready(function() {
    
 });
 </script>
-
-
-
-		
