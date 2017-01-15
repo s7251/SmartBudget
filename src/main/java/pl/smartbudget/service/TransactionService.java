@@ -368,7 +368,7 @@ public class TransactionService {
 			forecaster.getTSLagMaker().setMaxLag(12); // monthly data
 
 			// add a month of the year indicator field
-			forecaster.getTSLagMaker().setAddMonthOfYear(false);
+			forecaster.getTSLagMaker().setAddMonthOfYear(true);
 
 			// add a quarter of the year indicator field
 			forecaster.getTSLagMaker().setAddQuarterOfYear(true);
@@ -385,12 +385,12 @@ public class TransactionService {
 
 			// forecast for 12 units (months) beyond the end of the
 			// training data
-			List<List<NumericPrediction>> forecast = forecaster.forecast(24, System.out);
+			List<List<NumericPrediction>> forecast = forecaster.forecast(12, System.out);
 
 			// output the predictions. Outer list is over the steps; inner list
 			// is over
 			// the targets
-			for (int i = 0; i < 24; i++) {
+			for (int i = 0; i < 12; i++) {
 				List<NumericPrediction> predsAtStep = forecast.get(i);
 				for (int j = 0; j < 1; j++) {
 					NumericPrediction predForTarget = predsAtStep.get(j);
@@ -510,14 +510,14 @@ if(transactions.isEmpty() == false){
 			forecastResult.add(summaryOfForecast);}
 			if(summaryOfAccounts.size()==1){				
 				Map<String, Double> emptyForecast = new LinkedHashMap<String, Double>();
-				emptyForecast.put("add more data for forecast (more than 1 month)", 0.0);					
+				emptyForecast.put("add more data for forecast (more than 1 month)  ", 0.0);					
 				forecastResult.add(summaryOfAccounts);			
 				forecastResult.add(emptyForecast);}
 		if(summaryOfAccounts.isEmpty()){
 			Map<String, Double> emptyData = new LinkedHashMap<String, Double>();
-			emptyData.put("dataset is empty", 0.0);
+			emptyData.put("dataset is empty  ", 0.0);
 			Map<String, Double> emptyForecast = new LinkedHashMap<String, Double>();
-			emptyForecast.put("add more data for forecast", 0.0);
+			emptyForecast.put("add more data for forecast  ", 0.0);
 			
 			Calendar actualDate = Calendar.getInstance();
 			summaryOfAccounts.put(actualDate.get(Calendar.YEAR) + "-" + String.valueOf(actualDate.get(Calendar.MONTH) ) + "-1", 0.0);
@@ -1408,12 +1408,12 @@ public Double actualMonthSubcategoriesForecasting(Map<String, Double> summaryOfA
 
 					// forecast for 12 units (months) beyond the end of the
 					// training data
-					List<List<NumericPrediction>> forecast = forecaster.forecast(24, System.out);
+					List<List<NumericPrediction>> forecast = forecaster.forecast(12, System.out);
 
 					// output the predictions. Outer list is over the steps; inner list
 					// is over
 					// the targets
-					for (int i = 0; i < 24; i++) {
+					for (int i = 0; i < 12; i++) {
 						List<NumericPrediction> predsAtStep = forecast.get(i);
 						for (int j = 0; j < 1; j++) {
 							NumericPrediction predForTarget = predsAtStep.get(j);
