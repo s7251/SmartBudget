@@ -1297,8 +1297,7 @@ public Double actualMonthSubcategoriesForecasting(Map<String, Double> summaryOfA
 			
 			Date actualDate = new Date();
 			Calendar actualDateCal = Calendar.getInstance();
-			actualDateCal.setTime(actualDate);
-						
+			actualDateCal.setTime(actualDate);				
 			List<Category> categories = categoryRepository.findByUser(user);
 			for (Category category : categories) {
 				List<Subcategory> subcategories = subcategoryRepository.findByCategory(category);
@@ -1313,7 +1312,7 @@ public Double actualMonthSubcategoriesForecasting(Map<String, Double> summaryOfA
 						if(actualDateCal.get(Calendar.YEAR)<nextDate.get(Calendar.YEAR)){
 							found.add(transaction);
 						}
-						else if(actualDateCal.get(Calendar.YEAR)==nextDate.get(Calendar.YEAR) && actualDateCal.get(Calendar.MONTH)<nextDate.get(Calendar.MONTH)){
+						else if(actualDateCal.get(Calendar.YEAR)==nextDate.get(Calendar.YEAR) && actualDateCal.get(Calendar.MONTH)<=nextDate.get(Calendar.MONTH)){
 							found.add(transaction);
 						}
 					}
@@ -1333,6 +1332,17 @@ public Double actualMonthSubcategoriesForecasting(Map<String, Double> summaryOfA
 						Calendar nextDate = Calendar.getInstance();
 						nextDate.setTime(transaction.getDate());			
 						Calendar lastDate = Calendar.getInstance();
+						//
+						String lastTransactionDate=null;
+						if(lastDate.get(Calendar.MONTH)==0){
+						lastTransactionDate = String.valueOf(lastDate.get(Calendar.YEAR)-1) + "-"
+								+ "12" + "-1";
+						}
+						else{
+							lastTransactionDate = String.valueOf(lastDate.get(Calendar.YEAR)) + "-"
+									+ String.valueOf(lastDate.get(Calendar.MONTH)) + "-1";
+						}
+						//
 						lastDate.setTime(transactions.get(transactions.size() - 1).getDate());
 						lastDate.add(Calendar.MONTH, 1);
 						int diffYear = nextDate.get(Calendar.YEAR) - initDate.get(Calendar.YEAR);
@@ -1369,7 +1379,10 @@ public Double actualMonthSubcategoriesForecasting(Map<String, Double> summaryOfA
 							transactionsSum = new Double(0);	
 							transactionsSum = transactionsCalculate(transactionsSum, transaction);
 							initDate.add(Calendar.MONTH, 1);								
-						}							
+						}
+						if (transaction.equals(transactions.get(transactions.size() - 1))) {
+							subcategoryYearSummary.put(lastTransactionDate, Math.abs(transactionsSum));
+						}
 					}
 					dataForForecast.put(subcategory.getName(), subcategoryYearSummary);
 				}
@@ -1493,7 +1506,7 @@ public Double actualMonthSubcategoriesForecasting(Map<String, Double> summaryOfA
 					Date actualDate = new Date();
 					Calendar actualDateCal = Calendar.getInstance();
 					actualDateCal.setTime(actualDate);
-								
+				
 					List<Category> categories = categoryRepository.findByUser(user);
 					for (Category category : categories) {
 						List<Subcategory> subcategories = subcategoryRepository.findByCategory(category);
@@ -1507,9 +1520,15 @@ public Double actualMonthSubcategoriesForecasting(Map<String, Double> summaryOfA
 								
 								if(actualDateCal.get(Calendar.YEAR)<nextDate.get(Calendar.YEAR)){
 									found.add(transaction);
+									System.out.println(actualDateCal.get(Calendar.YEAR)+" czy rowne? " + nextDate.get(Calendar.YEAR));
+									System.out.println(transaction.getMemo());
+									
 								}
-								else if(actualDateCal.get(Calendar.YEAR)==nextDate.get(Calendar.YEAR) && actualDateCal.get(Calendar.MONTH)<nextDate.get(Calendar.MONTH)){
+								else if(actualDateCal.get(Calendar.YEAR)==nextDate.get(Calendar.YEAR) && actualDateCal.get(Calendar.MONTH)<=nextDate.get(Calendar.MONTH)){
 									found.add(transaction);
+//									System.out.println(actualDateCal.get(Calendar.YEAR)+" czy rowne? " + nextDate.get(Calendar.YEAR));
+//									System.out.println(actualDateCal.get(Calendar.MONTH)+" czy rowne? " + nextDate.get(Calendar.MONTH));
+//									System.out.println(transaction.getMemo());
 								}
 							}
 							transactions.removeAll(found);
@@ -1530,6 +1549,17 @@ public Double actualMonthSubcategoriesForecasting(Map<String, Double> summaryOfA
 								Calendar lastDate = Calendar.getInstance();
 								lastDate.setTime(transactions.get(transactions.size() - 1).getDate());
 								lastDate.add(Calendar.MONTH, 1);
+								//
+								String lastTransactionDate=null;
+								if(lastDate.get(Calendar.MONTH)==0){
+								lastTransactionDate = String.valueOf(lastDate.get(Calendar.YEAR)-1) + "-"
+										+ "12" + "-1";
+								}
+								else{
+									lastTransactionDate = String.valueOf(lastDate.get(Calendar.YEAR)) + "-"
+											+ String.valueOf(lastDate.get(Calendar.MONTH)) + "-1";
+								}
+								//
 								int diffYear = nextDate.get(Calendar.YEAR) - initDate.get(Calendar.YEAR);
 								int diffMonth = diffYear * 12 + nextDate.get(Calendar.MONTH) - initDate.get(Calendar.MONTH);
 								Calendar prevDate = Calendar.getInstance();
@@ -1564,9 +1594,11 @@ public Double actualMonthSubcategoriesForecasting(Map<String, Double> summaryOfA
 									subcategoryYearSummary.put(transactionDate, Math.abs(transactionsSum));
 									transactionsSum = new Double(0);	
 									transactionsSum = transactionsCalculate(transactionsSum, transaction);
-									initDate.add(Calendar.MONTH, 1);
-									
-								}							
+									initDate.add(Calendar.MONTH, 1);									
+								}
+								if (transaction.equals(transactions.get(transactions.size() - 1))) {
+									subcategoryYearSummary.put(lastTransactionDate, Math.abs(transactionsSum));
+								}
 							}
 							if(subcategoryYearSummary.size()>1){
 							dataForForecast.put(subcategory.getName(), subcategoryYearSummary);}
