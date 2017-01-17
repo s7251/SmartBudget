@@ -54,10 +54,6 @@
 </button>
 
 </div></c:if>
-<!-- <div class="alert alert-warning alert-dismissible" role="alert">
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  <strong>Attention! probably unexpected expenses:</strong> .
-</div> -->
 
 <div class="panel panel-default">
 	<!-- Default panel contents -->
