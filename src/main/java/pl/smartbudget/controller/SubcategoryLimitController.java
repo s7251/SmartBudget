@@ -38,6 +38,8 @@ public class SubcategoryLimitController {
 		model.addAttribute("nextMonthNav", transactionService.getNextMonthForNavigationByViewedTransactions(transactionService.findAllTransactionOfUserByActualMonth(name)));	
 		model.addAttribute("prevMonthNav", transactionService.getPrevMonthForNavigationByViewedTransactions(transactionService.findAllTransactionOfUserByActualMonth(name)));		
 		model.addAttribute("user", userService.findOneWithCategoriesSubcategoriesAndSubcategoryLimit(name, date));
+		model.addAttribute("date", transactionService.getActualDateByViewedTransactions(transactionService.findAllTransactionOfUserByActualMonth(name)));
+		model.addAttribute("actualMonth", true);
 		return "user-budgetplan";
 	}
 	
@@ -50,6 +52,7 @@ public class SubcategoryLimitController {
 		model.addAttribute("prevMonthNav", transactionService.getPrevMonthForNavigationByViewedTransactions(transactionService.findAllTransactionOfUserByDate(name, date)));		
 		model.addAttribute("user", userService.findOneWithCategoriesSubcategoriesAndSubcategoryLimit(name, date));
 		model.addAttribute("date", date);
+		model.addAttribute("actualMonth", transactionService.CheckIfActualMonth(transactionService.getMonthByOtherMonth(date), transactionService.getYearByOtherMonth(date)));
 		return "user-budgetplan";
 	}
 	

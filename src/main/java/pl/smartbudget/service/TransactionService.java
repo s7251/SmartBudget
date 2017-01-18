@@ -433,11 +433,11 @@ for(Transaction transaction : transactions){
 	nextDate.setTime(transaction.getDate());						
 	Calendar todayDate = Calendar.getInstance();
 	todayDate.setTime(new Date());	
-	todayDate.add(Calendar.MONTH, -1);	
+	//todayDate.add(Calendar.MONTH, -1);	
 	if(todayDate.get(Calendar.YEAR)<nextDate.get(Calendar.YEAR)){
 		found.add(transaction);
 	}
-	else if(todayDate.get(Calendar.YEAR)==nextDate.get(Calendar.YEAR) && todayDate.get(Calendar.MONTH)<nextDate.get(Calendar.MONTH)){
+	else if(todayDate.get(Calendar.YEAR)==nextDate.get(Calendar.YEAR) && todayDate.get(Calendar.MONTH)<=nextDate.get(Calendar.MONTH)){
 		found.add(transaction);
 	}
 	
