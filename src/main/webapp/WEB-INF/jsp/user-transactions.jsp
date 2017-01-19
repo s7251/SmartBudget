@@ -734,3 +734,43 @@ $(document).ready(function() {
    
 });
 </script>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([                                                        
+          ['Month', 'Month Summary', 'Forecast'],           
+          ['1',  123],  
+          ['1',  123], 
+          ['1',  123], 
+          ['1',  123]
+           
+        ]);
+        
+        var options = {
+          title: 'Forecasting',
+          curveType: 'function',
+          legend: { position: 'bottom' },
+          tooltip: { trigger: 'yes' },
+          pointSize: 4,
+          series: {
+          
+              1: { lineDashStyle: [4, 4] },
+                        
+            },
+         
+        };
+        
+        var formatter = new google.visualization.NumberFormat({decimalSymbol: ',',groupingSymbol: '.', negativeColor: 'red', negativeParens: true, suffix: ' zł '});
+        formatter.format(data, 1);
+        formatter.format(data, 2);
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));       
+        chart.draw(data, options);        
+        /* chart.setSelection([
+                            {row:11, column:1}                           
+                        ]); */
+        
+      }
+    </script>

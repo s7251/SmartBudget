@@ -1297,7 +1297,13 @@ public Double actualMonthSubcategoriesForecasting(Map<String, Double> summaryOfA
 			
 			Date actualDate = new Date();
 			Calendar actualDateCal = Calendar.getInstance();
-			actualDateCal.setTime(actualDate);				
+			actualDateCal.setTime(actualDate);	
+			
+			Date beforeActualDate = new Date();
+			Calendar beforeActualDateCal = Calendar.getInstance();
+			beforeActualDateCal.setTime(beforeActualDate);
+			beforeActualDateCal.add(Calendar.MONTH, -23);
+			
 			List<Category> categories = categoryRepository.findByUser(user);
 			for (Category category : categories) {
 				List<Subcategory> subcategories = subcategoryRepository.findByCategory(category);
@@ -1314,6 +1320,13 @@ public Double actualMonthSubcategoriesForecasting(Map<String, Double> summaryOfA
 						}
 						else if(actualDateCal.get(Calendar.YEAR)==nextDate.get(Calendar.YEAR) && actualDateCal.get(Calendar.MONTH)<=nextDate.get(Calendar.MONTH)){
 							found.add(transaction);
+						}
+						if(beforeActualDateCal.get(Calendar.YEAR)>nextDate.get(Calendar.YEAR)){
+							found.add(transaction);									
+							
+						}
+						else if(beforeActualDateCal.get(Calendar.YEAR)==nextDate.get(Calendar.YEAR) && beforeActualDateCal.get(Calendar.MONTH)>=nextDate.get(Calendar.MONTH)){
+							found.add(transaction);//								
 						}
 					}
 					transactions.removeAll(found);
@@ -1506,6 +1519,11 @@ public Double actualMonthSubcategoriesForecasting(Map<String, Double> summaryOfA
 					Date actualDate = new Date();
 					Calendar actualDateCal = Calendar.getInstance();
 					actualDateCal.setTime(actualDate);
+					
+					Date beforeActualDate = new Date();
+					Calendar beforeActualDateCal = Calendar.getInstance();
+					beforeActualDateCal.setTime(beforeActualDate);
+					beforeActualDateCal.add(Calendar.MONTH, -23);
 				
 					List<Category> categories = categoryRepository.findByUser(user);
 					for (Category category : categories) {
@@ -1529,6 +1547,13 @@ public Double actualMonthSubcategoriesForecasting(Map<String, Double> summaryOfA
 //									System.out.println(actualDateCal.get(Calendar.YEAR)+" czy rowne? " + nextDate.get(Calendar.YEAR));
 //									System.out.println(actualDateCal.get(Calendar.MONTH)+" czy rowne? " + nextDate.get(Calendar.MONTH));
 //									System.out.println(transaction.getMemo());
+								}
+								if(beforeActualDateCal.get(Calendar.YEAR)>nextDate.get(Calendar.YEAR)){
+									found.add(transaction);									
+									
+								}
+								else if(beforeActualDateCal.get(Calendar.YEAR)==nextDate.get(Calendar.YEAR) && beforeActualDateCal.get(Calendar.MONTH)>=nextDate.get(Calendar.MONTH)){
+									found.add(transaction);//								
 								}
 							}
 							transactions.removeAll(found);
