@@ -32,7 +32,6 @@ public class SubcategoryLimit {
 	@Transient
 	private String summaryOfSpentMoney;
 
-
 	public String getSummaryOfSpentMoney() {
 		return summaryOfSpentMoney;
 	}

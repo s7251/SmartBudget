@@ -6,6 +6,4 @@ import pl.smartbudget.entity.Subtransaction;
 
 public interface SubtransactionRepository extends JpaRepository<Subtransaction, Integer> {
 
-	
-
 }

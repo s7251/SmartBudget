@@ -21,7 +21,7 @@ public class User {
 	private String name;
 	private String email;
 	private boolean enabled;
-	
+
 	@Transient
 	private String permissions;
 
@@ -98,7 +98,7 @@ public class User {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
-	
+
 	public String getPermissions() {
 		return permissions;
 	}

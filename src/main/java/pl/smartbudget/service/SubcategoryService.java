@@ -53,14 +53,12 @@ public class SubcategoryService {
 		for(Transaction transaction: transactions){
 			transaction.setSubcategory(subcategoryRepository.getOne(newSubcategoryId));
 			transactionRepository.save(transaction);
-		}
-		
+		}		
 		subcategoryRepository.delete(subcategoryId);}
 	}
 
 	public Subcategory findOne(int id) {		
 		return subcategoryRepository.findOne(id);
 	}
-
 		
 }

@@ -23,11 +23,11 @@ public class AccountService {
 
 	public List<Account> findAll() {
 		return accountRepository.findAll();
-		
+
 	}
 
 	public void save(Account account, String name) {
-		User user = userRepository.findByName(name);		
+		User user = userRepository.findByName(name);
 		account.setName(account.getName());
 		account.setUser(user);
 		accountRepository.save(account);
@@ -35,26 +35,26 @@ public class AccountService {
 
 	@PreAuthorize("#account.user.name == authentication.name")
 	public void delete(@P("account") Account account, String name) {
-		accountRepository.delete(account);		
+		accountRepository.delete(account);
 	}
 
 	public String findById(int id) {
 		Account account = accountRepository.findById(id);
 		return account.getName();
 	}
-	
+
 	public String getForecastAccount(int id) {
 		String typeOfAccount;
-		if(id!=0){
-		Account account = accountRepository.findById(id);
-		typeOfAccount = account.getName();}
-		else{
-			typeOfAccount="Total Balance";
+		if (id != 0) {
+			Account account = accountRepository.findById(id);
+			typeOfAccount = account.getName();
+		} else {
+			typeOfAccount = "Total Balance";
 		}
 		return typeOfAccount;
 	}
 
-	public Account findOne(int id) {		
+	public Account findOne(int id) {
 		return accountRepository.findOne(id);
 	}
 

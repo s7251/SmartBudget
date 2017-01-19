@@ -12,7 +12,7 @@ public class Subtransaction {
 	@Id
 	@GeneratedValue
 	private Integer id;
-	private String memo;	
+	private String memo;
 	private double amount;
 
 	@ManyToOne
@@ -50,10 +50,5 @@ public class Subtransaction {
 	public void setTransaction(Transaction transaction) {
 		this.transaction = transaction;
 	}
-
-
-	
-
-
 
 }

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import pl.smartbudget.entity.Account;
 import pl.smartbudget.forms.AlignBalanceForm;
 import pl.smartbudget.forms.InternalTransferForm;
-import pl.smartbudget.forms.RemoveSubcategoryForm;
 import pl.smartbudget.service.AccountService;
 import pl.smartbudget.service.TransactionService;
 import pl.smartbudget.service.UserService;
@@ -27,59 +26,61 @@ public class AccountController {
 
 	@Autowired
 	private TransactionService transactionService;
-	
+
 	@Autowired
 	private AccountService accountService;
-	
+
 	@RequestMapping("/user-accounts")
 	public String accounts(Model model, Principal principal) {
 		String name = principal.getName();
 		model.addAttribute("account", new Account());
 		model.addAttribute("AlignBalanceForm", new AlignBalanceForm());
-		model.addAttribute("InternalTransferForm", new InternalTransferForm());		
-		model.addAttribute("accountsMap", userService.getAccountsMapOfUser(name));		
+		model.addAttribute("InternalTransferForm", new InternalTransferForm());
+		model.addAttribute("accountsMap", userService.getAccountsMapOfUser(name));
 		model.addAttribute("user", userService.findOneWithAccounts(name));
 		model.addAttribute("summaryOfAccounts", transactionService.summaryTransactionsOfAccounts(name));
-		model.addAttribute("summaryOfAllAccounts", transactionService.summaryTransactionsOfAllAccounts(name));		
+		model.addAttribute("summaryOfAllAccounts", transactionService.summaryTransactionsOfAllAccounts(name));
 		return "user-accounts";
 	}
-	
+
 	@RequestMapping(value = "/addAccount", method = RequestMethod.POST)
-	public String addAccount(@ModelAttribute("account") Account account, Principal principal)	throws ParseException {
+	public String addAccount(@ModelAttribute("account") Account account, Principal principal) throws ParseException {
 		String name = principal.getName();
 		accountService.save(account, name);
 		return "redirect:/user-accounts";
 	}
-	
+
 	@RequestMapping(value = "/renameAccount", method = RequestMethod.POST)
-	public String renameAccount(@ModelAttribute("account") Account account, Principal principal)	throws ParseException {
+	public String renameAccount(@ModelAttribute("account") Account account, Principal principal) throws ParseException {
 		String name = principal.getName();
 		accountService.save(account, name);
 		return "redirect:/user-accounts";
 	}
-	
+
 	@RequestMapping("/user-accounts/removeaccount/{id}")
-	public String removeAccount(@PathVariable int id, Principal principal){
+	public String removeAccount(@PathVariable int id, Principal principal) {
 		Account account = accountService.findOne(id);
 		String name = principal.getName();
 		accountService.delete(account, name);
 		return "redirect:/user-accounts";
 	}
-		
+
 	@RequestMapping(value = "/alignBalance", method = RequestMethod.POST)
-	public String alignBalance(@ModelAttribute("AlignBalanceForm") AlignBalanceForm alignBalanceForm, Principal principal)	throws ParseException {
+	public String alignBalance(@ModelAttribute("AlignBalanceForm") AlignBalanceForm alignBalanceForm,
+			Principal principal) throws ParseException {
 		String name = principal.getName();
 		transactionService.saveAlignBalance(alignBalanceForm, name);
 		return "redirect:/user-transactions";
-	}	
-	
+	}
+
 	@RequestMapping(value = "/internalTransfer", method = RequestMethod.POST)
-	public String internalTransfer(@ModelAttribute("InternalTransferForm") InternalTransferForm internalTransferForm, Principal principal)	throws ParseException {
+	public String internalTransfer(@ModelAttribute("InternalTransferForm") InternalTransferForm internalTransferForm,
+			Principal principal) throws ParseException {
 		String name = principal.getName();
 		transactionService.saveInternalTransfer(internalTransferForm, name);
 		return "redirect:/user-transactions";
-	}	
-	
+	}
+
 	@RequestMapping("/account-forecast/{id}")
 	public String detail(Model model, Principal principal, @PathVariable int id) {
 		String name = principal.getName();

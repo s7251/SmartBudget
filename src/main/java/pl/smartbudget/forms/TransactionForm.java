@@ -9,7 +9,7 @@ public class TransactionForm {
 	private String date;
 	private Integer accountId;
 	private Integer subcategoryId;
-	
+
 	private String firstSplitMemo;
 	private String secondarySplitMemo;
 	private double firstSplitAmount;
@@ -120,7 +120,5 @@ public class TransactionForm {
 	public void setSecondarySplitSubcategoryId(Integer secondarySplitSubcategoryId) {
 		this.secondarySplitSubcategoryId = secondarySplitSubcategoryId;
 	}
-	
-	
 
 }

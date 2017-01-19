@@ -26,7 +26,7 @@ public class CategoryController {
 
 	@Autowired
 	private CategoryService categoryService;
-	
+
 	@RequestMapping("/user-categories")
 	public String categories(Model model, Principal principal) {
 		model.addAttribute("subcategory", new SubcategoryForm());
@@ -38,37 +38,40 @@ public class CategoryController {
 		model.addAttribute("subcategoriesMap", userService.getSubcategoriesMapOfUser(name));
 		return "user-categories";
 	}
-	
+
 	@RequestMapping(value = "/addCategory", method = RequestMethod.POST)
-	public String addCategory(@ModelAttribute("category") Category category, Principal principal)	throws ParseException {
+	public String addCategory(@ModelAttribute("category") Category category, Principal principal)
+			throws ParseException {
 		String name = principal.getName();
 		categoryService.save(category, name);
 		return "redirect:/user-categories";
 	}
 
 	@RequestMapping(value = "/renameCategory", method = RequestMethod.POST)
-	public String renameCategory(@ModelAttribute("category") Category category, Principal principal)	throws ParseException {
+	public String renameCategory(@ModelAttribute("category") Category category, Principal principal)
+			throws ParseException {
 		String name = principal.getName();
 		categoryService.save(category, name);
 		return "redirect:/user-categories";
 	}
-	
+
 	@RequestMapping("/user-categories/removecategory/{id}")
-	public String removeCategory(@PathVariable int id,  Principal principal){
+	public String removeCategory(@PathVariable int id, Principal principal) {
 		Category category = categoryService.findOne(id);
-		String name = principal.getName();		
-		String userNameByCategoryId = userService.findUserNameByCategoryId(category);	
+		String name = principal.getName();
+		String userNameByCategoryId = userService.findUserNameByCategoryId(category);
 		categoryService.delete(category, name, userNameByCategoryId);
 		return "redirect:/user-categories";
 	}
-	
+
 	@RequestMapping("/user-categories/removecategory")
-	public String removeCategory(@ModelAttribute("RemoveCategoryForm") RemoveCategoryForm removeCategory, Principal principal){
+	public String removeCategory(@ModelAttribute("RemoveCategoryForm") RemoveCategoryForm removeCategory,
+			Principal principal) {
 		Category category = categoryService.findOne(removeCategory.getCategoryId());
-		String name = principal.getName();		
-		String userNameByCategoryId = userService.findUserNameByCategoryId(category);	
+		String name = principal.getName();
+		String userNameByCategoryId = userService.findUserNameByCategoryId(category);
 		categoryService.delete(category, removeCategory.getNewSubcategoryId(), name, userNameByCategoryId);
 		return "redirect:/user-categories";
 	}
-	
+
 }

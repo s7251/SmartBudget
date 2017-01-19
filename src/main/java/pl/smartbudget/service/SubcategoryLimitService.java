@@ -28,8 +28,7 @@ public class SubcategoryLimitService {
 		subcategoryLimit.setAmount(subcategoryLimitForm.getAmount());
 		subcategoryLimit.setId(subcategoryLimitForm.getId());
 		subcategoryLimit.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(dateTodb));
-		subcategoryLimit.setSubcategory(subcategoryRepository.getOne(subcategoryLimitForm.getSubcategoryId()));
-		
+		subcategoryLimit.setSubcategory(subcategoryRepository.getOne(subcategoryLimitForm.getSubcategoryId()));		
 		if (subcategoryLimit.getAmount()==0){
 			subcategoryLimitRepository.delete(subcategoryLimit);
 		}

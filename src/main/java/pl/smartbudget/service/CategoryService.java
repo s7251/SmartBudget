@@ -63,8 +63,7 @@ public class CategoryService {
 		}
 		//User user = userRepository.findByName(name);
 		//List<Category> categories = categoryRepository.findByUser(user);
-		//if (categories.size() > 1) {
-		
+		//if (categories.size() > 1) {		
 			categoryRepository.delete(category);			
 		//}
 		}	

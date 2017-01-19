@@ -36,7 +36,7 @@ public class Transaction {
 	@ManyToOne
 	@JoinColumn(name = "subcategory_id")
 	private Subcategory subcategory;
-	
+
 	@OneToMany(mappedBy = "transaction", cascade = CascadeType.REMOVE)
 	private List<Subtransaction> subtransactions;
 
@@ -111,7 +111,5 @@ public class Transaction {
 	public void setSubtransactions(List<Subtransaction> subtransactions) {
 		this.subtransactions = subtransactions;
 	}
-
-	
 
 }

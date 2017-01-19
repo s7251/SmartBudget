@@ -12,9 +12,4 @@ public class SubtransactionService {
 	@Autowired
 	private SubtransactionRepository subtransactionRepository;
 
-	
-
-
-
-
-}
+	}
