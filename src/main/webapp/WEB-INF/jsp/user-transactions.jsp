@@ -257,10 +257,10 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-number="1">&times;</button>
-        <h4 class="modal-title">Wrong sum of splitted transactions!</h4>
+        <h4 class="modal-title">Wrong sum of split transactions!</h4>
       </div>
       <div class="modal-body">
-        <p>Sum of splitted transactions must be equal: <b><fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${userTransactions.amount}" type="currency" currencySymbol="zł" pattern=" #,##0.00 ¤; -#,##0.00 ¤"/>.</b></p>
+        <p>Sum of split transactions must be equal: <b><fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${userTransactions.amount}" type="currency" currencySymbol="zł" pattern=" #,##0.00 ¤; -#,##0.00 ¤"/>.</b></p>
       </div>
       <div class="modal-footer">
        
@@ -578,7 +578,7 @@
         <c:forEach items="${nextMonthsSubcategoriesForecast}" var="subforecast">
         <td>  <strong>${subforecast.key}: </strong><br> <c:forEach items="${subforecast.value}" var="subforecast2">
         <table>
-      <tr> <td><strong> ${subforecast2.value} </strong> (${subforecast2.key}) </td></tr>
+      <tr> <td><strong><fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${subforecast2.value}" type="currency" currencySymbol="zł" pattern=" #,##0.00 ¤; -#,##0.00 ¤"/> </strong> (${subforecast2.key}) </td></tr>
         </table>
         </c:forEach></td>
   </c:forEach>

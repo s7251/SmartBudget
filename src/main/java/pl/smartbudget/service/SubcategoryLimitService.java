@@ -24,12 +24,19 @@ public class SubcategoryLimitService {
 	public void change(SubcategoryLimitForm subcategoryLimitForm) throws ParseException {
 		String date = subcategoryLimitForm.getDate();
 		String dateTodb = date.substring(3, 7) + "-" + date.substring(0, 2) + "-01";
-		SubcategoryLimit subcategoryLimit = new SubcategoryLimit();
+		SubcategoryLimit subcategoryLimit = new SubcategoryLimit();		
 		subcategoryLimit.setAmount(subcategoryLimitForm.getAmount());
 		subcategoryLimit.setId(subcategoryLimitForm.getId());
 		subcategoryLimit.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(dateTodb));
 		subcategoryLimit.setSubcategory(subcategoryRepository.getOne(subcategoryLimitForm.getSubcategoryId()));
-		subcategoryLimitRepository.save(subcategoryLimit);
+		
+		if (subcategoryLimit.getAmount()==0){
+			subcategoryLimitRepository.delete(subcategoryLimit);
+		}
+		else{
+			subcategoryLimitRepository.save(subcategoryLimit);
+		}
+		
 	}
 	
 	public void add(SubcategoryLimitForm subcategoryLimitForm) throws ParseException {
@@ -43,7 +50,12 @@ public class SubcategoryLimitService {
 		subcategoryLimit.setAmount(subcategoryLimitForm.getAmount());	
 		subcategoryLimit.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(dateTodb));
 		subcategoryLimit.setSubcategory(subcategoryRepository.getOne(subcategoryLimitForm.getSubcategoryId()));
-		subcategoryLimitRepository.save(subcategoryLimit);
+		if (subcategoryLimit.getAmount()==0){
+			
+		}
+		else{
+			subcategoryLimitRepository.save(subcategoryLimit);
+		}
 		}
 	}
 
