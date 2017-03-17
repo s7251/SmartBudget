@@ -49,6 +49,7 @@ public class TransactionController {
 		model.addAttribute("month", transactionService.getMonthByViewedTransactionsByActualMonth(transactionService.findAllTransactionOfUserByActualMonth(name)));
 		model.addAttribute("year", transactionService.geYearByViewedTransactionsByActualMonth(transactionService.findAllTransactionOfUserByActualMonth(name)));
 		model.addAttribute("firstView", true);
+		model.addAttribute("actualMonth", true);
 		return "user-transactions";
 	}
 	
@@ -69,7 +70,8 @@ public class TransactionController {
 		model.addAttribute("prevMonthNav", transactionService.getPrevMonthForNavigationByViewedTransactions(transactionService.findAllTransactionOfUserByDate(name, date)));
 		model.addAttribute("date", date);
 		model.addAttribute("month", transactionService.getMonthByOtherMonth(date));
-		model.addAttribute("year", transactionService.getYearByOtherMonth(date));			
+		model.addAttribute("year", transactionService.getYearByOtherMonth(date));
+		model.addAttribute("actualMonth", transactionService.CheckIfActualMonth(transactionService.getMonthByOtherMonth(date), transactionService.getYearByOtherMonth(date)));
 		return "user-transactions";
 	}
 	
@@ -93,6 +95,7 @@ public class TransactionController {
 		model.addAttribute("year", transactionService.getYearByOtherMonth(date));		
 		model.addAttribute("accountId", accountId);	
 		model.addAttribute("accountName", accountService.findById(accountId));
+		model.addAttribute("actualMonth", transactionService.CheckIfActualMonth(transactionService.getMonthByOtherMonth(date), transactionService.getYearByOtherMonth(date)));
 		return "user-transactions";
 	}
 	

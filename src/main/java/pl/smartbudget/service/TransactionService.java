@@ -1094,6 +1094,26 @@ if(transactions.isEmpty() == false){
 		return nextDate;
 	}
 	
+	public boolean CheckIfActualMonth(String month, String year){
+		boolean isActualMonth=false;
+		int dateMonth = Integer.parseInt(month);
+		int dateYear = Integer.parseInt(year);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date actualDate = new Date();			
+		String actualDateFormat = sdf.format(actualDate);
+		String actualMonth = actualDateFormat.substring(5, 7);
+		String actualYear = actualDateFormat.substring(0, 4);
+		int actualM = Integer.parseInt(actualMonth);		
+		int actualY = Integer.parseInt(actualYear);
+		if(dateMonth==actualM && dateYear==actualY){
+			isActualMonth=true;}	
+//		System.out.println("miesiac wysw " + dateMonth);
+//		System.out.println("rok transakcji " + dateYear);
+//		System.out.println("miesiac ak " + actualM);
+//		System.out.println("rok ak " + actualY);
+		return isActualMonth;
+	}
+	
 	public String getPrevMonthForNavigationByViewedTransactions(List<Transaction> transactions) throws ParseException {					
 		String prevDate = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

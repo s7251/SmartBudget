@@ -34,8 +34,13 @@
 
 <nav>
   <ul class="pager">
-    <li class="previous"><a href="<spring:url value="/user-transactions/${prevMonthNav}" />"><span aria-hidden="true">&larr;</span> Previous Month</a></li>     
-    <li class="next"><a href="<spring:url value="/user-transactions/${nextMonthNav}"/>">Next Month <span aria-hidden="true">&rarr;</span></a></li>
+    <li class="previous "><a href="<spring:url value="/user-transactions/${prevMonthNav}" />"><span aria-hidden="true">&larr;</span> Previous Month</a></li>    
+    <c:if test="${actualMonth==true}">
+        <li class="next disabled"><a href="#">Next Month <span aria-hidden="true">&rarr;</span></a></li>
+    </c:if> 
+    <c:if test="${actualMonth==false}">
+        <li class="next"><a href="<spring:url value="/user-transactions/${nextMonthNav}"/>">Next Month <span aria-hidden="true">&rarr;</span></a></li>
+    </c:if> 
   </ul>
 </nav>
 <c:if test="${not empty subcategoriesForecast}">
@@ -56,7 +61,7 @@
 
 <div class="panel panel-default">
 	<!-- Default panel contents -->
-	<div class="panel-heading"><h1 class="panel-title">Transactions <span class="pull-right">${date}<c:if test="${empty date}">${actualMonth}</c:if></span></h1></div>
+	<div class="panel-heading"><h1 class="panel-title">Transactions <span class="pull-right">${date}</span></h1></div>
 	
 
 	<div class="panel-body">
