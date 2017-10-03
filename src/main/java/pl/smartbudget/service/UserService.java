@@ -70,14 +70,265 @@ public class UserService {
 		return userRepository.findAll();
 	}
 
+	public User findOne(String name) {
+		return userRepository.findByName(name);
+	}
+	
 	public User findOne(int id) {
 		return userRepository.findOne(id);
 	}
-
-	public User findOneByName(String name) {
-		return userRepository.findByName(name);
+	
+	public User findOneWithAccounts(String name) {
+		User user = userRepository.findByName(name);		
+		List<Account> accounts = accountRepository.findByUser(user);
+		user.setAccounts(accounts);		
+		return user;
 	}
 
+	public User findOneWithAccountsAndTransactions(String name) {
+		User user = userRepository.findByName(name);
+		return findOneWithAccountsAndTransactions(user.getId());
+	}
+	
+	@Transactional
+	public User findOneWithAccountsAndTransactions(int id) {
+		User user = findOne(id);
+		List<Account> accounts = accountRepository.findByUser(user);
+		for (Account account : accounts) {
+			List<Transaction> transactions = transactionRepository.findByAccount(account);
+			account.setTransactions(transactions);
+		}
+		user.setAccounts(accounts);
+		return user;
+	}
+	
+	public User findOneWithCategoriesAndSubcategories(String name) {
+		User user = userRepository.findByName(name);
+		return findOneWithCategoriesAndSubcategories(user.getId());
+	}
+
+	
+	public User findOneWithCategoriesAndSubcategories(int id) {
+		User user = findOne(id);
+		List<Category> categories = categoryRepository.findByUser(user);
+		for (Category category : categories) {
+			List<Subcategory> subcategories = subcategoryRepository.findByCategory(category);
+			category.setSubcategories(subcategories);			
+		}
+		user.setCategories(categories);
+		return user;
+	}
+	
+	public User findOneWithCategoriesSubcategoriesAndSubcategoryLimit(String name, String date) {
+		User user = userRepository.findByName(name);
+		return findOneWithCategoriesSubcategoriesAndSubcategoryLimit(user.getId(), date);
+	}
+
+	@Transactional
+	public User findOneWithCategoriesSubcategoriesAndSubcategoryLimit(int id, String date) {
+		User user = findOne(id);
+		List<Category> categories = categoryRepository.findByUser(user);
+		for (Category category : categories) {
+			List<Subcategory> subcategories = subcategoryRepository.findByCategory(category);
+			category.setSubcategories(subcategories);
+			for (Subcategory subcategory : subcategories) {				
+				int month = Integer.parseInt(date.substring(0, 2));
+				int year = Integer.parseInt(date.substring(3, 7));				
+				List<SubcategoryLimit> subcategoryLimits = subcategoryLimitRepository.findBySubcategoryAndDate(subcategory.getId(), month, year );
+				subcategory.setSubcategoryLimits(subcategoryLimits);
+				for(SubcategoryLimit subcategoryLimit : subcategoryLimits){				
+					subcategoryLimit.setSummaryOfSpentMoney(transactionRepository.getSummaryOfSpentMoney(subcategory.getId(), month, year ));				
+				}								
+			}
+		}
+		user.setCategories(categories);
+		return user;
+	}
+	
+	public User findOneByEmail(String email) {		
+		return userRepository.findByEmail(email);
+	}
+	
+	public User findOneWithRoles(String name) {		
+		User user = userRepository.findByName(name);
+		user.setPermissions("User");		
+			user.setRoles(roleRepository.getRolesByUser(user.getName()));			
+			for(Role role : roleRepository.getRolesByUser(user.getName())){
+				if(role.getName().equals("ROLE_ADMIN")){					
+					user.setPermissions("Administrator");
+				}				
+			}
+		return user;
+	}
+	
+	public List<User> findAllWithRoles() {		
+		List<User> users = findAll();
+		for(User user: users){
+			user.setPermissions("User");	
+			user.setRoles(roleRepository.getRolesByUser(user.getName()));	
+			for(Role role : roleRepository.getRolesByUser(user.getName())){
+				if(role.getName().equals("ROLE_ADMIN")){					
+					user.setPermissions("Administrator");
+				}				
+			}
+		}		
+		return users;
+	}
+	
+	public String findUserNameByTransactionId(Transaction transaction){
+		String userName = userRepository.findUserNameByTransactionId(transaction);		
+		return userName;		
+	}
+
+	public String findUserNameByCategoryId(Category category) {
+		String userName = userRepository.findUserNameByCategoryId(category);
+		return userName;
+	}
+
+	public String findUserNameBySubcategoryId(Subcategory subcategory) {
+		String userName = userRepository.findUserNameBySubcategoryId(subcategory);
+		return userName;
+	}
+	
+	public void changePassword(User user) {		
+		BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
+		user.setPassword(bcrypt.encode(user.getPassword()));
+
+		List<Role> userRoles = new ArrayList<Role>();
+		if(user.getName().equals("admin")){
+			userRoles.add(roleRepository.findByName("ROLE_ADMIN"));		
+		}	
+			userRoles.add(roleRepository.findByName("ROLE_USER"));
+			user.setRoles(userRoles);		
+		    userRepository.save(user);
+	}
+	
+	public void changeEmail(User user) {	
+		user.setEmail(user.getEmail());
+		List<Role> userRoles = new ArrayList<Role>();
+		if(user.getName().equals("admin")){
+			userRoles.add(roleRepository.findByName("ROLE_ADMIN"));				
+		}	
+			userRoles.add(roleRepository.findByName("ROLE_USER"));
+			user.setRoles(userRoles);			
+		userRepository.save(user);
+	}
+		
+	@Transactional
+	public Map<Integer, String> getSubcategoriesMapOfUser(String name) {
+
+		Map<Integer, String> subcategoriesMap = new HashMap<Integer, String>();
+		List<Category> categories = findOneWithCategoriesAndSubcategories(name).getCategories();
+
+		for (Category category : categories) {
+			List<Subcategory> subcategories = category.getSubcategories();
+			for (Subcategory subcategory : subcategories)
+				subcategoriesMap.put(subcategory.getId(), subcategory.getName());
+		}
+		return subcategoriesMap;
+	}
+
+	@Transactional
+	public Map<Integer, String> getAccountsMapOfUser(String name) {
+
+		Map<Integer, String> accountsMap = new HashMap<Integer, String>();
+		List<Account> accounts = findOneWithAccountsAndTransactions(name).getAccounts();
+
+		for (Account account : accounts) {
+			accountsMap.put(account.getId(), account.getName());
+		}
+		return accountsMap;
+	}
+
+	@PreAuthorize("#userName == authentication.name or hasRole('ROLE_ADMIN')")
+	public void delete(int id, @P("userName") String userName) {
+		userRepository.delete(id);		
+	}
+	
+	public void ResetPassword(String name, String email){		
+		User user = userRepository.findByName(name);
+	    SecureRandom random = new SecureRandom();
+	    String newPassword = new BigInteger(100, random).toString(32);
+	    BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();		
+			  
+		if(user.getEmail().equals(email)){
+		user.setPassword(bcrypt.encode(newPassword));
+		List<Role> userRoles = new ArrayList<Role>();
+		if(user.getName().equals("admin")){
+			userRoles.add(roleRepository.findByName("ROLE_ADMIN"));		
+		}	
+			userRoles.add(roleRepository.findByName("ROLE_USER"));
+			user.setRoles(userRoles);	
+			user.setEnabled(true);
+			user.setName(name);
+			user.setEmail(email);		
+		
+		final String username = "smartbudget.no.reply@gmail.com";
+		final String password = "PoliBuda2016#@123%";
+
+		Properties props = new Properties();
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port", "587");
+
+		Session session = Session.getInstance(props,
+		  new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(username, password);
+			}
+		  });
+
+		try {
+
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress("smartbudget.no.reply@gmail.com"));
+			message.setRecipients(Message.RecipientType.TO,
+				InternetAddress.parse(email));
+			message.setSubject("SmartBudget password reset notification");
+			message.setText("Hello "+name+","
+				+ "\n\nWe received a request to reset the password for your SmartBudget account. your new password is: " + newPassword +"\n\nPlease change your password after next login.");
+
+			Transport.send(message);
+			System.out.println("Done");
+
+		} catch (MessagingException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	}
+
+
+
+	public void userSetRoles(User user, AddUserByAdminForm form) {
+		List<Role> userRoles = new ArrayList<Role>();
+		if(form.getPermissions().equals("administrator")){			
+			userRoles.add(roleRepository.findByName("ROLE_USER"));
+			userRoles.add(roleRepository.findByName("ROLE_ADMIN"));
+			user.setRoles(userRoles);
+		}
+		else if(form.getPermissions().equals("user")){
+			userRoles.add(roleRepository.findByName("ROLE_USER"));
+			user.setRoles(userRoles);
+		}		
+	}
+
+	public void changeRoles(ChangeRolesForm form) {
+		List<Role> userRoles = new ArrayList<Role>();
+		User user = userRepository.findById(form.getId());
+		user.setRoles(userRoles);
+		if(form.getPermissions().equals("admin")){
+			userRoles.add(roleRepository.findByName("ROLE_ADMIN"));		
+			userRoles.add(roleRepository.findByName("ROLE_USER"));
+		}	
+		else{
+			userRoles.add(roleRepository.findByName("ROLE_USER"));
+		}
+			user.setRoles(userRoles);					
+		userRepository.save(user);		
+	}
+	
+	
 	public void save(User user) {
 		user.setEnabled(true);
 		BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
@@ -85,8 +336,7 @@ public class UserService {
 
 		List<Role> userRoles = new ArrayList<Role>();
 		userRoles.add(roleRepository.findByName("ROLE_USER"));
-		user.setRoles(userRoles);
-		
+		user.setRoles(userRoles);		
 			
 		Account account = new Account();
 		account.setUser(user);
@@ -177,278 +427,5 @@ public class UserService {
 		transactionRepository.save(transaction2);
 		
 		userRepository.save(user);
-	}
-	
-	public void changePassword(User user) {		
-		BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
-		user.setPassword(bcrypt.encode(user.getPassword()));
-
-		List<Role> userRoles = new ArrayList<Role>();
-		if(user.getName().equals("admin")){
-			userRoles.add(roleRepository.findByName("ROLE_ADMIN"));		
-		}	
-			userRoles.add(roleRepository.findByName("ROLE_USER"));
-			user.setRoles(userRoles);	
-				
-		userRepository.save(user);
-	}
-	
-	public void changeEmail(User user) {	
-		user.setEmail(user.getEmail());
-		List<Role> userRoles = new ArrayList<Role>();
-		if(user.getName().equals("admin")){
-			userRoles.add(roleRepository.findByName("ROLE_ADMIN"));				
-		}	
-			userRoles.add(roleRepository.findByName("ROLE_USER"));
-			user.setRoles(userRoles);			
-		userRepository.save(user);
-	}
-	
-	public User findOneWithAccounts(String name) {
-		User user = userRepository.findByName(name);
-		return findOneWithAccountsAndTransactions(user.getId());
-	}
-
-	@Transactional
-	public User findOneWithAccounts(int id) {
-		User user = findOne(id);
-		List<Account> accounts = accountRepository.findByUser(user);
-		user.setAccounts(accounts);
-		return user;
-	}
-	
-	@Transactional
-	public User findOneWithRoles(String name) {
-		User user = userRepository.findByName(name);
-		//List<Role> roles = roleRepository.findByName(name);
-		//user.setRoles(roles);
-		return user;
-	}
-	
-	public User findOneWithAccountsAndTransactions(String name) {
-		User user = userRepository.findByName(name);
-		return findOneWithAccountsAndTransactions(user.getId());
-	}
-
-	@Transactional
-	public User findOneWithAccountsAndTransactions(int id) {
-		User user = findOne(id);
-		List<Account> accounts = accountRepository.findByUser(user);
-		for (Account account : accounts) {
-			List<Transaction> transactions = transactionRepository.findByAccount(account);
-			account.setTransactions(transactions);
-		}
-		user.setAccounts(accounts);
-		return user;
-	}
-
-	public User findOneWithCategoriesAndSubcategories(String name) {
-		User user = userRepository.findByName(name);
-		return findOneWithCategoriesAndSubcategories(user.getId());
-	}
-
-	@Transactional
-	public User findOneWithCategoriesAndSubcategories(int id) {
-		User user = findOne(id);
-		List<Category> categories = categoryRepository.findByUser(user);
-		for (Category category : categories) {
-			List<Subcategory> subcategories = subcategoryRepository.findByCategory(category);
-			category.setSubcategories(subcategories);			
-		}
-		user.setCategories(categories);
-		return user;
-	}
-	
-	public User findOneWithCategoriesSubcategoriesAndSubcategoryLimit(String name, String date) {
-		User user = userRepository.findByName(name);
-		return findOneWithCategoriesSubcategoriesAndSubcategoryLimit(user.getId(), date);
-	}
-
-	@Transactional
-	public User findOneWithCategoriesSubcategoriesAndSubcategoryLimit(int id, String date) {
-		User user = findOne(id);
-		List<Category> categories = categoryRepository.findByUser(user);
-		for (Category category : categories) {
-			List<Subcategory> subcategories = subcategoryRepository.findByCategory(category);
-			category.setSubcategories(subcategories);
-			for (Subcategory subcategory : subcategories) {				
-				int month = Integer.parseInt(date.substring(0, 2));
-				int year = Integer.parseInt(date.substring(3, 7));				
-				List<SubcategoryLimit> subcategoryLimits = subcategoryLimitRepository.findBySubcategoryAndDate(subcategory.getId(), month, year );
-				subcategory.setSubcategoryLimits(subcategoryLimits);
-				for(SubcategoryLimit subcategoryLimit : subcategoryLimits){
-				
-					subcategoryLimit.setSummaryOfSpentMoney(transactionRepository.getSummaryOfSpentMoney(subcategory.getId(), month, year ));					
-					
-				}								
-			}
-		}
-		user.setCategories(categories);
-		return user;
-	}
-
-	@Transactional
-	public Map<Integer, String> getSubcategoriesMapOfUser(String name) {
-
-		Map<Integer, String> subcategoriesMap = new HashMap<Integer, String>();
-		List<Category> categories = findOneWithCategoriesAndSubcategories(name).getCategories();
-
-		for (Category category : categories) {
-			List<Subcategory> subcategories = category.getSubcategories();
-			for (Subcategory subcategory : subcategories)
-				subcategoriesMap.put(subcategory.getId(), subcategory.getName());
-		}
-		return subcategoriesMap;
-	}
-
-	@Transactional
-	public Map<Integer, String> getAccountsMapOfUser(String name) {
-
-		Map<Integer, String> accountsMap = new HashMap<Integer, String>();
-		List<Account> accounts = findOneWithAccountsAndTransactions(name).getAccounts();
-
-		for (Account account : accounts) {
-			accountsMap.put(account.getId(), account.getName());
-		}
-		return accountsMap;
-	}
-
-	@PreAuthorize("#userName == authentication.name or hasRole('ROLE_ADMIN')")
-	public void delete(int id, @P("userName") String userName) {
-		userRepository.delete(id);
-		
-	}
-	
-	public String findUserNameByTransactionId(Transaction transaction){
-		String userName = userRepository.findUserNameByTransactionId(transaction);
-		
-		return userName;		
-	}
-
-	public String findUserNameByCategoryId(Category category) {
-		String userName = userRepository.findUserNameByCategoryId(category);
-		return userName;
-	}
-
-	public String findUserNameBySubcategoryId(Subcategory subcategory) {
-		String userName = userRepository.findUserNameBySubcategoryId(subcategory);
-		return userName;
-	}
-
-	public User findOneByEmail(String email) {		
-		return userRepository.findByEmail(email);
-	}
-	
-	public void ResetPassword(String name, String email){		
-		User user = userRepository.findByName(name);
-	    SecureRandom random = new SecureRandom();
-	    String newPassword = new BigInteger(100, random).toString(32);
-	    BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
-		
-			  
-		if(user.getEmail().equals(email)){
-		user.setPassword(bcrypt.encode(newPassword));
-		List<Role> userRoles = new ArrayList<Role>();
-		if(user.getName().equals("admin")){
-			userRoles.add(roleRepository.findByName("ROLE_ADMIN"));		
-		}	
-			userRoles.add(roleRepository.findByName("ROLE_USER"));
-			user.setRoles(userRoles);	
-			user.setEnabled(true);
-			user.setName(name);
-			user.setEmail(email);
-		
-		
-		final String username = "smartbudget.no.reply@gmail.com";
-		final String password = "PoliBuda2016#@123%";
-
-		Properties props = new Properties();
-		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.starttls.enable", "true");
-		props.put("mail.smtp.host", "smtp.gmail.com");
-		props.put("mail.smtp.port", "587");
-
-		Session session = Session.getInstance(props,
-		  new javax.mail.Authenticator() {
-			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(username, password);
-			}
-		  });
-
-		try {
-
-			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress("smartbudget.no.reply@gmail.com"));
-			message.setRecipients(Message.RecipientType.TO,
-				InternetAddress.parse(email));
-			message.setSubject("SmartBudget password reset notification");
-			message.setText("Hello "+name+","
-				+ "\n\nWe received a request to reset the password for your SmartBudget account. your new password is: " + newPassword +"\n\nPlease change your password after next login.");
-
-			Transport.send(message);
-
-			System.out.println("Done");
-
-		} catch (MessagingException e) {
-			throw new RuntimeException(e);
-		}
-	}
-	}
-
-	public List<User> getUsersWithRoles() {		
-		List<User> users = findAll();
-		for(User user: users){
-			user.setPermissions("User");	
-			user.setRoles(roleRepository.getRolesByUser(user.getName()));	
-			for(Role role : roleRepository.getRolesByUser(user.getName())){
-				if(role.getName().equals("ROLE_ADMIN")){					
-					user.setPermissions("Administrator");
-				}				
-			}
-		}		
-		return users;
-	}
-	
-	public User getUserByNameWithRoles(String name) {		
-		User user = userRepository.findByName(name);
-		user.setPermissions("User");		
-			user.setRoles(roleRepository.getRolesByUser(user.getName()));			
-			for(Role role : roleRepository.getRolesByUser(user.getName())){
-				if(role.getName().equals("ROLE_ADMIN")){					
-					user.setPermissions("Administrator");
-				}				
-			}
-		return user;
-	}
-
-	public void userSetRoles(User user, AddUserByAdminForm form) {
-		List<Role> userRoles = new ArrayList<Role>();
-		if(form.getPermissions().equals("administrator")){			
-			userRoles.add(roleRepository.findByName("ROLE_USER"));
-			userRoles.add(roleRepository.findByName("ROLE_ADMIN"));
-			user.setRoles(userRoles);
-		}
-		else if(form.getPermissions().equals("user")){
-			userRoles.add(roleRepository.findByName("ROLE_USER"));
-			user.setRoles(userRoles);
-		}
-		
-	}
-
-	public void changeRoles(ChangeRolesForm form) {
-		List<Role> userRoles = new ArrayList<Role>();
-		User user = userRepository.findById(form.getId());
-		user.setRoles(userRoles);
-		if(form.getPermissions().equals("admin")){
-			userRoles.add(roleRepository.findByName("ROLE_ADMIN"));		
-			userRoles.add(roleRepository.findByName("ROLE_USER"));
-		}	
-		else{
-			userRoles.add(roleRepository.findByName("ROLE_USER"));
-		}
-			user.setRoles(userRoles);	
-				
-		userRepository.save(user);
-		
 	}
 	}

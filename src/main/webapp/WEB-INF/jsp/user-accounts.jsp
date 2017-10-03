@@ -104,7 +104,7 @@
 	</div>
 </form:form>
 
-		<form:form mehod="post" modelAttribute="account" action="/renameAccount" cssClass="form-horizontal" id="form">
+		<form:form mehod="post" modelAttribute="Account" action="/renameAccount" cssClass="form-horizontal" id="form">
 			<form:hidden path="id" value="${summary.value.id}" />
 	<!-- Modal -->
 	<div class="modal fade" id="editAccountModal${summary.value.id}" tabindex="-1" role="dialog"
@@ -167,7 +167,7 @@
 </div>
 
 
-<form:form mehod="post" modelAttribute="account" action="/addAccount" cssClass="form-horizontal" id="form">
+<form:form mehod="post" modelAttribute="Account" action="/addAccount" cssClass="form-horizontal" id="form">
 	<!-- Modal -->
 	<div class="modal fade" id="addAccountModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">

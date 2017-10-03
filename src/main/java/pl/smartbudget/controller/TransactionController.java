@@ -99,24 +99,6 @@ public class TransactionController {
 		return "user-transactions";
 	}
 	
-	@RequestMapping("/user-transactions/removetransaction/{id}/{date}")
-	public String removeTransaction(@PathVariable int id, @PathVariable String date, Principal principal){
-		String name = principal.getName();
-		Transaction transaction = transactionService.findOne(id);
-		String userNameByTransactionId = userService.findUserNameByTransactionId(transaction);		
-		transactionService.delete(transaction, name, date, userNameByTransactionId);
-		return "redirect:/user-transactions/{date}";
-	}
-	
-	@RequestMapping("/user-transactions/removetransaction/{id}/{date}/{accountId}")
-	public String removeTransaction(@PathVariable int id, @PathVariable String date, Principal principal, @PathVariable int accountId){
-		String name = principal.getName();
-		Transaction transaction = transactionService.findOne(id);
-		String userNameByTransactionId = userService.findUserNameByTransactionId(transaction);		
-		transactionService.delete(transaction, name, date, userNameByTransactionId);
-		return "redirect:/user-transactions/{date}/{accountId}";
-	}
-
 	@RequestMapping(value = "/user-transactions", method = RequestMethod.POST)
 	public String addTransaction(@ModelAttribute("TransactionForm") TransactionForm transaction, Principal principal)	throws ParseException {
 		String name = principal.getName();
@@ -171,6 +153,24 @@ public class TransactionController {
 		String name = principal.getName();
 		transactionService.split(transaction, name);
 		return "redirect:/user-transactions/{date}";
+	}
+	
+	@RequestMapping("/user-transactions/removetransaction/{id}/{date}")
+	public String removeTransaction(@PathVariable int id, @PathVariable String date, Principal principal){
+		String name = principal.getName();
+		Transaction transaction = transactionService.findOne(id);
+		String userNameByTransactionId = userService.findUserNameByTransactionId(transaction);		
+		transactionService.delete(transaction, name, date, userNameByTransactionId);
+		return "redirect:/user-transactions/{date}";
+	}
+	
+	@RequestMapping("/user-transactions/removetransaction/{id}/{date}/{accountId}")
+	public String removeTransaction(@PathVariable int id, @PathVariable String date, Principal principal, @PathVariable int accountId){
+		String name = principal.getName();
+		Transaction transaction = transactionService.findOne(id);
+		String userNameByTransactionId = userService.findUserNameByTransactionId(transaction);		
+		transactionService.delete(transaction, name, date, userNameByTransactionId);
+		return "redirect:/user-transactions/{date}/{accountId}";
 	}
 		
 	}

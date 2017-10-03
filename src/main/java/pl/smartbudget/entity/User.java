@@ -3,6 +3,7 @@ package pl.smartbudget.entity;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -18,6 +19,7 @@ public class User {
 	@GeneratedValue
 	private Integer id;
 	private String password;
+	@Column(unique = true)
 	private String name;
 	private String email;
 	private boolean enabled;

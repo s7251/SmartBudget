@@ -36,72 +36,72 @@
 	</properties>
 
 	<dependencies>
-	
-<dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-core</artifactId>
-        <version>2.4.3</version>
-    </dependency>
-    <dependency>
-        <groupId>com.fasterxml.jackson.core</groupId>
-        <artifactId>jackson-databind</artifactId>
-        <version>2.4.3</version>
-    </dependency>
 
-	 <!-- Mail -->
-	
-	<!-- https://mvnrepository.com/artifact/javax.mail/mail -->
-	<dependency>
-  	  <groupId>javax.mail</groupId>
-  	  <artifactId>mail</artifactId>
-  	  <version>1.4</version>
-	</dependency>
-	
-	
-	   <!-- JodaTime -->
-	
-	   <dependency>
- 		    <groupId>joda-time</groupId>
-  			<artifactId>joda-time</artifactId>
- 		    <version>2.9.4</version>
-	   </dependency>
-	
-	    <!-- Weka -->
-	
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.4.3</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.4.3</version>
+		</dependency>
+
+		<!-- Mail -->
+
+		<!-- https://mvnrepository.com/artifact/javax.mail/mail -->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4</version>
+		</dependency>
+
+
+		<!-- JodaTime -->
+
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>2.9.4</version>
+		</dependency>
+
+		<!-- Weka -->
+
 		<!-- https://mvnrepository.com/artifact/nz.ac.waikato.cms.weka/weka-stable -->
 		<dependency>
- 		   <groupId>nz.ac.waikato.cms.weka</groupId>
- 		   <artifactId>weka-stable</artifactId>
- 		   <version>3.8.0</version>
+			<groupId>nz.ac.waikato.cms.weka</groupId>
+			<artifactId>weka-stable</artifactId>
+			<version>3.8.0</version>
 		</dependency>
 
-	
+
 		<!-- https://mvnrepository.com/artifact/jfree/jcommon -->
 		<dependency>
-   		 <groupId>jfree</groupId>
-  		  <artifactId>jcommon</artifactId>
-   		 <version>1.0.16</version>
+			<groupId>jfree</groupId>
+			<artifactId>jcommon</artifactId>
+			<version>1.0.16</version>
 		</dependency>
-	
-  	
-		   <!-- https://mvnrepository.com/artifact/nz.ac.waikato.cms.weka/timeseriesForecasting -->
+
+
+		<!-- https://mvnrepository.com/artifact/nz.ac.waikato.cms.weka/timeseriesForecasting -->
 		<dependency>
- 		   <groupId>nz.ac.waikato.cms.weka</groupId>
- 		   <artifactId>timeseriesForecasting</artifactId>
-  		  <version>1.0.23</version>
-	   </dependency>
+			<groupId>nz.ac.waikato.cms.weka</groupId>
+			<artifactId>timeseriesForecasting</artifactId>
+			<version>1.0.23</version>
+		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/jfree/jfreechart -->
 		<dependency>
-   		 	<groupId>jfree</groupId>
-   			 <artifactId>jfreechart</artifactId>
-   			 <version>1.0.13</version>
+			<groupId>jfree</groupId>
+			<artifactId>jfreechart</artifactId>
+			<version>1.0.13</version>
 		</dependency>
 
 		<!-- Tests -->
-		
+
 		<!-- http://mvnrepository.com/artifact/junit/junit -->
-		
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -109,7 +109,7 @@
 		</dependency>
 
 		<!-- http://mvnrepository.com/artifact/org.mockito/mockito-all -->
-		
+
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>

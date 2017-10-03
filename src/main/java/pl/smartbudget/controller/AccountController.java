@@ -33,7 +33,7 @@ public class AccountController {
 	@RequestMapping("/user-accounts")
 	public String accounts(Model model, Principal principal) {
 		String name = principal.getName();
-		model.addAttribute("account", new Account());
+		model.addAttribute("Account", new Account());
 		model.addAttribute("AlignBalanceForm", new AlignBalanceForm());
 		model.addAttribute("InternalTransferForm", new InternalTransferForm());
 		model.addAttribute("accountsMap", userService.getAccountsMapOfUser(name));
@@ -43,6 +43,16 @@ public class AccountController {
 		return "user-accounts";
 	}
 
+	@RequestMapping("/account-forecast/{id}")
+	public String detail(Model model, Principal principal, @PathVariable int id) {
+		String name = principal.getName();
+		model.addAttribute("user", userService.findOneWithAccounts(name));
+		model.addAttribute("accountName", accountService.getForecastAccount(id));
+		model.addAttribute("dataForForecast", transactionService.forecastByAccount(id, name).get(0));
+		model.addAttribute("forecastDataByAccount", transactionService.forecastByAccount(id, name).get(1));
+		return "account-forecast";
+	}
+	
 	@RequestMapping(value = "/addAccount", method = RequestMethod.POST)
 	public String addAccount(@ModelAttribute("account") Account account, Principal principal) throws ParseException {
 		String name = principal.getName();
@@ -54,14 +64,6 @@ public class AccountController {
 	public String renameAccount(@ModelAttribute("account") Account account, Principal principal) throws ParseException {
 		String name = principal.getName();
 		accountService.save(account, name);
-		return "redirect:/user-accounts";
-	}
-
-	@RequestMapping("/user-accounts/removeaccount/{id}")
-	public String removeAccount(@PathVariable int id, Principal principal) {
-		Account account = accountService.findOne(id);
-		String name = principal.getName();
-		accountService.delete(account, name);
 		return "redirect:/user-accounts";
 	}
 
@@ -80,15 +82,15 @@ public class AccountController {
 		transactionService.saveInternalTransfer(internalTransferForm, name);
 		return "redirect:/user-transactions";
 	}
-
-	@RequestMapping("/account-forecast/{id}")
-	public String detail(Model model, Principal principal, @PathVariable int id) {
+	
+	@RequestMapping("/user-accounts/removeaccount/{id}")
+	public String removeAccount(@PathVariable int id, Principal principal) {
+		Account account = accountService.findOne(id);
 		String name = principal.getName();
-		model.addAttribute("user", userService.findOneWithAccounts(name));
-		model.addAttribute("accountName", accountService.getForecastAccount(id));
-		model.addAttribute("dataForForecast", transactionService.forecastByAccount(id, name).get(0));
-		model.addAttribute("forecastDataByAccount", transactionService.forecastByAccount(id, name).get(1));
-		return "account-forecast";
+		accountService.delete(account, name);
+		return "redirect:/user-accounts";
 	}
+
+
 
 }

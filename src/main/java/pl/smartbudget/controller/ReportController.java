@@ -32,8 +32,8 @@ public class ReportController {
 
 	@RequestMapping("/user-reports")
 	public String reports(Model model, Principal principal) {
-		model.addAttribute("ReportForm", new ReportForm());
 		String name = principal.getName();
+		model.addAttribute("ReportForm", new ReportForm());		
 		model.addAttribute("user", userService.findOneWithCategoriesAndSubcategories(name));
 		return "user-reports";
 	}

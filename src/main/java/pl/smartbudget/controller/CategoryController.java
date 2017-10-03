@@ -29,12 +29,12 @@ public class CategoryController {
 
 	@RequestMapping("/user-categories")
 	public String categories(Model model, Principal principal) {
+		String name = principal.getName();
 		model.addAttribute("subcategory", new SubcategoryForm());
 		model.addAttribute("category", new Category());
-		String name = principal.getName();
-		model.addAttribute("user", userService.findOneWithCategoriesAndSubcategories(name));
 		model.addAttribute("RemoveSubcategoryForm", new RemoveSubcategoryForm());
-		model.addAttribute("RemoveCategoryForm", new RemoveSubcategoryForm());
+		model.addAttribute("RemoveCategoryForm", new RemoveSubcategoryForm());	
+		model.addAttribute("user", userService.findOneWithCategoriesAndSubcategories(name));		
 		model.addAttribute("subcategoriesMap", userService.getSubcategoriesMapOfUser(name));
 		return "user-categories";
 	}

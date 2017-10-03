@@ -34,10 +34,45 @@ public class UserController {
 		String name = principal.getName();
 		model.addAttribute("AddUserByAdminForm", new AddUserByAdminForm());
 		model.addAttribute("ChangeRolesForm", new ChangeRolesForm());
-		model.addAttribute("users", userService.getUsersWithRoles());
+		model.addAttribute("users", userService.findAllWithRoles());
 		model.addAttribute("user", new User());
 		model.addAttribute("loginName", name);	
 		return "users";
+	}
+	
+	@RequestMapping("/user-profile")
+	public String profile(Model model, Principal principal) {				
+		String name = principal.getName();
+		model.addAttribute("user", userService.findOneWithRoles(name));
+		return "user-profile";
+	}
+
+	@RequestMapping("/user-register")
+	public String showRegister() {
+		return "user-register";
+	}
+	
+	@RequestMapping("/users/{id}")
+	public String detail(Model model, @PathVariable int id, Principal principal) {
+		String nameUrl = userService.findOne(id).getName();
+		String name = principal.getName();
+		model.addAttribute("loginName", name);
+		model.addAttribute("userDetail", userService.findOneWithRoles(nameUrl));
+		return "user-detail";
+	}
+	
+	@RequestMapping("/user-available")
+	@ResponseBody
+	public String userAvailable(@RequestParam String name) {
+		Boolean userAvailable = userService.findOne(name) == null;
+		return userAvailable.toString();
+	}
+	
+	@RequestMapping("/email-available")
+	@ResponseBody
+	public String emailAvailable(@RequestParam String email) {
+		Boolean emailAvailable = userService.findOneByEmail(email) == null;
+		return emailAvailable.toString();
 	}
 	
 	@RequestMapping("/users/removeuser/{id}")
@@ -53,34 +88,6 @@ public class UserController {
 		return "redirect:/users";
 	}
 	
-	@RequestMapping("/user-profile/removeprofile/{id}")
-	public String removeProfile(@PathVariable int id){
-		String name = userService.findOne(id).getName();
-		userService.delete(id, name);
-		return "redirect:/logout";
-	}
-
-	@RequestMapping("/users/{id}")
-	public String detail(Model model, @PathVariable int id, Principal principal) {
-		String nameUrl = userService.findOne(id).getName();
-		String name = principal.getName();
-		model.addAttribute("loginName", name);
-		model.addAttribute("userDetail", userService.getUserByNameWithRoles(nameUrl));
-		return "user-detail";
-	}
-
-	@RequestMapping("/user-profile")
-	public String profile(Model model, Principal principal) {				
-		String name = principal.getName();
-		model.addAttribute("user", userService.getUserByNameWithRoles(name));
-		return "user-profile";
-	}
-
-	@RequestMapping("/user-register")
-	public String showRegister() {
-		return "user-register";
-	}
-
 	@RequestMapping(value = "/user-register", method = RequestMethod.POST)
 	public String doRegister(@ModelAttribute("user") User user) {
 		userService.save(user);
@@ -101,20 +108,6 @@ public class UserController {
 		
 		return "redirect:/users";
 		}
-	
-	@RequestMapping("/user-available")
-	@ResponseBody
-	public String userAvailable(@RequestParam String name) {
-		Boolean userAvailable = userService.findOneByName(name) == null;
-		return userAvailable.toString();
-	}
-	
-	@RequestMapping("/email-available")
-	@ResponseBody
-	public String emailAvailable(@RequestParam String email) {
-		Boolean emailAvailable = userService.findOneByEmail(email) == null;
-		return emailAvailable.toString();
-	}
 	
 	@RequestMapping(value = "/change-password", method = RequestMethod.POST)
 	public String changePassword(@ModelAttribute("user") User user) {
@@ -139,4 +132,11 @@ public class UserController {
 		userService.changeEmail(user);
 		return "redirect:/user-profile";
 		}
+	
+	@RequestMapping("/user-profile/removeprofile/{id}")
+	public String removeProfile(@PathVariable int id){
+		String name = userService.findOne(id).getName();
+		userService.delete(id, name);
+		return "redirect:/logout";
+	}
 }
