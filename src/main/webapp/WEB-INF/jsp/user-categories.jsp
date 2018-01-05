@@ -34,7 +34,7 @@
 				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="" />" class="btn btn-danger" type="button" data-toggle="modal" data-target="#removeCategoryModal${category.id}">Remove</a>	</td>			
 		<td>
 		
-			<form:form mehod="post" modelAttribute="subcategory" action="/addSubcategory" cssClass="form-horizontal" id="form">	
+			<form:form mehod="post" modelAttribute="Subcategory" action="/addSubcategory" cssClass="form-horizontal" id="form">	
 				<form:hidden path="categoryId" value="${category.id}" />
 	<!-- Modal -->
 	<div class="modal fade" id="addSubcategoryModal${category.id}" tabindex="-1" role="dialog"
@@ -70,7 +70,7 @@
 </form:form>	
 
 
-<form:form mehod="post" modelAttribute="category" action="/renameCategory" cssClass="form-horizontal" id="form">	
+<form:form mehod="post" modelAttribute="Category" action="/renameCategory" cssClass="form-horizontal" id="form">	
 <form:hidden path="id" value="${category.id}" />
 		<!-- Modal -->
 	<div class="modal fade" id="renameCategoryModal${category.id}" tabindex="-1" role="dialog"
@@ -187,7 +187,7 @@
 	</div>
 </form:form>	
 			
-						<form:form mehod="post" modelAttribute="subcategory" action="/renameSubcategory" cssClass="form-horizontal" id="form">	
+						<form:form mehod="post" modelAttribute="Subcategory" action="/renameSubcategory" cssClass="form-horizontal" id="form">	
 <form:hidden path="id" value="${subcategory.id}" />
 <form:hidden path="categoryId" value="${category.id}" />
 		<!-- Modal -->
@@ -232,7 +232,7 @@
 		</table>
 		</div>
 		
-		<form:form mehod="post" modelAttribute="category" action="/addCategory" cssClass="form-horizontal" id="form">		
+		<form:form mehod="post" modelAttribute="Category" action="/addCategory" cssClass="form-horizontal" id="form">		
 	<!-- Modal -->
 	<div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">

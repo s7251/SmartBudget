@@ -32,7 +32,7 @@ public class SubcategoryLimitController {
 	@RequestMapping("/user-budgetplan")
 	public String budgetplan(Model model, Principal principal) throws ParseException {
 		String name = principal.getName();
-		model.addAttribute("subcategorylimit", new SubcategoryLimitForm());
+		model.addAttribute("SubcategoryLimit", new SubcategoryLimitForm());
 		String date = transactionService.getActualDateByViewedTransactions(transactionService.findAllTransactionOfUserByActualMonth(name));
 		model.addAttribute("actualMonth", transactionService.getActualDateByViewedTransactions(transactionService.findAllTransactionOfUserByActualMonth(name)));
 		model.addAttribute("nextMonthNav", transactionService.getNextMonthForNavigationByViewedTransactions(transactionService.findAllTransactionOfUserByActualMonth(name)));	
@@ -46,7 +46,7 @@ public class SubcategoryLimitController {
 	@RequestMapping("/user-budgetplan/{date}")
 	public String budgetplan(Model model, Principal principal, @PathVariable String date) throws ParseException {
 		String name = principal.getName();
-		model.addAttribute("subcategorylimit", new SubcategoryLimitForm());
+		model.addAttribute("SubcategoryLimit", new SubcategoryLimitForm());
 		model.addAttribute("nextMonthNav", transactionService.getNextMonthForNavigationByViewedTransactions(transactionService.findAllTransactionOfUserByDate(name, date)));
 		model.addAttribute("actualMonthNav", transactionService.geActualtMonthForNavigationByViewedTransactions(transactionService.findAllTransactionOfUserByDate(name, date)));
 		model.addAttribute("prevMonthNav", transactionService.getPrevMonthForNavigationByViewedTransactions(transactionService.findAllTransactionOfUserByDate(name, date)));		

@@ -30,8 +30,8 @@ public class CategoryController {
 	@RequestMapping("/user-categories")
 	public String categories(Model model, Principal principal) {
 		String name = principal.getName();
-		model.addAttribute("subcategory", new SubcategoryForm());
-		model.addAttribute("category", new Category());
+		model.addAttribute("Subcategory", new SubcategoryForm());
+		model.addAttribute("Category", new Category());
 		model.addAttribute("RemoveSubcategoryForm", new RemoveSubcategoryForm());
 		model.addAttribute("RemoveCategoryForm", new RemoveSubcategoryForm());	
 		model.addAttribute("user", userService.findOneWithCategoriesAndSubcategories(name));		

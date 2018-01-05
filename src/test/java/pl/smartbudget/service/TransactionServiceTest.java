@@ -42,7 +42,7 @@ public class TransactionServiceTest {
 		ArrayList<Transaction> transactions = new ArrayList<Transaction>();
 		setUpMocks(transactions);
 		
-		Map<Integer, Account> accountsValues = transactionService.summaryTransactionsOfAccounts("jan");
+		Map<Integer, Account> accountsValues = transactionService.getBalanceOfAccount("jan");
 		
 		assertEquals(accountsValues.size(), 1);
 		assertEquals(accountsValues.get("Wallet"), new Double(0));
@@ -53,7 +53,7 @@ public class TransactionServiceTest {
 		List<Transaction> transactions = Arrays.asList(new Transaction(150, "influence"), new Transaction(50, "expense"));
 		setUpMocks(transactions);
 		
-		Map<Integer, Account> accountsValues = transactionService.summaryTransactionsOfAccounts("jan");
+		Map<Integer, Account> accountsValues = transactionService.getBalanceOfAccount("jan");
 		
 		assertEquals(accountsValues.size(), 1);
 		assertEquals(accountsValues.get("Wallet"), new Double(100));

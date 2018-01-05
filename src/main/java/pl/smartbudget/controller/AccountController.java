@@ -36,10 +36,10 @@ public class AccountController {
 		model.addAttribute("Account", new Account());
 		model.addAttribute("AlignBalanceForm", new AlignBalanceForm());
 		model.addAttribute("InternalTransferForm", new InternalTransferForm());
-		model.addAttribute("accountsMap", userService.getAccountsMapOfUser(name));
 		model.addAttribute("user", userService.findOneWithAccounts(name));
-		model.addAttribute("summaryOfAccounts", transactionService.summaryTransactionsOfAccounts(name));
-		model.addAttribute("summaryOfAllAccounts", transactionService.summaryTransactionsOfAllAccounts(name));
+		model.addAttribute("accountsMap", userService.getAccountsMapOfUser(name));
+		model.addAttribute("balanceOfAccount", transactionService.getBalanceOfAccount(name));
+		model.addAttribute("totalBalaceOfAccounts", transactionService.getTotalBalaceOfAccounts(name));
 		return "user-accounts";
 	}
 

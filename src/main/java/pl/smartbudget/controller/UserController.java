@@ -34,8 +34,8 @@ public class UserController {
 		String name = principal.getName();
 		model.addAttribute("AddUserByAdminForm", new AddUserByAdminForm());
 		model.addAttribute("ChangeRolesForm", new ChangeRolesForm());
+		model.addAttribute("User", new User());
 		model.addAttribute("users", userService.findAllWithRoles());
-		model.addAttribute("user", new User());
 		model.addAttribute("loginName", name);	
 		return "users";
 	}

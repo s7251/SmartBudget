@@ -75,6 +75,12 @@
 			<version>3.8.0</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/nz.ac.waikato.cms.weka/weka-dev -->
+		<dependency>
+    		<groupId>nz.ac.waikato.cms.weka</groupId>
+   			<artifactId>weka-dev</artifactId>
+   		    <version>3.9.0</version>
+		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/jfree/jcommon -->
 		<dependency>

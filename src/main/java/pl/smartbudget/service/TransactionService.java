@@ -552,7 +552,7 @@ if(transactions.isEmpty() == false){
 	
 	
 
-	public Map<Integer, Account> summaryTransactionsOfAccounts(String name) {		
+	public Map<Integer, Account> getBalanceOfAccount(String name) {		
 
 		Map<Integer, Account> summaryOfAccounts = new HashMap<Integer, Account>();
 
@@ -590,9 +590,9 @@ if(transactions.isEmpty() == false){
 		return transactionsSum;
 	}
 	
-	public Double summaryTransactionsOfAllAccounts(String name){
+	public Double getTotalBalaceOfAccounts(String name){
 		Double sum = new Double(0);
-		Map<Integer, Account> summaryOfAccounts = summaryTransactionsOfAccounts(name);
+		Map<Integer, Account> summaryOfAccounts = getBalanceOfAccount(name);
 		
 		for (Map.Entry<Integer, Account> entry : summaryOfAccounts.entrySet()){
 			sum+=entry.getValue().getSummaryOfAccount();

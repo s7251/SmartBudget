@@ -232,7 +232,7 @@ public class UserService {
 	public Map<Integer, String> getAccountsMapOfUser(String name) {
 
 		Map<Integer, String> accountsMap = new HashMap<Integer, String>();
-		List<Account> accounts = findOneWithAccountsAndTransactions(name).getAccounts();
+		List<Account> accounts = findOneWithAccounts(name).getAccounts();
 
 		for (Account account : accounts) {
 			accountsMap.put(account.getId(), account.getName());

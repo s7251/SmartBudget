@@ -60,7 +60,7 @@
 				<c:forEach items="${subcategory.subcategoryLimits}" var="subcategorylimits">
 				<fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${subcategorylimits.amount}" type="currency" currencySymbol="zł" pattern=" #,##0.00 ¤; -#,##0.00 ¤"/> 
 								
-				<form:form mehod="post" modelAttribute="subcategorylimit" action="/changeSubcategoryLimit/${date}" cssClass="form-horizontal" id="form">		
+				<form:form mehod="post" modelAttribute="SubcategoryLimit" action="/changeSubcategoryLimit/${date}" cssClass="form-horizontal" id="form">		
 		<form:hidden path="subcategoryId" value="${subcategory.id}" />
 		<form:hidden path="id" value="${subcategorylimits.id}" />
 		<c:if test="${not empty date}"><form:hidden path="date" value="${date}" /></c:if>
@@ -117,7 +117,7 @@
 				<a href="<spring:url value="/user-budgetplan/changesubcategorylimit/${subcategory.id}" />" class="btn btn-primary" type="button"  data-toggle="modal" data-target="#changeSubcategoryLimitModal${subcategory.id}">Change Budget</a>	
 				</c:if>						
 				
-		<form:form mehod="post" modelAttribute="subcategorylimit" action="/addSubcategoryLimit/${date}" cssClass="form-horizontal" id="form">		
+		<form:form mehod="post" modelAttribute="SubcategoryLimit" action="/addSubcategoryLimit/${date}" cssClass="form-horizontal" id="form">		
 		<form:hidden path="subcategoryId" value="${subcategory.id}" />		
 		<c:if test="${not empty date}"><form:hidden path="date" value="${date}" /></c:if>
  		<c:if test="${empty date}"><form:hidden path="date" value="${actualMonth}" /></c:if>

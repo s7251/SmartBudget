@@ -132,7 +132,7 @@
 				</td>
 				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="" />" class="btn btn-warning" type="button" data-toggle="modal" data-target="#changeEmailModal${users.id}">Change e-mail</a>
 				
-				<form:form mehod="post" modelAttribute="user" action="/change-email.html" cssClass="form-horizontal form">
+				<form:form mehod="post" modelAttribute="User" action="/change-email.html" cssClass="form-horizontal form">
 <form:hidden path="id" value="${users.id}" />
 <form:hidden path="name" value="${users.name}" />
 <form:hidden path="password" value="${users.password}" />
@@ -174,7 +174,7 @@
 				<a href="<spring:url value="" />" class="btn btn-warning" type="button" data-toggle="modal" data-target="#renameUserModal${users.id}">Rename</a>    </c:if>      </td>					
 				<td style="text-align: center; vertical-align: middle;"><a href="<spring:url value="" />" class="btn btn-warning" type="button" data-toggle="modal" data-target="#changePasswordModal${users.id}">Change password</a>	
 				
-					<form:form mehod="post" modelAttribute="user" action="/change-password.html" cssClass="form-horizontal form">
+					<form:form mehod="post" modelAttribute="User" action="/change-password.html" cssClass="form-horizontal form">
 <form:hidden path="id" value="${users.id}" />
 <form:hidden path="name" value="${users.name}" />
 <form:hidden path="email" value="${users.email}" />
@@ -214,7 +214,7 @@
 				<td style="text-align: center; vertical-align: middle;">
 				<c:if test="${(users.name != 'admin' )}"> <a href="<spring:url value="/users/removeuser/${users.id}.html" />" class="btn btn-danger triggerRemove" type="button">Remove</a></c:if>  
 		
-		<form:form mehod="post" modelAttribute="user" action="/renameUser.html" cssClass="form-horizontal form">
+		<form:form mehod="post" modelAttribute="User" action="/renameUser.html" cssClass="form-horizontal form">
 			<form:hidden path="id" value="${users.id}" />
 			<form:hidden path="password" value="${users.password}" />
 			<form:hidden path="email" value="${users.email}" />

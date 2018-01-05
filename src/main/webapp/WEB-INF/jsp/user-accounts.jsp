@@ -34,7 +34,7 @@
 			<td style="text-align: center; vertical-align: middle;"></td>
 			
 		</tr>		
-		<c:forEach items="${summaryOfAccounts}" var="summary">		
+		<c:forEach items="${balanceOfAccount}" var="summary">		
 			<tr>
 				<td style="text-align: center; vertical-align: middle;">${summary.value.name}</td>
 				<td style="text-align: center; vertical-align: middle;"><fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${summary.value.summaryOfAccount}" type="currency" currencySymbol="zł" pattern=" #,##0.00 ¤; -#,##0.00 ¤"/> </td>
@@ -156,7 +156,7 @@
 		</tr>
 			<tr>
 			<td style="text-align: center; vertical-align: middle;"><b></b></td>
- 			<td style="text-align: center; vertical-align: middle;"><b><fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${summaryOfAllAccounts}" type="currency" currencySymbol="zł" pattern=" #,##0.00 ¤; -#,##0.00 ¤"/> </b></td> 
+ 			<td style="text-align: center; vertical-align: middle;"><b><fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${totalBalaceOfAccounts}" type="currency" currencySymbol="zł" pattern=" #,##0.00 ¤; -#,##0.00 ¤"/> </b></td> 
 			<td style="text-align: center; vertical-align: middle;">	<a href='<spring:url value="/account-forecast/0"/>'><span style="font-size:2em;" class="glyphicon glyphicon-stats"></span> </a></td>
 		    <td style="text-align: center; vertical-align: middle;"><b></b></td>
 			<td style="text-align: center; vertical-align: middle;"><b></b></td>
